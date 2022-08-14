@@ -71,7 +71,6 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
-*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -108,8 +107,3 @@ dist
 .DS_Store
 .idea
 .vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
