@@ -3,16 +3,48 @@ require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
   "root": true,
+  "parser": "vue-eslint-parser",
+  "plugins": [
+    "@typescript-eslint",
+    "vue",
+    "prettier"
+  ],
   "extends": [
     "plugin:vue/vue3-essential",
     "eslint:recommended",
     "airbnb-base",
     "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
     "@vue/eslint-config-typescript/recommended",
     "@vue/eslint-config-prettier",
-    "@vue/eslint-config-airbnb-with-typescript"
+    "prettier"
   ],
   "parserOptions": {
-    "ecmaVersion": "latest"
-  }
+    "project": "./tsconfig.json",
+    "ecmaVersion": 2020,
+    "parser" : "@typescript-eslint/parser",
+    "sourceType": "module"
+  },
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true
+      }
+    ],
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        "default": "array"
+      }
+    ],
+    "max-lines-per-function": [
+      "error",
+      40
+    ]
+  },
+  "ignorePatterns": [
+    "*.config.ts"
+  ]
 }
