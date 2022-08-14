@@ -6,7 +6,16 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "module": "es2020"
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "outDir": "./build/",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true
   },
 
   "references": [
