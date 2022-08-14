@@ -1,13 +1,13 @@
 <template>
-  <header class="header">
-    <p>This is header</p>
-  </header>
+    <header class="header">
+        <p>This is header</p>
+    </header>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "HeaderView",
+    name: 'HeaderView',
 });
 </script>

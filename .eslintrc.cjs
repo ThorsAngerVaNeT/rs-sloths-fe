@@ -16,8 +16,8 @@ module.exports = {
     "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended",
     "@vue/eslint-config-typescript/recommended",
+    "plugin:prettier/recommended",
     "@vue/eslint-config-prettier",
-    "prettier"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -42,7 +42,7 @@ module.exports = {
     "max-lines-per-function": [
       "error",
       40
-    ]
+    ],
   },
   "ignorePatterns": [
     "*.config.ts"
