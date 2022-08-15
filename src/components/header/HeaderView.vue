@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <LocaleSwitcher />
+    <locale-switcher />
     <p>{{ $t('header') }}</p>
   </header>
 </template>
