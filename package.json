@@ -1,13 +1,15 @@
 {
   "name": "rss-sloths",
   "version": "0.0.0",
+  "author": "WOV WOV Team",
+  "description": "Final project in FEJS2022Q1",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.ts,.tsx --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.ts,.tsx --fix --ignore-path .gitignore"
   },
   "husky": {
     "hooks": {
