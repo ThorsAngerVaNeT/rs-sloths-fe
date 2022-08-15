@@ -1,5 +1,4 @@
 <template>
-  <!-- <h1>This is home page</h1> -->
   <h1>{{ $t('home') }}</h1>
   <div class="wrapper">
     <RouterLink to="/about">{{ $t('about') }}</RouterLink>
