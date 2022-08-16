@@ -1,6 +1,6 @@
 <template>
   <div class="suggest">
-    <h2>Suggestion</h2>
+    <h2>{{ $t('suggest') }}</h2>
   </div>
 </template>
 

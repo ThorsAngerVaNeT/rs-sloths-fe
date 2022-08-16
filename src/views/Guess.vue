@@ -1,6 +1,6 @@
 <template>
   <div class="guess">
-    <h2>Guess Game</h2>
+    <h2>{{ $t('guess') }}</h2>
   </div>
 </template>
 

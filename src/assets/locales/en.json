@@ -2,5 +2,11 @@
   "header": "Header",
   "footer": "footer",
   "home": "Home",
-  "about": "About"
+  "about": "About",
+  "profile": "User Profile",
+  "catalog": "Catalog",
+  "guess": "Guess-a-Sloth Game",
+  "memory": "Memory Game",
+  "suggest": "Suggest a new Sloth",
+  "create": "Create a meme"
 }
