@@ -2,6 +2,7 @@ import { APIError } from './error-handling/api-error';
 import { JSONError } from './error-handling/json-error';
 import { errorHandler } from './error-handling/error-handler';
 import type { APIRequestResult } from '../common/types';
+import { JSON_ERROR, JSON_ERROR_CODE } from '../common/const';
 
 export const apiRequest = async (url: string, config: RequestInit): Promise<APIRequestResult | null> => {
   try {
@@ -15,7 +16,7 @@ export const apiRequest = async (url: string, config: RequestInit): Promise<APIR
     const contentType = headers.get('content-type');
 
     if (!contentType || !contentType.includes('application/json')) {
-      throw new JSONError('Response is not a JSON!', 'NOT_JSON');
+      throw new JSONError(JSON_ERROR, JSON_ERROR_CODE);
     }
 
     const res = await response.json();
