@@ -1,8 +1,9 @@
+import type { API } from '@/common/types';
 import { BASE } from '../common/const';
 import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
 
-export class APIService {
+export class APIService implements API {
   private endpoint: string;
 
   constructor(endpoint: string) {
@@ -36,7 +37,7 @@ export class APIService {
     return apiRequest(url, config);
   }
 
-  public createOne(body: unknown) {
+  public create(body: unknown) {
     const url = `${this.endpoint}`;
     const config = {
       method: FetchMethod.post,
