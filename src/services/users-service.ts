@@ -3,7 +3,7 @@ import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 
 export class UsersService implements API {
-  private service = new APIService(Endpoints.users);
+  private service = new APIService<unknown>(Endpoints.users);
 
   private getAllResult = {
     ok: true,
