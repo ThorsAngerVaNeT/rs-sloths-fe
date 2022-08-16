@@ -3,8 +3,8 @@ import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 import { getAllUsers, getByIdUser, getDeleteUser } from './mocks/users-mocks';
 
-export class UsersService implements API {
-  private service = new APIService<unknown>(Endpoints.users);
+export class UsersService<T> implements API {
+  private service = new APIService<T>(Endpoints.users);
 
   private getAllResult = getAllUsers;
 
@@ -27,12 +27,12 @@ export class UsersService implements API {
     return Promise.resolve(this.getByIdResult);
   }
 
-  public create(body: unknown) {
+  public create(body: T) {
     // return this.service.create(body);
     return Promise.resolve(this.getByIdResult);
   }
 
-  public updateById(id: number, body: unknown) {
+  public updateById(id: number, body: T) {
     // return this.service.updateById(id, body);
     return Promise.resolve(this.getByIdResult);
   }

@@ -3,8 +3,8 @@ import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 import { getAllSloths, getByIdSloth, getDeleteSloth } from './mocks/sloths-mocks';
 
-export class SlothsService implements API {
-  private service = new APIService<unknown>(Endpoints.sloths);
+export class SlothsService<T> implements API {
+  private service = new APIService<T>(Endpoints.sloths);
 
   private getAllResult = getAllSloths;
 
@@ -27,12 +27,12 @@ export class SlothsService implements API {
     return Promise.resolve(this.getByIdResult);
   }
 
-  public create(body: unknown) {
+  public create(body: T) {
     // return this.service.create(body);
     return Promise.resolve(this.getByIdResult);
   }
 
-  public updateById(id: number, body: unknown) {
+  public updateById(id: number, body: T) {
     // return this.service.updateById(id, body);
     return Promise.resolve(this.getByIdResult);
   }
