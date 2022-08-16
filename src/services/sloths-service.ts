@@ -1,46 +1,16 @@
 import type { API } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
+import { getAllSloths, getByIdSloth, getDeleteSloth } from './mocks/sloths-mocks';
 
 export class SlothsService implements API {
   private service = new APIService<unknown>(Endpoints.sloths);
 
-  private getAllResult = {
-    ok: true,
-    status: 200,
-    data: [
-      {
-        id: 1,
-        name: 'sloth1',
-      },
-      {
-        id: 2,
-        name: 'sloth2',
-      },
-      {
-        id: 3,
-        name: 'sloth3',
-      },
-    ],
-    headers: 3,
-  };
+  private getAllResult = getAllSloths;
 
-  private getByIdResult = {
-    ok: true,
-    status: 200,
-    data: {
-      id: 1,
-      name: 'sloth1',
-    },
-    headers: '',
-  };
+  private getByIdResult = getByIdSloth;
 
-  private getDeleteResult = {
-    ok: true,
-    status: 200,
-    data: {},
-    headers: '',
-  };
+  private getDeleteResult = getDeleteSloth;
 
   public getAll() {
     // return this.service.getAll();

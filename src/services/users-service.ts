@@ -1,50 +1,16 @@
 import type { API } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
+import { getAllUsers, getByIdUser, getDeleteUser } from './mocks/users-mocks';
 
 export class UsersService implements API {
   private service = new APIService<unknown>(Endpoints.users);
 
-  private getAllResult = {
-    ok: true,
-    status: 200,
-    data: [
-      {
-        id: 1,
-        name: 'user1',
-        email: 'user1@gmail.com',
-      },
-      {
-        id: 2,
-        name: 'user2',
-        email: 'user2@gmail.com',
-      },
-      {
-        id: 3,
-        name: 'user3',
-        email: 'user3@gmail.com',
-      },
-    ],
-    headers: 3,
-  };
+  private getAllResult = getAllUsers;
 
-  private getByIdResult = {
-    ok: true,
-    status: 200,
-    data: {
-      id: 1,
-      name: 'user1',
-      email: 'user1@gmail.com',
-    },
-    headers: '',
-  };
+  private getByIdResult = getByIdUser;
 
-  private getDeleteResult = {
-    ok: true,
-    status: 200,
-    data: {},
-    headers: '',
-  };
+  private getDeleteResult = getDeleteUser;
 
   public getAll() {
     // return this.service.getAll();
