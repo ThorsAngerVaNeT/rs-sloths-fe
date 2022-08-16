@@ -17,7 +17,7 @@ export class SlothsService<T> implements API {
     return Promise.resolve(this.getAllResult);
   }
 
-  public getSome(page: number, limit: number) {
+  public getPage(page: number, limit: number) {
     // return this.service.getSome(page, limit);
     return Promise.resolve(this.getAllResult);
   }

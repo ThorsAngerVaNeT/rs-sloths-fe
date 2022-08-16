@@ -19,7 +19,7 @@ export class APIService<T> implements API {
     return apiRequest(url, config);
   }
 
-  public getSome(page: number, limit: number) {
+  public getPage(page: number, limit: number) {
     const url = `${this.endpoint}?_page=${page}&_limit=${limit}`;
     const config = {
       method: FetchMethod.get,

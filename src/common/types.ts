@@ -8,7 +8,7 @@ export type APIRequestResult = {
 export interface API {
   getAll(): Promise<APIRequestResult | null>;
 
-  getSome(page: number, limit: number): Promise<APIRequestResult | null>;
+  getPage(page: number, limit: number): Promise<APIRequestResult | null>;
 
   getById(id: number): Promise<APIRequestResult | null>;
 
