@@ -2,6 +2,7 @@
   <header class="header">
     <locale-switcher />
     <p>{{ $t('header') }}</p>
+    <router-link to="/">{{ $t('home') }}</router-link>
   </header>
 </template>
 
