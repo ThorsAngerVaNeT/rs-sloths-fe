@@ -6,6 +6,6 @@
 
 <script lang="ts">
 export default {
-    name: 'CatalogView'
-}
+  name: 'CatalogView',
+};
 </script>

@@ -6,6 +6,6 @@
 
 <script lang="ts">
 export default {
-    name: 'MemoryView'
-}
+  name: 'MemoryView',
+};
 </script>

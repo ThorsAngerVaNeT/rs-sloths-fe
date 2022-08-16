@@ -6,6 +6,6 @@
 
 <script lang="ts">
 export default {
-    name: 'SuggestionView'
-}
+  name: 'SuggestionView',
+};
 </script>
