@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <p>{{ $t('footer') }}</p>
+    <p>{{ $t('footer-title') }}</p>
   </footer>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
   <header class="header">
     <locale-switcher />
-    <p>{{ $t('header') }}</p>
-    <router-link to="/">{{ $t('home') }}</router-link>
+    <p>{{ $t('header-title') }}</p>
+    <router-link to="/">{{ $t('home-title') }}</router-link>
   </header>
 </template>
 
