@@ -18,3 +18,7 @@ export interface API<T> {
 
   deleteById(id: string): Promise<APIRequestResult | null>;
 }
+
+export type Users = unknown;
+
+export type Sloths = unknown;

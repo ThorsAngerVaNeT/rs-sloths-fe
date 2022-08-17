@@ -1,10 +1,10 @@
-import type { API } from '@/common/types';
+import type { API, Sloths } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 import { getAllSloths, getByIdSloth, getDeleteSloth } from './mocks/sloths-mocks';
 
-export class SlothsService<T> implements API<T> {
-  private service = new APIService<T>(Endpoints.sloths);
+export class SlothsService implements API<Sloths> {
+  private service = new APIService<Sloths>(Endpoints.sloths);
 
   private getAllResult = getAllSloths;
 
@@ -27,12 +27,12 @@ export class SlothsService<T> implements API<T> {
     return Promise.resolve(this.getByIdResult);
   }
 
-  public create(body: T) {
+  public create(body: Sloths) {
     // return this.service.create(body);
     return Promise.resolve(this.getByIdResult);
   }
 
-  public updateById(id: string, body: T) {
+  public updateById(id: string, body: Sloths) {
     // return this.service.updateById(id, body);
     return Promise.resolve(this.getByIdResult);
   }

@@ -1,10 +1,10 @@
-import type { API } from '@/common/types';
+import type { API, Users } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 import { getAllUsers, getByIdUser, getDeleteUser } from './mocks/users-mocks';
 
-export class UsersService<T> implements API<T> {
-  private service = new APIService<T>(Endpoints.users);
+export class UsersService implements API<Users> {
+  private service = new APIService<Users>(Endpoints.users);
 
   private getAllResult = getAllUsers;
 
@@ -27,12 +27,12 @@ export class UsersService<T> implements API<T> {
     return Promise.resolve(this.getByIdResult);
   }
 
-  public create(body: T) {
+  public create(body: Users) {
     // return this.service.create(body);
     return Promise.resolve(this.getByIdResult);
   }
 
-  public updateById(id: string, body: T) {
+  public updateById(id: string, body: Users) {
     // return this.service.updateById(id, body);
     return Promise.resolve(this.getByIdResult);
   }
