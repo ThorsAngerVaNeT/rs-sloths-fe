@@ -3,7 +3,7 @@ import { BASE } from '../common/const';
 import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
 
-export class APIService<T> implements API {
+export class APIService<T> implements API<T> {
   private endpoint: string;
 
   constructor(endpoint: string) {
@@ -28,7 +28,7 @@ export class APIService<T> implements API {
     return apiRequest(url, config);
   }
 
-  public getById(id: number) {
+  public getById(id: string) {
     const url = `${this.endpoint}/${id}`;
     const config = {
       method: FetchMethod.get,
@@ -50,7 +50,7 @@ export class APIService<T> implements API {
     return apiRequest(url, config);
   }
 
-  public updateById(id: number, body: T) {
+  public updateById(id: string, body: T) {
     const url = `${this.endpoint}/${id}`;
     const config = {
       method: FetchMethod.put,
@@ -63,7 +63,7 @@ export class APIService<T> implements API {
     return apiRequest(url, config);
   }
 
-  public deleteById(id: number) {
+  public deleteById(id: string) {
     const url = `${this.endpoint}/${id}`;
     const config = {
       method: FetchMethod.delete,

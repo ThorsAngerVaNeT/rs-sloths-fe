@@ -35,7 +35,7 @@ export const getByIdUser = {
 
 export const getDeleteUser = {
   ok: true,
-  status: 200,
+  status: 204,
   data: {},
   headers: '',
 };

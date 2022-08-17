@@ -31,7 +31,7 @@ export const getByIdSloth = {
 
 export const getDeleteSloth = {
   ok: true,
-  status: 200,
+  status: 204,
   data: {},
   headers: '',
 };
