@@ -2,7 +2,11 @@
   "header-title": "Заголовок",
   "footer-title": "Подвал",
   "home-title": "Домашняя страница",
+
   "about-title": "О нас",
+  "profile-btn-save": "Сохранить",
+  "profile-btn-logout": "Выйти",
+
   "profile-title": "Профиль пользователя",
   "catalog-title": "Каталог",
   "guess-title": "Игра 'Угадай ленивца'",

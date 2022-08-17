@@ -2,7 +2,11 @@
   "header-title": "Header",
   "footer-title": "Footer",
   "home-title": "Home",
+
   "about-title": "About",
+  "profile-btn-save": "Save",
+  "profile-btn-logout": "Sign out",
+
   "profile-title": "User Profile",
   "catalog-title": "Catalog",
   "guess-title": "Guess-a-Sloth Game",
