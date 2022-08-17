@@ -9,6 +9,9 @@
   "profile-name": "Ваше имя",
   "profile-email": "Электронная почта",
   "profile-avatar": "Фото",
+  "profile-btn-guess": "Результаты игры 'Угадай ленивца'",
+  "profile-btn-memory": "Результаты игры 'Найди пару'",
+  "profile-btn-suggest": "Ваши предложения ленивцев",
 
   "profile-title": "Профиль пользователя",
   "catalog-title": "Каталог",

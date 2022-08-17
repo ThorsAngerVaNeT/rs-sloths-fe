@@ -31,7 +31,7 @@ const service = new UsersService();
 const defaultUser = './default-user.png';
 
 export default defineComponent({
-  name: 'ProfileView',
+  name: 'UserInfo',
 
   data() {
     return {
