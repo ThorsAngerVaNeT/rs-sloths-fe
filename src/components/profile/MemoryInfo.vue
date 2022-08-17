@@ -1,11 +1,16 @@
 <template>
   <div class="game-info">
     <div class="title">{{ id }}</div>
+
+    <router-link to="/memory">
+      <custom-btn :text="$t('memory-title')" className="btn" img-path="./memory-game.png"></custom-btn>
+    </router-link>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import CustomBtn from '../buttons/CustomBtn.vue';
 // import { errorHandler } from '../../services/error-handling/error-handler';
 
 // const service = new UsersService();
@@ -27,6 +32,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+  },
+
+  components: {
+    CustomBtn,
   },
 
   computed: {},
