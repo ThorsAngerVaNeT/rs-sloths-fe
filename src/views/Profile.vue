@@ -1,25 +1,29 @@
 <template>
   <div class="profile">
-    <h2>{{ $t('profile-title') }}</h2>
+    <!-- <h2>{{ $t('profile-title') }}</h2> -->
     <aside class="aside">
-      <div class="avatar"></div>
-      <input
-        type="text"
-        class="input-text user-property"
-        autocomplete="off"
-        :placeholder="$t('profile-name')"
-        v-model="userInfo.name"
-      />
-      <input
-        type="text"
-        class="input-text user-property"
-        autocomplete="off"
-        :placeholder="$t('profile-email')"
-        v-model="userInfo.email"
-      />
-      <button class="btn btn-primary" @click="updUserInfo">{{ $t('profile-btn-save') }}</button>
+      <div class="user">
+        <div class="avatar">
+          <img class="avatar--img" :src="getAvatar" :alt="$t('profile-avatar')" />
+        </div>
+        <input
+          type="text"
+          class="input-text user-property"
+          autocomplete="off"
+          :placeholder="$t('profile-name')"
+          v-model="userInfo.name"
+        />
+        <input
+          type="text"
+          class="input-text user-property"
+          autocomplete="off"
+          :placeholder="$t('profile-email')"
+          v-model="userInfo.email"
+        />
+        <button class="btn btn-primary" @click="updUserInfo">{{ $t('profile-btn-save') }}</button>
+      </div>
+      <button class="btn btn-link">{{ $t('profile-btn-logout') }}</button>
     </aside>
-    <button class="btn btn-link">{{ $t('profile-btn-logout') }}</button>
     <main class="main"></main>
   </div>
 </template>
@@ -30,6 +34,7 @@ import { errorHandler } from '../services/error-handling/error-handler';
 import { UsersService } from '../services/users-service';
 
 const service = new UsersService();
+const defaultUser = './default-user.png';
 
 export default defineComponent({
   name: 'ProfileView',
@@ -40,8 +45,15 @@ export default defineComponent({
         id: '',
         name: '',
         email: '',
+        avatar: '',
       },
     };
+  },
+
+  computed: {
+    getAvatar() {
+      return this.userInfo.avatar || defaultUser;
+    },
   },
 
   mounted() {
@@ -53,7 +65,7 @@ export default defineComponent({
       try {
         const res = await service.getById('1');
 
-        if (!res) throw Error();
+        if (!res) throw Error(); // todo
 
         this.userInfo = res.data;
       } catch (error) {
@@ -64,7 +76,7 @@ export default defineComponent({
       try {
         const res = await service.updateById('1', this.userInfo);
 
-        if (!res) throw Error();
+        if (!res) throw Error(); // todo
 
         await this.getUserInfo();
       } catch (error) {
@@ -76,15 +88,45 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.profile {
+  display: flex;
+  flex-direction: row;
+}
 .aside {
   width: 300px;
+  padding: 1em;
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.user-property {
-  padding: 0.5em;
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+
+  border-radius: 50%;
+}
+.avatar--img {
+  width: 200px;
+}
+
+.user-property,
+.user-property:focus {
+  outline: none;
+
+  margin: 0.5em 0;
+  padding: 0.5em 0;
+
   text-align: center;
+  border-style: none none solid;
 }
 </style>
