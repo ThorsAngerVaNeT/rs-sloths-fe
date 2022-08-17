@@ -3,18 +3,18 @@
     <aside class="aside">
       <h2>{{ $t('profile-title') }}</h2>
       <user-info :id="id"></user-info>
-      <button class="btn btn-link" @click="logOut">{{ $t('profile-btn-logout') }}</button>
+      <custom-btn :text="$t('profile-btn-logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
     </aside>
     <main class="main">
-      <button
-        v-for="tab in tabs"
-        :key="tab"
-        :class="['tab-button', { active: currentGame === getGameComponent(tab) }]"
-        @click="currentGame = getGameComponent(tab)"
+      <span
+        v-for="(tab, index) in tabs"
+        :key="index"
+        :class="['btn btn-tab', { active: currentGame === index }]"
+        @click="currentGame = index"
       >
         {{ $t(`profile-btn-${tab}`) }}
-      </button>
-      <component :is="currentGame" class="tab" :id="currentGame"></component>
+      </span>
+      <component :is="components[currentGame]" class="tab" :id="components[currentGame]"></component>
     </main>
   </div>
 </template>
@@ -26,6 +26,7 @@ import UserInfo from '../components/profile/UserInfo.vue';
 import MemoryInfo from '../components/profile/MemoryInfo.vue';
 import GuessInfo from '../components/profile/GuessInfo.vue';
 import SuggestInfo from '../components/profile/SuggestInfo.vue';
+import CustomBtn from '../components/buttons/CustomBtn.vue';
 
 export default defineComponent({
   name: 'ProfileView',
@@ -33,8 +34,9 @@ export default defineComponent({
   data() {
     return {
       id: '',
-      currentGame: 'MemoryInfo',
+      currentGame: 0,
       tabs: ['memory', 'guess', 'suggest'],
+      components: ['MemoryInfo', 'GuessInfo', 'SuggestInfo'],
     };
   },
 
@@ -45,15 +47,12 @@ export default defineComponent({
     MemoryInfo,
     GuessInfo,
     SuggestInfo,
+    CustomBtn,
   },
 
   mounted() {},
 
   methods: {
-    getGameComponent(tab: string): string {
-      return `${tab.charAt(0).toUpperCase() + tab.slice(1)}Info`;
-    },
-
     logOut() {
       // todo
     },
@@ -75,24 +74,8 @@ export default defineComponent({
   align-items: center;
 }
 
-.tab-button {
-  padding: 0.5em 1em;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background: #f0f0f0;
-  margin-bottom: -1px;
-  margin-right: -1px;
-}
-.tab-button:hover {
-  background: #e0e0e0;
-}
-.tab-button.active {
-  background: #e0e0e0;
-}
 .tab {
-  border: 1px solid #ccc;
+  border: 1px solid;
   padding: 1em;
 }
 </style>

@@ -56,5 +56,8 @@ export default defineComponent({
   border: 1px solid;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+
+  margin-bottom: -1px;
+  margin-right: -1px;
 }
 </style>

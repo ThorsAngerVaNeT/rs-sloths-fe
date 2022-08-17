@@ -17,7 +17,7 @@
       :placeholder="$t('profile-email')"
       v-model="userInfo.email"
     />
-    <button class="btn btn-primary" @click="updUserInfo">{{ $t('profile-btn-save') }}</button>
+    <custom-btn :text="$t('profile-btn-save')" className="btn btn-primary" :onClick="updUserInfo"></custom-btn>
   </div>
 </template>
 
@@ -25,6 +25,7 @@
 import { defineComponent } from 'vue';
 import { errorHandler } from '../../services/error-handling/error-handler';
 import { UsersService } from '../../services/users-service';
+import CustomBtn from '../buttons/CustomBtn.vue';
 
 const service = new UsersService();
 
@@ -51,6 +52,10 @@ export default defineComponent({
     },
   },
 
+  components: {
+    CustomBtn,
+  },
+
   computed: {
     getAvatar(): string {
       return this.userInfo.avatar || defaultUser;
@@ -75,13 +80,11 @@ export default defineComponent({
     },
     async updUserInfo() {
       try {
-        // console.log('updUserInfo1', this.userInfo);
         const res = await service.updateById(this.id, this.userInfo);
 
         if (!res) throw Error(); // todo
 
         await this.getUserInfo();
-        // console.log('updUserInfo2', this.userInfo);
       } catch (error) {
         errorHandler(error);
       }
@@ -92,9 +95,16 @@ export default defineComponent({
 
 <style scoped>
 .user-info {
+  padding: 1em;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  width: 100%;
+
+  border: 1px solid;
+  border-radius: 0.5em;
 }
 
 .avatar {
