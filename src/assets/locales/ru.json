@@ -1,6 +1,12 @@
 {
-  "header": "Заголовок",
-  "footer": "Подвал",
-  "home": "Домашняя страница",
-  "about": "О нас"
+  "header-title": "Заголовок",
+  "footer-title": "Подвал",
+  "home-title": "Домашняя страница",
+  "about-title": "О нас",
+  "profile-title": "Профиль пользователя",
+  "catalog-title": "Каталог",
+  "guess-title": "Игра 'Угадай ленивца'",
+  "memory-title": "Игра 'Найди пару'",
+  "suggest-title": "Предложи нового ленивца",
+  "create-title": "Создай мемасик"
 }

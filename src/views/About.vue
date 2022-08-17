@@ -1,7 +1,7 @@
 <template>
   <div class="about">
-    <h1>{{ $t('about') }}</h1>
-    <router-link to="/">{{ $t('home') }}</router-link>
+    <h1>{{ $t('about-title') }}</h1>
+    <router-link to="/">{{ $t('home-title') }}</router-link>
   </div>
 </template>
 

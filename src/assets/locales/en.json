@@ -1,6 +1,12 @@
 {
-  "header": "Header",
-  "footer": "footer",
-  "home": "Home",
-  "about": "About"
+  "header-title": "Header",
+  "footer-title": "Footer",
+  "home-title": "Home",
+  "about-title": "About",
+  "profile-title": "User Profile",
+  "catalog-title": "Catalog",
+  "guess-title": "Guess-a-Sloth Game",
+  "memory-title": "Memory Game",
+  "suggest-title": "Suggest a new Sloth",
+  "create-title": "Create a meme"
 }
