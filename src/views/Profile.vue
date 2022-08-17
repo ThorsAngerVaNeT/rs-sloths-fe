@@ -22,7 +22,7 @@
         />
         <button class="btn btn-primary" @click="updUserInfo">{{ $t('profile-btn-save') }}</button>
       </div>
-      <button class="btn btn-link">{{ $t('profile-btn-logout') }}</button>
+      <button class="btn btn-link" @click="testUsers">{{ $t('profile-btn-logout') }}</button>
     </aside>
     <main class="main"></main>
   </div>
@@ -51,7 +51,7 @@ export default defineComponent({
   },
 
   computed: {
-    getAvatar() {
+    getAvatar(): string {
       return this.userInfo.avatar || defaultUser;
     },
   },
@@ -79,6 +79,17 @@ export default defineComponent({
         if (!res) throw Error(); // todo
 
         await this.getUserInfo();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+    async testUsers() {
+      try {
+        const res = await service.getAll();
+
+        if (!res) throw Error(); // todo
+
+        console.log(res.data);
       } catch (error) {
         errorHandler(error);
       }
