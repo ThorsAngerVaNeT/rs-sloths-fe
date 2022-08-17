@@ -4,15 +4,15 @@ export const getAllSloths = {
   status: 200,
   data: [
     {
-      id: 1,
+      id: '1',
       name: 'sloth1',
     },
     {
-      id: 2,
+      id: '2',
       name: 'sloth2',
     },
     {
-      id: 3,
+      id: '3',
       name: 'sloth3',
     },
   ],
@@ -23,7 +23,7 @@ export const getByIdSloth = {
   ok: true,
   status: 200,
   data: {
-    id: 1,
+    id: '1',
     name: 'sloth1',
   },
   headers: '',
