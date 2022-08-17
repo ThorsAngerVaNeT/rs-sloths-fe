@@ -32,8 +32,8 @@ export const getByIdUser = {
     id: '1',
     name: 'user1',
     email: 'user1@gmail.com',
-    // avatar: 'https://refactoring.guru/images/content-public/logos/logo-military.png',
-    avatar: '',
+    avatar: 'https://refactoring.guru/images/content-public/logos/logo-military.png',
+    // avatar: '',
   },
   headers: '',
 };
