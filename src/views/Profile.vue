@@ -40,8 +40,6 @@ export default defineComponent({
     };
   },
 
-  computed: {},
-
   components: {
     UserInfo,
     MemoryInfo,
@@ -49,8 +47,6 @@ export default defineComponent({
     SuggestInfo,
     CustomBtn,
   },
-
-  mounted() {},
 
   methods: {
     logOut() {
