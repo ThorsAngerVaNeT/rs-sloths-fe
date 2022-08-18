@@ -1,6 +1,6 @@
 <template>
   <div class="game-field">
-    <h3>{{ level.level }}</h3>
+    <h3>{{ $t(getLevel) }}</h3>
     <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
     <p>steps: {{ getSteps }}</p>
     <div class="game-field__cards">
@@ -54,6 +54,10 @@ export default defineComponent({
   computed: {
     getSteps() {
       return this.steps;
+    },
+
+    getLevel() {
+      return `memory.${this.level.level}`;
     },
   },
 
@@ -137,6 +141,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.game-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .game-field__cards {
   margin: 1em;
 
