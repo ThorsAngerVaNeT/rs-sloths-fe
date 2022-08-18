@@ -84,9 +84,9 @@ export default defineComponent({
       images
         .sort(() => Math.random() - 0.5)
         .filter((el, i) => i < this.level.n)
-        .forEach((el, index) => {
-          res.push({ img: el, id: index, open: true });
-          res.push({ img: el, id: index, open: true });
+        .forEach((el, i) => {
+          res.push({ img: el, id: i, open: true });
+          res.push({ img: el, id: i, open: true });
         });
 
       res.sort(() => Math.random() - 0.5);
