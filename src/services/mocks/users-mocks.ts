@@ -7,16 +7,19 @@ export const getAllUsers = {
       id: '1',
       name: 'user1',
       email: 'user1@gmail.com',
+      avatar: 'https://refactoring.guru/images/content-public/logos/logo-military.png',
     },
     {
       id: '2',
       name: 'user2',
       email: 'user2@gmail.com',
+      avatar: 'https://refactoring.guru/images/content-public/logos/logo-military.png',
     },
     {
       id: '3',
       name: 'user3',
       email: 'user3@gmail.com',
+      avatar: 'https://refactoring.guru/images/content-public/logos/logo-military.png',
     },
   ],
   headers: 3,
@@ -29,6 +32,8 @@ export const getByIdUser = {
     id: '1',
     name: 'user1',
     email: 'user1@gmail.com',
+    avatar: 'https://refactoring.guru/images/content-public/logos/logo-military.png',
+    // avatar: '',
   },
   headers: '',
 };
