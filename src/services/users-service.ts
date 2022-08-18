@@ -13,8 +13,8 @@ export class UsersService implements API<Users> {
   private getDeleteResult = getDeleteUser;
 
   public getAll() {
-    // return this.service.getAll();
-    return Promise.resolve(this.getAllResult);
+    return this.service.getAll();
+    // return Promise.resolve(this.getAllResult);
   }
 
   public getPage(page: number, limit: number) {

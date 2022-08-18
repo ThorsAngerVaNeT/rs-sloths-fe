@@ -1,6 +1,6 @@
 <template>
   <div class="create">
-    <h2>{{ $t('create-title') }}</h2>
+    <h2>{{ $t('create.title') }}</h2>
   </div>
 </template>
 

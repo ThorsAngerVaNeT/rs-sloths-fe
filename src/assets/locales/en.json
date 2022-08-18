@@ -1,12 +1,51 @@
 {
-  "header-title": "Header",
-  "footer-title": "Footer",
-  "home-title": "Home",
-  "about-title": "About",
-  "profile-title": "User Profile",
-  "catalog-title": "Catalog",
-  "guess-title": "Guess-a-Sloth Game",
-  "memory-title": "Memory Game",
-  "suggest-title": "Suggest a new Sloth",
-  "create-title": "Create a meme"
+  "header": {
+    "title": "Header"
+  },
+
+  "footer": {
+    "title": "Footer"
+  },
+
+  "home": {
+    "title": "Home"
+  },
+
+  "about": {
+    "title": "About"
+  },
+
+  "profile": {
+    "title": "User Profile",
+    "name": "Name",
+    "email": "E-mail",
+    "avatar": "User photo",
+    "btn": {
+      "save": "Save",
+      "logout": "Sign out",
+      "guess": "Guess-a-Sloth Game results",
+      "memory": "Memory Game results",
+      "suggest": "Your Sloths suggestions"
+    }
+  },
+
+  "catalog": {
+    "title": "Catalog"
+  },
+
+  "guess": {
+    "title": "Guess-a-Sloth Game"
+  },
+
+  "memory": {
+    "title": "Memory Game"
+  },
+
+  "suggest": {
+    "title": "Suggest a new Sloth"
+  },
+
+  "create": {
+    "title": "Create a meme"
+  }
 }
