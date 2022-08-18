@@ -1,9 +1,9 @@
 <template>
   <div class="profile">
     <aside class="aside">
-      <h2>{{ $t('profile-title') }}</h2>
+      <h2>{{ $t('profile.title') }}</h2>
       <user-info :id="id"></user-info>
-      <custom-btn :text="$t('profile-btn-logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
+      <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
     </aside>
     <main class="main">
       <div
@@ -12,7 +12,7 @@
         :class="['btn btn-tab', { active: currentGame === index }]"
         @click="currentGame = index"
       >
-        {{ $t(`profile-btn-${tab}`) }}
+        {{ $t(`profile.btn.${tab}`) }}
       </div>
       <component :is="components[currentGame]" class="tab" :id="components[currentGame]"></component>
     </main>

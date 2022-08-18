@@ -3,7 +3,7 @@
     <div class="title">{{ id }}</div>
 
     <router-link to="/suggest">
-      <custom-btn :text="$t('suggest-title')" className="btn" img-path="./suggest-game.png"></custom-btn>
+      <custom-btn :text="$t('suggest.title')" className="btn" img-path="./suggest-game.png"></custom-btn>
     </router-link>
   </div>
 </template>

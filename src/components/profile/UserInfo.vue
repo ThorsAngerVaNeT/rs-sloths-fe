@@ -1,23 +1,23 @@
 <template>
   <div class="user-info">
     <div class="avatar">
-      <img class="avatar--img" :src="getAvatar" :alt="$t('profile-avatar')" />
+      <img class="avatar--img" :src="getAvatar" :alt="$t('profile.avatar')" />
     </div>
     <input
       type="text"
       class="input-text user-property"
       autocomplete="off"
-      :placeholder="$t('profile-name')"
+      :placeholder="$t('profile.name')"
       v-model="userInfo.name"
     />
     <input
       type="text"
       class="input-text user-property"
       autocomplete="off"
-      :placeholder="$t('profile-email')"
+      :placeholder="$t('profile.email')"
       v-model="userInfo.email"
     />
-    <custom-btn :text="$t('profile-btn-save')" className="btn btn-primary" :onClick="updUserInfo"></custom-btn>
+    <custom-btn :text="$t('profile.btn.save')" className="btn btn.primary" :onClick="updUserInfo"></custom-btn>
   </div>
 </template>
 
