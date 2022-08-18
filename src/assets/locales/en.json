@@ -30,7 +30,11 @@
   },
 
   "catalog": {
-    "title": "Catalog"
+    "title": "Catalog",
+    "btn": {
+      "reset": "Reset filters",
+      "edit": "Edit"
+    }
   },
 
   "guess": {
