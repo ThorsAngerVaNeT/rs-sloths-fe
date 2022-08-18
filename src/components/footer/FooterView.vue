@@ -40,7 +40,7 @@ export default defineComponent({
 }
 
 .team__item {
-  color: #000;
+  color: var(--dark-main);
   text-decoration: none;
   font-size: 12px;
 }
@@ -50,6 +50,6 @@ export default defineComponent({
 }
 
 .link:hover {
-  color: #303030;
+  color: var(--dark-addict);
 }
 </style>

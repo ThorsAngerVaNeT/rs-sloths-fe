@@ -33,10 +33,10 @@ export default defineComponent({
   font-weight: 900;
   font-size: 24px;
   text-decoration: none;
-  color: var(--vt-c-indigo);
+  color: var(--dark-main);
 }
 
 .header__title:hover {
-  color: black;
+  color: var(--dark-addict);
 }
 </style>
