@@ -5,7 +5,7 @@
       <a class="team__item link" href="https://github.com/WiiJoy" target="_blank">WiiJoy</a>
       <a class="team__item link" href="https://github.com/Ogimly" target="_blank">Ogimly</a>
       <a class="team__item link" href="https://github.com/ThorsAngerVaNeT" target="_blank">VaNeT</a>
-      <p class="team__item">&#169; 2022</p>
+      <p class="team__item">© 2022</p>
     </div>
   </footer>
 </template>
