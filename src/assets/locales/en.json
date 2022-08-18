@@ -1,9 +1,13 @@
 {
   "header-title": "Header",
+
   "footer-title": "Footer",
+
   "home-title": "Home",
 
   "about-title": "About",
+
+  "profile-title": "User Profile",
   "profile-btn-save": "Save",
   "profile-btn-logout": "Sign out",
   "profile-name": "Name",
@@ -13,10 +17,13 @@
   "profile-btn-memory": "Memory Game results",
   "profile-btn-suggest": "Your Sloths suggestions",
 
-  "profile-title": "User Profile",
   "catalog-title": "Catalog",
+
   "guess-title": "Guess-a-Sloth Game",
+
   "memory-title": "Memory Game",
+
   "suggest-title": "Suggest a new Sloth",
+
   "create-title": "Create a meme"
 }

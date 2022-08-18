@@ -1,9 +1,13 @@
 {
   "header-title": "Заголовок",
+
   "footer-title": "Подвал",
+
   "home-title": "Домашняя страница",
 
   "about-title": "О нас",
+
+  "profile-title": "Профиль пользователя",
   "profile-btn-save": "Сохранить",
   "profile-btn-logout": "Выйти",
   "profile-name": "Ваше имя",
@@ -13,10 +17,13 @@
   "profile-btn-memory": "Результаты игры 'Найди пару'",
   "profile-btn-suggest": "Ваши предложения ленивцев",
 
-  "profile-title": "Профиль пользователя",
   "catalog-title": "Каталог",
+
   "guess-title": "Игра 'Угадай ленивца'",
+
   "memory-title": "Игра 'Найди пару'",
+
   "suggest-title": "Предложи нового ленивца",
+
   "create-title": "Создай мемасик"
 }
