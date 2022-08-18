@@ -31,6 +31,14 @@ import CustomBtn from '../components/buttons/CustomBtn.vue';
 export default defineComponent({
   name: 'ProfileView',
 
+  components: {
+    UserInfo,
+    MemoryInfo,
+    GuessInfo,
+    SuggestInfo,
+    CustomBtn,
+  },
+
   data() {
     return {
       id: '',
@@ -38,14 +46,6 @@ export default defineComponent({
       tabs: ['memory', 'guess', 'suggest'],
       components: ['MemoryInfo', 'GuessInfo', 'SuggestInfo'],
     };
-  },
-
-  components: {
-    UserInfo,
-    MemoryInfo,
-    GuessInfo,
-    SuggestInfo,
-    CustomBtn,
   },
 
   methods: {
