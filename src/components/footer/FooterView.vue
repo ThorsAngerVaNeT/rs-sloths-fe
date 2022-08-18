@@ -18,7 +18,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .footer {
   display: flex;
   justify-content: space-between;
@@ -39,20 +39,6 @@ export default defineComponent({
   gap: 10px;
 }
 
-.team__logo {
-  height: 40px;
-  width: 71px;
-  background: center center / contain url('../../assets/icons/wwt-light.svg') no-repeat;
-}
-
-.team__github {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 4px;
-}
-
 .team__item {
   color: #000;
   text-decoration: none;
@@ -60,11 +46,10 @@ export default defineComponent({
 }
 
 .link {
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .link:hover {
   color: #303030;
 }
-
 </style>
