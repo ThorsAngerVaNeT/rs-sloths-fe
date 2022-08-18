@@ -22,3 +22,8 @@ export interface API<T> {
 export type Users = unknown;
 
 export type Sloths = unknown;
+
+export type MemoryLevel = {
+  level: string;
+  n: number;
+};
