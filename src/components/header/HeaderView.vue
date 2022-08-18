@@ -1,8 +1,7 @@
 <template>
-  <header class="header">
+  <header class="header" :class="this.$route.name !== 'home' ? '' : 'header_home'">
+    <router-link v-show="this.$route.name !== 'home'" to="/">{{ $t('home-title') }}</router-link>
     <locale-switcher />
-    <p>{{ $t('header-title') }}</p>
-    <router-link to="/">{{ $t('home-title') }}</router-link>
   </header>
 </template>
 
@@ -12,6 +11,20 @@ import LocaleSwitcher from '../locale-switcher/LocaleSwitcher.vue';
 
 export default defineComponent({
   name: 'HeaderView',
+
   components: { LocaleSwitcher },
 });
 </script>
+
+<style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+}
+
+.header_home {
+  justify-content: flex-end;
+}
+</style>
