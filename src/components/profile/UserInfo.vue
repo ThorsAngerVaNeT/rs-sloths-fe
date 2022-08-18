@@ -34,6 +34,10 @@ const defaultUser = './default-user.png';
 export default defineComponent({
   name: 'UserInfo',
 
+  components: {
+    CustomBtn,
+  },
+
   data() {
     return {
       userInfo: {
@@ -50,10 +54,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-  },
-
-  components: {
-    CustomBtn,
   },
 
   computed: {

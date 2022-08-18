@@ -18,6 +18,10 @@ import CustomBtn from '../buttons/CustomBtn.vue';
 export default defineComponent({
   name: 'SuggestInfo',
 
+  components: {
+    CustomBtn,
+  },
+
   data() {
     return {
       gameInfo: {
@@ -33,12 +37,6 @@ export default defineComponent({
       required: true,
     },
   },
-
-  components: {
-    CustomBtn,
-  },
-
-  computed: {},
 
   mounted() {
     this.getGameInfo();
@@ -57,5 +55,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped></style>
