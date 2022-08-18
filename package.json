@@ -19,6 +19,9 @@
   "lint-staged": {
     "*.{ts,vue}": [
       "eslint --fix"
+    ],
+    "*.css": [
+      "prettier --write --config .prettierrc"
     ]
   },
   "dependencies": {

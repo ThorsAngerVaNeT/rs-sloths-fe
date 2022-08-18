@@ -1,6 +1,6 @@
 <template>
   <header class="header" :class="this.$route.name !== 'home' ? '' : 'header_home'">
-    <router-link v-show="this.$route.name !== 'home'" to="/">{{ $t('home-title') }}</router-link>
+    <router-link class="header__title" v-show="this.$route.name !== 'home'" to="/">RS SLOTHS</router-link>
     <locale-switcher />
   </header>
 </template>
@@ -26,5 +26,17 @@ export default defineComponent({
 
 .header_home {
   justify-content: flex-end;
+}
+
+.header__title {
+  font-family: Arial, sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  text-decoration: none;
+  color: var(--vt-c-indigo);
+}
+
+.header__title:hover {
+  color: black;
 }
 </style>
