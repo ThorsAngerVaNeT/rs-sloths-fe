@@ -38,7 +38,8 @@
   },
 
   "memory": {
-    "title": "Memory Game"
+    "title": "Memory Game",
+    "start": "Let's Go!"
   },
 
   "suggest": {

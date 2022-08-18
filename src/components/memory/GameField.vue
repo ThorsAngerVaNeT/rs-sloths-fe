@@ -1,6 +1,7 @@
 <template>
   <div class="game-field">
     <h3>{{ level.level }}</h3>
+    <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
     <div class="game-field__cards">
       <div class="game-field__card" v-for="(item, index) in cards" :key="index" :item="item" @click="openCard(index)">
         {{ item.id }}
@@ -12,6 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
+import CustomBtn from '../buttons/CustomBtn.vue';
 import { MEMORY_LEVELS, MEMORY_START_TIMEOUT } from '../../common/const';
 import type { MemoryLevel } from '../../common/types';
 
@@ -27,8 +29,13 @@ type Card = {
 export default defineComponent({
   name: 'GameField',
 
+  components: {
+    CustomBtn,
+  },
+
   data() {
     return {
+      images: [] as string[],
       cards: [] as Card[],
       gameStage: 0,
       steps: 0,
@@ -46,24 +53,24 @@ export default defineComponent({
   computed: {},
 
   mounted() {
-    this.randomGame(this.level.n);
+    this.getCards();
   },
 
   methods: {
     async getCards() {
       // todo fetch
 
-      return ['./default-user.png', './guess-game.png', './memory-game.png', './suggest-game.png'];
+      this.images = ['./default-user.png', './guess-game.png', './memory-game.png', './suggest-game.png'];
     },
 
-    async randomGame(n: number) {
-      const images = await this.getCards();
+    async startGame() {
+      const images = [...this.images];
 
       const res: Card[] = [];
 
       images
         .sort(() => Math.random() - 0.5)
-        .filter((el, i) => i < n)
+        .filter((el, i) => i < this.level.n)
         .forEach((el, index) => {
           res.push({
             img: el,
