@@ -6,14 +6,14 @@
       <custom-btn :text="$t('profile-btn-logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
     </aside>
     <main class="main">
-      <span
+      <div
         v-for="(tab, index) in tabs"
         :key="index"
         :class="['btn btn-tab', { active: currentGame === index }]"
         @click="currentGame = index"
       >
         {{ $t(`profile-btn-${tab}`) }}
-      </span>
+      </div>
       <component :is="components[currentGame]" class="tab" :id="components[currentGame]"></component>
     </main>
   </div>

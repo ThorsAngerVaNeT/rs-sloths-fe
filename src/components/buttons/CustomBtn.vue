@@ -1,8 +1,8 @@
 <template>
-  <span v-if="imgPath === ''" :class="className" @click="onClick">{{ text }}</span>
-  <span v-else class="btn-img" :class="className" @click="onClick">
+  <div v-if="imgPath === ''" :class="className" @click="onClick">{{ text }}</div>
+  <div v-else class="btn-img" :class="className" @click="onClick">
     <img :src="imgPath" :alt="text" />
-  </span>
+  </div>
 </template>
 
 <script lang="ts">
