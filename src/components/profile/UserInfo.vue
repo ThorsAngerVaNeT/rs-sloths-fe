@@ -1,18 +1,18 @@
 <template>
   <div class="user-info">
-    <div class="avatar">
-      <img class="avatar--img" :src="getAvatar" :alt="$t('profile.avatar')" />
+    <div class="user-info__avatar">
+      <img class="user-info__img" :src="getAvatar" :alt="$t('profile.avatar')" />
     </div>
     <input
       type="text"
-      class="input-text user-property"
+      class="input-text user-info__property"
       autocomplete="off"
       :placeholder="$t('profile.name')"
       v-model="userInfo.name"
     />
     <input
       type="text"
-      class="input-text user-property"
+      class="input-text user-info__property"
       autocomplete="off"
       :placeholder="$t('profile.email')"
       v-model="userInfo.email"
@@ -107,7 +107,7 @@ export default defineComponent({
   border-radius: 0.5em;
 }
 
-.avatar {
+.user-info__avatar {
   display: inline-block;
   width: 200px;
   height: 200px;
@@ -115,12 +115,12 @@ export default defineComponent({
 
   border-radius: 50%;
 }
-.avatar--img {
+.user-info__img {
   width: 200px;
 }
 
-.user-property,
-.user-property:focus {
+.user-info__property,
+.user-info__property:focus {
   outline: none;
 
   margin: 0.5em 0;
