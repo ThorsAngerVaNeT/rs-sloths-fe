@@ -2,6 +2,7 @@
   <div class="game-field">
     <h3>{{ level.level }}</h3>
     <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
+    <p>steps: {{ getSteps }}</p>
     <div class="game-field__cards">
       <div class="game-field__card" v-for="(item, index) in cards" :key="index" :item="item" @click="openCard(index)">
         <img class="game-field__img" :src="getImage(index)" alt="" />
@@ -50,7 +51,11 @@ export default defineComponent({
     },
   },
 
-  computed: {},
+  computed: {
+    getSteps() {
+      return this.steps;
+    },
+  },
 
   mounted() {
     this.getCards();
@@ -66,22 +71,18 @@ export default defineComponent({
     async startGame() {
       const images = [...this.images];
 
+      this.steps = 0;
+      this.activeCard = Infinity;
+      this.message = '';
+
       const res: Card[] = [];
 
       images
         .sort(() => Math.random() - 0.5)
         .filter((el, i) => i < this.level.n)
         .forEach((el, index) => {
-          res.push({
-            img: el,
-            id: index,
-            open: true,
-          });
-          res.push({
-            img: el,
-            id: index,
-            open: true,
-          });
+          res.push({ img: el, id: index, open: true });
+          res.push({ img: el, id: index, open: true });
         });
 
       res.sort(() => Math.random() - 0.5);
@@ -90,10 +91,7 @@ export default defineComponent({
 
       setTimeout(() => {
         this.cards.forEach((el, i) => this.closeCard(i));
-        this.steps = 0;
         this.startTime = Date.now();
-        this.activeCard = Infinity;
-        this.message = '';
       }, MEMORY_START_TIMEOUT);
     },
 
@@ -112,18 +110,18 @@ export default defineComponent({
       } else if (this.cards[i].id === this.cards[this.activeCard].id) {
         this.activeCard = Infinity;
       } else {
-        const i1 = i;
         const i2 = this.activeCard;
         this.activeCard = Infinity;
 
         setTimeout(() => {
-          this.closeCard(i1);
+          this.closeCard(i);
           this.closeCard(i2);
         }, MEMORY_GAME_TIMEOUT);
       }
 
       if (this.checkGame()) {
         this.message = `!!! Congrats !!! ${this.steps} steps, ${(Date.now() - this.startTime) / 1000} second!`;
+        // todo modal window
       }
     },
 
@@ -139,10 +137,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.game-field {
-  margin: 0 auto;
-}
 .game-field__cards {
+  margin: 1em;
+
   display: grid;
   grid-template-columns: repeat(4, 200px);
   gap: 1em;
@@ -153,6 +150,11 @@ export default defineComponent({
   height: 300px;
   overflow: hidden;
 
+  cursor: pointer;
+
   border-radius: 1em;
+}
+.game-field__img:hover {
+  box-shadow: 0px 0px 5px;
 }
 </style>
