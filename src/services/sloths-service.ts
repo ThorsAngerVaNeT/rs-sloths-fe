@@ -1,10 +1,10 @@
-import type { API, Sloths } from '@/common/types';
+import type { API, Sloth } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 import { getAllSloths, getByIdSloth, getDeleteSloth } from './mocks/sloths-mocks';
 
-export class SlothsService implements API<Sloths> {
-  private service = new APIService<Sloths>(Endpoints.sloths);
+export class SlothsService implements API<Sloth> {
+  private service = new APIService<Sloth>(Endpoints.sloths);
 
   private getAllResult = getAllSloths;
 
@@ -13,33 +13,33 @@ export class SlothsService implements API<Sloths> {
   private getDeleteResult = getDeleteSloth;
 
   public getAll() {
-    // return this.service.getAll();
-    return Promise.resolve(this.getAllResult);
+    return this.service.getAll();
+    // return Promise.resolve(this.getAllResult);
   }
 
   public getPage(page: number, limit: number) {
-    // return this.service.getSome(page, limit);
-    return Promise.resolve(this.getAllResult);
+    return this.service.getPage(page, limit);
+    // return Promise.resolve(this.getAllResult);
   }
 
   public getById(id: string) {
-    // return this.service.getById(id);
-    return Promise.resolve(this.getByIdResult);
+    return this.service.getById(id);
+    // return Promise.resolve(this.getByIdResult);
   }
 
-  public create(body: Sloths) {
-    // return this.service.create(body);
-    return Promise.resolve(this.getByIdResult);
+  public create(body: Sloth) {
+    return this.service.create(body);
+    // return Promise.resolve(this.getByIdResult);
   }
 
-  public updateById(id: string, body: Sloths) {
-    // return this.service.updateById(id, body);
-    return Promise.resolve(this.getByIdResult);
+  public updateById(id: string, body: Sloth) {
+    return this.service.updateById(id, body);
+    // return Promise.resolve(this.getByIdResult);
   }
 
   public deleteById(id: string) {
-    // return this.service.deleteById(id);
-    return Promise.resolve(this.getDeleteResult);
+    return this.service.deleteById(id);
+    // return Promise.resolve(this.getDeleteResult);
   }
 }
 
