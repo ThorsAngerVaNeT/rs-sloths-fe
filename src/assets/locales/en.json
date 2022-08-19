@@ -25,7 +25,8 @@
       "logout": "Sign out",
       "guess": "Guess-a-Sloth Game results",
       "memory": "Memory Game results",
-      "suggest": "Your Sloths suggestions"
+      "suggest": "Your Sloths suggestions",
+      "admin": "To Admin panel"
     }
   },
 
@@ -56,5 +57,9 @@
 
   "create": {
     "title": "Create a meme"
+  },
+
+  "admin": {
+    "title": "Admin panel"
   }
 }

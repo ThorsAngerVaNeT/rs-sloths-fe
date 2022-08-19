@@ -4,6 +4,9 @@
       <h2>{{ $t('profile.title') }}</h2>
       <user-info :id="id"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
+      <router-link to="/admin">
+        <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
+      </router-link>
     </aside>
     <main class="profile__main">
       <div
