@@ -38,7 +38,7 @@ import type { Sloth } from '@/common/types';
 import CustomBtn from '../buttons/CustomBtn.vue';
 
 export default defineComponent({
-  name: 'SlothsInfo',
+  name: 'SlothCard',
 
   components: {
     CustomBtn,

@@ -11,7 +11,7 @@
       <custom-btn :text="$t('catalog.btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
     <div class="catalog__showcase">
-      <sloths-info v-for="sloth in sloths" :key="sloth.id" :slothsInfo="sloth" @delSloth="delSloth"></sloths-info>
+      <sloth-card v-for="sloth in sloths" :key="sloth.id" :slothsInfo="sloth" @delSloth="delSloth"></sloth-card>
     </div>
     <modal-window v-show="isModalVisible" @close="closeModal">
       <template v-slot:header> Add sloth </template>
@@ -29,7 +29,7 @@ import { errorHandler } from '../services/error-handling/error-handler';
 import { SlothsService } from '../services/sloths-service';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
 import ModalWindow from '../components/modal/ModalWindow.vue';
-import SlothsInfo from '../components/catalog/SlothsInfo.vue';
+import SlothCard from '../components/catalog/SlothCard.vue';
 import type { Sloths } from '@/common/types';
 
 const service = new SlothsService();
@@ -39,7 +39,7 @@ export default defineComponent({
 
   components: {
     CustomBtn,
-    SlothsInfo,
+    SlothCard,
     ModalWindow,
   },
 
