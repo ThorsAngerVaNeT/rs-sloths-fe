@@ -1,24 +1,33 @@
-export type APIRequestResult = {
+export type APIRequestResult<T> = {
   ok: boolean;
   status: number;
-  data: unknown;
+  data: T;
   headers: unknown;
 };
 
 export interface API<T> {
-  getAll(): Promise<APIRequestResult | null>;
+  getAll(): Promise<APIRequestResult<T[]> | null>;
 
-  getPage(page: number, limit: number): Promise<APIRequestResult | null>;
+  getPage(page: number, limit: number): Promise<APIRequestResult<T[]> | null>;
 
-  getById(id: string): Promise<APIRequestResult | null>;
+  getById(id: string): Promise<APIRequestResult<T> | null>;
 
-  create(body: T): Promise<APIRequestResult | null>;
+  create(body: T): Promise<APIRequestResult<T> | null>;
 
-  updateById(id: string, body: T): Promise<APIRequestResult | null>;
+  updateById(id: string, body: T): Promise<APIRequestResult<T> | null>;
 
-  deleteById(id: string): Promise<APIRequestResult | null>;
+  deleteById(id: string): Promise<APIRequestResult<T> | null>;
 }
 
-export type Users = unknown;
+export type Users = User[];
+export type User = unknown;
 
-export type Sloths = unknown;
+export type Sloths = Sloth[];
+export type Sloth = {
+  id: string;
+  caption: string;
+  description: string;
+  image_url: string;
+  rating: number;
+  createdAt: number;
+};
