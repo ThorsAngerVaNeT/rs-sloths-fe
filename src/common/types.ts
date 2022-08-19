@@ -31,3 +31,8 @@ export type Sloth = {
   rating: number;
   createdAt: number;
 };
+
+export type MemoryLevel = {
+  level: string;
+  n: number;
+};
