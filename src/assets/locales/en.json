@@ -32,11 +32,17 @@
 
   "catalog": {
     "title": "Catalog",
+    "caption": "Caption",
+    "description": "Description",
+    "rating": "Rating",
+    "image_url": "Image url",
+    "createdAt": "Created at",
     "btn": {
       "reset": "Reset filters",
       "new": "New Sloth",
       "del": "Delete",
       "edit": "Edit",
+      "save": "Save",
       "pick": "Pick"
     }
   },

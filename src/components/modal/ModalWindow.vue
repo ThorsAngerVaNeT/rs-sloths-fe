@@ -2,9 +2,9 @@
   <div class="modal-background">
     <div class="modal">
       <div class="btn-close" @click="close">╳</div>
-      <header class="modal__header">
+      <h3 class="modal__header">
         <slot name="header"></slot>
-      </header>
+      </h3>
 
       <section class="modal__body">
         <slot name="body"> </slot>
@@ -59,32 +59,23 @@ export default defineComponent({
 
   overflow-x: auto;
 
+  background-color: var(--color-background);
   border-radius: 1em;
   box-shadow: 0px 0px 5px;
 }
 
 .modal__header,
 .modal__footer {
+  position: relative;
   padding: 0.5em;
 
   display: flex;
   justify-content: center;
 }
-
-.modal__header {
-  position: relative;
-  border-bottom: 1px solid;
-}
-
-.modal__footer {
-  border-top: 1px solid;
-}
-
 .modal__body {
   position: relative;
   padding: 1em 0.5em;
 }
-
 .btn-close {
   position: absolute;
   top: 0.8em;

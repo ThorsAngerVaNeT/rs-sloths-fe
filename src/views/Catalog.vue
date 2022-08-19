@@ -5,7 +5,7 @@
       <custom-btn
         :text="$t('catalog.btn.new')"
         className="btn btn-primary"
-        @click="showModal"
+        @click="showSlothInfo"
         v-show="getPageName === 'admin'"
       ></custom-btn>
       <custom-btn :text="$t('catalog.btn.reset')" className="btn btn-primary"></custom-btn>
@@ -13,13 +13,14 @@
     <div class="catalog__showcase">
       <sloth-card v-for="sloth in sloths" :key="sloth.id" :slothsInfo="sloth" @delSloth="delSloth"></sloth-card>
     </div>
-    <modal-window v-show="isModalVisible" @close="closeModal">
-      <template v-slot:header> Add sloth </template>
-
-      <template v-slot:body> Property </template>
-
-      <template v-slot:footer> Save </template>
-    </modal-window>
+    <sloth-info
+      :isSlothInfoVisible="isSlothInfoVisible"
+      :headerText="$t('catalog.btn.new')"
+      :isNew="true"
+      @closeSlothInfo="closeSlothInfo"
+      @createSloth="createSloth"
+      @updSloth="updSloth"
+    ></sloth-info>
   </div>
 </template>
 
@@ -28,9 +29,9 @@ import { defineComponent } from 'vue';
 import { errorHandler } from '../services/error-handling/error-handler';
 import { SlothsService } from '../services/sloths-service';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
-import ModalWindow from '../components/modal/ModalWindow.vue';
+import SlothInfo from '../components/catalog/SlothInfo.vue';
 import SlothCard from '../components/catalog/SlothCard.vue';
-import type { Sloths } from '@/common/types';
+import type { Sloth, Sloths } from '@/common/types';
 
 const service = new SlothsService();
 
@@ -40,13 +41,13 @@ export default defineComponent({
   components: {
     CustomBtn,
     SlothCard,
-    ModalWindow,
+    SlothInfo,
   },
 
   data() {
     return {
       sloths: [] as Sloths,
-      isModalVisible: false,
+      isSlothInfoVisible: false,
     };
   },
 
@@ -85,11 +86,36 @@ export default defineComponent({
       }
     },
 
-    showModal() {
-      this.isModalVisible = true;
+    async createSloth(sloth: Sloth) {
+      try {
+        const res = await service.create(sloth);
+
+        if (!res) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      }
     },
-    closeModal() {
-      this.isModalVisible = false;
+
+    async updSloth(sloth: Sloth) {
+      try {
+        const res = await service.updateById(sloth.id, sloth);
+
+        if (!res) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
+    showSlothInfo() {
+      this.isSlothInfoVisible = true;
+    },
+
+    closeSlothInfo() {
+      this.isSlothInfoVisible = false;
     },
   },
 });
