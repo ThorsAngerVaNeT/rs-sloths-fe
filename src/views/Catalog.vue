@@ -1,12 +1,12 @@
 <template>
   <div class="catalog">
-    <h2>{{ $t('catalog.title') }}</h2>
-    <aside>
+    <div class="catalog__aside">
+      <h3>{{ $t('catalog.title') }}</h3>
       <custom-btn :text="$t('catalog.btn.reset')" className="btn btn-primary"></custom-btn>
-    </aside>
-    <main class="catalog__showcase">
+    </div>
+    <div class="catalog__showcase">
       <sloths-info v-for="sloth in sloths" :key="sloth.id" :sloth="sloth"></sloths-info>
-    </main>
+    </div>
   </div>
 </template>
 
@@ -55,6 +55,16 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.catalog {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.catalog__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .catalog__showcase {
   margin: 0.5em;
   display: flex;

@@ -34,7 +34,9 @@
     "title": "Catalog",
     "btn": {
       "reset": "Reset filters",
-      "edit": "Edit"
+      "del": "Delete",
+      "edit": "Edit",
+      "save": "Save"
     }
   },
 

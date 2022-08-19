@@ -1,13 +1,24 @@
 <template>
-  <div class="sloths-info">
-    <div class="sloths-info__sloths">
-      <img class="sloths-info__img" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
+  <div :class="`${getPageName}-sloths-info`">
+    <div :class="`${getPageName}-sloths-info__sloths`">
+      <img :class="`${getPageName}-sloths-info__img`" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
     </div>
-    <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
-    <p class="sloths-info__property">{{ slothsInfo.description }}</p>
-    <p class="sloths-info__property">{{ slothsInfo.rating }}★</p>
-    <p class="sloths-info__property">{{ new Date(slothsInfo.createdAt).toLocaleDateString() }}</p>
-    <custom-btn :text="$t('catalog.btn.edit')" className="btn btn-primary"></custom-btn>
+    <div>
+      <div :class="`${getPageName}-sloths-info__props`">
+        <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
+        <p class="sloths-info__property">{{ slothsInfo.description }}</p>
+        <p class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
+        <p class="sloths-info__property">{{ new Date(slothsInfo.createdAt).toLocaleDateString() }}</p>
+      </div>
+      <div class="sloths-info__btn">
+        <custom-btn
+          v-show="getPageName === 'admin'"
+          :text="$t('catalog.btn.del')"
+          className="btn btn-primary"
+        ></custom-btn>
+        <custom-btn :text="$t('catalog.btn.edit')" className="btn btn-primary"></custom-btn>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,6 +48,12 @@ export default defineComponent({
     sloth: {
       type: Object as PropType<Sloth>,
       required: true,
+    },
+  },
+
+  computed: {
+    getPageName() {
+      return this.$route.name === 'admin' ? 'admin' : 'catalog';
     },
   },
 
@@ -71,28 +88,57 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.sloths-info {
-  padding: 1em;
-  width: 200px;
+.catalog-sloths-info,
+.admin-sloths-info {
   overflow: hidden;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
 
-  border-radius: 1em;
   border: 1px solid var(--dark-addict);
 }
-.sloths-info:hover {
+.admin-sloths-info {
+  padding: 0.5em;
+  width: 100%;
+
+  border-radius: 0.5em;
+}
+.catalog-sloths-info {
+  padding: 1em;
+  width: 200px;
+
+  flex-direction: column;
+
+  border-radius: 1em;
+}
+.admin-sloths-info:hover,
+.catalog-sloths-info:hover {
   box-shadow: 0px 0px 5px;
 }
-.sloths-info__sloths {
-  display: inline-block;
-  width: calc(200px - 2em);
-  height: calc(200px - 2em);
-  overflow: hidden;
+
+.admin-sloths-info__img {
+  width: calc(100px - 1em);
 }
-.sloths-info__img {
+.catalog-sloths-info__img {
   width: calc(200px - 2em);
+}
+
+.admin-sloths-info__props,
+.catalog-sloths-info__props {
+  display: flex;
+  align-items: center;
+}
+.catalog-sloths-info__props {
+  flex-direction: column;
+}
+
+.sloths-info__property {
+  padding: 0.25em;
+}
+
+.sloths-info__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 </style>
