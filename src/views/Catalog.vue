@@ -2,11 +2,24 @@
   <div class="catalog">
     <div class="catalog__aside">
       <h3>{{ $t('catalog.title') }}</h3>
+      <custom-btn
+        :text="$t('catalog.btn.new')"
+        className="btn btn-primary"
+        @click="showModal"
+        v-show="getPageName === 'admin'"
+      ></custom-btn>
       <custom-btn :text="$t('catalog.btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
     <div class="catalog__showcase">
-      <sloths-info v-for="sloth in sloths" :key="sloth.id" :sloth="sloth"></sloths-info>
+      <sloths-info v-for="sloth in sloths" :key="sloth.id" :slothsInfo="sloth" @delSloth="delSloth"></sloths-info>
     </div>
+    <modal-window v-show="isModalVisible" @close="closeModal">
+      <template v-slot:header> Add sloth </template>
+
+      <template v-slot:body> Property </template>
+
+      <template v-slot:footer> Save </template>
+    </modal-window>
   </div>
 </template>
 
@@ -15,6 +28,7 @@ import { defineComponent } from 'vue';
 import { errorHandler } from '../services/error-handling/error-handler';
 import { SlothsService } from '../services/sloths-service';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
+import ModalWindow from '../components/modal/ModalWindow.vue';
 import SlothsInfo from '../components/catalog/SlothsInfo.vue';
 import type { Sloths } from '@/common/types';
 
@@ -26,12 +40,20 @@ export default defineComponent({
   components: {
     CustomBtn,
     SlothsInfo,
+    ModalWindow,
   },
 
   data() {
     return {
       sloths: [] as Sloths,
+      isModalVisible: false,
     };
+  },
+
+  computed: {
+    getPageName() {
+      return this.$route.name === 'admin' ? 'admin' : 'catalog';
+    },
   },
 
   mounted() {
@@ -50,6 +72,25 @@ export default defineComponent({
         errorHandler(error);
       }
     },
+
+    async delSloth(id: string) {
+      try {
+        const res = await service.deleteById(id);
+
+        if (!res) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
   },
 });
 </script>
@@ -61,6 +102,8 @@ export default defineComponent({
   align-items: flex-start;
 }
 .catalog__aside {
+  width: 200px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;

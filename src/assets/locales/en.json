@@ -34,9 +34,10 @@
     "title": "Catalog",
     "btn": {
       "reset": "Reset filters",
+      "new": "New Sloth",
       "del": "Delete",
       "edit": "Edit",
-      "save": "Save"
+      "pick": "Pick"
     }
   },
 
@@ -69,6 +70,12 @@
       "suggest": "Suggest a Sloth",
       "guess": "Guess-a-Sloth",
       "memory": "Memory"
+    }
+  },
+
+  "modal": {
+    "btn": {
+      "close": "Close"
     }
   }
 }

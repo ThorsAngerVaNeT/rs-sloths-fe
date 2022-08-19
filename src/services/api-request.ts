@@ -12,14 +12,20 @@ export const apiRequest = async <T>(url: string, config: RequestInit): Promise<A
 
     if (!isOk) throw new APIError(response.statusText, response.status);
 
-    const { headers } = response;
-    const contentType = headers.get('content-type');
+    let data = <T>{};
+    let headers = null;
 
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new JSONError(JSON_ERROR, JSON_ERROR_CODE);
+    if (response.status !== 204) {
+      headers = response.headers;
+      // const { headers } = response;
+      const contentType = headers.get('content-type');
+
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new JSONError(JSON_ERROR, JSON_ERROR_CODE);
+      }
+
+      data = await response.json();
     }
-
-    const data = await response.json();
 
     const res: APIRequestResult<T> = {
       ok: isOk,

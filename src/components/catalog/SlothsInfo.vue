@@ -13,10 +13,20 @@
       <div class="sloths-info__btn">
         <custom-btn
           v-show="getPageName === 'admin'"
-          :text="$t('catalog.btn.del')"
+          :text="$t('catalog.btn.edit')"
           className="btn btn-primary"
         ></custom-btn>
-        <custom-btn :text="$t('catalog.btn.edit')" className="btn btn-primary"></custom-btn>
+        <custom-btn
+          v-show="getPageName === 'admin'"
+          :text="$t('catalog.btn.del')"
+          className="btn btn-primary"
+          @click="$emit('delSloth', slothsInfo.id)"
+        ></custom-btn>
+        <custom-btn
+          v-show="getPageName === 'catalog'"
+          :text="$t('catalog.btn.pick')"
+          className="btn btn-primary"
+        ></custom-btn>
       </div>
     </div>
   </div>
@@ -24,12 +34,8 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
-import { errorHandler } from '../../services/error-handling/error-handler';
-import { SlothsService } from '../../services/sloths-service';
 import type { Sloth } from '@/common/types';
 import CustomBtn from '../buttons/CustomBtn.vue';
-
-const service = new SlothsService();
 
 export default defineComponent({
   name: 'SlothsInfo',
@@ -38,14 +44,8 @@ export default defineComponent({
     CustomBtn,
   },
 
-  data() {
-    return {
-      slothsInfo: {} as Sloth,
-    };
-  },
-
   props: {
-    sloth: {
+    slothsInfo: {
       type: Object as PropType<Sloth>,
       required: true,
     },
@@ -56,37 +56,9 @@ export default defineComponent({
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
     },
   },
-
-  mounted() {
-    this.slothsInfo = { ...this.sloth };
-  },
-
-  methods: {
-    async getSlothsInfo() {
-      try {
-        const res = await service.getById(this.sloth.id);
-
-        if (!res) throw Error(); // todo
-
-        this.slothsInfo = res.data;
-      } catch (error) {
-        errorHandler(error);
-      }
-    },
-    async updSlothsInfo() {
-      try {
-        const res = await service.updateById(this.sloth.id, this.slothsInfo);
-
-        if (!res) throw Error(); // todo
-
-        await this.getSlothsInfo();
-      } catch (error) {
-        errorHandler(error);
-      }
-    },
-  },
 });
 </script>
+
 <style scoped>
 .catalog-sloths-info,
 .admin-sloths-info {
