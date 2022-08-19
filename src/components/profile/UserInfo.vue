@@ -17,7 +17,7 @@
       :placeholder="$t('profile.email')"
       v-model="userInfo.email"
     />
-    <custom-btn :text="$t('profile.btn.save')" className="btn btn.primary" :onClick="updUserInfo"></custom-btn>
+    <custom-btn :text="$t('profile.btn.save')" className="btn btn-primary" :onClick="updUserInfo"></custom-btn>
   </div>
 </template>
 
