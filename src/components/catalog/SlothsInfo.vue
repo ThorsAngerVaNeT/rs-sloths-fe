@@ -40,8 +40,6 @@ export default defineComponent({
     },
   },
 
-  computed: {},
-
   mounted() {
     this.slothsInfo = { ...this.sloth };
   },

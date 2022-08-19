@@ -4,13 +4,13 @@ import { errorHandler } from './error-handling/error-handler';
 import type { APIRequestResult } from '../common/types';
 import { JSON_ERROR, JSON_ERROR_CODE } from '../common/const';
 
-export const apiRequest = async (url: string, config: RequestInit): Promise<APIRequestResult | null> => {
+export const apiRequest = async <T>(url: string, config: RequestInit): Promise<APIRequestResult<T> | null> => {
   try {
     const response = await fetch(url, config);
 
-    const status = response.ok;
+    const isOk = response.ok;
 
-    if (!status) throw new APIError(response.statusText, response.status);
+    if (!isOk) throw new APIError(response.statusText, response.status);
 
     const { headers } = response;
     const contentType = headers.get('content-type');
@@ -19,13 +19,16 @@ export const apiRequest = async (url: string, config: RequestInit): Promise<APIR
       throw new JSONError(JSON_ERROR, JSON_ERROR_CODE);
     }
 
-    const res = await response.json();
-    return {
-      ok: response.ok,
+    const data = await response.json();
+
+    const res: APIRequestResult<T> = {
+      ok: isOk,
       status: response.status,
-      data: res,
+      data,
       headers,
     };
+
+    return res;
   } catch (error: unknown) {
     errorHandler(error);
     return null;
