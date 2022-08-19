@@ -15,7 +15,7 @@
 import { defineComponent, type PropType } from 'vue';
 import { errorHandler } from '../../services/error-handling/error-handler';
 import { SlothsService } from '../../services/sloths-service';
-import type { Sloths } from '@/common/types';
+import type { Sloth } from '@/common/types';
 import CustomBtn from '../buttons/CustomBtn.vue';
 
 const service = new SlothsService();
@@ -29,13 +29,13 @@ export default defineComponent({
 
   data() {
     return {
-      slothsInfo: {} as Sloths,
+      slothsInfo: {} as Sloth,
     };
   },
 
   props: {
     sloth: {
-      type: Object as PropType<Sloths>,
+      type: Object as PropType<Sloth>,
       required: true,
     },
   },

@@ -30,7 +30,7 @@ export default defineComponent({
 
   data() {
     return {
-      sloths: [] as Sloths[],
+      sloths: [] as Sloths,
     };
   },
 

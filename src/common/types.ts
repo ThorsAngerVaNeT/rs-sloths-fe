@@ -19,9 +19,11 @@ export interface API<T> {
   deleteById(id: string): Promise<APIRequestResult<T> | null>;
 }
 
-export type Users = unknown;
+export type Users = User[];
+export type User = unknown;
 
-export type Sloths = {
+export type Sloths = Sloth[];
+export type Sloth = {
   id: string;
   caption: string;
   description: string;
