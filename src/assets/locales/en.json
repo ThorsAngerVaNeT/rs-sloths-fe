@@ -60,6 +60,13 @@
   },
 
   "admin": {
-    "title": "Admin panel"
+    "title": "Admin panel",
+    "btn": {
+      "users": "Users",
+      "sloths": "Sloths",
+      "suggest": "Suggest a Sloth",
+      "guess": "Guess-a-Sloth",
+      "memory": "Memory"
+    }
   }
 }
