@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HomeCategory from '@/components/home/HomeCategory.vue';
+import HomeCategory from '../components/home/HomeCategory.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -34,18 +34,18 @@ export default defineComponent({
     HomeCategory,
   },
 
-  data(): {categories: string[]} {
+  data(): { categories: string[] } {
     return {
-      // categories: ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest'],
-      categories: ['catalog', 'profile', 'suggest'],
-    }
+      categories: ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest'],
+      // categories: ['catalog', 'profile', 'suggest'],
+    };
   },
 
   methods: {
     handleCategoryClick(category: string): void {
-      console.log(category)
-    }
-  }
+      console.log(category);
+    },
+  },
 });
 </script>
 
@@ -68,5 +68,18 @@ export default defineComponent({
 .home__menu {
   flex: 1;
   position: relative;
+  display: grid;
+  /* place-items: center; */
+  justify-items: start;
+  align-items: center;
+  gap: 20px;
+  grid-template-columns: repeat(4, 150px);
+  grid-template-rows: repeat(4, 150px);
+  grid-template-areas:
+    'A A B Z'
+    'D D B C'
+    'D D E F'
+    'G G E Y';
+  margin: 0 auto;
 }
 </style>
