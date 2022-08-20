@@ -92,8 +92,9 @@ export default defineComponent({
 
 .home__controls {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 .home__controls label {
@@ -102,33 +103,39 @@ export default defineComponent({
   width: 0.7rem;
   height: 0.7rem;
   padding: 0.7rem;
+  cursor: default;
 }
 
 .home__label {
   display: block;
-  border: 0.15rem solid #100d13;
+  border: 0.15rem solid var(--dark-main);
   height: 100%;
   width: 100%;
   border-radius: 50%;
-  background-color: #100d13;
-  transition: 0.5s;
+  background-color: var(--dark-main);
+  transition: 0.3s;
 }
 
 #slide1:checked ~ .home__controls [for='slide1'] .home__label,
 #slide2:checked ~ .home__controls [for='slide2'] .home__label {
-  background-color: #f1dedc;
+  background-color: var(--light-main);
+}
+
+#slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:hover,
+#slide2:not(#slide2:checked) ~ .home__controls [for='slide2']:hover {
+  cursor: pointer;
 }
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:hover .home__label,
 #slide2:not(#slide2:checked) ~ .home__controls [for='slide2']:hover .home__label {
-  background-color: #da6767;
-  border-color: #da6767;
+  background-color: var(--light-addict);
+  border-color: var(--light-addict);
 }
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:active .home__label,
 #slide2:not(#slide2:checked) ~ .home__controls [for='slide2']:active .home__label {
-  background-color: #8b4530;
-  border-color: #8b4530;
+  background-color: var(--blue-main);
+  border-color: var(--blue-main);
 }
 
 #slide1:checked ~ .home__slider > .home__slide_1 {

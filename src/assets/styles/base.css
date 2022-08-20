@@ -13,4 +13,12 @@
   height: 100vh;
   display: grid;
   grid-template-rows: 80px auto 60px;
+  background: repeat var(--color-background-soft);
+  overflow: hidden;
+}
+
+.main {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

@@ -8,12 +8,6 @@
         :category="category"
         @click="handleCategoryClick(category)"
       ></home-category>
-      <!-- <router-link to="/profile">{{ $t('profile.title') }}</router-link>
-      <router-link to="/catalog">{{ $t('catalog.title') }}</router-link>
-      <router-link to="/create">{{ $t('create.title') }}</router-link>
-      <router-link to="/guess">{{ $t('guess.title') }}</router-link>
-      <router-link to="/memory">{{ $t('memory.title') }}</router-link>
-      <router-link to="/suggest">{{ $t('suggest.title') }}</router-link> -->
     </div>
   </div>
 </template>
@@ -34,7 +28,6 @@ export default defineComponent({
   data(): { categories: string[] } {
     return {
       categories: ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest', 'sloth'],
-      // categories: ['catalog', 'profile', 'suggest'],
     };
   },
 
@@ -62,7 +55,6 @@ export default defineComponent({
   flex: 1;
   position: relative;
   display: grid;
-  /* place-items: center; */
   justify-items: start;
   align-items: center;
   justify-content: center;

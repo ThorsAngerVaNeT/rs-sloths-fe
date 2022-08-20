@@ -20,8 +20,6 @@ export default defineComponent({
       default: () => '',
     },
   },
-
-  // ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest']
 });
 </script>
 
@@ -39,8 +37,6 @@ export default defineComponent({
 }
 
 .home-category_catalog {
-  /* height: 220px;
-    width: 200px; */
   width: 100%;
   height: 100%;
   grid-area: D;
