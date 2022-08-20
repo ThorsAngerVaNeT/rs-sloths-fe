@@ -17,12 +17,13 @@
         :slothsInfo="sloth"
         @delSloth="delSloth"
         @editSloth="showSlothInfoEdit"
+        @showSloth="showSlothInfoView"
       ></sloth-card>
     </div>
     <sloth-info
       :isSlothInfoVisible="isSlothInfoVisible"
-      :headerText="isNew ? $t('catalog.btn.new') : $t('catalog.btn.edit')"
-      :isNew="isNew"
+      :headerText="getHeaderSlothInfo"
+      :modalEvents="modalEvents"
       @closeSlothInfo="closeSlothInfo"
       @createSloth="createSloth"
       @updSloth="updSloth"
@@ -39,6 +40,7 @@ import SlothCard from '../components/catalog/SlothCard.vue';
 import SlothInfo from '../components/catalog/SlothInfo.vue';
 import type { Sloth, Sloths } from '@/common/types';
 import useSlothInfo from '../stores/slothInfo';
+import { ModalEvents } from '../common/enums/modalEvents';
 
 const service = new SlothsService();
 
@@ -57,13 +59,19 @@ export default defineComponent({
     return {
       sloths: [] as Sloths,
       isSlothInfoVisible: false,
-      isNew: false,
+      modalEvents: ModalEvents.view,
     };
   },
 
   computed: {
     getPageName() {
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
+    },
+
+    getHeaderSlothInfo() {
+      if (this.modalEvents === ModalEvents.new) return this.$t('catalog.btn.new');
+      if (this.modalEvents === ModalEvents.edit) return this.$t('catalog.btn.edit');
+      return this.$t('catalog.info');
     },
   },
 
@@ -120,15 +128,21 @@ export default defineComponent({
       }
     },
 
+    showSlothInfoView(sloth: Sloth) {
+      this.modalEvents = ModalEvents.view;
+      setSlothInfo(sloth);
+      this.showSlothInfo();
+    },
+
     showSlothInfoNew() {
-      this.isNew = true;
+      this.modalEvents = ModalEvents.new;
       setEmptySlothInfo();
       this.showSlothInfo();
     },
 
-    showSlothInfoEdit(editSloth: Sloth) {
-      this.isNew = false;
-      setSlothInfo(editSloth);
+    showSlothInfoEdit(sloth: Sloth) {
+      this.modalEvents = ModalEvents.edit;
+      setSlothInfo(sloth);
       this.showSlothInfo();
     },
 

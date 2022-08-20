@@ -27,6 +27,7 @@
           v-show="getPageName === 'catalog'"
           :text="$t('catalog.btn.pick')"
           className="btn btn-primary"
+          @click="$emit('showSloth', slothsInfo)"
         ></custom-btn>
       </div>
     </div>

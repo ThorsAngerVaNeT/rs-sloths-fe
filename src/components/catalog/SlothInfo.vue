@@ -10,40 +10,61 @@
           </div>
           <div class="sloths-info__property">
             <label for="caption" class="sloths-info__label">{{ $t('catalog.caption') }} </label>
-            <input type="text" id="caption" class="sloths-info__input" v-model="slothsInfo.caption" />
+            <input v-show="!isView" type="text" id="caption" class="sloths-info__input" v-model="slothsInfo.caption" />
+            <p v-show="isView" id="caption" class="sloths-info__text">{{ slothsInfo.caption }}</p>
           </div>
           <div class="sloths-info__property">
             <label for="description" class="sloths-info__label">{{ $t('catalog.description') }} </label>
-            <textarea rows="5" id="description" class="sloths-info__input" v-model="slothsInfo.description"></textarea>
+            <textarea
+              v-show="!isView"
+              rows="5"
+              id="description"
+              class="sloths-info__input"
+              v-model="slothsInfo.description"
+            ></textarea>
+            <p v-show="isView" id="description" class="sloths-info__text">{{ slothsInfo.description }}</p>
           </div>
           <div class="sloths-info__property">
             <label for="image_url" class="sloths-info__label">{{ $t('catalog.image_url') }} </label>
-            <input type="text" id="image_url" class="sloths-info__input" v-model="slothsInfo.image_url" />
+            <input
+              v-show="!isView"
+              type="text"
+              id="image_url"
+              class="sloths-info__input"
+              v-model="slothsInfo.image_url"
+            />
+            <p v-show="isView" id="image_url" class="sloths-info__text">{{ slothsInfo.image_url }}</p>
           </div>
           <div v-show="!isNew" class="sloths-info__property">
             <label for="rating" class="sloths-info__label">{{ $t('catalog.rating') }} </label>
-            <p class="sloths-info__text" id="rating">{{ slothsInfo.rating }}⭐</p>
+            <p id="rating" class="sloths-info__text">{{ slothsInfo.rating }}⭐</p>
           </div>
           <div v-show="!isNew" class="sloths-info__property">
             <label for="createdAt" class="sloths-info__label">{{ $t('catalog.createdAt') }} </label>
-            <p class="sloths-info__text" id="createdAt">{{ new Date(slothsInfo.createdAt).toLocaleDateString() }}</p>
+            <p id="createdAt" class="sloths-info__text">{{ new Date(slothsInfo.createdAt).toLocaleDateString() }}</p>
           </div>
         </div>
       </template>
 
       <template v-slot:footer>
-        <custom-btn :text="$t('catalog.btn.save')" className="btn btn-primary" :onClick="saveSloth"></custom-btn>
+        <custom-btn
+          v-show="!isView"
+          :text="$t('catalog.btn.save')"
+          className="btn btn-primary"
+          :onClick="saveSloth"
+        ></custom-btn>
       </template>
     </modal-window>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, type PropType } from 'vue';
 import { storeToRefs } from 'pinia';
 import ModalWindow from '../modal/ModalWindow.vue';
 import CustomBtn from '../buttons/CustomBtn.vue';
 import useSlothInfo from '../../stores/slothInfo';
+import { ModalEvents } from '../../common/enums/modalEvents';
 
 const { slothsInfo } = storeToRefs(useSlothInfo());
 
@@ -71,17 +92,26 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    isNew: {
-      type: Boolean,
-      default: true,
+    modalEvents: {
+      type: String as PropType<ModalEvents>,
+      default: ModalEvents.view,
+    },
+  },
+
+  computed: {
+    isNew() {
+      return this.modalEvents === ModalEvents.new;
+    },
+    isView() {
+      return this.modalEvents === ModalEvents.view;
     },
   },
 
   methods: {
     saveSloth() {
-      if (this.isNew) {
+      if (this.modalEvents === ModalEvents.new) {
         this.$emit('createSloth', this.slothsInfo);
-      } else {
+      } else if (this.modalEvents === ModalEvents.edit) {
         this.$emit('updSloth', this.slothsInfo);
       }
       this.closeModal();
