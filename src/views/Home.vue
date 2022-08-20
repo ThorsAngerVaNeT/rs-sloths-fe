@@ -36,7 +36,7 @@ export default defineComponent({
 
   data(): { categories: string[] } {
     return {
-      categories: ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest'],
+      categories: ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest', 'sloth'],
       // categories: ['catalog', 'profile', 'suggest'],
     };
   },
@@ -72,6 +72,7 @@ export default defineComponent({
   /* place-items: center; */
   justify-items: start;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   grid-template-columns: repeat(4, 150px);
   grid-template-rows: repeat(4, 150px);

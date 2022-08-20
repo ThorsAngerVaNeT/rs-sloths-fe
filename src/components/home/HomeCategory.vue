@@ -65,6 +65,10 @@ export default defineComponent({
   grid-area: F;
 }
 
+.home-category_sloth {
+  grid-area: E;
+}
+
 .home-category_up,
 .home-category_down {
   position: absolute;

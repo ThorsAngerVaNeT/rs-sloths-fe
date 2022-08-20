@@ -56,5 +56,9 @@
 
   "create": {
     "title": "Create a meme"
+  },
+
+  "sloth": {
+    "title": "What kind of sloth are you today"
   }
 }
