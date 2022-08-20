@@ -59,7 +59,7 @@ export default defineComponent({
 
   overflow-x: auto;
 
-  background-color: var(--color-background);
+  background-color: var(--vt-c-white);
   border-radius: 1em;
   box-shadow: 0px 0px 5px;
 }
