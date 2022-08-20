@@ -8,7 +8,7 @@
         <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
         <p class="sloths-info__property">{{ slothsInfo.description }}</p>
         <p class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
-        <div v-show="getPageName === 'catalog'">
+        <div v-show="isCatalog">
           <label for="range" class="sloths-info__label">⭐</label>
           <input
             type="range"
@@ -24,19 +24,19 @@
       </div>
       <div class="sloths-info__btn">
         <custom-btn
-          v-show="getPageName === 'admin'"
+          v-show="isAdmin"
           :text="$t('catalog.btn.edit')"
           className="btn btn-primary"
           @click="$emit('editSloth', slothsInfo)"
         ></custom-btn>
         <custom-btn
-          v-show="getPageName === 'admin'"
+          v-show="isAdmin"
           :text="$t('catalog.btn.del')"
           className="btn btn-primary"
           @click="$emit('delSloth', slothsInfo.id)"
         ></custom-btn>
         <custom-btn
-          v-show="getPageName === 'catalog'"
+          v-show="isCatalog"
           :text="$t('catalog.btn.show')"
           className="btn btn-primary"
           @click="$emit('showSloth', slothsInfo)"
@@ -72,6 +72,14 @@ export default defineComponent({
   computed: {
     getPageName() {
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
+    },
+
+    isAdmin() {
+      return this.$route.name === 'admin';
+    },
+
+    isCatalog() {
+      return this.$route.name === 'catalog';
     },
   },
 });
