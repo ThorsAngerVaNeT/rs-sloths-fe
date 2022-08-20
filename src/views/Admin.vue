@@ -43,7 +43,6 @@ export default defineComponent({
       currentPage: 0,
       pages: ['users', 'sloths', 'suggest', 'guess', 'memory'],
       components: ['UserInfo', 'CatalogView', 'SuggestInfo', 'GuessInfo', 'MemoryInfo'],
-      color: 'red',
     };
   },
 });
