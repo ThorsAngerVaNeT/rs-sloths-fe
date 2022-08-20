@@ -42,6 +42,23 @@ export default defineComponent({
     left: 0;
     top: 50%;
     transform: translate(0, -50%);
+    margin-top: 220px;
+    margin-bottom: 220px;
+}
+
+.home-category_profile {
+    position: absolute;
+    left: 50px;
+    top: 0;
+    margin-bottom: (100% - 220px);
+}
+
+.home-category_suggest {
+    position: absolute;
+    left: 50px;
+    top: 100%;
+    transform: translate(0, -100%);
+    margin-top: (100% - 220px);
 }
 
 .home-category_up,
