@@ -43,7 +43,11 @@ export default defineComponent({
 
   methods: {
     handleCategoryClick(category: string): void {
-      console.log(category);
+      if (category === 'sloth') {
+        alert('Здесь что-нибудь будет по ленивцу');
+      } else {
+        this.$router.push({ name: `${category}` });
+      }
     },
   },
 });

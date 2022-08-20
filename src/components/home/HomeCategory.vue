@@ -31,6 +31,7 @@ export default defineComponent({
   width: 150px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 .home-category__wrapper {
   position: relative;
