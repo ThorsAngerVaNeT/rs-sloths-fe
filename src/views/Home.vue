@@ -7,25 +7,42 @@
       </div>
     </div>
     <div class="home__menu">
-      <router-link to="/profile">{{ $t('profile.title') }}</router-link>
+      <home-category
+        v-for="(category, i) in categories"
+        :key="`${i}_${category}`"
+        :class-part="category"
+        @click="handleCategoryClick(category)"
+      ></home-category>
+      <!-- <router-link to="/profile">{{ $t('profile.title') }}</router-link>
       <router-link to="/catalog">{{ $t('catalog.title') }}</router-link>
       <router-link to="/create">{{ $t('create.title') }}</router-link>
       <router-link to="/guess">{{ $t('guess.title') }}</router-link>
       <router-link to="/memory">{{ $t('memory.title') }}</router-link>
-      <router-link to="/suggest">{{ $t('suggest.title') }}</router-link>
+      <router-link to="/suggest">{{ $t('suggest.title') }}</router-link> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import HomeCategory from '@/components/home/HomeCategory.vue';
 
 export default defineComponent({
   name: 'HomeView',
 
-  data() {
+  components: {
+    HomeCategory,
+  },
+
+  data(): {categories: string[]} {
     return {
-      homeBtns: ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest'],
+      categories: ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest'],
+    }
+  },
+
+  methods: {
+    handleCategoryClick(category: string): void {
+      console.log(category)
     }
   }
 });
