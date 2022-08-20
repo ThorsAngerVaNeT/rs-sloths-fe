@@ -8,11 +8,15 @@
     </div>
     <div class="home__menu">
       <home-category
+        :category="categories[0]"
+        @click="handleCategoryClick(categories[0])"
+      ></home-category>
+      <!-- <home-category
         v-for="(category, i) in categories"
         :key="`${i}_${category}`"
-        :class-part="category"
+        :category="category"
         @click="handleCategoryClick(category)"
-      ></home-category>
+      ></home-category> -->
       <!-- <router-link to="/profile">{{ $t('profile.title') }}</router-link>
       <router-link to="/catalog">{{ $t('catalog.title') }}</router-link>
       <router-link to="/create">{{ $t('create.title') }}</router-link>
@@ -66,5 +70,6 @@ export default defineComponent({
 
 .home__menu {
   flex: 1;
+  position: relative;
 }
 </style>
