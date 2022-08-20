@@ -8,6 +8,18 @@
   font-weight: normal;
 }
 
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  width: 5px;
+  height: 5px;
+  background-color: var(--dark-addict);
+}
+
 #app {
   width: 100%;
   height: 100vh;
