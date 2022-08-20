@@ -1,11 +1,6 @@
 <template>
   <div class="home">
-    <div class="home__about">
-      <div class="home__logo"></div>
-      <div class="home__wrapper">
-        <router-link to="/about">{{ $t('about.title') }}</router-link>
-      </div>
-    </div>
+    <home-about></home-about>
     <div class="home__menu">
       <home-category
         v-for="(category, i) in categories"
@@ -26,12 +21,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import HomeCategory from '../components/home/HomeCategory.vue';
+import HomeAbout from '../components/home/HomeAbout.vue';
 
 export default defineComponent({
   name: 'HomeView',
 
   components: {
     HomeCategory,
+    HomeAbout,
   },
 
   data(): { categories: string[] } {
@@ -59,14 +56,6 @@ export default defineComponent({
   gap: 20px;
   padding: 30px;
   height: 100%;
-}
-
-.home__about {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .home__menu {
