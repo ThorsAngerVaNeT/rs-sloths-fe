@@ -8,6 +8,18 @@
         <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
         <p class="sloths-info__property">{{ slothsInfo.description }}</p>
         <p class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
+        <div v-show="getPageName === 'catalog'">
+          <label for="range" class="sloths-info__label">⭐</label>
+          <input
+            type="range"
+            id="range"
+            min="0"
+            max="5"
+            step="1"
+            v-model="newRating"
+            @change="$emit('editRating', slothsInfo, +newRating)"
+          />
+        </div>
         <p class="sloths-info__property">{{ new Date(slothsInfo.createdAt).toLocaleDateString() }}</p>
       </div>
       <div class="sloths-info__btn">
@@ -25,7 +37,7 @@
         ></custom-btn>
         <custom-btn
           v-show="getPageName === 'catalog'"
-          :text="$t('catalog.btn.pick')"
+          :text="$t('catalog.btn.show')"
           className="btn btn-primary"
           @click="$emit('showSloth', slothsInfo)"
         ></custom-btn>
@@ -44,6 +56,10 @@ export default defineComponent({
 
   components: {
     CustomBtn,
+  },
+
+  data() {
+    return { newRating: 0 };
   },
 
   props: {

@@ -15,6 +15,7 @@
         v-for="sloth in sloths"
         :key="sloth.id"
         :slothsInfo="sloth"
+        @editRating="updSlothRating"
         @delSloth="delSloth"
         @editSloth="showSlothInfoEdit"
         @showSloth="showSlothInfoView"
@@ -107,6 +108,18 @@ export default defineComponent({
     async createSloth(sloth: Sloth) {
       try {
         const res = await service.create(sloth);
+
+        if (!res) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
+    async updSlothRating(sloth: Sloth, rate: number) {
+      try {
+        const res = await SlothsService.updateRatingById(sloth.id, rate);
 
         if (!res) throw Error(); // todo
 
