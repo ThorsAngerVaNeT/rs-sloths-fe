@@ -15,6 +15,7 @@
           v-show="getPageName === 'admin'"
           :text="$t('catalog.btn.edit')"
           className="btn btn-primary"
+          @click="$emit('editSloth', slothsInfo)"
         ></custom-btn>
         <custom-btn
           v-show="getPageName === 'admin'"
@@ -71,7 +72,6 @@ export default defineComponent({
 }
 .admin-sloths-info {
   padding: 0.5em;
-  width: 100%;
 
   border-radius: 0.5em;
 }

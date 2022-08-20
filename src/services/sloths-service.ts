@@ -32,8 +32,10 @@ export class SlothsService implements API<Sloth> {
     // return Promise.resolve(this.getByIdResult);
   }
 
-  public updateById(id: string, body: Sloth) {
-    return this.service.updateById(id, body);
+  public updateById(slothId: string, sloth: Sloth) {
+    const { id, caption, description } = sloth;
+    const body = { id, caption, description };
+    return this.service.updateById(slothId, body);
     // return Promise.resolve(this.getByIdResult);
   }
 

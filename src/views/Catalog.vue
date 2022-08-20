@@ -5,18 +5,24 @@
       <custom-btn
         :text="$t('catalog.btn.new')"
         className="btn btn-primary"
-        @click="showSlothInfo"
+        @click="showSlothInfoNew"
         v-show="getPageName === 'admin'"
       ></custom-btn>
       <custom-btn :text="$t('catalog.btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
     <div class="catalog__showcase">
-      <sloth-card v-for="sloth in sloths" :key="sloth.id" :slothsInfo="sloth" @delSloth="delSloth"></sloth-card>
+      <sloth-card
+        v-for="sloth in sloths"
+        :key="sloth.id"
+        :slothsInfo="sloth"
+        @delSloth="delSloth"
+        @editSloth="showSlothInfoEdit"
+      ></sloth-card>
     </div>
     <sloth-info
       :isSlothInfoVisible="isSlothInfoVisible"
-      :headerText="$t('catalog.btn.new')"
-      :isNew="true"
+      :headerText="isNew ? $t('catalog.btn.new') : $t('catalog.btn.edit')"
+      :isNew="isNew"
       @closeSlothInfo="closeSlothInfo"
       @createSloth="createSloth"
       @updSloth="updSloth"
@@ -29,11 +35,14 @@ import { defineComponent } from 'vue';
 import { errorHandler } from '../services/error-handling/error-handler';
 import { SlothsService } from '../services/sloths-service';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
-import SlothInfo from '../components/catalog/SlothInfo.vue';
 import SlothCard from '../components/catalog/SlothCard.vue';
+import SlothInfo from '../components/catalog/SlothInfo.vue';
 import type { Sloth, Sloths } from '@/common/types';
+import useSlothInfo from '../stores/slothInfo';
 
 const service = new SlothsService();
+
+const { setEmptySlothInfo, setSlothInfo } = useSlothInfo();
 
 export default defineComponent({
   name: 'CatalogView',
@@ -48,6 +57,7 @@ export default defineComponent({
     return {
       sloths: [] as Sloths,
       isSlothInfoVisible: false,
+      isNew: false,
     };
   },
 
@@ -108,6 +118,18 @@ export default defineComponent({
       } catch (error) {
         errorHandler(error);
       }
+    },
+
+    showSlothInfoNew() {
+      this.isNew = true;
+      setEmptySlothInfo();
+      this.showSlothInfo();
+    },
+
+    showSlothInfoEdit(editSloth: Sloth) {
+      this.isNew = false;
+      setSlothInfo(editSloth);
+      this.showSlothInfo();
     },
 
     showSlothInfo() {

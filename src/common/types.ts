@@ -14,7 +14,7 @@ export interface API<T> {
 
   create(body: T): Promise<APIRequestResult<T> | null>;
 
-  updateById(id: string, body: T): Promise<APIRequestResult<T> | null>;
+  updateById(id: string, body: T): Promise<APIRequestResult<Partial<T>> | null>;
 
   deleteById(id: string): Promise<APIRequestResult<T> | null>;
 }

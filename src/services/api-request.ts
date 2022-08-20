@@ -17,7 +17,6 @@ export const apiRequest = async <T>(url: string, config: RequestInit): Promise<A
 
     if (response.status !== 204) {
       headers = response.headers;
-      // const { headers } = response;
       const contentType = headers.get('content-type');
 
       if (!contentType || !contentType.includes('application/json')) {
