@@ -52,6 +52,12 @@ const router = createRouter({
       name: 'admin',
       component: () => import('../views/Admin.vue'),
     },
+    // 404 always last item
+    {
+      path: '/*',
+      name: '404',
+      component: () => import('../views/404.vue'),
+    },
   ],
 });
 
