@@ -1,8 +1,8 @@
 <template>
   <div class="page-404">
     <div class="page-404__image"></div>
-    <h2 class="page-404__title"></h2>
-    <p class="page-404__descr"></p>
+    <h2 class="page-404__title">{{ $t('404.title') }}</h2>
+    <p class="page-404__descr">{{ $t('404.text') }}</p>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 
 .page-404__image {
