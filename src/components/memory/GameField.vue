@@ -11,7 +11,10 @@
         :item="item"
         @click="openCard(index)"
       >
-        <img class="game-field__img" :src="getImage(index)" alt="" />
+        <div class="game-field__card-inner" :class="getFlip(index)">
+          <img class="game-field__img game-field__img-front" :src="cardCover" alt="cover" />
+          <img class="game-field__img game-field__img-back" :src="getImage(index)" alt="card" />
+        </div>
       </div>
     </transition-group>
     <modal-window v-show="isModalVisible" @close="closeModal">
@@ -33,8 +36,6 @@ import CustomBtn from '../buttons/CustomBtn.vue';
 import { MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '../../common/const';
 import type { MemoryLevel } from '../../common/types';
 
-const cardCover = './card-cover.png';
-
 type Card = {
   img: string;
   index: number;
@@ -52,6 +53,7 @@ export default defineComponent({
 
   data() {
     return {
+      cardCover: './card-cover.png',
       images: [] as string[],
       cards: [] as Card[],
       grid: 0,
@@ -141,7 +143,13 @@ export default defineComponent({
     },
 
     getImage(i: number) {
-      return this.cards[i].open ? this.cards[i].img : cardCover;
+      // return this.cards[i].open ? this.cards[i].img : cardCover;
+      return this.cards[i].img;
+    },
+
+    getFlip(i: number) {
+      // return this.cards[i].open;
+      return this.cards[i].open ? 'flip' : '';
     },
 
     openCard(i: number) {
@@ -204,18 +212,46 @@ export default defineComponent({
   grid-template-columns: repeat(v-bind(grid), 150px);
   gap: 1em;
 }
-.game-field__img {
-  display: inline-block;
+
+.game-field__card {
   width: 150px;
   height: 200px;
-  overflow: hidden;
+
+  perspective: 600px;
+}
+
+.game-field__card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
 
   cursor: pointer;
 
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+
+.game-field__img {
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+
+  backface-visibility: hidden;
+
+  transition: transform 1s;
+  transform-style: preserve-3d;
+
+  overflow: hidden;
   border-radius: 1em;
 }
 .game-field__img:hover {
   box-shadow: 0px 0px 5px;
+}
+
+.game-field__img-back,
+.flip {
+  transform: rotateY(180deg);
 }
 
 .flip-list-move {
