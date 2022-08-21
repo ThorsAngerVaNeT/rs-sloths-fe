@@ -28,8 +28,5 @@ export default {
   computed: {
     ...mapState(useLoader, ['getIsLoad']),
   },
-  mounted() {
-    console.log('loader: ', this.getIsLoad);
-  },
 };
 </script>
