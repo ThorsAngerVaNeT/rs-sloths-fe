@@ -3,11 +3,17 @@
     <h3>{{ $t(getLevel) }}</h3>
     <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
     <p>steps: {{ getSteps }}</p>
-    <div class="game-field__cards">
-      <div class="game-field__card" v-for="(item, index) in cards" :key="index" :item="item" @click="openCard(index)">
+    <transition-group name="flip-list" tag="div" class="game-field__cards">
+      <div
+        class="game-field__card"
+        v-for="(item, index) in cards"
+        :key="item.index"
+        :item="item"
+        @click="openCard(index)"
+      >
         <img class="game-field__img" :src="getImage(index)" alt="" />
       </div>
-    </div>
+    </transition-group>
     <p>{{ message }}</p>
   </div>
 </template>
@@ -15,13 +21,14 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import CustomBtn from '../buttons/CustomBtn.vue';
-import { MEMORY_GAME_TIMEOUT, MEMORY_LEVELS, MEMORY_START_TIMEOUT } from '../../common/const';
+import { MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '../../common/const';
 import type { MemoryLevel } from '../../common/types';
 
 const cardCover = './card-cover.png';
 
 type Card = {
   img: string;
+  index: number;
   id: number;
   open: boolean;
 };
@@ -61,42 +68,55 @@ export default defineComponent({
     },
   },
 
+  watch: {
+    level() {
+      this.getCards();
+    },
+  },
+
   mounted() {
-    this.getCards();
+    this.getImages();
   },
 
   methods: {
-    async getCards() {
+    async getImages() {
       // todo fetch
 
-      this.images = ['./default-user.png', './guess-game.png', './memory-game.png', './suggest-game.png'];
+      this.images = [
+        './default-user.png',
+        './guess-game.png',
+        './memory-game.png',
+        './suggest-game.png',
+        './memory-level-junior.png',
+        './memory-level-middle.png',
+        './memory-level-senior.png',
+      ];
+
+      this.getCards();
+    },
+
+    getCards() {
+      this.cards = [];
+      let index = 0;
+
+      const images = this.images.sort(() => Math.random() - 0.5).filter((el, i) => i < this.level.n);
+
+      images.forEach((el, i) => {
+        this.cards.push({ img: el, id: i, index, open: false });
+        index += 1;
+        this.cards.push({ img: el, id: i, index, open: false });
+        index += 1;
+      });
     },
 
     async startGame() {
-      const images = [...this.images];
-
+      this.cards.forEach((el, i) => this.closeCard(i));
       this.steps = 0;
       this.activeCard = Infinity;
       this.message = '';
+      this.startTime = 0;
 
-      const res: Card[] = [];
-
-      images
-        .sort(() => Math.random() - 0.5)
-        .filter((el, i) => i < this.level.n)
-        .forEach((el, i) => {
-          res.push({ img: el, id: i, open: true });
-          res.push({ img: el, id: i, open: true });
-        });
-
-      res.sort(() => Math.random() - 0.5);
-
-      this.cards = res;
-
-      setTimeout(() => {
-        this.cards.forEach((el, i) => this.closeCard(i));
-        this.startTime = Date.now();
-      }, MEMORY_START_TIMEOUT);
+      this.cards.sort(() => Math.random() - 0.5);
     },
 
     getImage(i: number) {
@@ -104,6 +124,8 @@ export default defineComponent({
     },
 
     openCard(i: number) {
+      if (this.startTime === 0) this.startTime = Date.now();
+
       if (this.cards[i].open) return;
 
       this.cards[i].open = true;
@@ -150,13 +172,13 @@ export default defineComponent({
   margin: 1em;
 
   display: grid;
-  grid-template-columns: repeat(4, 200px);
+  grid-template-columns: repeat(4, 150px);
   gap: 1em;
 }
 .game-field__img {
   display: inline-block;
-  width: 200px;
-  height: 300px;
+  width: 150px;
+  height: 200px;
   overflow: hidden;
 
   cursor: pointer;
@@ -165,5 +187,9 @@ export default defineComponent({
 }
 .game-field__img:hover {
   box-shadow: 0px 0px 5px;
+}
+
+.flip-list-move {
+  transition: transform 0.5s;
 }
 </style>
