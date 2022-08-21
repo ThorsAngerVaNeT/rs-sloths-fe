@@ -2,19 +2,19 @@
   <div class="game-field">
     <h3>{{ $t(getLevel) }}</h3>
     <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
-    <p>steps: {{ getSteps }}</p>
-    <transition-group name="flip-list" tag="div" class="game-field__cards">
+    <p>steps: {{ steps }}</p>
+    <transition-group name="shuffle-list" tag="div" class="game-field__cards">
       <div
         class="game-field__card"
         v-for="(item, index) in cards"
         :key="item.index"
         :item="item"
-        @click="openCard(index)"
+        @click="gameHandler(index)"
       >
-        <div class="game-field__card-inner" :class="getFlip(index)">
-          <img class="game-field__img game-field__img-front" :src="cardCover" alt="cover" />
-          <img class="game-field__img game-field__img-back" :src="getImage(index)" alt="card" />
-        </div>
+        <transition name="flip" mode="out-in">
+          <img v-if="!getIsOpen(index)" :src="cardCover" alt="cover" class="game-field__img" />
+          <img v-else :src="getImage(index)" alt="card" class="game-field__img" />
+        </transition>
       </div>
     </transition-group>
     <modal-window v-show="isModalVisible" @close="closeModal">
@@ -22,7 +22,7 @@
 
       <template v-slot:body>
         <p>{{ $t('memory.win') }}</p>
-        <p>{{ getSteps }} {{ $t('memory.steps') }}</p>
+        <p>{{ steps }} {{ $t('memory.steps') }}</p>
         <p>{{ getTime }} {{ $t('memory.time') }}</p>
       </template>
     </modal-window>
@@ -56,11 +56,15 @@ export default defineComponent({
       cardCover: './card-cover.png',
       images: [] as string[],
       cards: [] as Card[],
-      grid: 0,
+      activeCard: Infinity,
       steps: 0,
       startTime: 0,
       endTime: 0,
-      activeCard: Infinity,
+      grid: 0,
+      isHandled: false,
+      isAnimation: false,
+      // @animationstart="isAnimation = true"
+      // @animationend="isAnimation = false"
       isModalVisible: false,
     };
   },
@@ -73,10 +77,6 @@ export default defineComponent({
   },
 
   computed: {
-    getSteps() {
-      return this.steps;
-    },
-
     getLevel() {
       return `memory.${this.level.level}`;
     },
@@ -89,12 +89,14 @@ export default defineComponent({
   mounted() {
     this.setGrid();
     this.getImages();
+    this.startGame();
   },
 
   watch: {
     level() {
-      this.getCards();
       this.setGrid();
+      this.getCards();
+      this.startGame();
     },
   },
 
@@ -134,8 +136,8 @@ export default defineComponent({
 
     async startGame() {
       this.cards.forEach((el, i) => this.closeCard(i));
-      this.steps = 0;
       this.activeCard = Infinity;
+      this.steps = 0;
       this.startTime = 0;
       this.endTime = 0;
 
@@ -143,21 +145,22 @@ export default defineComponent({
     },
 
     getImage(i: number) {
-      // return this.cards[i].open ? this.cards[i].img : cardCover;
       return this.cards[i].img;
     },
 
-    getFlip(i: number) {
-      // return this.cards[i].open;
-      return this.cards[i].open ? 'flip' : '';
+    getIsOpen(i: number) {
+      return this.cards[i].open;
     },
 
-    openCard(i: number) {
+    gameHandler(i: number) {
       if (this.startTime === 0) this.startTime = Date.now();
 
       if (this.cards[i].open) return;
+      if (this.isHandled) return;
 
-      this.cards[i].open = true;
+      this.isHandled = true;
+
+      this.openCard(i);
       this.steps += 1;
 
       if (this.activeCard === Infinity) {
@@ -178,10 +181,16 @@ export default defineComponent({
         this.endTime = Date.now();
         this.isModalVisible = true;
       }
+
+      this.isHandled = false;
     },
 
     checkGame(): boolean {
       return this.cards.every((el) => el.open);
+    },
+
+    openCard(i: number) {
+      this.cards[i].open = true;
     },
 
     closeCard(i: number) {
@@ -220,41 +229,49 @@ export default defineComponent({
   perspective: 600px;
 }
 
-.game-field__card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-
-  cursor: pointer;
-
-  transition: transform 1s;
-  transform-style: preserve-3d;
-}
-
 .game-field__img {
   position: absolute;
   display: inline-block;
+
   width: 100%;
   height: 100%;
-
-  backface-visibility: hidden;
-
-  transition: transform 1s;
-  transform-style: preserve-3d;
 
   overflow: hidden;
   border-radius: 1em;
 }
+
 .game-field__img:hover {
   box-shadow: 0px 0px 5px;
 }
-
-.game-field__img-back,
-.flip {
-  transform: rotateY(180deg);
+/* Animations */
+.shuffle-list-move {
+  transition: transform 1s;
 }
 
-.flip-list-move {
-  transition: transform 0.5s;
+.flip-enter-active {
+  animation: flip-out 0.2s;
+}
+.flip-leave-active {
+  animation: flip-in 0.2s;
+}
+@keyframes flip-in {
+  0% {
+    transform: rotateY(0deg);
+    transform-style: preserve-3d;
+  }
+  100% {
+    transform: rotateY(90deg);
+    transform-style: preserve-3d;
+  }
+}
+@keyframes flip-out {
+  0% {
+    transform: rotateY(270deg);
+    transform-style: preserve-3d;
+  }
+  100% {
+    transform: rotateY(360deg);
+    transform-style: preserve-3d;
+  }
 }
 </style>
