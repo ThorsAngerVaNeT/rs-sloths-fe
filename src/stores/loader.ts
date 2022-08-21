@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 const useLoader = defineStore({
   id: 'loader',
   state: () => ({
-    isLoad: true,
+    isLoad: false,
   }),
 
   getters: {
