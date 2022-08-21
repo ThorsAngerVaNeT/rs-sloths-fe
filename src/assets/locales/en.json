@@ -98,6 +98,6 @@
 
   "404": {
     "title": "404: Page Not Found",
-    "text": "Sloth make a bug or didn't make this page.\nPlease check the correctness of path again"
+    "text": "Sloth made a bug or didn't make this page.\nPlease check the correctness of path again"
   }
 }
