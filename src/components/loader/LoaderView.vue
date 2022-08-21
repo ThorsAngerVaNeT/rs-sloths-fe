@@ -10,6 +10,7 @@
       <div class="sloth-loader sloth-7"></div>
       <div class="sloth-loader sloth-8"></div>
     </div>
+    <span class="loader__text">{{ $t('loader.text') }}</span>
   </div>
 </template>
 
@@ -29,8 +30,10 @@ export default defineComponent({
   z-index: 1000;
   background-color: var(--dark-opacity);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .loader__wrap {
@@ -44,6 +47,7 @@ export default defineComponent({
   height: 20px;
   width: 22px;
   background: no-repeat center center / contain url('../../assets/icons/loader/loader-point.svg');
+  opacity: 0;
   animation-name: scaleAnim;
   animation-duration: 1.2s;
   animation-iteration-count: infinite;
@@ -54,47 +58,61 @@ export default defineComponent({
   top: 40px;
   animation-delay: 0.45s;
 }
+
 .sloth-2 {
   left: 15px;
   top: 15px;
   animation-delay: 0.6s;
 }
+
 .sloth-3 {
   left: 40px;
   top: 3px;
   animation-delay: 0.75s;
 }
+
 .sloth-4 {
   right: 15px;
   top: 15px;
   animation-delay: 0.9s;
 }
+
 .sloth-5 {
   right: 3px;
   top: 40px;
   animation-delay: 1.05s;
 }
+
 .sloth-6 {
   right: 15px;
   bottom: 15px;
   animation-delay: 1.2s;
 }
+
 .sloth-7 {
   left: 40px;
   bottom: 3px;
   animation-delay: 1.35s;
 }
+
 .sloth-8 {
   left: 15px;
   bottom: 15px;
   animation-delay: 1.5s;
 }
+
 @keyframes scaleAnim {
   0% {
     transform: scale(1.6);
+    opacity: 1;
   }
   100% {
     transform: scale(1);
+    opacity: 0;
   }
+}
+
+.loader__text {
+  color: var(--color-text-inverse);
 }
 </style>
