@@ -31,8 +31,14 @@ export type Sloth = {
   rating: number;
   createdAt: number;
 };
+
 export type SlothRating = {
   slothId: string;
   userId: string;
   rate: number;
+};
+
+export type MemoryLevel = {
+  level: string;
+  n: number;
 };
