@@ -30,11 +30,14 @@ export default defineComponent({
   background: no-repeat center center / contain url('../assets/icons/404/404.svg');
 }
 
+/* Temp colors */
 .page-404__title {
-  color: var(--color-heading);
+  /* color: var(--color-heading); */
+  color: var(--dark-addict);
 }
 
 .page-404__descr {
-  color: var(--color-text);
+  /* color: var(--color-text); */
+  color: var(--dark-main);
 }
 </style>
