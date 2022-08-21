@@ -56,6 +56,10 @@
   "memory": {
     "title": "Memory Game",
     "start": "Let's Go!",
+    "congrats": "Congratulations!",
+    "win": "You won! Your result:",
+    "steps": "steps",
+    "time": "seconds",
     "level": "Choose your level",
     "junior": "Junior",
     "middle": "Middle",

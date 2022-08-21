@@ -14,12 +14,21 @@
         <img class="game-field__img" :src="getImage(index)" alt="" />
       </div>
     </transition-group>
-    <p>{{ message }}</p>
+    <modal-window v-show="isModalVisible" @close="closeModal">
+      <template v-slot:header> {{ $t('memory.congrats') }} </template>
+
+      <template v-slot:body>
+        <p>{{ $t('memory.win') }}</p>
+        <p>{{ getSteps }} {{ $t('memory.steps') }}</p>
+        <p>{{ getTime }} {{ $t('memory.time') }}</p>
+      </template>
+    </modal-window>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
+import ModalWindow from '../modal/ModalWindow.vue';
 import CustomBtn from '../buttons/CustomBtn.vue';
 import { MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '../../common/const';
 import type { MemoryLevel } from '../../common/types';
@@ -38,16 +47,19 @@ export default defineComponent({
 
   components: {
     CustomBtn,
+    ModalWindow,
   },
 
   data() {
     return {
       images: [] as string[],
       cards: [] as Card[],
+      grid: 0,
       steps: 0,
       startTime: 0,
+      endTime: 0,
       activeCard: Infinity,
-      message: '',
+      isModalVisible: false,
     };
   },
 
@@ -66,16 +78,22 @@ export default defineComponent({
     getLevel() {
       return `memory.${this.level.level}`;
     },
+
+    getTime() {
+      return (this.endTime - this.startTime) / 1000;
+    },
+  },
+
+  mounted() {
+    this.setGrid();
+    this.getImages();
   },
 
   watch: {
     level() {
       this.getCards();
+      this.setGrid();
     },
-  },
-
-  mounted() {
-    this.getImages();
   },
 
   methods: {
@@ -87,9 +105,10 @@ export default defineComponent({
         './guess-game.png',
         './memory-game.png',
         './suggest-game.png',
-        './memory-level-junior.png',
-        './memory-level-middle.png',
-        './memory-level-senior.png',
+        './test1.png',
+        './test2.png',
+        './test3.png',
+        './test4.png',
       ];
 
       this.getCards();
@@ -107,14 +126,16 @@ export default defineComponent({
         this.cards.push({ img: el, id: i, index, open: false });
         index += 1;
       });
+
+      this.cards.sort(() => Math.random() - 0.5);
     },
 
     async startGame() {
       this.cards.forEach((el, i) => this.closeCard(i));
       this.steps = 0;
       this.activeCard = Infinity;
-      this.message = '';
       this.startTime = 0;
+      this.endTime = 0;
 
       this.cards.sort(() => Math.random() - 0.5);
     },
@@ -146,8 +167,8 @@ export default defineComponent({
       }
 
       if (this.checkGame()) {
-        this.message = `!!! Congrats !!! ${this.steps} steps, ${(Date.now() - this.startTime) / 1000} second!`;
-        // todo modal window
+        this.endTime = Date.now();
+        this.isModalVisible = true;
       }
     },
 
@@ -157,6 +178,14 @@ export default defineComponent({
 
     closeCard(i: number) {
       this.cards[i].open = false;
+    },
+
+    closeModal() {
+      this.isModalVisible = false;
+    },
+
+    setGrid() {
+      this.grid = this.level.n <= 6 ? this.level.n : 6;
     },
   },
 });
@@ -172,7 +201,7 @@ export default defineComponent({
   margin: 1em;
 
   display: grid;
-  grid-template-columns: repeat(4, 150px);
+  grid-template-columns: repeat(v-bind(grid), 150px);
   gap: 1em;
 }
 .game-field__img {
