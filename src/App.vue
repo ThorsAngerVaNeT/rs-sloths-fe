@@ -7,11 +7,11 @@
 
   <footer-view />
 
-  <loader-view v-show="getIsLoad" />
+  <loader-view v-show="isLoad" />
 </template>
 
 <script lang="ts">
-import { mapState } from 'pinia';
+import { mapWritableState } from 'pinia';
 import HeaderView from './components/header/HeaderView.vue';
 import FooterView from './components/footer/FooterView.vue';
 import LoaderView from './components/loader/LoaderView.vue';
@@ -26,7 +26,15 @@ export default {
     LoaderView,
   },
   computed: {
-    ...mapState(useLoader, ['getIsLoad']),
+    ...mapWritableState(useLoader, ['isLoad']),
+  },
+  created() {
+    this.isLoad = true;
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isLoad = false;
+    }, 100);
   },
 };
 </script>
