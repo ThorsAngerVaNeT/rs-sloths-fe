@@ -26,15 +26,27 @@
       "logout": "Sign out",
       "guess": "Guess-a-Sloth Game results",
       "memory": "Memory Game results",
-      "suggest": "Your Sloths suggestions"
+      "suggest": "Your Sloths suggestions",
+      "admin": "To Admin panel"
     }
   },
 
   "catalog": {
     "title": "Catalog",
+    "info": "Detail info",
+    "caption": "Caption",
+    "description": "Description",
+    "rating": "Rating",
+    "image_url": "Image url",
+    "createdAt": "Created at",
     "btn": {
       "reset": "Reset filters",
-      "edit": "Edit"
+      "new": "New Sloth",
+      "del": "Delete",
+      "edit": "Edit",
+      "save": "Save",
+      "show": "Detail info",
+      "pick": "Pick"
     }
   },
 
@@ -61,5 +73,21 @@
 
   "sloth": {
     "title": "What kind of sloth are you today"
+
+  "admin": {
+    "title": "Admin panel",
+    "btn": {
+      "users": "Users",
+      "sloths": "Sloths",
+      "suggest": "Suggest a Sloth",
+      "guess": "Guess-a-Sloth",
+      "memory": "Memory"
+    }
+  },
+
+  "modal": {
+    "btn": {
+      "close": "Close"
+    }
   }
 }

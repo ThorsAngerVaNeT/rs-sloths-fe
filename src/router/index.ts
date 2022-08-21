@@ -47,6 +47,11 @@ const router = createRouter({
       name: 'suggest',
       component: () => import('../views/Suggestion.vue'),
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('../views/Admin.vue'),
+    },
   ],
 });
 

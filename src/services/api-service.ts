@@ -49,8 +49,22 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public updateById(id: string, body: T): Promise<APIRequestResult<T> | null> {
+  public updateById(id: string, body: Partial<T>): Promise<APIRequestResult<Partial<T>> | null> {
     const url = `${this.endpoint}/${id}`;
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    const config: RequestInit = {
+      method: FetchMethod.put,
+      body: JSON.stringify(body),
+      headers,
+    };
+
+    return apiRequest(url, config);
+  }
+
+  public update(body: Partial<T>): Promise<APIRequestResult<Partial<T>> | null> {
+    const url = `${this.endpoint}`;
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
     };

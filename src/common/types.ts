@@ -14,7 +14,7 @@ export interface API<T> {
 
   create(body: T): Promise<APIRequestResult<T> | null>;
 
-  updateById(id: string, body: T): Promise<APIRequestResult<T> | null>;
+  updateById(id: string, body: T): Promise<APIRequestResult<Partial<T>> | null>;
 
   deleteById(id: string): Promise<APIRequestResult<T> | null>;
 }
@@ -30,4 +30,15 @@ export type Sloth = {
   image_url: string;
   rating: number;
   createdAt: number;
+};
+
+export type SlothRating = {
+  slothId: string;
+  userId: string;
+  rate: number;
+};
+
+export type MemoryLevel = {
+  level: string;
+  n: number;
 };
