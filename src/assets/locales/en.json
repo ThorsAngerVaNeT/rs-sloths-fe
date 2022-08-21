@@ -8,7 +8,8 @@
   },
 
   "home": {
-    "title": "Home"
+    "title": "Home",
+    "more": "Read more"
   },
 
   "about": {
@@ -69,6 +70,9 @@
   "create": {
     "title": "Create a meme"
   },
+
+  "sloth": {
+    "title": "What kind of sloth are you today"
 
   "admin": {
     "title": "Admin panel",
