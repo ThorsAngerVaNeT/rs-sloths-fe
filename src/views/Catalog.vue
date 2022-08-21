@@ -1,12 +1,34 @@
 <template>
   <div class="catalog">
-    <h2>{{ $t('catalog.title') }}</h2>
-    <aside>
+    <div class="catalog__aside">
+      <h3>{{ $t('catalog.title') }}</h3>
+      <custom-btn
+        :text="$t('catalog.btn.new')"
+        className="btn btn-primary"
+        @click="showSlothInfoNew"
+        v-show="getPageName === 'admin'"
+      ></custom-btn>
       <custom-btn :text="$t('catalog.btn.reset')" className="btn btn-primary"></custom-btn>
-    </aside>
-    <main class="catalog__showcase">
-      <sloths-info v-for="sloth in sloths" :key="sloth.id" :sloth="sloth"></sloths-info>
-    </main>
+    </div>
+    <div class="catalog__showcase">
+      <sloth-card
+        v-for="sloth in sloths"
+        :key="sloth.id"
+        :slothsInfo="sloth"
+        @editRating="updSlothRating"
+        @delSloth="delSloth"
+        @editSloth="showSlothInfoEdit"
+        @showSloth="showSlothInfoView"
+      ></sloth-card>
+    </div>
+    <sloth-info
+      :isSlothInfoVisible="isSlothInfoVisible"
+      :headerText="getHeaderSlothInfo"
+      :modalEvents="modalEvents"
+      @closeSlothInfo="closeSlothInfo"
+      @createSloth="createSloth"
+      @updSloth="updSloth"
+    ></sloth-info>
   </div>
 </template>
 
@@ -15,23 +37,43 @@ import { defineComponent } from 'vue';
 import { errorHandler } from '../services/error-handling/error-handler';
 import { SlothsService } from '../services/sloths-service';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
-import SlothsInfo from '../components/catalog/SlothsInfo.vue';
-import type { Sloths } from '@/common/types';
+import SlothCard from '../components/catalog/SlothCard.vue';
+import SlothInfo from '../components/catalog/SlothInfo.vue';
+import type { Sloth, Sloths } from '@/common/types';
+import useSlothInfo from '../stores/slothInfo';
+import { ModalEvents } from '../common/enums/modalEvents';
 
 const service = new SlothsService();
+
+const { setEmptySlothInfo, setSlothInfo } = useSlothInfo();
 
 export default defineComponent({
   name: 'CatalogView',
 
   components: {
     CustomBtn,
-    SlothsInfo,
+    SlothCard,
+    SlothInfo,
   },
 
   data() {
     return {
       sloths: [] as Sloths,
+      isSlothInfoVisible: false,
+      modalEvents: ModalEvents.view,
     };
+  },
+
+  computed: {
+    getPageName() {
+      return this.$route.name === 'admin' ? 'admin' : 'catalog';
+    },
+
+    getHeaderSlothInfo() {
+      if (this.modalEvents === ModalEvents.new) return this.$t('catalog.btn.new');
+      if (this.modalEvents === ModalEvents.edit) return this.$t('catalog.btn.edit');
+      return this.$t('catalog.info');
+    },
   },
 
   mounted() {
@@ -50,11 +92,97 @@ export default defineComponent({
         errorHandler(error);
       }
     },
+
+    async delSloth(id: string) {
+      try {
+        const res = await service.deleteById(id);
+
+        if (!res) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
+    async createSloth(sloth: Sloth) {
+      try {
+        const res = await service.create(sloth);
+
+        if (!res) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
+    async updSlothRating(sloth: Sloth, rate: number) {
+      try {
+        const res = await SlothsService.updateRatingById(sloth.id, rate);
+
+        if (!res) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
+    async updSloth(sloth: Sloth) {
+      try {
+        const res = await service.updateById(sloth.id, sloth);
+
+        if (!res) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
+    showSlothInfoView(sloth: Sloth) {
+      this.modalEvents = ModalEvents.view;
+      setSlothInfo(sloth);
+      this.showSlothInfo();
+    },
+
+    showSlothInfoNew() {
+      this.modalEvents = ModalEvents.new;
+      setEmptySlothInfo();
+      this.showSlothInfo();
+    },
+
+    showSlothInfoEdit(sloth: Sloth) {
+      this.modalEvents = ModalEvents.edit;
+      setSlothInfo(sloth);
+      this.showSlothInfo();
+    },
+
+    showSlothInfo() {
+      this.isSlothInfoVisible = true;
+    },
+
+    closeSlothInfo() {
+      this.isSlothInfoVisible = false;
+    },
   },
 });
 </script>
 
 <style scoped>
+.catalog {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.catalog__aside {
+  width: 200px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .catalog__showcase {
   margin: 0.5em;
   display: flex;

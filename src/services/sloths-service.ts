@@ -1,4 +1,4 @@
-import type { API, Sloth } from '@/common/types';
+import type { API, Sloth, SlothRating } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 import { getAllSloths, getByIdSloth, getDeleteSloth } from './mocks/sloths-mocks';
@@ -32,9 +32,19 @@ export class SlothsService implements API<Sloth> {
     // return Promise.resolve(this.getByIdResult);
   }
 
-  public updateById(id: string, body: Sloth) {
-    return this.service.updateById(id, body);
+  public updateById(slothId: string, sloth: Sloth) {
+    const { id, caption, description } = sloth;
+    const body = { id, caption, description };
+    return this.service.updateById(slothId, body);
     // return Promise.resolve(this.getByIdResult);
+  }
+
+  public static updateRatingById(slothId: string, rate: number) {
+    const ratingService = new APIService<SlothRating>(`${Endpoints.sloths}/${slothId}/rating`);
+    const userId = '09edb293-9e8c-4768-8d32-3ee2784959fa'; // todo user id
+
+    const body: SlothRating = { slothId, userId, rate };
+    return ratingService.update(body);
   }
 
   public deleteById(id: string) {
