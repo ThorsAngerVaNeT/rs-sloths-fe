@@ -74,7 +74,7 @@
   "sloth": {
     "title": "What kind of sloth are you today"
   },
-  
+
   "admin": {
     "title": "Admin panel",
     "btn": {
@@ -90,5 +90,14 @@
     "btn": {
       "close": "Close"
     }
+  },
+
+  "loader": {
+    "text": "Sloth's loading in progress"
+  },
+
+  "404": {
+    "title": "404: Page Not Found",
+    "text": "Sloth made a bug or didn't make this page.\nPlease check the correctness of path again"
   }
 }
