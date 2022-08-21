@@ -19,5 +19,4 @@ export const MEMORY_LEVELS = [
   },
 ];
 
-export const MEMORY_START_TIMEOUT = 5000;
 export const MEMORY_GAME_TIMEOUT = 1000;

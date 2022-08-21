@@ -11,18 +11,18 @@
         :item="item"
         @click="gameHandler(index)"
       >
-        <transition name="flip" mode="out-in">
+        <transition name="flip" mode="out-in" @before-leave="isAnimated = true" @after-enter="isAnimated = false">
           <img v-if="!getIsOpen(index)" :src="cardCover" alt="cover" class="game-field__img" />
           <img v-else :src="getImage(index)" alt="card" class="game-field__img" />
         </transition>
       </div>
     </transition-group>
-    <modal-window v-show="isModalVisible" @close="closeModal">
+    <modal-window v-show="getShowModal" @close="closeModal">
       <template v-slot:header> {{ $t('memory.congrats') }} </template>
 
       <template v-slot:body>
         <p>{{ $t('memory.win') }}</p>
-        <p>{{ steps }} {{ $t('memory.steps') }}</p>
+        <p>{{ steps }} {{ getStepsText }}</p>
         <p>{{ getTime }} {{ $t('memory.time') }}</p>
       </template>
     </modal-window>
@@ -62,9 +62,7 @@ export default defineComponent({
       endTime: 0,
       grid: 0,
       isHandled: false,
-      isAnimation: false,
-      // @animationstart="isAnimation = true"
-      // @animationend="isAnimation = false"
+      isAnimated: false,
       isModalVisible: false,
     };
   },
@@ -72,17 +70,36 @@ export default defineComponent({
   props: {
     level: {
       type: Object as PropType<MemoryLevel>,
-      default: MEMORY_LEVELS[0],
+      default: MEMORY_LEVELS[1],
     },
   },
 
   computed: {
-    getLevel() {
+    getLevel(): string {
       return `memory.${this.level.level}`;
     },
 
-    getTime() {
+    getStepsText(): string {
+      const n = this.steps % 100;
+      const n1 = n % 10;
+      if (n > 10 && n < 20) {
+        return this.$t('memory.stepsN');
+      }
+      if (n1 > 1 && n1 < 5) {
+        return this.$t('memory.steps2');
+      }
+      if (n1 === 1) {
+        return this.$t('memory.steps1');
+      }
+      return this.$t('memory.stepsN');
+    },
+
+    getTime(): number {
       return (this.endTime - this.startTime) / 1000;
+    },
+
+    getShowModal(): boolean {
+      return this.isModalVisible && !this.isAnimated && !this.isHandled;
     },
   },
 
@@ -130,11 +147,9 @@ export default defineComponent({
         this.cards.push({ img: el, id: i, index, open: false });
         index += 1;
       });
-
-      this.cards.sort(() => Math.random() - 0.5);
     },
 
-    async startGame() {
+    startGame() {
       this.cards.forEach((el, i) => this.closeCard(i));
       this.activeCard = Infinity;
       this.steps = 0;
@@ -144,11 +159,11 @@ export default defineComponent({
       this.cards.sort(() => Math.random() - 0.5);
     },
 
-    getImage(i: number) {
+    getImage(i: number): string {
       return this.cards[i].img;
     },
 
-    getIsOpen(i: number) {
+    getIsOpen(i: number): boolean {
       return this.cards[i].open;
     },
 
@@ -157,8 +172,7 @@ export default defineComponent({
 
       if (this.cards[i].open) return;
       if (this.isHandled) return;
-
-      this.isHandled = true;
+      if (this.isAnimated) return;
 
       this.openCard(i);
       this.steps += 1;
@@ -171,9 +185,11 @@ export default defineComponent({
         const i2 = this.activeCard;
         this.activeCard = Infinity;
 
+        this.isHandled = true;
         setTimeout(() => {
           this.closeCard(i);
           this.closeCard(i2);
+          this.isHandled = false;
         }, MEMORY_GAME_TIMEOUT);
       }
 
@@ -181,8 +197,6 @@ export default defineComponent({
         this.endTime = Date.now();
         this.isModalVisible = true;
       }
-
-      this.isHandled = false;
     },
 
     checkGame(): boolean {
