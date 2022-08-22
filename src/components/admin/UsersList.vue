@@ -6,23 +6,23 @@
       <custom-btn :text="$t('admin.users.btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
     <div class="users__showcase">
-      <user-info
+      <user-card
         v-for="user in users"
         :key="user.id"
         :userInfo="user"
         @delUser="delUser"
         @editUser="showUserInfoEdit"
         @showUser="showUserInfoView"
-      ></user-info>
+      ></user-card>
     </div>
-    <user-info
+    <!-- <user-info
       :isUserInfoVisible="isUserInfoVisible"
       :headerText="getHeaderUserInfo"
       :modalEvents="modalEvents"
       @closeUserInfo="closeUserInfo"
       @createUser="createUser"
       @updUser="updUser"
-    ></user-info>
+    ></user-info> -->
   </div>
 </template>
 
@@ -30,11 +30,12 @@
 import { defineComponent } from 'vue';
 import { errorHandler } from '../../services/error-handling/error-handler';
 import { UsersService } from '../../services/users-service';
-import CustomBtn from '../buttons/CustomBtn.vue';
-import UserInfo from '../profile/UserInfo.vue';
 import type { User, Users } from '@/common/types';
-import useUserInfo from '../../stores/user-info';
 import { ModalEvents } from '../../common/enums/modalEvents';
+import CustomBtn from '../buttons/CustomBtn.vue';
+// import UserInfo from '../profile/UserInfo.vue';
+import UserCard from './UserCard.vue';
+import useUserInfo from '../../stores/user-info';
 
 const service = new UsersService();
 
@@ -45,7 +46,8 @@ export default defineComponent({
 
   components: {
     CustomBtn,
-    UserInfo,
+    UserCard,
+    // UserInfo,
   },
 
   data() {
