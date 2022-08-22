@@ -33,7 +33,7 @@
 import { defineComponent, type PropType } from 'vue';
 import ModalWindow from '../modal/ModalWindow.vue';
 import CustomBtn from '../buttons/CustomBtn.vue';
-import { MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '../../common/const';
+import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '../../common/const';
 import type { MemoryLevel } from '../../common/types';
 
 type Card = {
@@ -53,7 +53,7 @@ export default defineComponent({
 
   data() {
     return {
-      cardCover: './card-cover.png',
+      cardCover: MEMORY_GAME_COVER,
       images: [] as string[],
       cards: [] as Card[],
       activeCard: Infinity,
