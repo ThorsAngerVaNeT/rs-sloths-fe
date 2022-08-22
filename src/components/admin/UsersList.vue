@@ -15,14 +15,14 @@
         @showUser="showUserInfoView"
       ></user-card>
     </div>
-    <!-- <user-info
+    <user-modal
       :isUserInfoVisible="isUserInfoVisible"
       :headerText="getHeaderUserInfo"
       :modalEvents="modalEvents"
       @closeUserInfo="closeUserInfo"
       @createUser="createUser"
       @updUser="updUser"
-    ></user-info> -->
+    ></user-modal>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ import { UsersService } from '../../services/users-service';
 import type { User, Users } from '@/common/types';
 import { ModalEvents } from '../../common/enums/modalEvents';
 import CustomBtn from '../buttons/CustomBtn.vue';
-// import UserInfo from '../profile/UserInfo.vue';
+import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
 import useUserInfo from '../../stores/user-info';
 
@@ -47,7 +47,7 @@ export default defineComponent({
   components: {
     CustomBtn,
     UserCard,
-    // UserInfo,
+    UserModal,
   },
 
   data() {
