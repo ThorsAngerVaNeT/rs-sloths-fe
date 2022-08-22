@@ -150,13 +150,26 @@ export default defineComponent({
     },
 
     startGame() {
+      const isAllClosed = this.cards.every((el) => !el.open);
+
       this.cards.forEach((el, i) => this.closeCard(i));
       this.activeCard = Infinity;
       this.steps = 0;
       this.startTime = 0;
       this.endTime = 0;
 
-      this.cards.sort(() => Math.random() - 0.5);
+      if (isAllClosed) {
+        this.cards.sort(() => Math.random() - 0.5);
+      } else {
+        setTimeout(() => {
+          this.cards.sort(() => Math.random() - 0.5);
+        }, MEMORY_GAME_TIMEOUT);
+      }
+      setTimeout(() => {
+        this.cards.sort(() => Math.random() - 0.5);
+      }, MEMORY_GAME_TIMEOUT / 2);
+
+      // this.cards.sort(() => Math.random() - 0.5);
     },
 
     getImage(i: number): string {
@@ -259,7 +272,7 @@ export default defineComponent({
 }
 /* Animations */
 .shuffle-list-move {
-  transition: transform 1s;
+  transition: transform 0.6s;
 }
 
 .flip-enter-active {
