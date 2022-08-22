@@ -98,9 +98,7 @@
         "new": "New user",
         "del": "Delete",
         "edit": "Edit",
-        "save": "Save",
-        "show": "Detail info",
-        "pick": "Pick"
+        "save": "Save"
       }
     }
   },
