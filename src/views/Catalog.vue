@@ -41,7 +41,7 @@ import SlothCard from '../components/catalog/SlothCard.vue';
 import SlothInfo from '../components/catalog/SlothInfo.vue';
 import type { Sloth, Sloths } from '@/common/types';
 import useSlothInfo from '../stores/slothInfo';
-import { ModalEvents } from '../common/enums/modalEvents';
+import { ModalEvents } from '../common/enums/modal-events';
 
 const service = new SlothsService();
 
