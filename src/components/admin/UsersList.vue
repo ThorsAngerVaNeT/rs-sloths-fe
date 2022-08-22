@@ -6,14 +6,14 @@
       <custom-btn :text="$t('admin.users.btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
     <div class="users__showcase">
-      <user-card
+      <user-info
         v-for="user in users"
         :key="user.id"
         :usersInfo="user"
         @delUser="delUser"
         @editUser="showUserInfoEdit"
         @showUser="showUserInfoView"
-      ></user-card>
+      ></user-info>
     </div>
     <user-info
       :isUserInfoVisible="isUserInfoVisible"
@@ -31,7 +31,6 @@ import { defineComponent } from 'vue';
 import { errorHandler } from '../../services/error-handling/error-handler';
 import { UsersService } from '../../services/users-service';
 import CustomBtn from '../buttons/CustomBtn.vue';
-// import UserCard from './UserCard.vue';
 import UserInfo from '../profile/UserInfo.vue';
 import type { User, Users } from '@/common/types';
 import useUserInfo from '../../stores/user-info';
@@ -46,7 +45,6 @@ export default defineComponent({
 
   components: {
     CustomBtn,
-    // UserCard,
     UserInfo,
   },
 
