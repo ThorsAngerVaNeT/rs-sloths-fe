@@ -59,7 +59,7 @@ export default defineComponent({
   },
 
   computed: {
-    getHeaderUserInfo() {
+    getHeaderUserInfo(): string {
       if (this.modalEvents === ModalEvents.new) return this.$t('admin.users.btn.new');
       if (this.modalEvents === ModalEvents.edit) return this.$t('admin.users.btn.edit');
       return this.$t('admin.users.info');

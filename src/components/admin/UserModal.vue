@@ -50,15 +50,6 @@ export default defineComponent({
     },
   },
 
-  computed: {
-    isNew() {
-      return this.modalEvents === ModalEvents.new;
-    },
-    isView() {
-      return this.modalEvents === ModalEvents.view;
-    },
-  },
-
   methods: {
     saveUser() {
       if (this.modalEvents === ModalEvents.new) {
