@@ -1,21 +1,23 @@
 <template>
-  <div class="modal-background">
-    <div class="modal">
-      <div class="btn-close" @click="close">╳</div>
-      <h3 class="modal__header">
-        <slot name="header"></slot>
-      </h3>
+  <transition name="fade">
+    <div class="modal-background">
+      <div class="modal">
+        <div class="btn-close" @click="close">╳</div>
+        <h3 class="modal__header">
+          <slot name="header"></slot>
+        </h3>
 
-      <section class="modal__body">
-        <slot name="body"> </slot>
-      </section>
+        <section class="modal__body">
+          <slot name="body"> </slot>
+        </section>
 
-      <footer class="modal__footer">
-        <slot name="footer"></slot>
-      </footer>
-      <custom-btn :text="$t('modal.btn.close')" className="btn btn-link" :onClick="close"></custom-btn>
+        <footer class="modal__footer">
+          <slot name="footer"></slot>
+        </footer>
+        <custom-btn :text="$t('modal.btn.close')" className="btn btn-link" :onClick="close"></custom-btn>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script lang="ts">
@@ -48,6 +50,8 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background-color: var(--dark-opacity);
 }
 
 .modal {
@@ -59,7 +63,7 @@ export default defineComponent({
 
   overflow-x: auto;
 
-  background-color: var(--vt-c-white);
+  background-color: var(--light-addict);
   border-radius: 1em;
   box-shadow: 0px 0px 5px;
 }
@@ -91,5 +95,34 @@ export default defineComponent({
   cursor: pointer;
 
   background: transparent;
+}
+/* Animation */
+.fade-enter-active {
+  animation: fade-out 0.2s;
+}
+.fade-leave-active {
+  animation: fade-in 0.2s;
+}
+@keyframes fade-in {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  0% {
+    transform: scale(2);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 </style>

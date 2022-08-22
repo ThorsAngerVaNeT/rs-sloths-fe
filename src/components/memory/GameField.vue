@@ -208,7 +208,10 @@ export default defineComponent({
 
       if (this.checkGame()) {
         this.endTime = Date.now();
-        this.isModalVisible = true;
+
+        setTimeout(() => {
+          this.isModalVisible = true;
+        }, 0);
       }
     },
 
