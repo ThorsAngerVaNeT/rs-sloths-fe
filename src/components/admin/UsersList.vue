@@ -9,7 +9,7 @@
       <user-info
         v-for="user in users"
         :key="user.id"
-        :usersInfo="user"
+        :userInfo="user"
         @delUser="delUser"
         @editUser="showUserInfoEdit"
         @showUser="showUserInfoView"

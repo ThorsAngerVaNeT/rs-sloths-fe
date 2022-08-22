@@ -2,7 +2,7 @@
   <div class="profile">
     <aside class="profile__aside">
       <h2>{{ $t('profile.title') }}</h2>
-      <user-info :id="id"></user-info>
+      <user-info @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
       <router-link to="/admin">
         <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
@@ -24,12 +24,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
+import { errorHandler } from '../services/error-handling/error-handler';
+import { UsersService } from '../services/users-service';
 import UserInfo from '../components/profile/UserInfo.vue';
 import MemoryInfo from '../components/profile/MemoryInfo.vue';
 import GuessInfo from '../components/profile/GuessInfo.vue';
 import SuggestInfo from '../components/profile/SuggestInfo.vue';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
+import type { User } from '@/common/types';
+import useUserInfo from '../stores/user-info';
+
+const service = new UsersService();
+
+const { setUserInfo } = useUserInfo();
 
 export default defineComponent({
   name: 'ProfileView',
@@ -44,14 +51,47 @@ export default defineComponent({
 
   data() {
     return {
-      id: '',
+      user: {} as User,
       currentGame: 0,
       tabs: ['memory', 'guess', 'suggest'],
       components: ['MemoryInfo', 'GuessInfo', 'SuggestInfo'],
     };
   },
 
+  props: {
+    id: {
+      type: String,
+      default: '1', // todo // required: true,
+    },
+  },
+
+  mounted() {
+    this.getUser();
+  },
+
   methods: {
+    async getUser() {
+      try {
+        const res = await service.getById(this.id);
+        if (!res) throw Error(); // todo
+        this.user = res.data;
+
+        setUserInfo(this.user);
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
+    async updUser(user: User) {
+      try {
+        const res = await service.updateById(user.id, user);
+        if (!res) throw Error(); // todo
+        await this.getUser();
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
+
     logOut() {
       // todo
     },

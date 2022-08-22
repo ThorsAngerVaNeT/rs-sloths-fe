@@ -18,28 +18,30 @@ export class UsersService implements API<User> {
   }
 
   public getPage(page: number, limit: number) {
-    // return this.service.getSome(page, limit);
-    return Promise.resolve(this.getAllResult);
+    return this.service.getPage(page, limit);
+    // return Promise.resolve(this.getAllResult);
   }
 
   public getById(id: string) {
-    // return this.service.getById(id);
-    return Promise.resolve(this.getByIdResult);
+    return this.service.getById(id);
+    // return Promise.resolve(this.getByIdResult);
   }
 
   public create(body: User) {
-    // return this.service.create(body);
-    return Promise.resolve(this.getByIdResult);
+    return this.service.create(body);
+    // return Promise.resolve(this.getByIdResult);
   }
 
-  public updateById(id: string, body: User) {
-    // return this.service.updateById(id, body);
-    return Promise.resolve(this.getByIdResult);
+  public updateById(userId: string, user: User) {
+    const { id, name, email } = user;
+    const body = { id, name, email };
+    return this.service.updateById(userId, body);
+    // return Promise.resolve(this.getByIdResult);
   }
 
   public deleteById(id: string) {
-    // return this.service.deleteById(id);
-    return Promise.resolve(this.getDeleteResult);
+    return this.service.deleteById(id);
+    // return Promise.resolve(this.getDeleteResult);
   }
 }
 
