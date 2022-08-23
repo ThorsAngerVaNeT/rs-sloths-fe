@@ -25,6 +25,11 @@ module.exports = {
     "parser" : "@typescript-eslint/parser",
     "sourceType": "module"
   },
+  "settings": {
+    "import/resolver": {
+      "typescript": {} // this loads <rootdir>/tsconfig.json to eslint
+    },
+  },
   "rules": {
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-unused-expressions": [

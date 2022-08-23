@@ -30,11 +30,12 @@
 </template>
 
 <script lang="ts">
+import { ruNounEnding } from '@/utils/ru-noun-ending';
+import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '@/common/const';
+import type { MemoryLevel } from '@/common/types';
 import { defineComponent, type PropType } from 'vue';
-import ModalWindow from '../modal/ModalWindow.vue';
-import CustomBtn from '../buttons/CustomBtn.vue';
-import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '../../common/const';
-import type { MemoryLevel } from '../../common/types';
+import ModalWindow from '@/components/modal/ModalWindow.vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
 
 type Card = {
   img: string;
@@ -80,18 +81,7 @@ export default defineComponent({
     },
 
     getStepsText(): string {
-      const n = this.steps % 100;
-      const n1 = n % 10;
-      if (n > 10 && n < 20) {
-        return this.$t('memory.stepsN');
-      }
-      if (n1 > 1 && n1 < 5) {
-        return this.$t('memory.steps2');
-      }
-      if (n1 === 1) {
-        return this.$t('memory.steps1');
-      }
-      return this.$t('memory.stepsN');
+      return ruNounEnding(this.steps, this.$t('memory.steps1'), this.$t('memory.steps2'), this.$t('memory.stepsN'));
     },
 
     getTime(): number {
