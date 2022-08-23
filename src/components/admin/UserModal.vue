@@ -13,10 +13,10 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import { storeToRefs } from 'pinia';
-import ModalWindow from '../modal/ModalWindow.vue';
-import UserInfo from '../profile/UserInfo.vue';
-import useUserInfo from '../../stores/user-info';
-import { ModalEvents } from '../../common/enums/modalEvents';
+import useUserInfo from '@/stores/user-info';
+import { ModalEvents } from '@/common/enums/modal-events';
+import ModalWindow from '@/components/modal/ModalWindow.vue';
+import UserInfo from '@/components/profile/UserInfo.vue';
 
 const { userInfo } = storeToRefs(useUserInfo());
 
