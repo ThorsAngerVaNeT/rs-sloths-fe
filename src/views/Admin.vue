@@ -19,12 +19,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CustomBtn from '../components/buttons/CustomBtn.vue';
-import UsersList from '../components/admin/UsersList.vue';
+
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import UsersList from '@/components/admin/UsersList.vue';
+import SuggestInfo from '@/components/profile/SuggestInfo.vue';
+import GuessInfo from '@/components/profile/GuessInfo.vue';
+import MemoryInfo from '@/components/profile/MemoryInfo.vue';
 import CatalogView from './Catalog.vue';
-import SuggestInfo from '../components/profile/SuggestInfo.vue';
-import GuessInfo from '../components/profile/GuessInfo.vue';
-import MemoryInfo from '../components/profile/MemoryInfo.vue';
 
 export default defineComponent({
   name: 'AdminView',

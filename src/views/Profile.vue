@@ -20,19 +20,23 @@
       <component :is="components[currentGame]" class="profile__tab" :id="components[currentGame]"></component>
     </main>
   </div>
+  <loader-view v-show="isLoad" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapWritableState } from 'pinia';
 import type { User } from '@/common/types';
-import { errorHandler } from '../services/error-handling/error-handler';
-import { UsersService } from '../services/users-service';
-import UserInfo from '../components/profile/UserInfo.vue';
-import MemoryInfo from '../components/profile/MemoryInfo.vue';
-import GuessInfo from '../components/profile/GuessInfo.vue';
-import SuggestInfo from '../components/profile/SuggestInfo.vue';
-import CustomBtn from '../components/buttons/CustomBtn.vue';
-import useUserInfo from '../stores/user-info';
+import { errorHandler } from '@/services/error-handling/error-handler';
+import { UsersService } from '@/services/users-service';
+import useLoader from '@/stores/loader';
+import LoaderView from '@/components/loader/LoaderView.vue';
+import UserInfo from '@/components/profile/UserInfo.vue';
+import MemoryInfo from '@/components/profile/MemoryInfo.vue';
+import GuessInfo from '@/components/profile/GuessInfo.vue';
+import SuggestInfo from '@/components/profile/SuggestInfo.vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import useUserInfo from '@/stores/user-info';
 
 const service = new UsersService();
 
@@ -42,6 +46,7 @@ export default defineComponent({
   name: 'ProfileView',
 
   components: {
+    LoaderView,
     UserInfo,
     MemoryInfo,
     GuessInfo,
@@ -65,12 +70,21 @@ export default defineComponent({
     },
   },
 
+  computed: {
+    ...mapWritableState(useLoader, ['isLoad']),
+  },
+
+  created() {
+    this.isLoad = false;
+  },
+
   mounted() {
     this.getUser();
   },
 
   methods: {
     async getUser() {
+      this.isLoad = true;
       try {
         const res = await service.getById(this.id);
         if (!res) throw Error(); // todo
@@ -79,16 +93,21 @@ export default defineComponent({
         setUserInfo(this.user);
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async updUser(user: User) {
+      this.isLoad = true;
       try {
         const res = await service.updateById(user.id, user);
         if (!res) throw Error(); // todo
         await this.getUser();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 

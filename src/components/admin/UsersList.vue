@@ -25,16 +25,20 @@
       @updUser="updUser"
     ></user-modal>
   </div>
+  <loader-view v-show="isLoad" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapWritableState } from 'pinia';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { UsersService } from '@/services/users-service';
 import type { User, Users } from '@/common/types';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useUserInfo from '@/stores/user-info';
+import useLoader from '@/stores/loader';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import LoaderView from '@/components/loader/LoaderView.vue';
 import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
 
@@ -49,6 +53,7 @@ export default defineComponent({
     CustomBtn,
     UserCard,
     UserModal,
+    LoaderView,
   },
 
   data() {
@@ -61,11 +66,17 @@ export default defineComponent({
   },
 
   computed: {
+    ...mapWritableState(useLoader, ['isLoad']),
+
     getHeaderUserInfo(): string {
       if (this.modalEvents === ModalEvents.new) return this.$t('admin.users.btn.new');
       if (this.modalEvents === ModalEvents.edit) return this.$t('admin.users.btn.edit');
       return this.$t('admin.users.info');
     },
+  },
+
+  created() {
+    this.isLoad = false;
   },
 
   mounted() {
@@ -74,6 +85,7 @@ export default defineComponent({
 
   methods: {
     async getUsers() {
+      this.isLoad = true;
       try {
         const res = await service.getAll();
 
@@ -83,10 +95,15 @@ export default defineComponent({
         this.count = res.data.count;
       } catch (error) {
         errorHandler(error);
+      } finally {
+        setTimeout(() => {
+          this.isLoad = false;
+        }, 3000);
       }
     },
 
     async delUser(id: string) {
+      this.isLoad = true;
       try {
         const res = await service.deleteById(id);
 
@@ -95,10 +112,13 @@ export default defineComponent({
         await this.getUsers();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async createUser(user: User) {
+      this.isLoad = true;
       try {
         const res = await service.create(user);
 
@@ -107,10 +127,13 @@ export default defineComponent({
         await this.getUsers();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async updUser(user: User) {
+      this.isLoad = true;
       try {
         const res = await service.updateById(user.id, user);
 
@@ -119,6 +142,8 @@ export default defineComponent({
         await this.getUsers();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
