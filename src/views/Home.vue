@@ -59,7 +59,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   gap: 20px;
-  grid-template-columns: repeat(4, 150px);
+  grid-template-columns: repeat(4, 100px);
   grid-template-rows: repeat(4, 150px);
   grid-template-areas:
     'A A B Z'

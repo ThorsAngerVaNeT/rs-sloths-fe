@@ -1,9 +1,10 @@
 <template>
   <div :class="`home-category home-category_${category}`">
-    <div class="home-category__wrapper">
+    <div class="home-category__wrapper" v-if="category === 'catalog'">
       <div class="home-category_up"></div>
       <div class="home-category_down"></div>
     </div>
+    <img class="home-category__img" v-else :src="`../../assets/icons/home/${category}.svg`" :alt="`${category}-icon`" />
     <div class="home-category__name">{{ $t(`${category}.title`) }}</div>
   </div>
 </template>
@@ -25,8 +26,8 @@ export default defineComponent({
 
 <style scoped>
 .home-category {
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -86,14 +87,19 @@ export default defineComponent({
   background-color: var(--dark-addict);
 }
 
+.home-category__img {
+  height: 100px;
+  width: 100%;
+}
+
 .home-category:hover .home-category_up {
-  top: 0;
+  top: 20%;
   transform: translate(0, 0);
 }
 
 .home-category:hover .home-category_down {
   top: none;
-  bottom: 0;
+  bottom: 20%;
   transform: translate(0, 0);
 }
 </style>
