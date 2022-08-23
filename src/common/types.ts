@@ -20,7 +20,12 @@ export interface API<T> {
 }
 
 export type Users = User[];
-export type User = unknown;
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+};
 
 export type Sloths = Sloth[];
 export type Sloth = {

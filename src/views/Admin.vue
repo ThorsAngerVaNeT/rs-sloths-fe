@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
-import UserInfo from '../components/profile/UserInfo.vue';
+import UsersList from '../components/admin/UsersList.vue';
 import CatalogView from './Catalog.vue';
 import SuggestInfo from '../components/profile/SuggestInfo.vue';
 import GuessInfo from '../components/profile/GuessInfo.vue';
@@ -31,7 +31,7 @@ export default defineComponent({
 
   components: {
     CustomBtn,
-    UserInfo,
+    UsersList,
     CatalogView,
     SuggestInfo,
     GuessInfo,
@@ -42,7 +42,7 @@ export default defineComponent({
     return {
       currentPage: 0,
       pages: ['users', 'sloths', 'suggest', 'guess', 'memory'],
-      components: ['UserInfo', 'CatalogView', 'SuggestInfo', 'GuessInfo', 'MemoryInfo'],
+      components: ['UsersList', 'CatalogView', 'SuggestInfo', 'GuessInfo', 'MemoryInfo'],
     };
   },
 });
