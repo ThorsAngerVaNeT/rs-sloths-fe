@@ -25,7 +25,6 @@
       @updUser="updUser"
     ></user-modal>
   </div>
-  <loader-view v-show="isLoad" />
 </template>
 
 <script lang="ts">
@@ -38,7 +37,6 @@ import { ModalEvents } from '@/common/enums/modal-events';
 import useUserInfo from '@/stores/user-info';
 import useLoader from '@/stores/loader';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
-import LoaderView from '@/components/loader/LoaderView.vue';
 import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
 
@@ -53,7 +51,6 @@ export default defineComponent({
     CustomBtn,
     UserCard,
     UserModal,
-    LoaderView,
   },
 
   data() {
@@ -96,9 +93,7 @@ export default defineComponent({
       } catch (error) {
         errorHandler(error);
       } finally {
-        setTimeout(() => {
-          this.isLoad = false;
-        }, 3000);
+        this.isLoad = false;
       }
     },
 

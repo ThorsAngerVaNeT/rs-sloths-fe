@@ -20,7 +20,6 @@
       <component :is="components[currentGame]" class="profile__tab" :id="components[currentGame]"></component>
     </main>
   </div>
-  <loader-view v-show="isLoad" />
 </template>
 
 <script lang="ts">
@@ -30,7 +29,6 @@ import type { User } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { UsersService } from '@/services/users-service';
 import useLoader from '@/stores/loader';
-import LoaderView from '@/components/loader/LoaderView.vue';
 import UserInfo from '@/components/profile/UserInfo.vue';
 import MemoryInfo from '@/components/profile/MemoryInfo.vue';
 import GuessInfo from '@/components/profile/GuessInfo.vue';
@@ -46,7 +44,6 @@ export default defineComponent({
   name: 'ProfileView',
 
   components: {
-    LoaderView,
     UserInfo,
     MemoryInfo,
     GuessInfo,
