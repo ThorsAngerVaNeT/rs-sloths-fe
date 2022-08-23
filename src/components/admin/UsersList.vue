@@ -2,6 +2,7 @@
   <div class="users">
     <div class="users__aside">
       <h3>{{ $t('admin.users.title') }}</h3>
+      {{ count }}
       <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
       <custom-btn :text="$t('admin.users.btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
@@ -53,6 +54,7 @@ export default defineComponent({
   data() {
     return {
       users: [] as Users,
+      count: 0,
       isUserInfoVisible: false,
       modalEvents: ModalEvents.view,
     };
@@ -77,7 +79,8 @@ export default defineComponent({
 
         if (!res) throw Error(); // todo
 
-        this.users = res.data;
+        this.users = res.data.items;
+        this.count = res.data.count;
       } catch (error) {
         errorHandler(error);
       }

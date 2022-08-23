@@ -1,3 +1,5 @@
+import type { Role } from './enums/user-role';
+
 export type APIRequestResult<T> = {
   ok: boolean;
   status: number;
@@ -5,10 +7,15 @@ export type APIRequestResult<T> = {
   headers: unknown;
 };
 
-export interface API<T> {
-  getAll(): Promise<APIRequestResult<T[]> | null>;
+export type GetList<T> = {
+  count: number;
+  items: T[];
+};
 
-  getPage(page: number, limit: number): Promise<APIRequestResult<T[]> | null>;
+export interface API<T> {
+  getAll(): Promise<APIRequestResult<GetList<T>> | null>;
+
+  getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>> | null>;
 
   getById(id: string): Promise<APIRequestResult<T> | null>;
 
@@ -24,6 +31,9 @@ export type User = {
   id: string;
   name: string;
   email: string;
+  password: string;
+  createdAt: number;
+  role: Role;
   avatar: string;
 };
 

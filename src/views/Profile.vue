@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import type { User } from '@/common/types';
 import { errorHandler } from '../services/error-handling/error-handler';
 import { UsersService } from '../services/users-service';
 import UserInfo from '../components/profile/UserInfo.vue';
@@ -31,7 +32,6 @@ import MemoryInfo from '../components/profile/MemoryInfo.vue';
 import GuessInfo from '../components/profile/GuessInfo.vue';
 import SuggestInfo from '../components/profile/SuggestInfo.vue';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
-import type { User } from '@/common/types';
 import useUserInfo from '../stores/user-info';
 
 const service = new UsersService();
@@ -61,7 +61,7 @@ export default defineComponent({
   props: {
     id: {
       type: String,
-      default: '1', // todo // required: true,
+      default: 'cd86722d-e3cc-405c-9a46-8da7d7d2dfcf', // todo // required: true,
     },
   },
 
