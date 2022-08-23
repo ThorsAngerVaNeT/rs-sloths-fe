@@ -72,17 +72,19 @@ export default defineComponent({
   position: absolute;
   width: 100%;
   height: 50%;
-  top: 50%;
-  transform: translate(0, -50%);
   transition: 0.3s;
 }
 
 .home-category_up {
+  top: 50%;
+  transform: translate(0, -50%);
   z-index: 2;
   background-color: var(--blue-main);
 }
 
 .home-category_down {
+  bottom: 50%;
+  transform: translate(0, 50%);
   z-index: 3;
   background-color: var(--dark-addict);
 }
