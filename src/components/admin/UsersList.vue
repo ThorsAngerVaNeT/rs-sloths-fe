@@ -28,14 +28,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { errorHandler } from '../../services/error-handling/error-handler';
-import { UsersService } from '../../services/users-service';
+import { errorHandler } from '@/services/error-handling/error-handler';
+import { UsersService } from '@/services/users-service';
 import type { User, Users } from '@/common/types';
-import { ModalEvents } from '../../common/enums/modalEvents';
-import CustomBtn from '../buttons/CustomBtn.vue';
+import { ModalEvents } from '@/common/enums/modal-events';
+import useUserInfo from '@/stores/user-info';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
-import useUserInfo from '../../stores/user-info';
 
 const service = new UsersService();
 
