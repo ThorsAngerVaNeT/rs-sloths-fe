@@ -57,3 +57,8 @@ export type MemoryLevel = {
   level: string;
   n: number;
 };
+
+export type ErrorDescription = {
+  code: string;
+  message: string;
+};

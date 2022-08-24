@@ -31,6 +31,8 @@
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 import { errorHandler } from '@/services/error-handling/error-handler';
+import { CustomError } from '@/services/error-handling/custom-error';
+import { USERS_ERROR_CREATE, USERS_ERROR_DEL, USERS_ERROR_GET_LIST, USERS_ERROR_UPD } from '@/common/const';
 import { UsersService } from '@/services/users-service';
 import type { User, Users } from '@/common/types';
 import { ModalEvents } from '@/common/enums/modal-events';
@@ -86,7 +88,7 @@ export default defineComponent({
       try {
         const res = await service.getAll();
 
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_GET_LIST.code, USERS_ERROR_GET_LIST.message);
 
         this.users = res.data.items;
         this.count = res.data.count;
@@ -102,7 +104,7 @@ export default defineComponent({
       try {
         const res = await service.deleteById(id);
 
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_DEL.code, `${USERS_ERROR_DEL.message} (id=${id})`);
 
         await this.getUsers();
       } catch (error) {
@@ -117,7 +119,7 @@ export default defineComponent({
       try {
         const res = await service.create(user);
 
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_CREATE.code, `${USERS_ERROR_CREATE.message} (name=${user.name})`);
 
         await this.getUsers();
       } catch (error) {
@@ -132,7 +134,7 @@ export default defineComponent({
       try {
         const res = await service.updateById(user.id, user);
 
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
 
         await this.getUsers();
       } catch (error) {

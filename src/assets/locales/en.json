@@ -116,5 +116,7 @@
   "404": {
     "title": "404: Page Not Found",
     "text": "Sloth made a bug or didn't make this page.\nPlease check the correctness of path again"
-  }
+  },
+
+  "error": "ERROR!"
 }

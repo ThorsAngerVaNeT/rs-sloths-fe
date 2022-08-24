@@ -35,6 +35,8 @@ import GuessInfo from '@/components/profile/GuessInfo.vue';
 import SuggestInfo from '@/components/profile/SuggestInfo.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useUserInfo from '@/stores/user-info';
+import { USERS_ERROR_GET, USERS_ERROR_UPD } from '@/common/const';
+import { CustomError } from '@/services/error-handling/custom-error';
 
 const service = new UsersService();
 
@@ -84,7 +86,7 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const res = await service.getById(this.id);
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.id})`);
         this.user = res.data;
 
         setUserInfo(this.user);
@@ -99,7 +101,7 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const res = await service.updateById(user.id, user);
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
         await this.getUser();
       } catch (error) {
         errorHandler(error);
