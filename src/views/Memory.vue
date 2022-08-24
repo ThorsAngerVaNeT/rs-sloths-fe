@@ -1,16 +1,19 @@
 <template>
   <div class="memory">
-    <h2>{{ $t('memory.title') }}</h2>
-    <h3>{{ $t('memory.level') }}: {{ $t(getLevel) }}</h3>
-    <div class="memory__level">
-      <div
-        v-for="(level, index) in levels"
-        :key="index"
-        class="btn btn-img memory__btn"
-        :class="{ active: activeLevel === index }"
-        @click="setLevel(index)"
-      >
-        <img :src="getImg(index)" :alt="$t(getText(index))" />
+    <div class="memory__aside">
+      <h2>{{ $t('memory.title') }}</h2>
+      <h3>{{ $t('memory.level') }}</h3>
+      <h2>{{ $t(getLevel) }}</h2>
+      <div class="memory__level">
+        <div
+          v-for="(level, index) in levels"
+          :key="index"
+          class="btn btn-img memory__btn"
+          :class="{ active: activeLevel === index }"
+          @click="setLevel(index)"
+        >
+          <img :src="getImg(index)" :alt="$t(getText(index))" />
+        </div>
       </div>
     </div>
     <game-field :level="levels[activeLevel]"></game-field>
@@ -60,6 +63,12 @@ export default defineComponent({
 <style scoped>
 .memory {
   display: flex;
+}
+
+.memory__aside {
+  width: 300px;
+
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
@@ -69,6 +78,7 @@ h3 {
 }
 .memory__level {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 .memory__btn img {

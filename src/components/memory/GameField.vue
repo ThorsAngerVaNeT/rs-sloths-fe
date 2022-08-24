@@ -263,6 +263,7 @@ export default defineComponent({
 
     closeCard(i: number) {
       this.cards[i].open = false;
+      this.cards[i].success = false;
     },
 
     closeModal() {
@@ -306,6 +307,8 @@ export default defineComponent({
 .game-field__card {
   width: 150px;
   height: 200px;
+
+  cursor: pointer;
 
   perspective: 600px;
 }
