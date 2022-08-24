@@ -20,7 +20,7 @@ export const apiRequest = async <T>(url: string, config: RequestInit): Promise<A
       const contentType = headers.get('content-type');
 
       if (!contentType || !contentType.includes('application/json')) {
-        throw new CustomError(JSON_ERROR);
+        throw new CustomError(JSON_ERROR.code, JSON_ERROR.message);
       }
 
       data = await response.json();

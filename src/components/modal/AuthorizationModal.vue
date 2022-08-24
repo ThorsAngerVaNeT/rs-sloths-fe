@@ -1,0 +1,70 @@
+<template>
+  <div class="authorization-modal">
+    <modal-window @close="closeModal">
+      <template v-slot:header> {{ $t('modal.header.authorization') }} </template>
+
+      <template v-slot:body>
+        <div class="authorization-modal__body">
+          <img :src="imgGitHub" alt="GitHub" />
+          <p>{{ $t('modal.body.authorization') }}</p>
+        </div>
+      </template>
+
+      <template v-slot:footer>
+        <div class="btn btn-primary">
+          <a :href="getUrl">{{ $t('modal.btn.authorization') }}</a>
+        </div>
+      </template>
+    </modal-window>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import ModalWindow from '@/components/modal/ModalWindow.vue';
+import { AUTHORIZATION_IMG, AUTHORIZATION_URL } from '@/common/const';
+
+export default defineComponent({
+  name: 'AuthorizationModal',
+
+  components: {
+    ModalWindow,
+  },
+
+  data() {
+    return {
+      imgGitHub: AUTHORIZATION_IMG,
+      url: AUTHORIZATION_URL,
+    };
+  },
+
+  computed: {
+    getUrl(): string {
+      return `${this.url}&state='${window.location.href}'`;
+    },
+  },
+
+  methods: {
+    closeModal() {
+      this.$emit('closeAuthorizationModal');
+    },
+  },
+});
+</script>
+
+<style scoped>
+.authorization-modal__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* .authorization-modal__body img {
+  width: 200px;
+  height: 200px;
+} */
+.authorization-modal__body p {
+  width: 200px;
+  text-align: center;
+}
+</style>
