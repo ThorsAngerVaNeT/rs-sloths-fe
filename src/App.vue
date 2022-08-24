@@ -9,7 +9,12 @@
 
   <loader-view v-show="isLoad" />
 
-  <error-modal v-show="isVisible" :message="message" @closeErrorModal="isVisible = false"></error-modal>
+  <alert-modal
+    v-show="isVisible"
+    :header="header"
+    :message="message"
+    @closeAlertModal="isVisible = false"
+  ></alert-modal>
 </template>
 
 <script lang="ts">
@@ -18,10 +23,10 @@ import { mapWritableState } from 'pinia';
 import HeaderView from './components/header/HeaderView.vue';
 import FooterView from './components/footer/FooterView.vue';
 import LoaderView from './components/loader/LoaderView.vue';
-import ErrorModal from './components/modal/ErrorModal.vue';
+import AlertModal from './components/modal/AlertModal.vue';
 
 import useLoader from './stores/loader';
-import useErrorModal from './stores/error-modal';
+import useAlertModal from './stores/alert-modal';
 
 export default defineComponent({
   name: 'App',
@@ -29,16 +34,17 @@ export default defineComponent({
     HeaderView,
     FooterView,
     LoaderView,
-    ErrorModal,
+    AlertModal,
   },
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
 
-    ...mapWritableState(useErrorModal, ['isVisible', 'message']),
+    ...mapWritableState(useAlertModal, ['isVisible', 'header', 'message']),
   },
   created() {
     this.isLoad = true;
     this.isVisible = false;
+    this.header = 'modal.header.alert';
     this.message = '';
   },
   mounted() {

@@ -1,16 +1,16 @@
-import useErrorModal from '@/stores/error-modal';
+import useAlertModal from '@/stores/alert-modal';
 import { APIError } from './api-error';
 import { CustomError } from './custom-error';
 
-const { showErrorModal } = useErrorModal();
+const { showAlertModal } = useAlertModal();
 
 export const errorHandler = (error: unknown) => {
   if (error instanceof APIError) {
-    showErrorModal(`ErrorCode (${error.statusCode}): ${error.message}`);
+    showAlertModal('modal.header.error', `ErrorCode (${error.statusCode}): ${error.message}`);
   } else if (error instanceof CustomError) {
-    showErrorModal(`ErrorCode (${error.code}): ${error.message}`);
+    showAlertModal('modal.header.error', `ErrorCode (${error.code}): ${error.message}`);
   } else {
-    showErrorModal(`${error}`);
+    showAlertModal('modal.header.error', `${error}`);
   }
 };
 

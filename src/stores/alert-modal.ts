@@ -1,19 +1,21 @@
 import { defineStore } from 'pinia';
 
-const useErrorModal = defineStore({
-  id: 'errorModal',
+const useAlertModal = defineStore({
+  id: 'alertModal',
 
   state: () => ({
     isVisible: false,
+    header: '',
     message: '',
   }),
 
   actions: {
-    showErrorModal(message: string) {
+    showAlertModal(header: string, message: string) {
       this.isVisible = true;
+      this.header = header;
       this.message = message;
     },
   },
 });
 
-export default useErrorModal;
+export default useAlertModal;

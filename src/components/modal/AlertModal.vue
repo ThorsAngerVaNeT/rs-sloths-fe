@@ -1,7 +1,7 @@
 <template>
-  <div class="error-modal">
+  <div class="alert-modal">
     <modal-window @close="closeModal">
-      <template v-slot:header> {{ $t('error') }} </template>
+      <template v-slot:header> {{ $t(header) }} </template>
 
       <template v-slot:body>
         {{ message }}
@@ -15,13 +15,18 @@ import { defineComponent } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 
 export default defineComponent({
-  name: 'ErrorModal',
+  name: 'AlertModal',
 
   components: {
     ModalWindow,
   },
 
   props: {
+    header: {
+      type: String,
+      required: true,
+    },
+
     message: {
       type: String,
       required: true,
@@ -30,7 +35,7 @@ export default defineComponent({
 
   methods: {
     closeModal() {
-      this.$emit('closeErrorModal');
+      this.$emit('closeAlertModal');
     },
   },
 });
