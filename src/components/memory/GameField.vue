@@ -12,8 +12,14 @@
         @click="gameHandler(index)"
       >
         <transition name="flip" mode="out-in" @before-leave="isAnimated = true" @after-enter="isAnimated = false">
-          <img v-if="!getIsOpen(index)" :src="cardCover" alt="cover" class="game-field__img" />
-          <img v-else :src="getImage(index)" alt="card" class="game-field__img" />
+          <img
+            v-if="!getIsOpen(index)"
+            :src="cardCover"
+            alt="cover"
+            class="game-field__img"
+            :class="{ success: item.success }"
+          />
+          <img v-else :src="getImage(index)" alt="card" class="game-field__img" :class="{ success: item.success }" />
         </transition>
       </div>
     </transition-group>
@@ -36,12 +42,14 @@ import type { MemoryLevel } from '@/common/types';
 import { defineComponent, type PropType } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import { playAudio, audioSlide, audioFlip, audioFail, audioSuccess, audioWin } from '@/utils/audio';
 
 type Card = {
   img: string;
   index: number;
   id: number;
   open: boolean;
+  success: boolean;
 };
 
 export default defineComponent({
@@ -132,9 +140,9 @@ export default defineComponent({
       const images = this.images.sort(() => Math.random() - 0.5).filter((el, i) => i < this.level.n);
 
       images.forEach((el, i) => {
-        this.cards.push({ img: el, id: i, index, open: false });
+        this.cards.push({ img: el, id: i, index, open: false, success: false });
         index += 1;
-        this.cards.push({ img: el, id: i, index, open: false });
+        this.cards.push({ img: el, id: i, index, open: false, success: false });
         index += 1;
       });
     },
@@ -142,24 +150,29 @@ export default defineComponent({
     startGame() {
       const isAllClosed = this.cards.every((el) => !el.open);
 
-      this.cards.forEach((el, i) => this.closeCard(i));
+      if (!isAllClosed) {
+        playAudio(audioFlip);
+        this.cards.forEach((el, i) => this.closeCard(i));
+      }
+
       this.activeCard = Infinity;
       this.steps = 0;
       this.startTime = 0;
       this.endTime = 0;
 
       if (isAllClosed) {
+        playAudio(audioSlide);
         this.cards.sort(() => Math.random() - 0.5);
       } else {
         setTimeout(() => {
+          playAudio(audioSlide);
           this.cards.sort(() => Math.random() - 0.5);
         }, MEMORY_GAME_TIMEOUT);
       }
       setTimeout(() => {
+        playAudio(audioSlide);
         this.cards.sort(() => Math.random() - 0.5);
       }, MEMORY_GAME_TIMEOUT / 2);
-
-      // this.cards.sort(() => Math.random() - 0.5);
     },
 
     getImage(i: number): string {
@@ -170,36 +183,64 @@ export default defineComponent({
       return this.cards[i].open;
     },
 
+    checkGameHandler(i: number): boolean {
+      return !(this.cards[i].open || this.isHandled || this.isAnimated);
+    },
+
+    cardsNotMatched(i1: number, i2: number) {
+      this.isHandled = true;
+
+      setTimeout(() => {
+        playAudio(audioFail);
+
+        this.closeCard(i1);
+        this.closeCard(i2);
+
+        this.isHandled = false;
+      }, MEMORY_GAME_TIMEOUT);
+    },
+
+    cardsMatched(i1: number, i2: number) {
+      this.isHandled = true;
+
+      setTimeout(() => {
+        playAudio(audioSuccess);
+
+        this.cards[i1].success = true;
+        this.cards[i2].success = true;
+
+        this.isHandled = false;
+      }, MEMORY_GAME_TIMEOUT);
+    },
+
     gameHandler(i: number) {
       if (this.startTime === 0) this.startTime = Date.now();
 
-      if (this.cards[i].open) return;
-      if (this.isHandled) return;
-      if (this.isAnimated) return;
+      if (!this.checkGameHandler(i)) return;
 
+      playAudio(audioFlip);
       this.openCard(i);
       this.steps += 1;
 
       if (this.activeCard === Infinity) {
         this.activeCard = i;
       } else if (this.cards[i].id === this.cards[this.activeCard].id) {
+        const i2 = this.activeCard;
         this.activeCard = Infinity;
+
+        if (!this.checkGame()) this.cardsMatched(i, i2);
       } else {
         const i2 = this.activeCard;
         this.activeCard = Infinity;
 
-        this.isHandled = true;
-        setTimeout(() => {
-          this.closeCard(i);
-          this.closeCard(i2);
-          this.isHandled = false;
-        }, MEMORY_GAME_TIMEOUT);
+        this.cardsNotMatched(i, i2);
       }
 
       if (this.checkGame()) {
         this.endTime = Date.now();
 
         setTimeout(() => {
+          playAudio(audioWin);
           this.isModalVisible = true;
         }, 0);
       }
@@ -263,6 +304,10 @@ export default defineComponent({
 .game-field__img:hover {
   box-shadow: 0px 0px 5px;
 }
+
+.success {
+  animation: rainbow 0.5s;
+}
 /* Animations */
 .shuffle-list-move {
   transition: transform 0.6s;
@@ -292,6 +337,25 @@ export default defineComponent({
   100% {
     transform: rotateY(360deg);
     transform-style: preserve-3d;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 5px 5px rgb(255, 255, 0);
+  }
+  33% {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 255, 0.75);
+  }
+  66% {
+    transform: scale(1.025);
+    box-shadow: 0 0 5px 5px rgba(255, 0, 0, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 5px 5px rgba(255, 0, 0, 0);
   }
 }
 </style>
