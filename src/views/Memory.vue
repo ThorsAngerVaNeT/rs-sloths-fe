@@ -16,7 +16,9 @@
         </div>
       </div>
     </div>
-    <game-field :level="levels[activeLevel]"></game-field>
+    <div class="memory__main">
+      <game-field :level="levels[activeLevel]"></game-field>
+    </div>
   </div>
 </template>
 
@@ -71,11 +73,17 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1em;
 }
 
-h3 {
-  padding: 1em;
+.memory__main {
+  width: calc(100% - 300px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .memory__level {
   display: flex;
   flex-direction: column;

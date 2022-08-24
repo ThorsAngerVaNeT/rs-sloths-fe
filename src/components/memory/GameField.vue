@@ -72,7 +72,7 @@ export default defineComponent({
       steps: 0,
       startTime: 0,
       endTime: 0,
-      grid: 0,
+      grid: '1000px',
       isHandled: false,
       isAnimated: false,
       isModalVisible: false,
@@ -271,7 +271,7 @@ export default defineComponent({
     },
 
     setGrid() {
-      this.grid = this.level.n <= 6 ? this.level.n : 6;
+      this.grid = this.level.n <= 4 ? '670px' : '1000px';
     },
   },
 });
@@ -298,9 +298,13 @@ export default defineComponent({
 }
 .game-field__cards {
   margin: 1em;
+  max-width: v-bind(grid);
 
-  display: grid;
-  grid-template-columns: repeat(v-bind(grid), 150px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
   gap: 1em;
 }
 
