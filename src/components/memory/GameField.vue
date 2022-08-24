@@ -1,8 +1,8 @@
 <template>
   <div class="game-field">
-    <h3>{{ $t(getLevel) }}</h3>
-    <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
-    <p>steps: {{ steps }}</p>
+    <div class="game-field__steps">
+      <p>{{ steps }}</p>
+    </div>
     <transition-group name="shuffle-list" tag="div" class="game-field__cards">
       <div
         class="game-field__card"
@@ -23,6 +23,7 @@
         </transition>
       </div>
     </transition-group>
+    <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
     <modal-window v-show="getShowModal" @close="closeModal">
       <template v-slot:header> {{ $t('memory.congrats') }} </template>
 
@@ -120,14 +121,18 @@ export default defineComponent({
       // todo fetch
 
       this.images = [
-        './default-user.png',
-        './guess-game.png',
-        './memory-game.png',
-        './suggest-game.png',
-        './test1.png',
-        './test2.png',
-        './test3.png',
-        './test4.png',
+        './test01.png',
+        './test02.png',
+        './test03.png',
+        './test04.png',
+        './test05.png',
+        './test06.png',
+        './test07.png',
+        './test08.png',
+        './test09.png',
+        './test10.png',
+        './test11.png',
+        './test12.png',
       ];
 
       this.getCards();
@@ -275,6 +280,19 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
+.game-field__steps {
+  width: 70px;
+  height: 70px;
+
+  font-size: 2em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: lightgray;
+  border-radius: 50%;
+}
 .game-field__cards {
   margin: 1em;
 
@@ -299,6 +317,8 @@ export default defineComponent({
 
   overflow: hidden;
   border-radius: 1em;
+
+  background-color: lightgray;
 }
 
 .game-field__img:hover {
