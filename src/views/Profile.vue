@@ -4,7 +4,7 @@
       <h2>{{ $t('profile.title') }}</h2>
       <user-info @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
-      <router-link to="/admin">
+      <router-link v-show="isAdmin" to="/admin">
         <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
       </router-link>
     </aside>
@@ -37,6 +37,7 @@ import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useUserInfo from '@/stores/user-info';
 import { USERS_ERROR_GET, USERS_ERROR_UPD } from '@/common/const';
 import { CustomError } from '@/services/error-handling/custom-error';
+import { Role } from '@/common/enums/user-role';
 
 const service = new UsersService();
 
@@ -71,6 +72,10 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
+
+    isAdmin(): boolean {
+      return this.user.role === Role.admin;
+    },
   },
 
   created() {
