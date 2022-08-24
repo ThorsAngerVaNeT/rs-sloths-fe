@@ -2,6 +2,7 @@
   <div class="users">
     <div class="users__aside">
       <h3>{{ $t('admin.users.title') }}</h3>
+      {{ count }}
       <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
       <custom-btn :text="$t('admin.users.btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
@@ -28,11 +29,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapWritableState } from 'pinia';
 import { errorHandler } from '@/services/error-handling/error-handler';
+import { CustomError } from '@/services/error-handling/custom-error';
+import { USERS_ERROR_CREATE, USERS_ERROR_DEL, USERS_ERROR_GET_LIST, USERS_ERROR_UPD } from '@/common/const';
 import { UsersService } from '@/services/users-service';
 import type { User, Users } from '@/common/types';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useUserInfo from '@/stores/user-info';
+import useLoader from '@/stores/loader';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
@@ -53,12 +58,15 @@ export default defineComponent({
   data() {
     return {
       users: [] as Users,
+      count: 0,
       isUserInfoVisible: false,
       modalEvents: ModalEvents.view,
     };
   },
 
   computed: {
+    ...mapWritableState(useLoader, ['isLoad']),
+
     getHeaderUserInfo(): string {
       if (this.modalEvents === ModalEvents.new) return this.$t('admin.users.btn.new');
       if (this.modalEvents === ModalEvents.edit) return this.$t('admin.users.btn.edit');
@@ -72,50 +80,63 @@ export default defineComponent({
 
   methods: {
     async getUsers() {
+      this.isLoad = true;
       try {
         const res = await service.getAll();
 
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_GET_LIST.code, USERS_ERROR_GET_LIST.message);
 
-        this.users = res.data;
+        this.users = res.data.items;
+        this.count = res.data.count;
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async delUser(id: string) {
+      this.isLoad = true;
       try {
         const res = await service.deleteById(id);
 
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_DEL.code, `${USERS_ERROR_DEL.message} (id=${id})`);
 
         await this.getUsers();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async createUser(user: User) {
+      this.isLoad = true;
       try {
         const res = await service.create(user);
 
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_CREATE.code, `${USERS_ERROR_CREATE.message} (name=${user.name})`);
 
         await this.getUsers();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async updUser(user: User) {
+      this.isLoad = true;
       try {
         const res = await service.updateById(user.id, user);
 
-        if (!res) throw Error(); // todo
+        if (!res) throw new CustomError(USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
 
         await this.getUsers();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 

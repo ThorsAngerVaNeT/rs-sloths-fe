@@ -1,8 +1,8 @@
+import type { APIRequestResult } from '@/common/types';
+import { JSON_ERROR } from '@/common/const';
 import { APIError } from './error-handling/api-error';
-import { JSONError } from './error-handling/json-error';
+import { CustomError } from './error-handling/custom-error';
 import { errorHandler } from './error-handling/error-handler';
-import type { APIRequestResult } from '../common/types';
-import { JSON_ERROR, JSON_ERROR_CODE } from '../common/const';
 
 export const apiRequest = async <T>(url: string, config: RequestInit): Promise<APIRequestResult<T> | null> => {
   try {
@@ -20,7 +20,7 @@ export const apiRequest = async <T>(url: string, config: RequestInit): Promise<A
       const contentType = headers.get('content-type');
 
       if (!contentType || !contentType.includes('application/json')) {
-        throw new JSONError(JSON_ERROR, JSON_ERROR_CODE);
+        throw new CustomError(JSON_ERROR);
       }
 
       data = await response.json();

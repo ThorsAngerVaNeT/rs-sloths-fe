@@ -1,4 +1,4 @@
-import type { API, APIRequestResult } from '@/common/types';
+import type { API, APIRequestResult, GetList } from '@/common/types';
 import { BASE } from '../common/const';
 import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
@@ -8,7 +8,7 @@ export class APIService<T> implements API<T> {
     this.endpoint = `${BASE}/${endpoint}`;
   }
 
-  public getAll(): Promise<APIRequestResult<T[]> | null> {
+  public getAll(): Promise<APIRequestResult<GetList<T>> | null> {
     const url = `${this.endpoint}`;
     const config: RequestInit = {
       method: FetchMethod.get,
@@ -17,7 +17,7 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public getPage(page: number, limit: number): Promise<APIRequestResult<T[]> | null> {
+  public getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>> | null> {
     const url = `${this.endpoint}?_page=${page}&_limit=${limit}`;
     const config: RequestInit = {
       method: FetchMethod.get,

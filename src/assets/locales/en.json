@@ -104,6 +104,10 @@
   },
 
   "modal": {
+    "header": {
+      "alert": "Alert!",
+      "error": "ERROR!"
+    },
     "btn": {
       "close": "Close"
     }
