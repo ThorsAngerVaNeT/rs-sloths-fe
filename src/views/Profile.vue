@@ -78,10 +78,6 @@ export default defineComponent({
     },
   },
 
-  created() {
-    this.isLoad = false;
-  },
-
   mounted() {
     this.getUser();
   },
