@@ -3,6 +3,8 @@ import { BASE } from '../common/const';
 import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
 
+const credentials = 'include';
+
 export class APIService<T> implements API<T> {
   constructor(private endpoint: string) {
     this.endpoint = `${BASE}/${endpoint}`;
@@ -12,6 +14,7 @@ export class APIService<T> implements API<T> {
     const url = `${this.endpoint}`;
     const config: RequestInit = {
       method: FetchMethod.get,
+      credentials,
     };
 
     return apiRequest(url, config);
@@ -21,6 +24,7 @@ export class APIService<T> implements API<T> {
     const url = `${this.endpoint}?_page=${page}&_limit=${limit}`;
     const config: RequestInit = {
       method: FetchMethod.get,
+      credentials,
     };
 
     return apiRequest(url, config);
@@ -30,6 +34,7 @@ export class APIService<T> implements API<T> {
     const url = `${this.endpoint}/${id}`;
     const config: RequestInit = {
       method: FetchMethod.get,
+      credentials,
     };
 
     return apiRequest(url, config);
@@ -42,6 +47,7 @@ export class APIService<T> implements API<T> {
     };
     const config: RequestInit = {
       method: FetchMethod.post,
+      credentials,
       body: JSON.stringify(body),
       headers,
     };
@@ -56,6 +62,7 @@ export class APIService<T> implements API<T> {
     };
     const config: RequestInit = {
       method: FetchMethod.put,
+      credentials,
       body: JSON.stringify(body),
       headers,
     };
@@ -70,6 +77,7 @@ export class APIService<T> implements API<T> {
     };
     const config: RequestInit = {
       method: FetchMethod.put,
+      credentials,
       body: JSON.stringify(body),
       headers,
     };
@@ -81,6 +89,7 @@ export class APIService<T> implements API<T> {
     const url = `${this.endpoint}/${id}`;
     const config: RequestInit = {
       method: FetchMethod.delete,
+      credentials,
     };
 
     return apiRequest(url, config);
