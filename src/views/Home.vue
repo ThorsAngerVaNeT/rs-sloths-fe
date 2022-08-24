@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <home-about></home-about>
+    <home-catalog></home-catalog>
     <div class="home__menu">
       <home-category
         v-for="(category, i) in categories"
@@ -16,6 +17,7 @@
 import { defineComponent } from 'vue';
 import HomeCategory from '../components/home/HomeCategory.vue';
 import HomeAbout from '../components/home/HomeAbout.vue';
+import HomeCatalog from '../components/home/HomeCatalog.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -23,11 +25,12 @@ export default defineComponent({
   components: {
     HomeCategory,
     HomeAbout,
+    HomeCatalog,
   },
 
   data(): { categories: string[] } {
     return {
-      categories: ['catalog', 'profile', 'memory', 'guess', 'create', 'suggest', 'sloth'],
+      categories: ['profile', 'memory', 'guess', 'create', 'suggest', 'sloth'],
     };
   },
 
@@ -45,27 +48,24 @@ export default defineComponent({
 
 <style scoped>
 .home {
-  display: flex;
-  gap: 20px;
-  padding: 30px;
   height: 100%;
+  display: grid;
+  gap: 80px;
+  /* padding: 30px; */
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 300px 400px 300px;
+  margin: 0 auto;
 }
 
 .home__menu {
-  flex: 1;
-  position: relative;
   display: grid;
-  justify-items: start;
+  justify-items: center;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  grid-template-columns: repeat(4, 100px);
-  grid-template-rows: repeat(4, 150px);
-  grid-template-areas:
-    'A A B Z'
-    'D D B C'
-    'D D E F'
-    'G G E Y';
-  margin: 0 auto;
+  grid-template-columns: repeat(2, 120px);
+  grid-template-rows: repeat(3, 150px);
+  gap: 60px 100px;
 }
 </style>

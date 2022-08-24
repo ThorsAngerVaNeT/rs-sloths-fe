@@ -48,7 +48,8 @@ export default defineComponent({
 
 <style scoped>
 .home__about {
-  width: 300px;
+  height: 100%;
+  /* width: 300px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,8 +58,8 @@ export default defineComponent({
 }
 
 .home__logo {
-  width: 100%;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   justify-self: start;
   background: no-repeat center center / contain url('@/assets/icons/home/rs-sloths.svg');
 }
