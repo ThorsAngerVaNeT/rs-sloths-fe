@@ -28,6 +28,7 @@
       <template v-slot:header> {{ $t('memory.congrats') }} </template>
 
       <template v-slot:body>
+        <img :src="cardWinner" alt="winner" />
         <p>{{ $t('memory.win') }}</p>
         <p>{{ steps }} {{ getStepsText }}</p>
         <p>{{ getTime }} {{ $t('memory.time') }}</p>
@@ -38,7 +39,7 @@
 
 <script lang="ts">
 import { ruNounEnding } from '@/utils/ru-noun-ending';
-import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '@/common/const';
+import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_GAME_WINNER, MEMORY_LEVELS } from '@/common/const';
 import type { MemoryLevel } from '@/common/types';
 import { defineComponent, type PropType } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
@@ -64,6 +65,7 @@ export default defineComponent({
   data() {
     return {
       cardCover: MEMORY_GAME_COVER,
+      cardWinner: MEMORY_GAME_WINNER,
       images: [] as string[],
       cards: [] as Card[],
       activeCard: Infinity,
