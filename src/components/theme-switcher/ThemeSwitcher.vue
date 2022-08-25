@@ -21,18 +21,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapWritableState } from 'pinia';
+
+import themeProp from '../../stores/theme';
 
 export default defineComponent({
   name: 'ThemeSwitcher',
 
-  data(): { currTheme: string; themes: string[] } {
+  data(): { themes: string[] } {
     return {
-      currTheme: '',
+      //   currTheme: '',
       themes: ['light', 'dark'],
     };
   },
 
   computed: {
+    ...mapWritableState(themeProp, ['currTheme']),
     checkTheme(): string {
       return this.themes.filter((theme) => theme !== this.currTheme)[0];
     },
@@ -76,8 +80,9 @@ export default defineComponent({
 
 .theme-switcher__label {
   display: block;
-  width: 14px;
-  height: 20px;
+  width: 20px;
+  height: 30px;
+  transition: 0.5s ease;
 }
 
 .theme-switcher__label_light {
