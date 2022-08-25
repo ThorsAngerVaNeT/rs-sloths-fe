@@ -47,6 +47,16 @@ export default defineComponent({
   cursor: pointer;
 }
 
+.home-category__img {
+  height: 100px;
+  width: 100%;
+  border-radius: 50%;
+  border: 3px var(--color-border-theme) solid;
+  background-color: var(--color-background-soft);
+  transition: 0.3s;
+  /* background: v-bind(background); */
+}
+
 /* .home-category__wrapper {
   position: relative;
   flex: 1;
@@ -63,7 +73,7 @@ export default defineComponent({
 } */
 
 .home-category_profile > .home-category__img {
-  background: no-repeat center center / contain url('../../assets/icons/home/profile.svg');
+  background: no-repeat center center / contain url('../../assets/icons/home/profile.svg') var(--color-background-soft);
 }
 
 /* .home-category_suggest {
@@ -71,7 +81,7 @@ export default defineComponent({
 } */
 
 .home-category_suggest > .home-category__img {
-  background: no-repeat center center / contain url('../../assets/icons/home/suggest.svg');
+  background: no-repeat center center / contain url('../../assets/icons/home/suggest.svg') var(--color-background-soft);
 }
 
 /* .home-category_memory {
@@ -79,7 +89,7 @@ export default defineComponent({
 } */
 
 .home-category_memory > .home-category__img {
-  background: no-repeat center center / contain url('../../assets/icons/home/memory.svg');
+  background: no-repeat center center / contain url('../../assets/icons/home/memory.svg') var(--color-background-soft);
 }
 
 /* .home-category_guess {
@@ -87,7 +97,7 @@ export default defineComponent({
 } */
 
 .home-category_guess > .home-category__img {
-  background: no-repeat center center / contain url('../../assets/icons/home/guess.svg');
+  background: no-repeat center center / contain url('../../assets/icons/home/guess.svg') var(--color-background-soft);
 }
 
 /* .home-category_create {
@@ -95,7 +105,7 @@ export default defineComponent({
 } */
 
 .home-category_create > .home-category__img {
-  background: no-repeat center center / contain url('../../assets/icons/home/create.svg');
+  background: no-repeat center center / contain url('../../assets/icons/home/create.svg') var(--color-background-soft);
 }
 
 /* .home-category_sloth {
@@ -103,15 +113,7 @@ export default defineComponent({
 } */
 
 .home-category_sloth > .home-category__img {
-  background: no-repeat center center / contain url('../../assets/icons/home/sloth.svg');
-}
-
-.home-category__img {
-  height: 100px;
-  width: 100%;
-  border-radius: 50%;
-  transition: 0.3s;
-  /* background: v-bind(background); */
+  background: no-repeat center center / contain url('../../assets/icons/home/sloth.svg') var(--color-background-soft);
 }
 
 .home-category__name {

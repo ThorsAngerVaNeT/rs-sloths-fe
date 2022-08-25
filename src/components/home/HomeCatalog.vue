@@ -53,6 +53,8 @@ export default defineComponent({
 
 .home-catalog__name {
   text-align: center;
+  opacity: 0;
+  transition: 0.3s;
 }
 
 .home-catalog:hover .home-catalog_up {

@@ -7,6 +7,7 @@
 
   <footer-view />
 
+  <background-view />
   <loader-view v-show="isLoad" />
 </template>
 
@@ -15,6 +16,7 @@ import { mapWritableState } from 'pinia';
 import HeaderView from './components/header/HeaderView.vue';
 import FooterView from './components/footer/FooterView.vue';
 import LoaderView from './components/loader/LoaderView.vue';
+import BackgroundView from './components/background/BackgroundView.vue';
 
 import useLoader from './stores/loader';
 
@@ -24,6 +26,7 @@ export default {
     HeaderView,
     FooterView,
     LoaderView,
+    BackgroundView,
   },
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
