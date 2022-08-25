@@ -49,7 +49,6 @@ export default defineComponent({
 <style scoped>
 .home__about {
   height: 100%;
-  /* width: 300px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -147,5 +146,11 @@ export default defineComponent({
 
 #slide2:checked ~ .home__slider > .home__slide_2 {
   opacity: 1;
+}
+
+@media (max-width: 1200px) {
+  .home__about {
+    grid-area: A;
+  }
 }
 </style>

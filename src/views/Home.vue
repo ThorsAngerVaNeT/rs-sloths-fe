@@ -66,4 +66,40 @@ export default defineComponent({
   grid-template-rows: repeat(3, 170px);
   gap: 50px 10px;
 }
+
+@media (max-width: 1200px) {
+  .home {
+    grid-template-columns: 300px 400px;
+    grid-template-rows: 500px auto;
+    gap: 50px 30px;
+    grid-template-areas:
+      'A B'
+      'C C';
+  }
+
+  .home__menu {
+    grid-area: C;
+    grid-template-columns: repeat(3, 140px);
+    grid-template-rows: repeat(2, 170px);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .home {
+    grid-template-columns: 400px;
+    grid-template-rows: auto;
+    gap: 20px;
+    grid-template-areas:
+      'B'
+      'C'
+      'A';
+  }
+
+  .home__menu {
+    grid-template-columns: repeat(2, 140px);
+    grid-template-rows: repeat(3, 170px);
+    gap: 1.5rem;
+  }
+}
 </style>

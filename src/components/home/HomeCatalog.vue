@@ -74,4 +74,10 @@ export default defineComponent({
 .home-catalog:hover .home-catalog__name {
   opacity: 1;
 }
+
+@media (max-width: 1200px) {
+  .home-catalog {
+    grid-area: B;
+  }
+}
 </style>
