@@ -90,6 +90,7 @@ export default defineComponent({
   opacity: 0;
   transition: 0.5s;
   color: var(--color-text);
+  font-weight: 300;
 }
 
 .home__controls {
@@ -110,17 +111,17 @@ export default defineComponent({
 
 .home__label {
   display: block;
-  border: 0.15rem solid var(--dark-main);
+  border: 0.15rem solid var(--color-border-inverse);
   height: 100%;
   width: 100%;
   border-radius: 50%;
-  background-color: var(--dark-main);
+  background-color: var(--color-border-inverse);
   transition: 0.3s;
 }
 
 #slide1:checked ~ .home__controls [for='slide1'] .home__label,
 #slide2:checked ~ .home__controls [for='slide2'] .home__label {
-  background-color: var(--light-main);
+  background-color: var(--red-active);
 }
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:hover,
@@ -130,8 +131,8 @@ export default defineComponent({
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:hover .home__label,
 #slide2:not(#slide2:checked) ~ .home__controls [for='slide2']:hover .home__label {
-  background-color: var(--light-addict);
-  border-color: var(--light-addict);
+  background-color: var(--green-active);
+  border-color: var(--green-active);
 }
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:active .home__label,

@@ -62,7 +62,6 @@ export default defineComponent({
 .home__menu {
   display: grid;
   justify-items: center;
-  align-items: center;
   justify-content: center;
   grid-template-columns: repeat(2, 140px);
   grid-template-rows: repeat(3, 170px);

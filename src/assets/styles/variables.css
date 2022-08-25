@@ -7,6 +7,12 @@
 
   --blue-main: #e3e8ff;
 
+  --red-active: #b44a4a;
+  --red-disactive: #deaaaa;
+
+  --green-active: #448447;
+  --green-disactive: #bed9bf;
+
   --dark-opacity: rgba(31, 31, 31, 0.8);
 }
 
@@ -20,6 +26,7 @@
   --color-text-inverse: var(--light-main);
 
   --color-border-theme: var(--light-main);
+  --color-border-inverse: var(--dark-main);
 }
 /* 
 @media (prefers-color-scheme: dark) {
@@ -44,4 +51,5 @@
   --color-text-inverse: var(--dark-main);
 
   --color-border-theme: var(--dark-main);
+  --color-border-inverse: var(--light-main);
 }

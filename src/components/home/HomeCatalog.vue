@@ -55,6 +55,8 @@ export default defineComponent({
   text-align: center;
   opacity: 0;
   color: var(--color-text);
+  font-size: 1.5rem;
+  font-weight: 300;
   transition: 0.3s;
 }
 

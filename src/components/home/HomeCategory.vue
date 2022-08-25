@@ -119,6 +119,7 @@ export default defineComponent({
 .home-category__name {
   text-align: center;
   color: var(--color-text);
+  font-weight: 300;
   opacity: 0;
   transition: 0.3s;
 }
