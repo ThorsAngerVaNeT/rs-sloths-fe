@@ -4,7 +4,7 @@
       <div class="home-catalog_up"></div>
       <div class="home-catalog_down"></div>
     </div>
-    <div class="home-category__name">{{ $t('catalog.title') }}</div>
+    <div class="home-catalog__name">{{ $t('catalog.title') }}</div>
   </div>
 </template>
 
@@ -17,6 +17,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.home-catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .home-catalog__wrapper {
   position: relative;
   width: 400px;
@@ -43,6 +49,10 @@ export default defineComponent({
   transform: translate(0, 50%);
   z-index: 3;
   background: no-repeat center center / contain url('../../assets/icons/home/catalog-down.svg');
+}
+
+.home-catalog__name {
+  text-align: center;
 }
 
 .home-catalog:hover .home-catalog_up {

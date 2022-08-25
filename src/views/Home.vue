@@ -64,8 +64,8 @@ export default defineComponent({
   justify-items: center;
   align-items: center;
   justify-content: center;
-  grid-template-columns: repeat(2, 120px);
-  grid-template-rows: repeat(3, 150px);
-  gap: 60px 100px;
+  grid-template-columns: repeat(2, 140px);
+  grid-template-rows: repeat(3, 170px);
+  gap: 50px 10px;
 }
 </style>

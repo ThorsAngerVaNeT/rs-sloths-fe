@@ -115,6 +115,7 @@ export default defineComponent({
 }
 
 .home-category__name {
+  text-align: center;
   opacity: 0;
   transition: 0.3s;
 }
