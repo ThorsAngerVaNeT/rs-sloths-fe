@@ -1,18 +1,22 @@
 <template>
-  <header class="header" :class="this.$route.name !== 'home' ? '' : 'header_home'">
-    <router-link class="header__title" v-show="this.$route.name !== 'home'" to="/">RS SLOTHS</router-link>
-    <locale-switcher />
+  <header class="header" :class="$route.name !== 'home' ? '' : 'header_home'">
+    <router-link class="header__title" v-show="$route.name !== 'home'" to="/">RS SLOTHS</router-link>
+    <div class="header__tools">
+      <locale-switcher />
+      <theme-switcher />
+    </div>
   </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LocaleSwitcher from '../locale-switcher/LocaleSwitcher.vue';
+import ThemeSwitcher from '../theme-switcher/ThemeSwitcher.vue';
 
 export default defineComponent({
   name: 'HeaderView',
 
-  components: { LocaleSwitcher },
+  components: { LocaleSwitcher, ThemeSwitcher },
 });
 </script>
 
@@ -39,5 +43,12 @@ export default defineComponent({
 
 .header__title:hover {
   color: var(--dark-addict);
+}
+
+.header__tools {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
 }
 </style>

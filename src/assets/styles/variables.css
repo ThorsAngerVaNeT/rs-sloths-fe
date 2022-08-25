@@ -21,7 +21,7 @@
 
   --color-border-theme: var(--light-main);
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--dark-main);
@@ -33,4 +33,15 @@
 
     --color-border-theme: var(--dark-main);
   }
+} */
+
+:root.dark {
+  --color-background: var(--dark-main);
+  --color-background-soft: var(var(--dark-addict));
+
+  --color-heading: var(--light-addict);
+  --color-text: var(--light-main);
+  --color-text-inverse: var(--dark-main);
+
+  --color-border-theme: var(--dark-main);
 }
