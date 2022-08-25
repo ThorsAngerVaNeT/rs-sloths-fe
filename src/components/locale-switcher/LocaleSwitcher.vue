@@ -40,8 +40,8 @@ export default defineComponent({
 
 .switcher__label {
   display: block;
-  width: 32px;
-  height: 16px;
+  width: 3.2rem;
+  height: 1.6rem;
 }
 
 .switcher__label_en {

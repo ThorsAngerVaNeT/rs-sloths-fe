@@ -80,8 +80,8 @@ export default defineComponent({
 
 .theme-switcher__label {
   display: block;
-  width: 20px;
-  height: 30px;
+  width: 2rem;
+  height: 3rem;
   transition: 0.5s ease;
 }
 

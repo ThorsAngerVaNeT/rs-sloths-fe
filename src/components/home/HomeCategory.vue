@@ -26,18 +26,18 @@ export default defineComponent({
 
 <style scoped>
 .home-category {
-  width: 100px;
+  width: 10rem;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.5rem;
   cursor: pointer;
 }
 
 .home-category__img {
-  height: 100px;
+  height: 10rem;
   width: 100%;
   border-radius: 50%;
-  border: 3px var(--color-border-theme) solid;
+  border: 0.3rem var(--color-border-theme) solid;
   background-color: var(--color-background-soft);
   transition: 0.3s;
 }

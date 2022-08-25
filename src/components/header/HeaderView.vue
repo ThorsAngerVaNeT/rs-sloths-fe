@@ -25,7 +25,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px;
+  padding: 3rem;
   z-index: 2;
 }
 
@@ -36,7 +36,7 @@ export default defineComponent({
 .header__title {
   font-family: Arial, sans-serif;
   font-weight: 900;
-  font-size: 24px;
+  font-size: 2.4rem;
   text-decoration: none;
   color: var(--color-text);
 }
@@ -49,6 +49,6 @@ export default defineComponent({
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 20px;
+  gap: 2rem;
 }
 </style>

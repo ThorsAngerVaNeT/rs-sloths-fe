@@ -53,12 +53,12 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 2rem;
 }
 
 .home__logo {
-  width: 300px;
-  height: 300px;
+  width: 30rem;
+  height: 30rem;
   justify-self: start;
   background: no-repeat center center / contain url('@/assets/icons/home/rs-sloths.svg');
 }
@@ -81,7 +81,7 @@ export default defineComponent({
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 120px;
+  height: 12rem;
 }
 
 .home__slide {
@@ -96,21 +96,21 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .home__controls label {
   box-sizing: unset;
   cursor: pointer;
-  width: 0.7rem;
-  height: 0.7rem;
-  padding: 0.7rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 1.5rem;
   cursor: default;
 }
 
 .home__label {
   display: block;
-  border: 0.15rem solid var(--color-border-inverse);
+  border: 0.3rem solid var(--color-border-inverse);
   height: 100%;
   width: 100%;
   border-radius: 50%;

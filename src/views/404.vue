@@ -21,23 +21,20 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 2rem;
 }
 
 .page-404__image {
-  height: 250px;
-  width: 250px;
+  height: 25rem;
+  width: 25rem;
   background: no-repeat center center / contain url('../assets/icons/404/404.svg');
 }
 
-/* Temp colors */
 .page-404__title {
-  /* color: var(--color-heading); */
-  color: var(--dark-addict);
+  color: var(--color-heading);
 }
 
 .page-404__descr {
-  /* color: var(--color-text); */
-  color: var(--dark-main);
+  color: var(--color-text);
 }
 </style>

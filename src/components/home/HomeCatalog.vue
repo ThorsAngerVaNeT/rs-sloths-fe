@@ -20,20 +20,20 @@ export default defineComponent({
 .home-catalog {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
 }
 
 .home-catalog__wrapper {
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 40rem;
+  height: 40rem;
 }
 
 .home-catalog_up,
 .home-catalog_down {
   position: absolute;
   width: 100%;
-  height: 240px;
+  height: 24rem;
   transition: 0.3s;
 }
 
@@ -55,7 +55,7 @@ export default defineComponent({
   text-align: center;
   opacity: 0;
   color: var(--color-text);
-  font-size: 1.5rem;
+  font-size: 2.4rem;
   font-weight: 300;
   transition: 0.3s;
 }

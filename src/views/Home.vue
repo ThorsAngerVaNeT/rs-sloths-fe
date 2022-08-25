@@ -50,11 +50,11 @@ export default defineComponent({
 .home {
   height: 100%;
   display: grid;
-  gap: 80px;
+  gap: 8rem;
   justify-items: center;
   align-items: center;
   justify-content: center;
-  grid-template-columns: 300px 400px 300px;
+  grid-template-columns: 30rem 40rem 30rem;
   margin: 0 auto;
 }
 
@@ -62,16 +62,16 @@ export default defineComponent({
   display: grid;
   justify-items: center;
   justify-content: center;
-  grid-template-columns: repeat(2, 140px);
-  grid-template-rows: repeat(3, 170px);
-  gap: 50px 10px;
+  grid-template-columns: repeat(2, 14rem);
+  grid-template-rows: repeat(3, 17rem);
+  gap: 5rem 1rem;
 }
 
 @media (max-width: 1200px) {
   .home {
-    grid-template-columns: 300px 400px;
-    grid-template-rows: 500px auto;
-    gap: 50px 30px;
+    grid-template-columns: 30rem 40rem;
+    grid-template-rows: 50rem auto;
+    gap: 5rem 3rem;
     grid-template-areas:
       'A B'
       'C C';
@@ -79,17 +79,17 @@ export default defineComponent({
 
   .home__menu {
     grid-area: C;
-    grid-template-columns: repeat(3, 140px);
-    grid-template-rows: repeat(2, 170px);
+    grid-template-columns: repeat(3, 14rem);
+    grid-template-rows: repeat(2, 17rem);
     gap: 2rem;
   }
 }
 
 @media (max-width: 768px) {
   .home {
-    grid-template-columns: 400px;
+    grid-template-columns: 40rem;
     grid-template-rows: auto;
-    gap: 20px;
+    gap: 2rem;
     grid-template-areas:
       'B'
       'C'
@@ -97,8 +97,8 @@ export default defineComponent({
   }
 
   .home__menu {
-    grid-template-columns: repeat(2, 140px);
-    grid-template-rows: repeat(3, 170px);
+    grid-template-columns: repeat(2, 14rem);
+    grid-template-rows: repeat(3, 17rem);
     gap: 1.5rem;
   }
 }
