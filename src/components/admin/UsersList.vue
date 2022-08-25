@@ -3,6 +3,7 @@
     <div class="users__aside">
       <h3>{{ $t('admin.users.title') }}: {{ count }}</h3>
       <search-text @search="getUsers" :placeholder="$t('admin.search')"></search-text>
+      <tag-cloud @tags="getUsers" :tags="tags"></tag-cloud>
       <sorting-list @sorting="getUsers" :title="$t('admin.sorting')" :options="sortingOptions"></sorting-list>
       <custom-btn :text="$t('admin.users.btn.reset')" className="btn btn-primary"></custom-btn>
       <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
@@ -44,12 +45,15 @@ import { UsersService } from '@/services/users-service';
 import type { User, Users } from '@/common/types';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useSearchText from '@/stores/search-text';
+import useSelectedTags from '@/stores/tag-cloud';
 import useSortingList from '@/stores/sorting-list';
 import useUserInfo from '@/stores/user-info';
 import useLoader from '@/stores/loader';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import SearchText from '@/components/search/SearchText.vue';
+import TagCloud from '@/components/tag/TagCloud.vue';
 import SortingList from '@/components/sorting/SortingList.vue';
+import { Role } from '@/common/enums/user-role';
 import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
 
@@ -57,6 +61,7 @@ const service = new UsersService();
 
 const { setEmptyUserInfo, setUserInfo } = useUserInfo();
 const { getSearchText } = useSearchText();
+const { getSelected } = useSelectedTags();
 const { getSortingList } = useSortingList();
 
 export default defineComponent({
@@ -67,6 +72,7 @@ export default defineComponent({
     UserCard,
     UserModal,
     SearchText,
+    TagCloud,
     SortingList,
   },
 
@@ -77,6 +83,7 @@ export default defineComponent({
       isUserInfoVisible: false,
       modalEvents: ModalEvents.view,
       searchText: '',
+      tags: [Role.admin, Role.user],
       sortingOptions: USER_SORTING,
     };
   },
@@ -100,9 +107,10 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const searchText = getSearchText();
+        const selected = getSelected();
         const sorting = getSortingList();
 
-        const res = await service.getAll(searchText, sorting);
+        const res = await service.getAll(searchText, sorting, selected);
 
         if (!res) throw new CustomError(USERS_ERROR_GET_LIST.code, USERS_ERROR_GET_LIST.message);
 

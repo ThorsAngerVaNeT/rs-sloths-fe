@@ -66,3 +66,5 @@ export type SelectOptions = {
   value: string;
   text: string;
 };
+
+export type TagCloud = Set<string>;

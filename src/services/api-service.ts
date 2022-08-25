@@ -12,7 +12,7 @@ export class APIService<T> implements API<T> {
 
   public getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null> {
     let param = filter ? `filter=${filter}` : '';
-    param = sorting ? `${param}order=${sorting}` : '';
+    param = sorting ? `${param}order=${sorting}` : `${param}`;
     param = param ? `?${param}` : '';
 
     const url = `${this.endpoint}${param}`;
@@ -31,9 +31,9 @@ export class APIService<T> implements API<T> {
     sorting: string
   ): Promise<APIRequestResult<GetList<T>> | null> {
     let param = page ? `_page=${page}` : '';
-    param = limit ? `${param}_limit=${limit}` : '';
-    param = filter ? `${param}filter=${filter}` : '';
-    param = sorting ? `${param}order=${sorting}` : '';
+    param = limit ? `${param}_limit=${limit}` : `${param}`;
+    param = filter ? `${param}filter=${filter}` : `${param}`;
+    param = sorting ? `${param}order=${sorting}` : `${param}`;
     param = param ? `?${param}` : '';
 
     const url = `${this.endpoint}${param}`;
