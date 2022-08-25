@@ -36,8 +36,11 @@ export default defineComponent({
 .btn {
   display: inline-block;
   padding: 0.4em 0.8em;
+  color: var(--color-text-inverse);
+  background-color: var(--color-background-inverse);
   cursor: pointer;
   user-select: none;
+  transition: 0.3s;
 }
 
 .btn-link {
@@ -45,7 +48,8 @@ export default defineComponent({
 }
 
 .btn-primary {
-  border: 1px solid;
+  /* border: 1px solid var(--color-border-inverse); */
+  border: none;
 }
 
 .btn-img img {
@@ -58,5 +62,9 @@ export default defineComponent({
   border-top-right-radius: 5px;
   margin-bottom: -1px;
   margin-right: -1px;
+}
+
+.btn:hover {
+  background-color: var(--color-background-inverse-soft);
 }
 </style>

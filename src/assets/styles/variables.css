@@ -13,6 +13,8 @@
   --green-active: #448447;
   --green-disactive: #bed9bf;
 
+  --yellow-main: #ffdb1f;
+
   --dark-opacity: rgba(31, 31, 31, 0.8);
 }
 
@@ -20,6 +22,9 @@
 :root {
   --color-background: var(--light-main);
   --color-background-soft: var(--light-addict);
+
+  --color-background-inverse: var(--dark-addict);
+  --color-background-inverse-soft: var(--dark-main);
 
   --color-heading: var(--dark-addict);
   --color-text: var(--dark-main);
@@ -45,6 +50,9 @@
 :root.dark {
   --color-background: var(--dark-main);
   --color-background-soft: var(var(--dark-addict));
+
+  --color-background-inverse: var(--light-addict);
+  --color-background-inverse-soft: var(--light-main);
 
   --color-heading: var(--light-addict);
   --color-text: var(--light-main);
