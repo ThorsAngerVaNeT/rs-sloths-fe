@@ -89,6 +89,7 @@ export default defineComponent({
   position: absolute;
   opacity: 0;
   transition: 0.5s;
+  color: var(--color-text);
 }
 
 .home__controls {

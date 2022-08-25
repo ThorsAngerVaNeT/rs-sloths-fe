@@ -54,6 +54,7 @@ export default defineComponent({
 .home-catalog__name {
   text-align: center;
   opacity: 0;
+  color: var(--color-text);
   transition: 0.3s;
 }
 

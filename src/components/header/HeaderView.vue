@@ -38,11 +38,11 @@ export default defineComponent({
   font-weight: 900;
   font-size: 24px;
   text-decoration: none;
-  color: var(--dark-main);
+  color: var(--color-text);
 }
 
 .header__title:hover {
-  color: var(--dark-addict);
+  color: var(--color-heading);
 }
 
 .header__tools {
