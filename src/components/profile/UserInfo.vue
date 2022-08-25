@@ -14,8 +14,8 @@
       type="text"
       class="input-text user-info__property"
       autocomplete="off"
-      :placeholder="$t('profile.email')"
-      v-model="userInfo.email"
+      :placeholder="$t('profile.github')"
+      v-model="userInfo.github"
     />
     <custom-btn :text="$t('profile.btn.save')" className="btn btn-primary" :onClick="saveUser"></custom-btn>
   </div>
@@ -45,7 +45,7 @@ export default defineComponent({
 
   computed: {
     getAvatar(): string {
-      return this.userInfo.avatar || DEFAULT_USER_AVATAR;
+      return this.userInfo.avatar_url || DEFAULT_USER_AVATAR;
     },
   },
 

@@ -30,10 +30,10 @@ export type Users = User[];
 export type User = {
   id: string;
   name: string;
-  email: string;
-  createdAt: number;
+  github: string;
+  avatar_url: string;
+  createdAt: Date;
   role: Role;
-  avatar: string;
 };
 
 export type Sloths = Sloth[];

@@ -6,7 +6,7 @@
     <div>
       <div class="user-info__props">
         <p class="user-info__property">{{ userInfo.name }}</p>
-        <p class="user-info__property">{{ userInfo.email }}</p>
+        <p class="user-info__property">{{ userInfo.github }}</p>
       </div>
       <div class="user-info__btn">
         <custom-btn
@@ -46,7 +46,7 @@ export default defineComponent({
 
   computed: {
     getAvatar(): string {
-      return this.userInfo.avatar || DEFAULT_USER_AVATAR;
+      return this.userInfo.avatar_url || DEFAULT_USER_AVATAR;
     },
   },
 });

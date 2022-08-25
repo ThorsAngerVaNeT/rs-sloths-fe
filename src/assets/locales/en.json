@@ -19,7 +19,7 @@
   "profile": {
     "title": "User Profile",
     "name": "Name",
-    "email": "E-mail",
+    "github": "GitHub",
     "avatar": "User photo",
     "btn": {
       "save": "Save",

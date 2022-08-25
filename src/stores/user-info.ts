@@ -1,23 +1,16 @@
 import { defineStore } from 'pinia';
 import type { User } from '@/common/types';
 
-const newUser: User = {
-  id: '',
-  name: '',
-  email: '',
-  avatar: '',
-};
-
 const useUserInfo = defineStore({
   id: 'userInfo',
 
   state: () => ({
-    userInfo: newUser,
+    userInfo: {} as User,
   }),
 
   actions: {
     setEmptyUserInfo() {
-      this.userInfo = { ...newUser };
+      this.userInfo = {} as User;
     },
 
     setUserInfo(newUserInfo: User) {
