@@ -34,14 +34,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import type { Sloth, Sloths } from '@/common/types';
 import { errorHandler } from '../services/error-handling/error-handler';
 import { SlothsService } from '../services/sloths-service';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
 import SlothCard from '../components/catalog/SlothCard.vue';
 import SlothInfo from '../components/catalog/SlothInfo.vue';
-import type { Sloth, Sloths } from '@/common/types';
 import useSlothInfo from '../stores/slothInfo';
-import { ModalEvents } from '../common/enums/modalEvents';
+import { ModalEvents } from '../common/enums/modal-events';
 
 const service = new SlothsService();
 

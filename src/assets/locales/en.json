@@ -89,10 +89,25 @@
       "suggest": "Suggest a Sloth",
       "guess": "Guess-a-Sloth",
       "memory": "Memory"
+    },
+    "users": {
+      "title": "Users List",
+      "info": "Detail info",
+      "btn": {
+        "reset": "Reset filters",
+        "new": "New user",
+        "del": "Delete",
+        "edit": "Edit",
+        "save": "Save"
+      }
     }
   },
 
   "modal": {
+    "header": {
+      "alert": "Alert!",
+      "error": "ERROR!"
+    },
     "btn": {
       "close": "Close"
     }

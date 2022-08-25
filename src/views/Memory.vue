@@ -1,13 +1,24 @@
 <template>
   <div class="memory">
-    <h2>{{ $t('memory.title') }}</h2>
-    <h3>{{ $t('memory.level') }}</h3>
-    <div class="memory__level">
-      <div v-for="(level, index) in levels" :key="index" class="btn btn-img" @click="setLevel(index)">
-        <img :src="getImg(index)" :alt="$t(getText(index))" />
+    <div class="memory__aside">
+      <h2>{{ $t('memory.title') }}</h2>
+      <h3>{{ $t('memory.level') }}</h3>
+      <h2>{{ $t(getLevel) }}</h2>
+      <div class="memory__level">
+        <div
+          v-for="(level, index) in levels"
+          :key="index"
+          class="btn btn-img memory__btn"
+          :class="{ active: activeLevel === index }"
+          @click="setLevel(index)"
+        >
+          <img :src="getImg(index)" :alt="$t(getText(index))" />
+        </div>
       </div>
     </div>
-    <game-field :level="levels[level]"></game-field>
+    <div class="memory__main">
+      <game-field :level="levels[activeLevel]"></game-field>
+    </div>
   </div>
 </template>
 
@@ -26,8 +37,13 @@ export default defineComponent({
   data() {
     return {
       levels: MEMORY_LEVELS,
-      level: 1,
+      activeLevel: 1,
     };
+  },
+  computed: {
+    getLevel(): string {
+      return `memory.${this.levels[this.activeLevel].level}`;
+    },
   },
 
   methods: {
@@ -40,7 +56,7 @@ export default defineComponent({
     },
 
     setLevel(i: number) {
-      this.level = i;
+      this.activeLevel = i;
     },
   },
 });
@@ -49,11 +65,40 @@ export default defineComponent({
 <style scoped>
 .memory {
   display: flex;
+}
+
+.memory__aside {
+  width: 300px;
+
+  display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1em;
 }
+
+.memory__main {
+  width: calc(100% - 300px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .memory__level {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+.memory__btn img {
+  width: 150px;
+  height: 150px;
+
+  border-radius: 50%;
+
+  background-color: lightgray;
+}
+
+.active img {
+  box-shadow: 0px 0px 5px;
 }
 </style>

@@ -64,7 +64,7 @@ import { storeToRefs } from 'pinia';
 import ModalWindow from '../modal/ModalWindow.vue';
 import CustomBtn from '../buttons/CustomBtn.vue';
 import useSlothInfo from '../../stores/slothInfo';
-import { ModalEvents } from '../../common/enums/modalEvents';
+import { ModalEvents } from '../../common/enums/modal-events';
 
 const { slothsInfo } = storeToRefs(useSlothInfo());
 

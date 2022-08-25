@@ -17,19 +17,18 @@
       :placeholder="$t('profile.email')"
       v-model="userInfo.email"
     />
-    <custom-btn :text="$t('profile.btn.save')" className="btn btn-primary" :onClick="updUserInfo"></custom-btn>
+    <custom-btn :text="$t('profile.btn.save')" className="btn btn-primary" :onClick="saveUser"></custom-btn>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { errorHandler } from '../../services/error-handling/error-handler';
-import { UsersService } from '../../services/users-service';
+import { storeToRefs } from 'pinia';
+import { DEFAULT_USER_AVATAR } from '../../common/const';
+import useUserInfo from '../../stores/user-info';
 import CustomBtn from '../buttons/CustomBtn.vue';
 
-const service = new UsersService();
-
-const defaultUser = './default-user.png';
+const { userInfo } = storeToRefs(useUserInfo());
 
 export default defineComponent({
   name: 'UserInfo',
@@ -40,54 +39,19 @@ export default defineComponent({
 
   data() {
     return {
-      userInfo: {
-        id: '',
-        name: '',
-        email: '',
-        avatar: '',
-      },
+      userInfo,
     };
-  },
-
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
   },
 
   computed: {
     getAvatar(): string {
-      return this.userInfo.avatar || defaultUser;
+      return this.userInfo.avatar || DEFAULT_USER_AVATAR;
     },
-  },
-
-  mounted() {
-    this.getUserInfo();
   },
 
   methods: {
-    async getUserInfo() {
-      try {
-        const res = await service.getById(this.id);
-
-        if (!res) throw Error(); // todo
-
-        this.userInfo = res.data;
-      } catch (error) {
-        errorHandler(error);
-      }
-    },
-    async updUserInfo() {
-      try {
-        const res = await service.updateById(this.id, this.userInfo);
-
-        if (!res) throw Error(); // todo
-
-        await this.getUserInfo();
-      } catch (error) {
-        errorHandler(error);
-      }
+    saveUser() {
+      this.$emit('updUser', this.userInfo);
     },
   },
 });

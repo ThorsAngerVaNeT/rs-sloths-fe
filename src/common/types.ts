@@ -1,3 +1,5 @@
+import type { Role } from './enums/user-role';
+
 export type APIRequestResult<T> = {
   ok: boolean;
   status: number;
@@ -5,10 +7,15 @@ export type APIRequestResult<T> = {
   headers: unknown;
 };
 
-export interface API<T> {
-  getAll(): Promise<APIRequestResult<T[]> | null>;
+export type GetList<T> = {
+  count: number;
+  items: T[];
+};
 
-  getPage(page: number, limit: number): Promise<APIRequestResult<T[]> | null>;
+export interface API<T> {
+  getAll(): Promise<APIRequestResult<GetList<T>> | null>;
+
+  getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>> | null>;
 
   getById(id: string): Promise<APIRequestResult<T> | null>;
 
@@ -20,7 +27,14 @@ export interface API<T> {
 }
 
 export type Users = User[];
-export type User = unknown;
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: number;
+  role: Role;
+  avatar: string;
+};
 
 export type Sloths = Sloth[];
 export type Sloth = {
@@ -41,4 +55,9 @@ export type SlothRating = {
 export type MemoryLevel = {
   level: string;
   n: number;
+};
+
+export type ErrorDescription = {
+  code: string;
+  message: string;
 };
