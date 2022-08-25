@@ -27,6 +27,7 @@ import AlertModal from './components/modal/AlertModal.vue';
 
 import useLoader from './stores/loader';
 import useAlertModal from './stores/alert-modal';
+import useAudioOn from './stores/audio-on';
 
 export default defineComponent({
   name: 'App',
@@ -40,12 +41,15 @@ export default defineComponent({
     ...mapWritableState(useLoader, ['isLoad']),
 
     ...mapWritableState(useAlertModal, ['isVisible', 'header', 'message']),
+
+    ...mapWritableState(useAudioOn, ['isAudioOn']),
   },
   created() {
     this.isLoad = true;
     this.isVisible = false;
     this.header = 'modal.header.alert';
     this.message = '';
+    this.isAudioOn = true; // todo local storage
   },
   mounted() {
     setTimeout(() => {
