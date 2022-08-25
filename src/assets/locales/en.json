@@ -20,6 +20,8 @@
     "title": "User Profile",
     "name": "Name",
     "github": "GitHub",
+    "role": "Role",
+    "createdAt": "Created at",
     "avatar": "User photo",
     "btn": {
       "save": "Save",

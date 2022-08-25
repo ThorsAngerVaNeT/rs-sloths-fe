@@ -18,8 +18,10 @@
 
   "profile": {
     "title": "Профиль пользователя",
-    "name": "Ваше имя",
+    "name": "Имя",
     "github": "GitHub",
+    "role": "Роль",
+    "createdAt": "Создан",
     "avatar": "Фото",
     "btn": {
       "save": "Сохранить",

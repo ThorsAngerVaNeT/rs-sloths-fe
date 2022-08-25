@@ -124,8 +124,8 @@ export default defineComponent({
   flex-direction: row;
 }
 .profile__aside {
-  width: 300px;
-  padding: 1em;
+  width: 30rem;
+  padding: 1rem;
 
   display: flex;
   flex-direction: column;
@@ -134,6 +134,6 @@ export default defineComponent({
 
 .profile__tab {
   border: 1px solid;
-  padding: 1em;
+  padding: 1rem;
 }
 </style>

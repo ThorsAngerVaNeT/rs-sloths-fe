@@ -16,6 +16,7 @@ export const errorHandler = (error: unknown) => {
   } else if (error instanceof CustomError) {
     showAlertModal('modal.header.error', `ErrorCode (${error.code}): ${error.message}`);
   } else {
+    // todo
     // showAlertModal('modal.header.error', `${error}`);
   }
 };
