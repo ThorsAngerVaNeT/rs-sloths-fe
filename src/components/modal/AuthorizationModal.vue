@@ -12,7 +12,7 @@
 
       <template v-slot:footer>
         <div class="btn btn-primary">
-          <a :href="getUrl">{{ $t('modal.btn.authorization') }}</a>
+          <a :href="url">{{ $t('modal.btn.authorization') }}</a>
         </div>
       </template>
     </modal-window>
@@ -38,12 +38,6 @@ export default defineComponent({
     };
   },
 
-  computed: {
-    getUrl(): string {
-      return `${this.url}&state='${window.location.href}'`;
-    },
-  },
-
   methods: {
     closeModal() {
       this.$emit('closeAuthorizationModal');
@@ -59,10 +53,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 }
-/* .authorization-modal__body img {
-  width: 200px;
-  height: 200px;
-} */
+
 .authorization-modal__body p {
   width: 200px;
   text-align: center;
