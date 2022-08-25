@@ -48,7 +48,6 @@ export default defineComponent({
 }
 
 .btn-primary {
-  /* border: 1px solid var(--color-border-inverse); */
   border: none;
 }
 

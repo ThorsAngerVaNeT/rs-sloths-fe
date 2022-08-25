@@ -51,7 +51,6 @@ export default defineComponent({
   height: 100%;
   display: grid;
   gap: 80px;
-  /* padding: 30px; */
   justify-items: center;
   align-items: center;
   justify-content: center;
