@@ -52,6 +52,8 @@ export default defineComponent({
   align-items: center;
 
   background-color: var(--dark-opacity);
+
+  z-index: 100;
 }
 
 .modal {

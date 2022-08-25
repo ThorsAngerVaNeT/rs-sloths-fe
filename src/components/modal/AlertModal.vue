@@ -40,3 +40,10 @@ export default defineComponent({
   },
 });
 </script>
+
+.
+<style scoped>
+.alert-modal {
+  z-index: 100;
+}
+</style>

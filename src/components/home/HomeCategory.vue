@@ -1,10 +1,6 @@
 <template>
   <div :class="`home-category home-category_${category}`">
-    <div class="home-category__wrapper" v-if="category === 'catalog'">
-      <div class="home-category_up"></div>
-      <div class="home-category_down"></div>
-    </div>
-    <div class="home-category__img" v-else></div>
+    <div class="home-category__img"></div>
     <div class="home-category__name">{{ $t(`${category}.title`) }}</div>
   </div>
 </template>

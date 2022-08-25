@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <home-about></home-about>
-    <home-catalog></home-catalog>
+    <home-catalog @click="handleCategoryClick('catalog')"></home-catalog>
     <div class="home__menu">
       <home-category
         v-for="(category, i) in categories"
