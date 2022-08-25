@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import type { ErrorDescription } from './types';
+import type { ErrorDescription, SelectOptions } from './types';
 
 // Services
 export const BASE = 'http://localhost:3000'; // todo
@@ -28,6 +28,34 @@ export const USERS_ERROR_UPD: ErrorDescription = {
   code: 'USERS_UPD',
   message: 'Failed to update user on server',
 };
+
+// Sorting
+export const USER_SORTING: SelectOptions[] = [
+  {
+    value: JSON.stringify({ name: 'desc' }),
+    text: 'sorting.name-',
+  },
+  {
+    value: JSON.stringify({ name: 'asc' }),
+    text: 'sorting.name+',
+  },
+  {
+    value: JSON.stringify({ github: 'desc' }),
+    text: 'sorting.github-',
+  },
+  {
+    value: JSON.stringify({ github: 'asc' }),
+    text: 'sorting.github+',
+  },
+  {
+    value: JSON.stringify({ createdAt: 'desc' }),
+    text: 'sorting.createdAt-',
+  },
+  {
+    value: JSON.stringify({ createdAt: 'asc' }),
+    text: 'sorting.createdAt+',
+  },
+];
 
 // Users
 export const DEFAULT_USER_AVATAR = './default-user.png';

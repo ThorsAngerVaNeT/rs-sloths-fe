@@ -13,9 +13,9 @@ export type GetList<T> = {
 };
 
 export interface API<T> {
-  getAll(): Promise<APIRequestResult<GetList<T>> | null>;
+  getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null>;
 
-  getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>> | null>;
+  getPage(page: number, limit: number, filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null>;
 
   getById(id: string): Promise<APIRequestResult<T> | null>;
 
@@ -60,4 +60,9 @@ export type MemoryLevel = {
 export type ErrorDescription = {
   code: string;
   message: string;
+};
+
+export type SelectOptions = {
+  value: string;
+  text: string;
 };

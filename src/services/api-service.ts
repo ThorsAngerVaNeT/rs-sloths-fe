@@ -10,8 +10,12 @@ export class APIService<T> implements API<T> {
     this.endpoint = `${BASE}/${endpoint}`;
   }
 
-  public getAll(): Promise<APIRequestResult<GetList<T>> | null> {
-    const url = `${this.endpoint}`;
+  public getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null> {
+    let param = filter ? `filter=${filter}` : '';
+    param = sorting ? `${param}order=${sorting}` : '';
+    param = param ? `?${param}` : '';
+
+    const url = `${this.endpoint}${param}`;
     const config: RequestInit = {
       method: FetchMethod.get,
       credentials,
@@ -20,8 +24,19 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>> | null> {
-    const url = `${this.endpoint}?_page=${page}&_limit=${limit}`;
+  public getPage(
+    page: number,
+    limit: number,
+    filter: string,
+    sorting: string
+  ): Promise<APIRequestResult<GetList<T>> | null> {
+    let param = page ? `_page=${page}` : '';
+    param = limit ? `${param}_limit=${limit}` : '';
+    param = filter ? `${param}filter=${filter}` : '';
+    param = sorting ? `${param}order=${sorting}` : '';
+    param = param ? `?${param}` : '';
+
+    const url = `${this.endpoint}${param}`;
     const config: RequestInit = {
       method: FetchMethod.get,
       credentials,

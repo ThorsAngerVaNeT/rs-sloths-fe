@@ -54,7 +54,7 @@ export default defineComponent({
 
   computed: {
     getAvatar(): string {
-      return this.userInfo.avatar_url || DEFAULT_USER_AVATAR;
+      return this.userInfo.avatar_url ?? DEFAULT_USER_AVATAR;
     },
   },
 });

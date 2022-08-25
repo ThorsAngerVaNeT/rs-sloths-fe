@@ -2,15 +2,34 @@ import type { API, User } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 
+const getFilter = (searchText: string) => {
+  return searchText
+    ? JSON.stringify({
+        OR: [
+          {
+            name: {
+              contains: searchText,
+            },
+          },
+          {
+            github: {
+              contains: searchText,
+            },
+          },
+        ],
+      })
+    : '';
+};
+
 export class UsersService implements API<User> {
   private service = new APIService<User>(Endpoints.users);
 
-  public getAll() {
-    return this.service.getAll();
+  public getAll(searchText = '', sorting = '') {
+    return this.service.getAll(getFilter(searchText), sorting);
   }
 
-  public getPage(page: number, limit: number) {
-    return this.service.getPage(page, limit);
+  public getPage(page: number, limit: number, searchText = '', sorting = '') {
+    return this.service.getPage(page, limit, getFilter(searchText), sorting);
   }
 
   public getById(id: string) {

@@ -85,6 +85,8 @@
 
   "admin": {
     "title": "Admin panel",
+    "search": "...name or GitHub",
+    "sorting": "Sort by...",
     "btn": {
       "users": "Users",
       "sloths": "Sloths",
@@ -127,5 +129,14 @@
   "404": {
     "title": "404: Page Not Found",
     "text": "Sloth made a bug or didn't make this page.\nPlease check the correctness of path again"
+  },
+
+  "sorting": {
+    "name+": "Sort by Name (ascending)",
+    "name-": "Sort by Name (descending)",
+    "github+": "Sort by GitHub (ascending)",
+    "github-": "Sort by GitHub (descending)",
+    "createdAt+": "Sort by creation date (ascending)",
+    "createdAt-": "Sort by creation date (descending)"
   }
 }
