@@ -1,7 +1,7 @@
 <template>
   <div class="user-modal">
     <modal-window v-show="isUserInfoVisible" @close="closeModal">
-      <template v-slot:header> {{ headerText }} </template>
+      <template v-slot:header> {{ getHeader }} </template>
 
       <template v-slot:body>
         <user-info @updUser="saveUser"></user-info>
@@ -47,6 +47,12 @@ export default defineComponent({
     modalEvents: {
       type: String as PropType<ModalEvents>,
       default: ModalEvents.view,
+    },
+  },
+
+  computed: {
+    getHeader() {
+      return this.modalEvents === ModalEvents.edit ? this.userInfo.id : this.headerText;
     },
   },
 

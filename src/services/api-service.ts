@@ -3,45 +3,51 @@ import { BASE } from '../common/const';
 import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
 
+const credentials = 'include';
+
 export class APIService<T> implements API<T> {
   constructor(private endpoint: string) {
     this.endpoint = `${BASE}/${endpoint}`;
   }
 
-  public getAll(): Promise<APIRequestResult<GetList<T>> | null> {
+  public getAll(): Promise<APIRequestResult<GetList<T>>> {
     const url = `${this.endpoint}`;
     const config: RequestInit = {
       method: FetchMethod.get,
+      credentials,
     };
 
     return apiRequest(url, config);
   }
 
-  public getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>> | null> {
+  public getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>>> {
     const url = `${this.endpoint}?_page=${page}&_limit=${limit}`;
     const config: RequestInit = {
       method: FetchMethod.get,
+      credentials,
     };
 
     return apiRequest(url, config);
   }
 
-  public getById(id: string): Promise<APIRequestResult<T> | null> {
+  public getById(id: string): Promise<APIRequestResult<T>> {
     const url = `${this.endpoint}/${id}`;
     const config: RequestInit = {
       method: FetchMethod.get,
+      credentials,
     };
 
     return apiRequest(url, config);
   }
 
-  public create(body: T): Promise<APIRequestResult<T> | null> {
+  public create(body: T): Promise<APIRequestResult<T>> {
     const url = `${this.endpoint}`;
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
     };
     const config: RequestInit = {
       method: FetchMethod.post,
+      credentials,
       body: JSON.stringify(body),
       headers,
     };
@@ -49,13 +55,14 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public updateById(id: string, body: Partial<T>): Promise<APIRequestResult<Partial<T>> | null> {
+  public updateById(id: string, body: Partial<T>): Promise<APIRequestResult<Partial<T>>> {
     const url = `${this.endpoint}/${id}`;
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
     };
     const config: RequestInit = {
       method: FetchMethod.put,
+      credentials,
       body: JSON.stringify(body),
       headers,
     };
@@ -63,13 +70,14 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public update(body: Partial<T>): Promise<APIRequestResult<Partial<T>> | null> {
+  public update(body: Partial<T>): Promise<APIRequestResult<Partial<T>>> {
     const url = `${this.endpoint}`;
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
     };
     const config: RequestInit = {
       method: FetchMethod.put,
+      credentials,
       body: JSON.stringify(body),
       headers,
     };
@@ -77,10 +85,11 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public deleteById(id: string): Promise<APIRequestResult<T> | null> {
+  public deleteById(id: string): Promise<APIRequestResult<T>> {
     const url = `${this.endpoint}/${id}`;
     const config: RequestInit = {
       method: FetchMethod.delete,
+      credentials,
     };
 
     return apiRequest(url, config);

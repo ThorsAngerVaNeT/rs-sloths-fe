@@ -31,6 +31,8 @@ export const USERS_ERROR_UPD: ErrorDescription = {
 
 // Users
 export const DEFAULT_USER_AVATAR = './default-user.png';
+export const AUTHORIZATION_IMG = './github.png';
+export const AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize?client_id=12e65e35ba7755d60466';
 
 // Memory Game
 export const MEMORY_LEVELS = [

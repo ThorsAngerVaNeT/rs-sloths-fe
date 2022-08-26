@@ -4,7 +4,7 @@ export type APIRequestResult<T> = {
   ok: boolean;
   status: number;
   data: T;
-  headers: unknown;
+  headers: Headers;
 };
 
 export type GetList<T> = {
@@ -13,27 +13,27 @@ export type GetList<T> = {
 };
 
 export interface API<T> {
-  getAll(): Promise<APIRequestResult<GetList<T>> | null>;
+  getAll(): Promise<APIRequestResult<GetList<T>>>;
 
-  getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>> | null>;
+  getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>>>;
 
-  getById(id: string): Promise<APIRequestResult<T> | null>;
+  getById(id: string): Promise<APIRequestResult<T>>;
 
-  create(body: T): Promise<APIRequestResult<T> | null>;
+  create(body: T): Promise<APIRequestResult<T>>;
 
-  updateById(id: string, body: T): Promise<APIRequestResult<Partial<T>> | null>;
+  updateById(id: string, body: T): Promise<APIRequestResult<Partial<T>>>;
 
-  deleteById(id: string): Promise<APIRequestResult<T> | null>;
+  deleteById(id: string): Promise<APIRequestResult<T>>;
 }
 
 export type Users = User[];
 export type User = {
   id: string;
   name: string;
-  email: string;
-  createdAt: number;
+  github: string;
+  avatar_url: string;
+  createdAt: Date;
   role: Role;
-  avatar: string;
 };
 
 export type Sloths = Sloth[];
