@@ -1,16 +1,29 @@
 <template>
   <div class="catalog">
     <div class="catalog__aside">
-      <h3>{{ $t('catalog.title') }}</h3>
+      <h3>{{ $t('catalog.title') }}: {{ count }}</h3>
+      <list-controls
+        @search="getSloths"
+        @tags="getSloths"
+        @sorting="getSloths"
+        @clearAll="getSloths"
+        :placeholder="$t('catalog.search')"
+        :tags="tags"
+        :title="$t('catalog.sorting')"
+        :options="sortingOptions"
+        :text="$t('btn.reset')"
+      >
+      </list-controls>
+
       <custom-btn
         :text="$t('catalog.btn.new')"
         className="btn btn-primary"
         @click="showSlothInfoNew"
         v-show="getPageName === 'admin'"
       ></custom-btn>
-      <custom-btn :text="$t('btn.reset')" className="btn btn-primary"></custom-btn>
+      <list-pagination :size="count" @getPage="getSloths"></list-pagination>
     </div>
-    <div class="catalog__showcase">
+    <div class="catalog__list">
       <sloth-card
         v-for="sloth in sloths"
         :key="sloth.id"
@@ -37,17 +50,29 @@ import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 import type { Sloth, Sloths } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
+import { SLOTH_SORTING } from '@/common/const';
 import { SlothsService } from '@/services/sloths-service';
+import { ModalEvents } from '@/common/enums/modal-events';
 import useLoader from '@/stores/loader';
+import usePagination from '@/stores/pagination';
+import useSearchText from '@/stores/search-text';
+import useSelectedTags from '@/stores/tag-cloud';
+import useSortingList from '@/stores/sorting-list';
+import useSlothInfo from '@/stores/slothInfo';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import ListControls from '@/components/list-controls/ListControls.vue';
+import ListPagination from '@/components/list-controls/ListPagination.vue';
 import SlothCard from '@/components/catalog/SlothCard.vue';
 import SlothInfo from '@/components/catalog/SlothInfo.vue';
-import useSlothInfo from '@/stores/slothInfo';
-import { ModalEvents } from '@/common/enums/modal-events';
 
 const service = new SlothsService();
 
 const { setEmptySlothInfo, setSlothInfo } = useSlothInfo();
+
+const { getPerPage, getCurrPage } = usePagination();
+const { getSearchText } = useSearchText();
+const { getSelected } = useSelectedTags();
+const { getSortingList } = useSortingList();
 
 export default defineComponent({
   name: 'CatalogView',
@@ -56,13 +81,19 @@ export default defineComponent({
     CustomBtn,
     SlothCard,
     SlothInfo,
+    ListControls,
+    ListPagination,
   },
 
   data() {
     return {
       sloths: [] as Sloths,
+      count: 0,
       isSlothInfoVisible: false,
       modalEvents: ModalEvents.view,
+      searchText: '',
+      tags: ['mentor', 'student'],
+      sortingOptions: SLOTH_SORTING,
     };
   },
 
@@ -88,11 +119,18 @@ export default defineComponent({
     async getSloths() {
       this.isLoad = true;
       try {
-        const res = await service.getAll();
+        const currPage = getCurrPage();
+        const perPage = getPerPage();
+        const searchText = getSearchText();
+        const selected = getSelected();
+        const sorting = getSortingList();
+
+        const res = await service.getPage(currPage, perPage, searchText, sorting, selected);
 
         if (!res.ok) throw Error(); // todo
 
-        this.sloths = res.data;
+        this.sloths = res.data.items;
+        this.count = res.data.count;
       } catch (error) {
         errorHandler(error);
       } finally {
@@ -196,14 +234,14 @@ export default defineComponent({
   align-items: flex-start;
 }
 .catalog__aside {
-  width: 200px;
+  width: var(--width-panel);
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.catalog__showcase {
-  margin: 0.5em;
+.catalog__list {
+  margin: 0.5rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

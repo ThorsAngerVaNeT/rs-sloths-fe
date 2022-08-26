@@ -57,6 +57,33 @@ export const USER_SORTING: SelectOptions[] = [
   },
 ];
 
+export const SLOTH_SORTING: SelectOptions[] = [
+  {
+    value: JSON.stringify({ caption: 'desc' }),
+    text: 'sorting.caption-',
+  },
+  {
+    value: JSON.stringify({ caption: 'asc' }),
+    text: 'sorting.caption+',
+  },
+  {
+    value: JSON.stringify({ rating: 'desc' }),
+    text: 'sorting.rating-',
+  },
+  {
+    value: JSON.stringify({ rating: 'asc' }),
+    text: 'sorting.rating+',
+  },
+  {
+    value: JSON.stringify({ createdAt: 'desc' }),
+    text: 'sorting.createdAt-',
+  },
+  {
+    value: JSON.stringify({ createdAt: 'asc' }),
+    text: 'sorting.createdAt+',
+  },
+];
+
 // Pagination
 export const PAGINATION_OPTIONS: number[] = [10, 15, 20, 1, 2];
 
