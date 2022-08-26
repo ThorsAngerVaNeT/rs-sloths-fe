@@ -34,14 +34,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapWritableState } from 'pinia';
 import type { Sloth, Sloths } from '@/common/types';
-import { errorHandler } from '../services/error-handling/error-handler';
-import { SlothsService } from '../services/sloths-service';
-import CustomBtn from '../components/buttons/CustomBtn.vue';
-import SlothCard from '../components/catalog/SlothCard.vue';
-import SlothInfo from '../components/catalog/SlothInfo.vue';
-import useSlothInfo from '../stores/slothInfo';
-import { ModalEvents } from '../common/enums/modal-events';
+import { errorHandler } from '@/services/error-handling/error-handler';
+import { SlothsService } from '@/services/sloths-service';
+import useLoader from '@/stores/loader';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import SlothCard from '@/components/catalog/SlothCard.vue';
+import SlothInfo from '@/components/catalog/SlothInfo.vue';
+import useSlothInfo from '@/stores/slothInfo';
+import { ModalEvents } from '@/common/enums/modal-events';
 
 const service = new SlothsService();
 
@@ -65,6 +67,8 @@ export default defineComponent({
   },
 
   computed: {
+    ...mapWritableState(useLoader, ['isLoad']),
+
     getPageName() {
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
     },
@@ -82,6 +86,7 @@ export default defineComponent({
 
   methods: {
     async getSloths() {
+      this.isLoad = true;
       try {
         const res = await service.getAll();
 
@@ -90,10 +95,13 @@ export default defineComponent({
         this.sloths = res.data;
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async delSloth(id: string) {
+      this.isLoad = true;
       try {
         const res = await service.deleteById(id);
 
@@ -102,10 +110,13 @@ export default defineComponent({
         await this.getSloths();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async createSloth(sloth: Sloth) {
+      this.isLoad = true;
       try {
         const res = await service.create(sloth);
 
@@ -114,10 +125,13 @@ export default defineComponent({
         await this.getSloths();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async updSlothRating(sloth: Sloth, rate: number) {
+      this.isLoad = true;
       try {
         const res = await SlothsService.updateRatingById(sloth.id, rate);
 
@@ -126,10 +140,13 @@ export default defineComponent({
         await this.getSloths();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
     async updSloth(sloth: Sloth) {
+      this.isLoad = true;
       try {
         const res = await service.updateById(sloth.id, sloth);
 
@@ -138,6 +155,8 @@ export default defineComponent({
         await this.getSloths();
       } catch (error) {
         errorHandler(error);
+      } finally {
+        this.isLoad = false;
       }
     },
 
