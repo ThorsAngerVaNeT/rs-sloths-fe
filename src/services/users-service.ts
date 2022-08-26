@@ -1,19 +1,15 @@
-import type { API, WhereFieldFilter, User } from '@/common/types';
-import { getANDFields, getFieldContainsFilter, getFieldEqualFilter } from '@/utils/query-string';
+import type { API, WhereFieldFilter, User, WhereField } from '@/common/types';
+import { getANDFields, getFieldContainsFilter, getFieldEqualFilter, getORFields } from '@/utils/query-string';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 
 const getFilter = (searchText: string, selected: string[]): string => {
-  const search: WhereFieldFilter | null = searchText
-    ? {
-        OR: ['name', 'github'].map((field) => getFieldContainsFilter(field, searchText)),
-      }
+  const search: WhereFieldFilter | WhereField | null = searchText
+    ? getORFields(['name', 'github'].map((field) => getFieldContainsFilter(field, searchText)))
     : null;
 
-  const select: WhereFieldFilter | null = selected.length
-    ? {
-        OR: selected.map((field) => getFieldEqualFilter('role', field)),
-      }
+  const select: WhereFieldFilter | WhereField | null = selected.length
+    ? getORFields(selected.map((field) => getFieldEqualFilter('role', field)))
     : null;
 
   return getANDFields([search, select]);

@@ -75,7 +75,7 @@ type WhereFieldContains = {
   [keyof: string]: { contains: string; mode: string };
 };
 type WhereFieldEquals = {
-  [keyof: string]: { equals: string };
+  [keyof: string]: string;
 };
 export type WhereField = WhereFieldContains | WhereFieldEquals;
 
