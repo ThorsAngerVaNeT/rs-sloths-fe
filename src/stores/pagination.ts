@@ -23,7 +23,7 @@ const usePagination = defineStore({
     },
 
     setCurrPage(n: number) {
-      this.perPage = +n;
+      this.currPage = +n;
     },
   },
 });
