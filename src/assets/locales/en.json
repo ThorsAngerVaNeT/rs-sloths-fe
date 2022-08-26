@@ -24,7 +24,6 @@
     "createdAt": "Created at",
     "avatar": "User photo",
     "btn": {
-      "save": "Save",
       "logout": "Sign out",
       "guess": "Guess-a-Sloth Game results",
       "memory": "Memory Game results",

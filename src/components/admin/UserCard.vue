@@ -6,12 +6,12 @@
       </div>
       <div class="user-info__btn">
         <custom-btn
-          :text="$t('admin.users.btn.edit')"
+          :text="$t('btn.edit')"
           className="btn btn-primary"
           @click="$emit('editUser', userInfo)"
         ></custom-btn>
         <custom-btn
-          :text="$t('admin.users.btn.del')"
+          :text="$t('btn.del')"
           className="btn btn-primary"
           @click="$emit('delUser', userInfo.id)"
         ></custom-btn>

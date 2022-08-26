@@ -29,7 +29,7 @@
       <option :value="admin">{{ admin }}</option>
       <option :value="user">{{ user }}</option>
     </select>
-    <custom-btn :text="$t('profile.btn.save')" className="btn btn-primary" :onClick="saveUser"></custom-btn>
+    <custom-btn :text="$t('btn.save')" className="btn btn-primary" :onClick="saveUser"></custom-btn>
   </div>
 </template>
 

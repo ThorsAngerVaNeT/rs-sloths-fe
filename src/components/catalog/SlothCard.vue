@@ -25,19 +25,19 @@
       <div class="sloths-info__btn">
         <custom-btn
           v-show="isAdmin"
-          :text="$t('catalog.btn.edit')"
+          :text="$t('btn.edit')"
           className="btn btn-primary"
           @click="$emit('editSloth', slothsInfo)"
         ></custom-btn>
         <custom-btn
           v-show="isAdmin"
-          :text="$t('catalog.btn.del')"
+          :text="$t('btn.del')"
           className="btn btn-primary"
           @click="$emit('delSloth', slothsInfo.id)"
         ></custom-btn>
         <custom-btn
           v-show="isCatalog"
-          :text="$t('catalog.btn.show')"
+          :text="$t('btn.show')"
           className="btn btn-primary"
           @click="$emit('showSloth', slothsInfo)"
         ></custom-btn>

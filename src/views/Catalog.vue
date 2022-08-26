@@ -8,7 +8,7 @@
         @click="showSlothInfoNew"
         v-show="getPageName === 'admin'"
       ></custom-btn>
-      <custom-btn :text="$t('catalog.btn.reset')" className="btn btn-primary"></custom-btn>
+      <custom-btn :text="$t('btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
     <div class="catalog__showcase">
       <sloth-card
@@ -34,12 +34,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import type { Sloth, Sloths } from '@/common/types';
 import { errorHandler } from '../services/error-handling/error-handler';
 import { SlothsService } from '../services/sloths-service';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
 import SlothCard from '../components/catalog/SlothCard.vue';
 import SlothInfo from '../components/catalog/SlothInfo.vue';
-import type { Sloth, Sloths } from '@/common/types';
 import useSlothInfo from '../stores/slothInfo';
 import { ModalEvents } from '../common/enums/modal-events';
 
@@ -71,7 +71,7 @@ export default defineComponent({
 
     getHeaderSlothInfo() {
       if (this.modalEvents === ModalEvents.new) return this.$t('catalog.btn.new');
-      if (this.modalEvents === ModalEvents.edit) return this.$t('catalog.btn.edit');
+      if (this.modalEvents === ModalEvents.edit) return this.$t('btn.edit');
       return this.$t('catalog.info');
     },
   },
