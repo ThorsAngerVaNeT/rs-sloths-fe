@@ -41,6 +41,7 @@ export default defineComponent({
   font-size: 2.4rem;
   text-decoration: none;
   color: var(--color-text);
+  transition: 0.5s ease;
 }
 
 .header__title:hover {

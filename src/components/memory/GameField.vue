@@ -293,8 +293,11 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
 
-  background-color: lightgray;
+  background-color: var(--color-background-inverse-soft);
   border-radius: 50%;
+  color: var(--color-text-inverse);
+
+  transition: 0.5s ease;
 }
 .game-field__cards {
   margin: 1em;
@@ -331,7 +334,7 @@ export default defineComponent({
 }
 
 .game-field__img:hover {
-  box-shadow: 0px 0px 5px;
+  box-shadow: 0px 0px 5px var(--color-text);
 }
 
 .success {

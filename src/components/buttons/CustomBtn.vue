@@ -51,8 +51,13 @@ export default defineComponent({
   border: none;
 }
 
+.btn-img {
+  background: none;
+}
+
 .btn-img img {
   overflow: hidden;
+  border: 0.2rem solid var(--color-border-inverse);
 }
 
 .btn-tab {
@@ -63,7 +68,11 @@ export default defineComponent({
   margin-right: -1px;
 }
 
-.btn:hover {
+.btn-primary:hover {
   background-color: var(--color-background-inverse-soft);
+}
+
+.btn-img:hover {
+  transform: scale(1.1) rotate(10deg);
 }
 </style>

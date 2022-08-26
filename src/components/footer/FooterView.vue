@@ -41,7 +41,7 @@ export default defineComponent({
 }
 
 .team__item {
-  color: var(--dark-main);
+  color: var(--color-text);
   text-decoration: none;
   font-size: 1.2rem;
 }
@@ -51,6 +51,6 @@ export default defineComponent({
 }
 
 .link:hover {
-  color: var(--dark-addict);
+  color: var(--color-heading);
 }
 </style>
