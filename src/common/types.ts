@@ -26,6 +26,11 @@ export interface API<T> {
   deleteById(id: string): Promise<APIRequestResult<T>>;
 }
 
+export type Tags = Tag[];
+export type Tag = {
+  value: string;
+};
+
 export type Users = User[];
 export type User = {
   id: string;
@@ -44,6 +49,7 @@ export type Sloth = {
   image_url: string;
   rating: number;
   createdAt: number;
+  tags: Tags;
 };
 
 export type SlothRating = {
