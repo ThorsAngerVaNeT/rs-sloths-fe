@@ -136,5 +136,13 @@
     "save": "Save",
     "show": "Detail info",
     "pick": "Pick"
+  },
+
+  "pagination": {
+    "perPage": "Items per page",
+    "next": ">",
+    "prev": "<",
+    "top": "<<",
+    "bottom": ">>"
   }
 }

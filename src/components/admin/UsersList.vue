@@ -15,8 +15,9 @@
       >
       </list-controls>
       <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
+      <list-pagination :size="count" @getPage="getUsers"></list-pagination>
     </div>
-    <div class="users__showcase">
+    <div class="users__list">
       <user-card
         v-for="user in users"
         :key="user.id"
@@ -52,6 +53,7 @@ import {
 import { UsersService } from '@/services/users-service';
 import type { User, Users } from '@/common/types';
 import { ModalEvents } from '@/common/enums/modal-events';
+import usePagination from '@/stores/pagination';
 import useSearchText from '@/stores/search-text';
 import useSelectedTags from '@/stores/tag-cloud';
 import useSortingList from '@/stores/sorting-list';
@@ -59,6 +61,7 @@ import useUserInfo from '@/stores/user-info';
 import useLoader from '@/stores/loader';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ListControls from '@/components/list-controls/ListControls.vue';
+import ListPagination from '@/components/list-controls/ListPagination.vue';
 import { Role } from '@/common/enums/user-role';
 import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
@@ -66,6 +69,8 @@ import UserCard from './UserCard.vue';
 const service = new UsersService();
 
 const { setEmptyUserInfo, setUserInfo } = useUserInfo();
+
+const { getPerPage, getCurrPage } = usePagination();
 const { getSearchText } = useSearchText();
 const { getSelected } = useSelectedTags();
 const { getSortingList } = useSortingList();
@@ -78,6 +83,7 @@ export default defineComponent({
     UserCard,
     UserModal,
     ListControls,
+    ListPagination,
   },
 
   data() {
@@ -110,11 +116,13 @@ export default defineComponent({
     async getUsers() {
       this.isLoad = true;
       try {
+        const currPage = getCurrPage();
+        const perPage = getPerPage();
         const searchText = getSearchText();
         const selected = getSelected();
         const sorting = getSortingList();
 
-        const res = await service.getAll(searchText, sorting, selected);
+        const res = await service.getPage(currPage, perPage, searchText, sorting, selected);
 
         if (!res) throw new CustomError(USERS_ERROR_GET_LIST.code, USERS_ERROR_GET_LIST.message);
 
@@ -214,7 +222,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
 }
-.users__showcase {
+.users__list {
   margin: 0.5em;
   display: flex;
   flex-direction: row;

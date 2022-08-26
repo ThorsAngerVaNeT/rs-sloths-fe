@@ -57,6 +57,9 @@ export const USER_SORTING: SelectOptions[] = [
   },
 ];
 
+// Pagination
+export const PAGINATION_OPTIONS: number[] = [10, 15, 20, 1, 2];
+
 // Users
 export const DEFAULT_USER_AVATAR = './default-user.png';
 export const AUTHORIZATION_IMG = './github.png';

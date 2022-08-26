@@ -42,8 +42,8 @@ export class APIService<T> implements API<T> {
     order: string
   ): Promise<APIRequestResult<GetList<T>> | null> {
     const param = makeParamString({
-      page: page.toString(),
-      limit: page.toString(),
+      _page: page.toString(),
+      _limit: limit.toString(),
       filter,
       order,
     });
