@@ -14,10 +14,13 @@ export const errorHandler = (error: unknown) => {
       showAlertModal('modal.header.error', `ErrorCode (${error.statusCode}): ${error.message}`);
     }
   } else if (error instanceof CustomError) {
-    showAlertModal('modal.header.error', `ErrorCode (${error.code}): ${error.message}`);
+    if (error.statusCode === 401) {
+      // todo ? showAuthorizationModal();
+    } else {
+      showAlertModal('modal.header.error', `ErrorCode (${error.customCode}): ${error.message}`);
+    }
   } else {
-    // todo
-    // showAlertModal('modal.header.error', `${error}`);
+    // todo ? showAlertModal('modal.header.error', `${error}`);
   }
 };
 

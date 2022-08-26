@@ -124,7 +124,7 @@ export default defineComponent({
 
         const res = await service.getPage(currPage, perPage, searchText, sorting, selected);
 
-        if (!res) throw new CustomError(USERS_ERROR_GET_LIST.code, USERS_ERROR_GET_LIST.message);
+        if (!res.ok) throw new CustomError(res.status, USERS_ERROR_GET_LIST.code, USERS_ERROR_GET_LIST.message);
 
         this.users = res.data.items;
         this.count = res.data.count;
@@ -140,7 +140,7 @@ export default defineComponent({
       try {
         const res = await service.deleteById(id);
 
-        if (!res) throw new CustomError(USERS_ERROR_DEL.code, `${USERS_ERROR_DEL.message} (id=${id})`);
+        if (!res.ok) throw new CustomError(res.status, USERS_ERROR_DEL.code, `${USERS_ERROR_DEL.message} (id=${id})`);
 
         await this.getUsers();
       } catch (error) {
@@ -155,7 +155,12 @@ export default defineComponent({
       try {
         const res = await service.create(user);
 
-        if (!res) throw new CustomError(USERS_ERROR_CREATE.code, `${USERS_ERROR_CREATE.message} (name=${user.name})`);
+        if (!res.ok)
+          throw new CustomError(
+            res.status,
+            USERS_ERROR_CREATE.code,
+            `${USERS_ERROR_CREATE.message} (name=${user.name})`
+          );
 
         await this.getUsers();
       } catch (error) {
@@ -170,7 +175,8 @@ export default defineComponent({
       try {
         const res = await service.updateById(user.id, user);
 
-        if (!res) throw new CustomError(USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
+        if (!res.ok)
+          throw new CustomError(res.status, USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
 
         await this.getUsers();
       } catch (error) {

@@ -23,12 +23,13 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px;
+  padding: 3rem;
+  z-index: 2;
 }
 
 .rss {
-  height: 20px;
-  width: 50px;
+  height: 2rem;
+  width: 5rem;
   background: center center / contain url('../../assets/icons/rs-school.png') no-repeat;
 }
 
@@ -36,20 +37,17 @@ export default defineComponent({
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .team__item {
-  color: var(--dark-main);
+  color: var(--color-text);
   text-decoration: none;
-  font-size: 12px;
-}
-
-.link {
+  font-size: 1.2rem;
   transition: 0.3s;
 }
 
 .link:hover {
-  color: var(--dark-addict);
+  color: var(--color-heading);
 }
 </style>

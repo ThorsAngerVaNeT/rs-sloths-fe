@@ -1,21 +1,23 @@
 <template>
   <div class="authorization-modal">
-    <modal-window @close="closeModal">
-      <template v-slot:header> {{ $t('modal.header.authorization') }} </template>
+    <div class="background">
+      <modal-window @close="closeModal">
+        <template v-slot:header> {{ $t('modal.header.authorization') }} </template>
 
-      <template v-slot:body>
-        <div class="authorization-modal__body">
-          <img :src="imgGitHub" alt="GitHub" />
-          <p>{{ $t('modal.body.authorization') }}</p>
-        </div>
-      </template>
+        <template v-slot:body>
+          <div class="authorization-modal__body">
+            <img :src="imgGitHub" alt="GitHub" />
+            <p>{{ $t('modal.body.authorization') }}</p>
+          </div>
+        </template>
 
-      <template v-slot:footer>
-        <div class="btn btn-primary">
-          <a :href="url">{{ $t('modal.btn.authorization') }}</a>
-        </div>
-      </template>
-    </modal-window>
+        <template v-slot:footer>
+          <div class="btn btn-primary">
+            <a :href="url">{{ $t('modal.btn.authorization') }}</a>
+          </div>
+        </template>
+      </modal-window>
+    </div>
   </div>
 </template>
 
@@ -47,6 +49,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-color: var(--color-background);
+}
 .authorization-modal__body {
   display: flex;
   flex-direction: column;

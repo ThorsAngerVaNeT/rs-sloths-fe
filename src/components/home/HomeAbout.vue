@@ -48,17 +48,17 @@ export default defineComponent({
 
 <style scoped>
 .home__about {
-  width: 300px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 2rem;
 }
 
 .home__logo {
-  width: 100%;
-  height: 250px;
+  width: 30rem;
+  height: 30rem;
   justify-self: start;
   background: no-repeat center center / contain url('@/assets/icons/home/rs-sloths.svg');
 }
@@ -81,44 +81,46 @@ export default defineComponent({
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 120px;
+  height: 12rem;
 }
 
 .home__slide {
   position: absolute;
   opacity: 0;
   transition: 0.5s;
+  color: var(--color-text);
+  font-weight: 300;
 }
 
 .home__controls {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .home__controls label {
   box-sizing: unset;
   cursor: pointer;
-  width: 0.7rem;
-  height: 0.7rem;
-  padding: 0.7rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 1.5rem;
   cursor: default;
 }
 
 .home__label {
   display: block;
-  border: 0.15rem solid var(--dark-main);
+  border: 0.3rem solid var(--color-border-inverse);
   height: 100%;
   width: 100%;
   border-radius: 50%;
-  background-color: var(--dark-main);
+  background-color: var(--color-border-inverse);
   transition: 0.3s;
 }
 
 #slide1:checked ~ .home__controls [for='slide1'] .home__label,
 #slide2:checked ~ .home__controls [for='slide2'] .home__label {
-  background-color: var(--light-main);
+  background-color: var(--sloth-main);
 }
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:hover,
@@ -128,8 +130,8 @@ export default defineComponent({
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:hover .home__label,
 #slide2:not(#slide2:checked) ~ .home__controls [for='slide2']:hover .home__label {
-  background-color: var(--light-addict);
-  border-color: var(--light-addict);
+  background-color: var(--green-active);
+  border-color: var(--green-active);
 }
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:active .home__label,
@@ -144,5 +146,11 @@ export default defineComponent({
 
 #slide2:checked ~ .home__slider > .home__slide_2 {
   opacity: 1;
+}
+
+@media (max-width: 1200px) {
+  .home__about {
+    grid-area: A;
+  }
 }
 </style>

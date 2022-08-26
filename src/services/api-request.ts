@@ -4,40 +4,36 @@ import { APIError } from './error-handling/api-error';
 import { CustomError } from './error-handling/custom-error';
 import { errorHandler } from './error-handling/error-handler';
 
-export const apiRequest = async <T>(url: string, config: RequestInit): Promise<APIRequestResult<T> | null> => {
+export const apiRequest = async <T>(url: string, config: RequestInit): Promise<APIRequestResult<T>> => {
+  const res: APIRequestResult<T> = {
+    ok: false,
+    status: 0,
+    data: {} as T,
+    headers: {} as Headers,
+  };
+
   try {
     const response = await fetch(url, config);
 
-    const isOk = response.ok;
+    res.ok = response.ok;
+    res.status = response.status;
 
-    if (!isOk) throw new APIError(response.statusText, response.status);
-
-    let data = <T>{};
-    let headers = null;
+    if (!res.ok) throw new APIError(response.statusText, response.status);
 
     if (response.status !== 204) {
-      headers = response.headers;
-      const contentType = headers.get('content-type');
+      res.headers = response.headers;
+      const contentType = res.headers.get('content-type');
 
       if (!contentType || !contentType.includes('application/json')) {
-        throw new CustomError(JSON_ERROR.code, JSON_ERROR.message);
+        throw new CustomError(response.status, JSON_ERROR.code, JSON_ERROR.message);
       }
 
-      data = await response.json();
+      res.data = await response.json();
     }
-
-    const res: APIRequestResult<T> = {
-      ok: isOk,
-      status: response.status,
-      data,
-      headers,
-    };
-
-    return res;
   } catch (error: unknown) {
     errorHandler(error);
-    return null;
   }
+  return res;
 };
 
 export default apiRequest;
