@@ -44,9 +44,6 @@ export default defineComponent({
   color: var(--color-text);
   text-decoration: none;
   font-size: 1.2rem;
-}
-
-.link {
   transition: 0.3s;
 }
 
