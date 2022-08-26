@@ -14,7 +14,7 @@ export class APIService<T> implements API<T> {
     this.endpoint = `${BASE}/${endpoint}`;
   }
 
-  public getAll(filter: string, order: string): Promise<APIRequestResult<GetList<T>> | null> {
+  public getAll(filter: string, order: string): Promise<APIRequestResult<GetList<T>>> {
     const param = makeParamString({
       filter,
       order,
@@ -29,12 +29,7 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public getPage(
-    page: number,
-    limit: number,
-    filter: string,
-    order: string
-  ): Promise<APIRequestResult<GetList<T>> | null> {
+  public getPage(page: number, limit: number, filter: string, order: string): Promise<APIRequestResult<GetList<T>>> {
     const param = makeParamString({
       _page: page.toString(),
       _limit: limit.toString(),

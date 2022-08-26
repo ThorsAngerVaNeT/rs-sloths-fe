@@ -13,9 +13,9 @@ export type GetList<T> = {
 };
 
 export interface API<T> {
-  getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null>;
+  getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>>>;
 
-  getPage(page: number, limit: number, filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null>;
+  getPage(page: number, limit: number, filter: string, sorting: string): Promise<APIRequestResult<GetList<T>>>;
 
   getById(id: string): Promise<APIRequestResult<T>>;
 
