@@ -1,19 +1,30 @@
-import type { API, APIRequestResult, GetList } from '@/common/types';
+import type { API, APIRequestResult, GetList, Options } from '@/common/types';
 import { BASE } from '../common/const';
 import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
 
 const credentials = 'include';
 
+const makeParamString = (options: Options) => {
+  let url = '?';
+
+  Object.keys(options).forEach((key) => {
+    if (options[key] !== '') url += `${key}=${options[key]}&`;
+  });
+
+  return url.slice(0, -1);
+};
+
 export class APIService<T> implements API<T> {
   constructor(private endpoint: string) {
     this.endpoint = `${BASE}/${endpoint}`;
   }
 
-  public getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null> {
-    let param = filter ? `filter=${filter}` : '';
-    param = sorting ? `${param}order=${sorting}` : `${param}`;
-    param = param ? `?${param}` : '';
+  public getAll(filter: string, order: string): Promise<APIRequestResult<GetList<T>> | null> {
+    const param = makeParamString({
+      filter,
+      order,
+    });
 
     const url = `${this.endpoint}${param}`;
     const config: RequestInit = {
@@ -28,13 +39,14 @@ export class APIService<T> implements API<T> {
     page: number,
     limit: number,
     filter: string,
-    sorting: string
+    order: string
   ): Promise<APIRequestResult<GetList<T>> | null> {
-    let param = page ? `_page=${page}` : '';
-    param = limit ? `${param}_limit=${limit}` : `${param}`;
-    param = filter ? `${param}filter=${filter}` : `${param}`;
-    param = sorting ? `${param}order=${sorting}` : `${param}`;
-    param = param ? `?${param}` : '';
+    const param = makeParamString({
+      page: page.toString(),
+      limit: page.toString(),
+      filter,
+      order,
+    });
 
     const url = `${this.endpoint}${param}`;
     const config: RequestInit = {

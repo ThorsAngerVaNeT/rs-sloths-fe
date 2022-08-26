@@ -57,8 +57,8 @@ export class UsersService implements API<User> {
   }
 
   public updateById(userId: string, user: User) {
-    const { id, name, role } = user;
-    const body = { id, name, role };
+    const { id, name, role, github } = user;
+    const body = { id, name, role, github };
     return this.service.updateById(userId, body);
   }
 

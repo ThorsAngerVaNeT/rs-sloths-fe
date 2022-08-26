@@ -62,6 +62,8 @@ export type ErrorDescription = {
   message: string;
 };
 
+export type Options = Record<string, string>;
+
 export type SelectOptions = {
   value: string;
   text: string;
