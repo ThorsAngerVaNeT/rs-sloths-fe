@@ -26,6 +26,7 @@ import useLoader from './stores/loader';
 import useAlertModal from './stores/alert-modal';
 import useAuthorizationModal from './stores/authorization-modal';
 import router from './router';
+import useAudioOn from './stores/audio-on';
 
 export default defineComponent({
   name: 'App',
@@ -42,12 +43,15 @@ export default defineComponent({
     ...mapWritableState(useAlertModal, ['isAlert', 'header', 'message']),
 
     ...mapWritableState(useAuthorizationModal, ['isAuthorization']),
+
+    ...mapWritableState(useAudioOn, ['isAudioOn']),
   },
   created() {
     this.isLoad = true;
     this.isAlert = false;
     this.header = 'modal.header.alert';
     this.message = '';
+    this.isAudioOn = true; // todo local storage
   },
   mounted() {
     setTimeout(() => {

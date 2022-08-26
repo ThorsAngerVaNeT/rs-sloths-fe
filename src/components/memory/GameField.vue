@@ -1,8 +1,8 @@
 <template>
   <div class="game-field">
-    <h3>{{ $t(getLevel) }}</h3>
-    <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
-    <p>steps: {{ steps }}</p>
+    <div class="game-field__steps">
+      <p>{{ steps }}</p>
+    </div>
     <transition-group name="shuffle-list" tag="div" class="game-field__cards">
       <div
         class="game-field__card"
@@ -12,15 +12,23 @@
         @click="gameHandler(index)"
       >
         <transition name="flip" mode="out-in" @before-leave="isAnimated = true" @after-enter="isAnimated = false">
-          <img v-if="!getIsOpen(index)" :src="cardCover" alt="cover" class="game-field__img" />
-          <img v-else :src="getImage(index)" alt="card" class="game-field__img" />
+          <img
+            v-if="!getIsOpen(index)"
+            :src="cardCover"
+            alt="cover"
+            class="game-field__img"
+            :class="{ success: item.success }"
+          />
+          <img v-else :src="getImage(index)" alt="card" class="game-field__img" :class="{ success: item.success }" />
         </transition>
       </div>
     </transition-group>
+    <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
     <modal-window v-show="getShowModal" @close="closeModal">
       <template v-slot:header> {{ $t('memory.congrats') }} </template>
 
       <template v-slot:body>
+        <img :src="cardWinner" alt="winner" />
         <p>{{ $t('memory.win') }}</p>
         <p>{{ steps }} {{ getStepsText }}</p>
         <p>{{ getTime }} {{ $t('memory.time') }}</p>
@@ -31,17 +39,19 @@
 
 <script lang="ts">
 import { ruNounEnding } from '@/utils/ru-noun-ending';
-import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_LEVELS } from '@/common/const';
+import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_GAME_WINNER, MEMORY_LEVELS } from '@/common/const';
 import type { MemoryLevel } from '@/common/types';
 import { defineComponent, type PropType } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import { playAudio, audioSlide, audioFlip, audioFail, audioSuccess, audioWin } from '@/utils/audio';
 
 type Card = {
   img: string;
   index: number;
   id: number;
   open: boolean;
+  success: boolean;
 };
 
 export default defineComponent({
@@ -55,13 +65,14 @@ export default defineComponent({
   data() {
     return {
       cardCover: MEMORY_GAME_COVER,
+      cardWinner: MEMORY_GAME_WINNER,
       images: [] as string[],
       cards: [] as Card[],
       activeCard: Infinity,
       steps: 0,
       startTime: 0,
       endTime: 0,
-      grid: 0,
+      grid: '1000px',
       isHandled: false,
       isAnimated: false,
       isModalVisible: false,
@@ -112,14 +123,18 @@ export default defineComponent({
       // todo fetch
 
       this.images = [
-        './default-user.png',
-        './guess-game.png',
-        './memory-game.png',
-        './suggest-game.png',
-        './test1.png',
-        './test2.png',
-        './test3.png',
-        './test4.png',
+        './test01.png',
+        './test02.png',
+        './test03.png',
+        './test04.png',
+        './test05.png',
+        './test06.png',
+        './test07.png',
+        './test08.png',
+        './test09.png',
+        './test10.png',
+        './test11.png',
+        './test12.png',
       ];
 
       this.getCards();
@@ -132,9 +147,9 @@ export default defineComponent({
       const images = this.images.sort(() => Math.random() - 0.5).filter((el, i) => i < this.level.n);
 
       images.forEach((el, i) => {
-        this.cards.push({ img: el, id: i, index, open: false });
+        this.cards.push({ img: el, id: i, index, open: false, success: false });
         index += 1;
-        this.cards.push({ img: el, id: i, index, open: false });
+        this.cards.push({ img: el, id: i, index, open: false, success: false });
         index += 1;
       });
     },
@@ -142,24 +157,29 @@ export default defineComponent({
     startGame() {
       const isAllClosed = this.cards.every((el) => !el.open);
 
-      this.cards.forEach((el, i) => this.closeCard(i));
+      if (!isAllClosed) {
+        playAudio(audioFlip);
+        this.cards.forEach((el, i) => this.closeCard(i));
+      }
+
       this.activeCard = Infinity;
       this.steps = 0;
       this.startTime = 0;
       this.endTime = 0;
 
       if (isAllClosed) {
+        playAudio(audioSlide);
         this.cards.sort(() => Math.random() - 0.5);
       } else {
         setTimeout(() => {
+          playAudio(audioSlide);
           this.cards.sort(() => Math.random() - 0.5);
         }, MEMORY_GAME_TIMEOUT);
       }
       setTimeout(() => {
+        playAudio(audioSlide);
         this.cards.sort(() => Math.random() - 0.5);
       }, MEMORY_GAME_TIMEOUT / 2);
-
-      // this.cards.sort(() => Math.random() - 0.5);
     },
 
     getImage(i: number): string {
@@ -170,36 +190,64 @@ export default defineComponent({
       return this.cards[i].open;
     },
 
+    checkGameHandler(i: number): boolean {
+      return !(this.cards[i].open || this.isHandled || this.isAnimated);
+    },
+
+    cardsNotMatched(i1: number, i2: number) {
+      this.isHandled = true;
+
+      setTimeout(() => {
+        playAudio(audioFail);
+
+        this.closeCard(i1);
+        this.closeCard(i2);
+
+        this.isHandled = false;
+      }, MEMORY_GAME_TIMEOUT);
+    },
+
+    cardsMatched(i1: number, i2: number) {
+      this.isHandled = true;
+
+      setTimeout(() => {
+        playAudio(audioSuccess);
+
+        this.cards[i1].success = true;
+        this.cards[i2].success = true;
+
+        this.isHandled = false;
+      }, MEMORY_GAME_TIMEOUT);
+    },
+
     gameHandler(i: number) {
       if (this.startTime === 0) this.startTime = Date.now();
 
-      if (this.cards[i].open) return;
-      if (this.isHandled) return;
-      if (this.isAnimated) return;
+      if (!this.checkGameHandler(i)) return;
 
+      playAudio(audioFlip);
       this.openCard(i);
       this.steps += 1;
 
       if (this.activeCard === Infinity) {
         this.activeCard = i;
       } else if (this.cards[i].id === this.cards[this.activeCard].id) {
+        const i2 = this.activeCard;
         this.activeCard = Infinity;
+
+        if (!this.checkGame()) this.cardsMatched(i, i2);
       } else {
         const i2 = this.activeCard;
         this.activeCard = Infinity;
 
-        this.isHandled = true;
-        setTimeout(() => {
-          this.closeCard(i);
-          this.closeCard(i2);
-          this.isHandled = false;
-        }, MEMORY_GAME_TIMEOUT);
+        this.cardsNotMatched(i, i2);
       }
 
       if (this.checkGame()) {
         this.endTime = Date.now();
 
         setTimeout(() => {
+          playAudio(audioWin);
           this.isModalVisible = true;
         }, 0);
       }
@@ -215,6 +263,7 @@ export default defineComponent({
 
     closeCard(i: number) {
       this.cards[i].open = false;
+      this.cards[i].success = false;
     },
 
     closeModal() {
@@ -222,7 +271,7 @@ export default defineComponent({
     },
 
     setGrid() {
-      this.grid = this.level.n <= 6 ? this.level.n : 6;
+      this.grid = this.level.n <= 4 ? '670px' : '1000px';
     },
   },
 });
@@ -234,17 +283,36 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
+.game-field__steps {
+  width: 70px;
+  height: 70px;
+
+  font-size: 2em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: lightgray;
+  border-radius: 50%;
+}
 .game-field__cards {
   margin: 1em;
+  max-width: v-bind(grid);
 
-  display: grid;
-  grid-template-columns: repeat(v-bind(grid), 150px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
   gap: 1em;
 }
 
 .game-field__card {
   width: 150px;
   height: 200px;
+
+  cursor: pointer;
 
   perspective: 600px;
 }
@@ -258,10 +326,16 @@ export default defineComponent({
 
   overflow: hidden;
   border-radius: 1em;
+
+  background-color: lightgray;
 }
 
 .game-field__img:hover {
   box-shadow: 0px 0px 5px;
+}
+
+.success {
+  animation: rainbow 0.5s;
 }
 /* Animations */
 .shuffle-list-move {
@@ -292,6 +366,25 @@ export default defineComponent({
   100% {
     transform: rotateY(360deg);
     transform-style: preserve-3d;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 5px 5px rgb(255, 255, 0);
+  }
+  33% {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 255, 0.75);
+  }
+  66% {
+    transform: scale(1.025);
+    box-shadow: 0 0 5px 5px rgba(255, 0, 0, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 5px 5px rgba(255, 0, 0, 0);
   }
 }
 </style>
