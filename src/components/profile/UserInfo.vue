@@ -83,10 +83,11 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
 
   width: 100%;
 
-  border: 1px solid;
+  border: 0.1rem solid;
   border-radius: 0.5rem;
 }
 
@@ -99,7 +100,7 @@ export default defineComponent({
   border-radius: 50%;
 }
 .user-info__img {
-  width: 20rem;
+  height: 20rem;
 }
 .user-info__property,
 .user-info__select {
@@ -111,7 +112,8 @@ export default defineComponent({
   text-align: center;
 
   border: none;
-  border-bottom: 2px solid gray;
+  border-bottom: 0.2rem solid gray;
+  background: none;
 }
 
 .user-info__property,

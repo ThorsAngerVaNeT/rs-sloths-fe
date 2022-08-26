@@ -66,6 +66,8 @@ export default defineComponent({
   border-top-right-radius: 5px;
   margin-bottom: -1px;
   margin-right: -1px;
+  color: var(--color-text);
+  background-color: var(--color-background-soft);
 }
 
 .btn-primary:hover {
@@ -74,5 +76,15 @@ export default defineComponent({
 
 .btn-img:hover {
   transform: scale(1.1) rotate(10deg);
+}
+
+.btn-tab:hover {
+  background-color: var(--color-background);
+}
+
+.btn-tab.active,
+.btn-tab.active:hover {
+  color: var(--color-text-inverse);
+  background-color: var(--color-background-inverse);
 }
 </style>
