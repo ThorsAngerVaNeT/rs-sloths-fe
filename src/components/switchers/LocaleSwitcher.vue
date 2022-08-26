@@ -69,16 +69,17 @@ export default defineComponent({
 
 .switcher__label {
   display: block;
-  width: 3.2rem;
-  height: 1.6rem;
+  width: 3rem;
+  height: 3rem;
   cursor: pointer;
+  transition: 0.5s ease;
 }
 
 .switcher__label_en {
-  background: center center / cover url('@/assets/icons/locales/en.png') no-repeat;
+  background: center center / cover url('@/assets/icons/locales/en.svg') no-repeat;
 }
 
 .switcher__label_ru {
-  background: center center / cover url('@/assets/icons/locales/ru.png') no-repeat;
+  background: center center / cover url('@/assets/icons/locales/ru.svg') no-repeat;
 }
 </style>

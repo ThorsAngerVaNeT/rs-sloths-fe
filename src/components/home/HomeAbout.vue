@@ -120,7 +120,7 @@ export default defineComponent({
 
 #slide1:checked ~ .home__controls [for='slide1'] .home__label,
 #slide2:checked ~ .home__controls [for='slide2'] .home__label {
-  background-color: var(--yellow-main);
+  background-color: var(--sloth-main);
 }
 
 #slide1:not(#slide1:checked) ~ .home__controls [for='slide1']:hover,

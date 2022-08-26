@@ -2,7 +2,14 @@
   <header-view />
 
   <main class="main">
-    <router-view />
+    <!-- <transition name="fade">
+      <router-view />
+    </transition> -->
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </main>
 
   <footer-view />
@@ -61,3 +68,15 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
