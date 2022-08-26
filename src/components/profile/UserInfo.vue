@@ -79,14 +79,11 @@ export default defineComponent({
 <style scoped>
 .user-info {
   padding: 1rem;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-
   width: 100%;
-
   border: 0.1rem solid;
   border-radius: 0.5rem;
 }
@@ -96,7 +93,6 @@ export default defineComponent({
   width: 20rem;
   height: 20rem;
   overflow: hidden;
-
   border-radius: 50%;
 }
 .user-info__img {
@@ -106,11 +102,8 @@ export default defineComponent({
 .user-info__select {
   margin: 0.5rem 0;
   padding: 0.5rem 0;
-
   width: 60%;
-
   text-align: center;
-
   border: none;
   border-bottom: 0.2rem solid gray;
   background: none;
@@ -123,9 +116,7 @@ export default defineComponent({
 
 .user-info__select {
   cursor: pointer;
-
   border-radius: 0;
-
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;

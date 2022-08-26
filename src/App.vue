@@ -2,9 +2,6 @@
   <header-view />
 
   <main class="main">
-    <!-- <transition name="fade">
-      <router-view />
-    </transition> -->
     <router-view v-slot="{ Component }">
       <transition name="fade">
         <component :is="Component" />

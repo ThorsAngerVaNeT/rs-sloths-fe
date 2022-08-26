@@ -67,7 +67,6 @@ export default defineComponent({
 }
 
 .home-catalog:hover .home-catalog_down {
-  /* top: none; */
   bottom: 0;
   transform: translate(0, 0);
 }

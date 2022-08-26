@@ -141,7 +141,6 @@ export default defineComponent({
 .profile__aside {
   width: 30rem;
   padding: 1rem;
-
   display: flex;
   flex-direction: column;
   align-items: center;

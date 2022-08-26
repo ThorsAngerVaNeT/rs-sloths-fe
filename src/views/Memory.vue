@@ -69,12 +69,10 @@ export default defineComponent({
 
 .memory__aside {
   width: 300px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1em;
-
   color: var(--color-text);
 }
 
@@ -85,7 +83,6 @@ export default defineComponent({
 
 .memory__main {
   width: calc(100% - 300px);
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,9 +96,7 @@ export default defineComponent({
 .memory__btn img {
   width: 150px;
   height: 150px;
-
   border-radius: 50%;
-
   background-color: lightgray;
 }
 
