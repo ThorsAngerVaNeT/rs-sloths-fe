@@ -18,7 +18,7 @@ import { defineComponent } from 'vue';
 
 const { setSearchText } = useSearchText();
 
-export default defineComponent({
+const searchText = defineComponent({
   name: 'SearchText',
 
   data() {
@@ -40,12 +40,19 @@ export default defineComponent({
       this.$emit('search');
     },
 
+    clearSearchText() {
+      this.searchText = '';
+      setSearchText(this.searchText);
+    },
+
     clearSearch() {
       this.searchText = '';
       this.search();
     },
   },
 });
+export default searchText;
+export type SearchTextElement = InstanceType<typeof searchText>;
 </script>
 
 <style scoped></style>

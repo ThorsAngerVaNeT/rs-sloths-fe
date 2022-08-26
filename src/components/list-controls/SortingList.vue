@@ -14,7 +14,7 @@ import { defineComponent, type PropType } from 'vue';
 
 const { setSortingList } = useSortingList();
 
-export default defineComponent({
+const sortingList = defineComponent({
   name: 'SortingList',
 
   data() {
@@ -40,8 +40,15 @@ export default defineComponent({
       setSortingList(this.sorting);
       this.$emit('sorting');
     },
+
+    clearSorting() {
+      this.sorting = this.options[0].value;
+      setSortingList(this.sorting);
+    },
   },
 });
+export default sortingList;
+export type SortingListElement = InstanceType<typeof sortingList>;
 </script>
 
 <style scoped></style>

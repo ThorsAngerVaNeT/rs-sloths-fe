@@ -13,7 +13,7 @@ import { defineComponent, type PropType } from 'vue';
 
 const { setSelected } = useSelectedTags();
 
-export default defineComponent({
+const tagCloud = defineComponent({
   name: 'TagCloud',
 
   data() {
@@ -45,8 +45,16 @@ export default defineComponent({
       setSelected(this.selected);
       this.$emit('tags');
     },
+
+    clearSelected() {
+      this.selected = new Set([]) as TagCloud;
+
+      setSelected(this.selected);
+    },
   },
 });
+export default tagCloud;
+export type TagCloudElement = InstanceType<typeof tagCloud>;
 </script>
 
 <style scoped>

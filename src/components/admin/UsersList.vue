@@ -2,10 +2,18 @@
   <div class="users">
     <div class="users__aside">
       <h3>{{ $t('admin.users.title') }}: {{ count }}</h3>
-      <search-text @search="getUsers" :placeholder="$t('admin.search')"></search-text>
-      <tag-cloud @tags="getUsers" :tags="tags"></tag-cloud>
-      <sorting-list @sorting="getUsers" :title="$t('admin.sorting')" :options="sortingOptions"></sorting-list>
-      <custom-btn :text="$t('admin.users.btn.reset')" className="btn btn-primary"></custom-btn>
+      <list-controls
+        @search="getUsers"
+        @tags="getUsers"
+        @sorting="getUsers"
+        @clearAll="getUsers"
+        :placeholder="$t('admin.search')"
+        :tags="tags"
+        :title="$t('admin.sorting')"
+        :options="sortingOptions"
+        :text="$t('btn.reset')"
+      >
+      </list-controls>
       <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
     </div>
     <div class="users__showcase">
@@ -50,9 +58,7 @@ import useSortingList from '@/stores/sorting-list';
 import useUserInfo from '@/stores/user-info';
 import useLoader from '@/stores/loader';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
-import SearchText from '@/components/list-controls/SearchText.vue';
-import TagCloud from '@/components/list-controls/TagCloud.vue';
-import SortingList from '@/components/list-controls/SortingList.vue';
+import ListControls from '@/components/list-controls/ListControls.vue';
 import { Role } from '@/common/enums/user-role';
 import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
@@ -71,9 +77,7 @@ export default defineComponent({
     CustomBtn,
     UserCard,
     UserModal,
-    SearchText,
-    TagCloud,
-    SortingList,
+    ListControls,
   },
 
   data() {

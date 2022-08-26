@@ -42,13 +42,7 @@
     "image_url": "Image url",
     "createdAt": "Created at",
     "btn": {
-      "reset": "Reset filters",
-      "new": "New Sloth",
-      "del": "Delete",
-      "edit": "Edit",
-      "save": "Save",
-      "show": "Detail info",
-      "pick": "Pick"
+      "new": "New Sloth"
     }
   },
 
@@ -98,11 +92,7 @@
       "title": "Users List",
       "info": "Detail info",
       "btn": {
-        "reset": "Reset filters",
-        "new": "New user",
-        "del": "Delete",
-        "edit": "Edit",
-        "save": "Save"
+        "new": "New user"
       }
     }
   },
@@ -138,5 +128,14 @@
     "github-": "Sort by GitHub (descending)",
     "createdAt+": "Sort by creation date (ascending)",
     "createdAt-": "Sort by creation date (descending)"
+  },
+
+  "btn": {
+    "reset": "Reset filters",
+    "del": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "show": "Detail info",
+    "pick": "Pick"
   }
 }
