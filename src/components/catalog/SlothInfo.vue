@@ -49,7 +49,7 @@
       <template v-slot:footer>
         <custom-btn
           v-show="!isView"
-          :text="$t('catalog.btn.save')"
+          :text="$t('btn.save')"
           className="btn btn-primary"
           :onClick="saveSloth"
         ></custom-btn>

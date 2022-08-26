@@ -8,7 +8,7 @@
         @click="showSlothInfoNew"
         v-show="getPageName === 'admin'"
       ></custom-btn>
-      <custom-btn :text="$t('catalog.btn.reset')" className="btn btn-primary"></custom-btn>
+      <custom-btn :text="$t('btn.reset')" className="btn btn-primary"></custom-btn>
     </div>
     <div class="catalog__showcase">
       <sloth-card
@@ -71,7 +71,7 @@ export default defineComponent({
 
     getHeaderSlothInfo() {
       if (this.modalEvents === ModalEvents.new) return this.$t('catalog.btn.new');
-      if (this.modalEvents === ModalEvents.edit) return this.$t('catalog.btn.edit');
+      if (this.modalEvents === ModalEvents.edit) return this.$t('btn.edit');
       return this.$t('catalog.info');
     },
   },

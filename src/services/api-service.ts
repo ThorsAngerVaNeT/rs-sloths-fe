@@ -1,17 +1,26 @@
-import type { API, APIRequestResult, GetList } from '@/common/types';
+import type { API, APIRequestResult, GetList, Options } from '@/common/types';
 import { BASE } from '../common/const';
 import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
 
 const credentials = 'include';
 
+const makeParamString = (options: Options) => {
+  return `?${new URLSearchParams(options)}`;
+};
+
 export class APIService<T> implements API<T> {
   constructor(private endpoint: string) {
     this.endpoint = `${BASE}/${endpoint}`;
   }
 
-  public getAll(): Promise<APIRequestResult<GetList<T>>> {
-    const url = `${this.endpoint}`;
+  public getAll(filter: string, order: string): Promise<APIRequestResult<GetList<T>> | null> {
+    const param = makeParamString({
+      filter,
+      order,
+    });
+
+    const url = `${this.endpoint}${param}`;
     const config: RequestInit = {
       method: FetchMethod.get,
       credentials,
@@ -20,8 +29,20 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>>> {
-    const url = `${this.endpoint}?_page=${page}&_limit=${limit}`;
+  public getPage(
+    page: number,
+    limit: number,
+    filter: string,
+    order: string
+  ): Promise<APIRequestResult<GetList<T>> | null> {
+    const param = makeParamString({
+      _page: page.toString(),
+      _limit: limit.toString(),
+      filter,
+      order,
+    });
+
+    const url = `${this.endpoint}${param}`;
     const config: RequestInit = {
       method: FetchMethod.get,
       credentials,

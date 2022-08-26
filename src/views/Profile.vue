@@ -139,7 +139,7 @@ export default defineComponent({
 }
 
 .profile__aside {
-  width: 30rem;
+  width: var(--width-panel);
   padding: 1rem;
   display: flex;
   flex-direction: column;

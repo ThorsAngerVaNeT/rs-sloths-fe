@@ -24,7 +24,6 @@
     "createdAt": "Created at",
     "avatar": "User photo",
     "btn": {
-      "save": "Save",
       "logout": "Sign out",
       "guess": "Guess-a-Sloth Game results",
       "memory": "Memory Game results",
@@ -42,13 +41,7 @@
     "image_url": "Image url",
     "createdAt": "Created at",
     "btn": {
-      "reset": "Reset filters",
-      "new": "New Sloth",
-      "del": "Delete",
-      "edit": "Edit",
-      "save": "Save",
-      "show": "Detail info",
-      "pick": "Pick"
+      "new": "New Sloth"
     }
   },
 
@@ -85,6 +78,8 @@
 
   "admin": {
     "title": "Admin panel",
+    "search": "...name or GitHub",
+    "sorting": "Sort by...",
     "btn": {
       "users": "Users",
       "sloths": "Sloths",
@@ -96,11 +91,7 @@
       "title": "Users List",
       "info": "Detail info",
       "btn": {
-        "reset": "Reset filters",
-        "new": "New user",
-        "del": "Delete",
-        "edit": "Edit",
-        "save": "Save"
+        "new": "New user"
       }
     }
   },
@@ -127,5 +118,31 @@
   "404": {
     "title": "404: Page Not Found",
     "text": "Sloth made a bug or didn't make this page.\nPlease check the correctness of path again"
+  },
+
+  "sorting": {
+    "name+": "Sort by Name (ascending)",
+    "name-": "Sort by Name (descending)",
+    "github+": "Sort by GitHub (ascending)",
+    "github-": "Sort by GitHub (descending)",
+    "createdAt+": "Sort by creation date (ascending)",
+    "createdAt-": "Sort by creation date (descending)"
+  },
+
+  "btn": {
+    "reset": "Reset filters",
+    "del": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "show": "Detail info",
+    "pick": "Pick"
+  },
+
+  "pagination": {
+    "perPage": "Items per page",
+    "next": ">",
+    "prev": "<",
+    "top": "<<",
+    "bottom": ">>"
   }
 }

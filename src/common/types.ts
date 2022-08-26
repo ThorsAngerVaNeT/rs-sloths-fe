@@ -13,9 +13,9 @@ export type GetList<T> = {
 };
 
 export interface API<T> {
-  getAll(): Promise<APIRequestResult<GetList<T>>>;
+  getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null>;
 
-  getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>>>;
+  getPage(page: number, limit: number, filter: string, sorting: string): Promise<APIRequestResult<GetList<T>> | null>;
 
   getById(id: string): Promise<APIRequestResult<T>>;
 
@@ -61,3 +61,22 @@ export type ErrorDescription = {
   code: string;
   message: string;
 };
+
+export type Options = Record<string, string>;
+
+export type SelectOptions = {
+  value: string;
+  text: string;
+};
+
+export type TagCloud = Set<string>;
+
+type WhereFieldContains = {
+  [keyof: string]: { contains: string; mode: string };
+};
+type WhereFieldEquals = {
+  [keyof: string]: string;
+};
+export type WhereField = WhereFieldContains | WhereFieldEquals;
+
+export type WhereFieldFilter = { OR: WhereField[] };
