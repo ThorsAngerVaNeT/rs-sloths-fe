@@ -6,13 +6,7 @@ import { apiRequest } from './api-request';
 const credentials = 'include';
 
 const makeParamString = (options: Options) => {
-  let url = '?';
-
-  Object.keys(options).forEach((key) => {
-    if (options[key] !== '') url += `${key}=${options[key]}&`;
-  });
-
-  return url.slice(0, -1);
+  return `?${new URLSearchParams(options)}`;
 };
 
 export class APIService<T> implements API<T> {

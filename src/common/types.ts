@@ -70,3 +70,13 @@ export type SelectOptions = {
 };
 
 export type TagCloud = Set<string>;
+
+type WhereFieldContains = {
+  [keyof: string]: { contains: string; mode: string };
+};
+type WhereFieldEquals = {
+  [keyof: string]: { equals: string };
+};
+export type WhereField = WhereFieldContains | WhereFieldEquals;
+
+export type WhereFieldFilter = { OR: WhereField[] };

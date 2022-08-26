@@ -1,40 +1,22 @@
-import type { API, User } from '@/common/types';
+import type { API, WhereFieldFilter, User } from '@/common/types';
+import { getANDFields, getFieldContainsFilter, getFieldEqualFilter } from '@/utils/query-string';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 
-const getFilter = (searchText: string, selected: string[]) => {
-  const search = searchText
+const getFilter = (searchText: string, selected: string[]): string => {
+  const search: WhereFieldFilter | null = searchText
     ? {
-        OR: [
-          {
-            name: {
-              contains: searchText,
-              mode: 'insensitive',
-            },
-          },
-          {
-            github: {
-              contains: searchText,
-              mode: 'insensitive',
-            },
-          },
-        ],
+        OR: ['name', 'github'].map((field) => getFieldContainsFilter(field, searchText)),
       }
-    : '';
+    : null;
 
-  const select = selected.length
+  const select: WhereFieldFilter | null = selected.length
     ? {
-        OR: selected.map((el) => {
-          return { role: el };
-        }),
+        OR: selected.map((field) => getFieldEqualFilter('role', field)),
       }
-    : '';
+    : null;
 
-  if (search && select) return JSON.stringify({ AND: [search, select] });
-  if (search) return JSON.stringify(search);
-  if (select) return JSON.stringify(select);
-
-  return '';
+  return getANDFields([search, select]);
 };
 
 export class UsersService implements API<User> {
