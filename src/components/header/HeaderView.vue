@@ -11,9 +11,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import LocaleSwitcher from '../locale-switcher/LocaleSwitcher.vue';
-import ThemeSwitcher from '../theme-switcher/ThemeSwitcher.vue';
-import SoundSwitcher from '../sound-switcher/SoundSwitcher.vue';
+import LocaleSwitcher from '../switchers/LocaleSwitcher.vue';
+import ThemeSwitcher from '../switchers/ThemeSwitcher.vue';
+import SoundSwitcher from '../switchers/SoundSwitcher.vue';
 
 export default defineComponent({
   name: 'HeaderView',
