@@ -2,6 +2,7 @@
   <header class="header" :class="$route.name !== 'home' ? '' : 'header_home'">
     <router-link class="header__title" v-show="$route.name !== 'home'" to="/">RS SLOTHS</router-link>
     <div class="header__tools">
+      <sound-switcher />
       <locale-switcher />
       <theme-switcher />
     </div>
@@ -12,11 +13,12 @@
 import { defineComponent } from 'vue';
 import LocaleSwitcher from '../locale-switcher/LocaleSwitcher.vue';
 import ThemeSwitcher from '../theme-switcher/ThemeSwitcher.vue';
+import SoundSwitcher from '../sound-switcher/SoundSwitcher.vue';
 
 export default defineComponent({
   name: 'HeaderView',
 
-  components: { LocaleSwitcher, ThemeSwitcher },
+  components: { LocaleSwitcher, ThemeSwitcher, SoundSwitcher },
 });
 </script>
 

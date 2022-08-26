@@ -83,6 +83,7 @@ export default defineComponent({
   width: 2rem;
   height: 3rem;
   transition: 0.5s ease;
+  cursor: pointer;
 }
 
 .theme-switcher__label_light {

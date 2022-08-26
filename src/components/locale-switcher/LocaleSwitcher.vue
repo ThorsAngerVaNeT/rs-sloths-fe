@@ -42,6 +42,7 @@ export default defineComponent({
   display: block;
   width: 3.2rem;
   height: 1.6rem;
+  cursor: pointer;
 }
 
 .switcher__label_en {

@@ -21,6 +21,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  cursor: pointer;
 }
 
 .home-catalog__wrapper {
