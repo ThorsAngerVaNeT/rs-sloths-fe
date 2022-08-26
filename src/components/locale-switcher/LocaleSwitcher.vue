@@ -6,7 +6,7 @@
       v-for="(locale, i) in locales"
       :key="`locale-${i}`"
       :value="locale"
-      v-model="$i18n.locale"
+      v-model="currLocale"
       :name="locale"
       :id="`locale-${locale}`"
     />
@@ -21,13 +21,42 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'LocaleSwitcher',
 
-  data() {
-    return { locales: ['ru', 'en'] };
+  data(): { currLocale: string; locales: string[] } {
+    return {
+      currLocale: '',
+      locales: ['ru', 'en'],
+    };
   },
 
   computed: {
     checkLocale(): string {
       return this.locales.filter((item) => item !== this.$i18n.locale)[0];
+    },
+  },
+
+  mounted() {
+    this.currLocale = this.getLocaleValue();
+  },
+
+  watch: {
+    currLocale(newLocale: string) {
+      this.setLocaleValue(newLocale);
+    },
+  },
+
+  methods: {
+    getLocaleValue(): string {
+      return localStorage.getItem('rs-sloths-locale') || this.getUserLocale();
+    },
+
+    getUserLocale(): string {
+      const userLocale = navigator.language.split('-')[0];
+      return this.locales.includes(userLocale) ? userLocale : 'en';
+    },
+
+    setLocaleValue(locale: string): void {
+      localStorage.setItem('rs-sloths-locale', locale);
+      this.$i18n.locale = locale;
     },
   },
 });

@@ -30,7 +30,6 @@ export default defineComponent({
 
   data(): { themes: string[] } {
     return {
-      //   currTheme: '',
       themes: ['light', 'dark'],
     };
   },
@@ -61,7 +60,6 @@ export default defineComponent({
     },
 
     getLastTheme(): string | null {
-      console.log(localStorage.getItem('rs-sloths-theme'));
       return localStorage.getItem('rs-sloths-theme');
     },
 

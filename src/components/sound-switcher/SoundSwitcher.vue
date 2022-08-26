@@ -50,14 +50,12 @@ export default defineComponent({
 
   watch: {
     currSound(newValue) {
-      console.log('change currSound: ', newValue);
       this.setSoundValue(newValue);
     },
   },
 
   methods: {
     getSoundValue(): string | null {
-      console.log(localStorage.getItem('rs-sloths-sound'));
       return localStorage.getItem('rs-sloths-sound');
     },
 
