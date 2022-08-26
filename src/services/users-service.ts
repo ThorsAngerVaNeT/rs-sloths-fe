@@ -9,11 +9,13 @@ const getFilter = (searchText: string, selected: string[]) => {
           {
             name: {
               contains: searchText,
+              mode: 'insensitive',
             },
           },
           {
             github: {
               contains: searchText,
+              mode: 'insensitive',
             },
           },
         ],
