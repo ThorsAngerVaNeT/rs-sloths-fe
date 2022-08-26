@@ -1,7 +1,7 @@
 <template>
   <div class="admin">
+    <h3>{{ $t('admin.title') }}</h3>
     <div class="admin__aside">
-      <h3>{{ $t('admin.title') }}</h3>
       <div
         v-for="(page, index) in pages"
         :key="index"
@@ -52,18 +52,16 @@ export default defineComponent({
 <style scoped>
 .admin {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-.admin__aside {
-  width: 200px;
-  padding: 1em;
-
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
+.admin__aside {
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: row;
+}
 .admin__main {
-  padding: 1em;
+  padding: 1rem;
 }
 </style>

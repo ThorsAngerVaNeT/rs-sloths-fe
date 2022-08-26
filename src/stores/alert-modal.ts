@@ -4,14 +4,14 @@ const useAlertModal = defineStore({
   id: 'alertModal',
 
   state: () => ({
-    isVisible: false,
+    isAlert: false,
     header: '',
     message: '',
   }),
 
   actions: {
     showAlertModal(header: string, message: string) {
-      this.isVisible = true;
+      this.isAlert = true;
       this.header = header;
       this.message = message;
     },

@@ -19,7 +19,9 @@
   "profile": {
     "title": "User Profile",
     "name": "Name",
-    "email": "E-mail",
+    "github": "GitHub",
+    "role": "Role",
+    "createdAt": "Created at",
     "avatar": "User photo",
     "btn": {
       "save": "Save",
@@ -106,10 +108,15 @@
   "modal": {
     "header": {
       "alert": "Alert!",
-      "error": "ERROR!"
+      "error": "ERROR!",
+      "authorization": "Please login via GitHub"
+    },
+    "body": {
+      "authorization": "In order to access the RS Sloths, you need to login with your GitHub account"
     },
     "btn": {
-      "close": "Close"
+      "close": "Close",
+      "authorization": "Sign up with GitHub"
     }
   },
 

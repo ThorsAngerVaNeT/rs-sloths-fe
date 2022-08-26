@@ -18,8 +18,10 @@
 
   "profile": {
     "title": "Профиль пользователя",
-    "name": "Ваше имя",
-    "email": "Электронная почта",
+    "name": "Имя",
+    "github": "GitHub",
+    "role": "Роль",
+    "createdAt": "Создан",
     "avatar": "Фото",
     "btn": {
       "save": "Сохранить",
@@ -106,10 +108,15 @@
   "modal": {
     "header": {
       "alert": "Предупреждение!",
-      "error": "ОШИБКА!"
+      "error": "ОШИБКА!",
+      "authorization": "Пожалуйста, войдите через GitHub"
+    },
+    "body": {
+      "authorization": "Чтобы получить доступ к RS Sloths, вам необходимо войти в свою учетную запись GitHub."
     },
     "btn": {
-      "close": "Закрыть"
+      "close": "Закрыть",
+      "authorization": "Войти через GitHub"
     }
   },
 

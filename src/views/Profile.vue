@@ -87,7 +87,8 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const res = await service.getById(this.id);
-        if (!res) throw new CustomError(USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.id})`);
+        if (!res.ok)
+          throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.id})`);
         this.user = res.data;
 
         setUserInfo(this.user);
@@ -102,7 +103,8 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const res = await service.updateById(user.id, user);
-        if (!res) throw new CustomError(USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
+        if (!res.ok)
+          throw new CustomError(res.status, USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
         await this.getUser();
       } catch (error) {
         errorHandler(error);
@@ -124,8 +126,8 @@ export default defineComponent({
   flex-direction: row;
 }
 .profile__aside {
-  width: 300px;
-  padding: 1em;
+  width: 30rem;
+  padding: 1rem;
 
   display: flex;
   flex-direction: column;
@@ -134,6 +136,6 @@ export default defineComponent({
 
 .profile__tab {
   border: 1px solid;
-  padding: 1em;
+  padding: 1rem;
 }
 </style>
