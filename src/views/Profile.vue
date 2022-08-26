@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
+    <h2 class="profile__title">{{ $t('profile.title') }}</h2>
     <aside class="profile__aside">
-      <h2>{{ $t('profile.title') }}</h2>
       <user-info @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
       <router-link v-show="isAdmin" to="/admin">
@@ -9,13 +9,15 @@
       </router-link>
     </aside>
     <main class="profile__main">
-      <div
-        v-for="(tab, index) in tabs"
-        :key="index"
-        :class="['btn btn-tab', { active: currentGame === index }]"
-        @click="currentGame = index"
-      >
-        {{ $t(`profile.btn.${tab}`) }}
+      <div class="profile__tabs">
+        <div
+          v-for="(tab, index) in tabs"
+          :key="index"
+          :class="['btn btn-tab', { active: currentGame === index }]"
+          @click="currentGame = index"
+        >
+          {{ $t(`profile.btn.${tab}`) }}
+        </div>
       </div>
       <component :is="components[currentGame]" class="profile__tab" :id="components[currentGame]"></component>
     </main>
@@ -122,20 +124,43 @@ export default defineComponent({
 
 <style scoped>
 .profile {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 300px auto;
+  grid-template-rows: repeat(2, auto);
+  grid-template-areas:
+    'A A'
+    'B C';
 }
+
+.profile__title {
+  grid-area: A;
+  text-align: center;
+  padding: 1rem;
+}
+
 .profile__aside {
   width: 30rem;
   padding: 1rem;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
+  grid-area: B;
+}
+
+.profile__main {
+  grid-area: C;
+  padding: 1rem;
+}
+
+.profile__tabs {
+  display: flex;
+  gap: 3px;
 }
 
 .profile__tab {
-  border: 1px solid;
+  border: 1px solid var(--color-border-inverse);
   padding: 1rem;
+  margin-left: 0.1rem;
 }
 </style>

@@ -286,52 +286,44 @@ export default defineComponent({
 .game-field__steps {
   width: 70px;
   height: 70px;
-
   font-size: 2em;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background-color: lightgray;
+  background-color: var(--color-background-inverse-soft);
   border-radius: 50%;
+  color: var(--color-text-inverse);
+  transition: 0.5s ease;
 }
 .game-field__cards {
   margin: 1em;
   max-width: v-bind(grid);
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-
   gap: 1em;
 }
 
 .game-field__card {
   width: 150px;
   height: 200px;
-
   cursor: pointer;
-
   perspective: 600px;
 }
 
 .game-field__img {
   position: absolute;
   display: inline-block;
-
   width: 100%;
   height: 100%;
-
   overflow: hidden;
   border-radius: 1em;
-
   background-color: lightgray;
 }
 
 .game-field__img:hover {
-  box-shadow: 0px 0px 5px;
+  box-shadow: 0px 0px 5px var(--color-text);
 }
 
 .success {

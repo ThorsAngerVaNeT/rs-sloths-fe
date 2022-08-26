@@ -33,19 +33,19 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 2rem;
 }
 
 .loader__wrap {
-  width: 100px;
-  height: 100px;
+  width: 10rem;
+  height: 10rem;
   position: relative;
 }
 
 .loader__wrap > .sloth-loader {
   position: absolute;
-  height: 20px;
-  width: 22px;
+  height: 2rem;
+  width: 2.2rem;
   background: no-repeat center center / contain url('../../assets/icons/loader/loader-point.svg');
   opacity: 0;
   animation-name: scaleAnim;
@@ -54,50 +54,50 @@ export default defineComponent({
 }
 
 .sloth-1 {
-  left: 3px;
-  top: 40px;
+  left: 0.3rem;
+  top: 4rem;
   animation-delay: 0.45s;
 }
 
 .sloth-2 {
-  left: 15px;
-  top: 15px;
+  left: 1.5rem;
+  top: 1.5rem;
   animation-delay: 0.6s;
 }
 
 .sloth-3 {
-  left: 40px;
-  top: 3px;
+  left: 4rem;
+  top: 0.3rem;
   animation-delay: 0.75s;
 }
 
 .sloth-4 {
-  right: 15px;
-  top: 15px;
+  right: 1.5rem;
+  top: 1.5rem;
   animation-delay: 0.9s;
 }
 
 .sloth-5 {
-  right: 3px;
-  top: 40px;
+  right: 0.3rem;
+  top: 4rem;
   animation-delay: 1.05s;
 }
 
 .sloth-6 {
-  right: 15px;
-  bottom: 15px;
+  right: 1.5rem;
+  bottom: 1.5rem;
   animation-delay: 1.2s;
 }
 
 .sloth-7 {
-  left: 40px;
-  bottom: 3px;
+  left: 4rem;
+  bottom: 0.3rem;
   animation-delay: 1.35s;
 }
 
 .sloth-8 {
-  left: 15px;
-  bottom: 15px;
+  left: 1.5rem;
+  bottom: 1.5rem;
   animation-delay: 1.5s;
 }
 

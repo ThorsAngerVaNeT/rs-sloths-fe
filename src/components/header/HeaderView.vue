@@ -1,18 +1,24 @@
 <template>
-  <header class="header" :class="this.$route.name !== 'home' ? '' : 'header_home'">
-    <router-link class="header__title" v-show="this.$route.name !== 'home'" to="/">RS SLOTHS</router-link>
-    <locale-switcher />
+  <header class="header" :class="$route.name !== 'home' ? '' : 'header_home'">
+    <router-link class="header__title" v-show="$route.name !== 'home'" to="/">RS SLOTHS</router-link>
+    <div class="header__tools">
+      <sound-switcher />
+      <locale-switcher />
+      <theme-switcher />
+    </div>
   </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import LocaleSwitcher from '../locale-switcher/LocaleSwitcher.vue';
+import LocaleSwitcher from '../switchers/LocaleSwitcher.vue';
+import ThemeSwitcher from '../switchers/ThemeSwitcher.vue';
+import SoundSwitcher from '../switchers/SoundSwitcher.vue';
 
 export default defineComponent({
   name: 'HeaderView',
 
-  components: { LocaleSwitcher },
+  components: { LocaleSwitcher, ThemeSwitcher, SoundSwitcher },
 });
 </script>
 
@@ -21,7 +27,8 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px;
+  padding: 3rem;
+  z-index: 2;
 }
 
 .header_home {
@@ -31,12 +38,20 @@ export default defineComponent({
 .header__title {
   font-family: Arial, sans-serif;
   font-weight: 900;
-  font-size: 24px;
+  font-size: 2.4rem;
   text-decoration: none;
-  color: var(--dark-main);
+  color: var(--color-text);
+  transition: 0.5s ease;
 }
 
 .header__title:hover {
-  color: var(--dark-addict);
+  color: var(--color-heading);
+}
+
+.header__tools {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
 }
 </style>

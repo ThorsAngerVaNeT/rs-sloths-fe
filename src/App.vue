@@ -2,11 +2,16 @@
   <header-view />
 
   <main class="main">
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </main>
 
   <footer-view />
 
+  <background-view />
   <loader-view v-show="isLoad" />
 
   <alert-modal v-show="isAlert" :header="header" :message="message" @closeAlertModal="isAlert = false"></alert-modal>
@@ -19,6 +24,7 @@ import { mapWritableState } from 'pinia';
 import HeaderView from './components/header/HeaderView.vue';
 import FooterView from './components/footer/FooterView.vue';
 import LoaderView from './components/loader/LoaderView.vue';
+import BackgroundView from './components/background/BackgroundView.vue';
 import AlertModal from './components/modal/AlertModal.vue';
 import AuthorizationModal from './components/modal/AuthorizationModal.vue';
 
@@ -34,6 +40,7 @@ export default defineComponent({
     HeaderView,
     FooterView,
     LoaderView,
+    BackgroundView,
     AlertModal,
     AuthorizationModal,
   },
@@ -66,3 +73,15 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

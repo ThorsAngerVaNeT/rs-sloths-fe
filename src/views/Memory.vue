@@ -1,9 +1,9 @@
 <template>
   <div class="memory">
     <div class="memory__aside">
-      <h2>{{ $t('memory.title') }}</h2>
-      <h3>{{ $t('memory.level') }}</h3>
-      <h2>{{ $t(getLevel) }}</h2>
+      <h2 class="memory__title">{{ $t('memory.title') }}</h2>
+      <h3 class="memory__subtitle">{{ $t('memory.level') }}</h3>
+      <h2 class="memory__title">{{ $t(getLevel) }}</h2>
       <div class="memory__level">
         <div
           v-for="(level, index) in levels"
@@ -69,16 +69,20 @@ export default defineComponent({
 
 .memory__aside {
   width: 300px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1em;
+  color: var(--color-text);
+}
+
+.memory__title,
+.memory__subtitle {
+  transition: 0.5s ease;
 }
 
 .memory__main {
   width: calc(100% - 300px);
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,9 +96,7 @@ export default defineComponent({
 .memory__btn img {
   width: 150px;
   height: 150px;
-
   border-radius: 50%;
-
   background-color: lightgray;
 }
 

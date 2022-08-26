@@ -1,9 +1,6 @@
 <template>
   <div :class="`home-category home-category_${category}`">
-    <div class="home-category__wrapper">
-      <div class="home-category_up"></div>
-      <div class="home-category_down"></div>
-    </div>
+    <div class="home-category__img"></div>
     <div class="home-category__name">{{ $t(`${category}.title`) }}</div>
   </div>
 </template>
@@ -25,75 +22,70 @@ export default defineComponent({
 
 <style scoped>
 .home-category {
-  height: 150px;
-  width: 150px;
+  width: 10rem;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   cursor: pointer;
 }
-.home-category__wrapper {
-  position: relative;
-  flex: 1;
-}
 
-.home-category_catalog {
+.home-category__img {
+  height: 10rem;
   width: 100%;
-  height: 100%;
-  grid-area: D;
-}
-
-.home-category_profile {
-  grid-area: A;
-}
-
-.home-category_suggest {
-  grid-area: G;
-}
-
-.home-category_memory {
-  grid-area: B;
-}
-
-.home-category_guess {
-  grid-area: C;
-}
-
-.home-category_create {
-  grid-area: F;
-}
-
-.home-category_sloth {
-  grid-area: E;
-}
-
-.home-category_up,
-.home-category_down {
-  position: absolute;
-  width: 100%;
-  height: 50%;
-  top: 50%;
-  transform: translate(0, -50%);
+  border-radius: 50%;
+  border: 0.3rem var(--color-border-theme) solid;
+  background-color: var(--color-background-soft);
   transition: 0.3s;
 }
 
-.home-category_up {
-  z-index: 2;
-  background-color: var(--blue-main);
+.home-category_profile > .home-category__img {
+  background: no-repeat center center / contain url('../../assets/icons/home/profile.svg') var(--color-background-soft);
 }
 
-.home-category_down {
-  z-index: 3;
-  background-color: var(--dark-addict);
+.home-category_suggest > .home-category__img {
+  background: no-repeat center center / contain url('../../assets/icons/home/suggest.svg') var(--color-background-soft);
+}
+
+.home-category_memory > .home-category__img {
+  background: no-repeat center center / contain url('../../assets/icons/home/memory.svg') var(--color-background-soft);
+}
+
+.home-category_guess > .home-category__img {
+  background: no-repeat center center / contain url('../../assets/icons/home/guess.svg') var(--color-background-soft);
+}
+
+.home-category_create > .home-category__img {
+  background: no-repeat center center / contain url('../../assets/icons/home/create.svg') var(--color-background-soft);
+}
+
+.home-category_sloth > .home-category__img {
+  background: no-repeat center center / contain url('../../assets/icons/home/sloth.svg') var(--color-background-soft);
+}
+
+.home-category__name {
+  text-align: center;
+  color: var(--color-text);
+  font-weight: 300;
+  opacity: 0;
+  transition: 0.3s;
 }
 
 .home-category:hover .home-category_up {
-  top: 0;
+  top: 20%;
   transform: translate(0, 0);
 }
 
 .home-category:hover .home-category_down {
   top: none;
-  bottom: 0;
+  bottom: 20%;
   transform: translate(0, 0);
+}
+
+.home-category:hover .home-category__img {
+  transform: scale(1.1) rotate(-10deg);
+}
+
+.home-category:hover .home-category__name {
+  opacity: 1;
 }
 </style>
