@@ -87,7 +87,8 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const res = await service.getById(this.id);
-        if (!res) throw new CustomError(USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.id})`);
+        if (!res.ok)
+          throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.id})`);
         this.user = res.data;
 
         setUserInfo(this.user);
@@ -102,7 +103,8 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const res = await service.updateById(user.id, user);
-        if (!res) throw new CustomError(USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
+        if (!res.ok)
+          throw new CustomError(res.status, USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
         await this.getUser();
       } catch (error) {
         errorHandler(error);

@@ -34,12 +34,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import type { Sloth, Sloths } from '@/common/types';
 import { errorHandler } from '../services/error-handling/error-handler';
 import { SlothsService } from '../services/sloths-service';
 import CustomBtn from '../components/buttons/CustomBtn.vue';
 import SlothCard from '../components/catalog/SlothCard.vue';
 import SlothInfo from '../components/catalog/SlothInfo.vue';
-import type { Sloth, Sloths } from '@/common/types';
 import useSlothInfo from '../stores/slothInfo';
 import { ModalEvents } from '../common/enums/modal-events';
 
@@ -85,7 +85,7 @@ export default defineComponent({
       try {
         const res = await service.getAll();
 
-        if (!res) throw Error(); // todo
+        if (!res.ok) throw Error(); // todo
 
         this.sloths = res.data;
       } catch (error) {
@@ -97,7 +97,7 @@ export default defineComponent({
       try {
         const res = await service.deleteById(id);
 
-        if (!res) throw Error(); // todo
+        if (!res.ok) throw Error(); // todo
 
         await this.getSloths();
       } catch (error) {
@@ -109,7 +109,7 @@ export default defineComponent({
       try {
         const res = await service.create(sloth);
 
-        if (!res) throw Error(); // todo
+        if (!res.ok) throw Error(); // todo
 
         await this.getSloths();
       } catch (error) {
@@ -121,7 +121,7 @@ export default defineComponent({
       try {
         const res = await SlothsService.updateRatingById(sloth.id, rate);
 
-        if (!res) throw Error(); // todo
+        if (!res.ok) throw Error(); // todo
 
         await this.getSloths();
       } catch (error) {
@@ -133,7 +133,7 @@ export default defineComponent({
       try {
         const res = await service.updateById(sloth.id, sloth);
 
-        if (!res) throw Error(); // todo
+        if (!res.ok) throw Error(); // todo
 
         await this.getSloths();
       } catch (error) {

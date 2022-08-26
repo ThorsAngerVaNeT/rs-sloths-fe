@@ -10,7 +10,7 @@ export class APIService<T> implements API<T> {
     this.endpoint = `${BASE}/${endpoint}`;
   }
 
-  public getAll(): Promise<APIRequestResult<GetList<T>> | null> {
+  public getAll(): Promise<APIRequestResult<GetList<T>>> {
     const url = `${this.endpoint}`;
     const config: RequestInit = {
       method: FetchMethod.get,
@@ -20,7 +20,7 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>> | null> {
+  public getPage(page: number, limit: number): Promise<APIRequestResult<GetList<T>>> {
     const url = `${this.endpoint}?_page=${page}&_limit=${limit}`;
     const config: RequestInit = {
       method: FetchMethod.get,
@@ -30,7 +30,7 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public getById(id: string): Promise<APIRequestResult<T> | null> {
+  public getById(id: string): Promise<APIRequestResult<T>> {
     const url = `${this.endpoint}/${id}`;
     const config: RequestInit = {
       method: FetchMethod.get,
@@ -40,7 +40,7 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public create(body: T): Promise<APIRequestResult<T> | null> {
+  public create(body: T): Promise<APIRequestResult<T>> {
     const url = `${this.endpoint}`;
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public updateById(id: string, body: Partial<T>): Promise<APIRequestResult<Partial<T>> | null> {
+  public updateById(id: string, body: Partial<T>): Promise<APIRequestResult<Partial<T>>> {
     const url = `${this.endpoint}/${id}`;
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public update(body: Partial<T>): Promise<APIRequestResult<Partial<T>> | null> {
+  public update(body: Partial<T>): Promise<APIRequestResult<Partial<T>>> {
     const url = `${this.endpoint}`;
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public deleteById(id: string): Promise<APIRequestResult<T> | null> {
+  public deleteById(id: string): Promise<APIRequestResult<T>> {
     const url = `${this.endpoint}/${id}`;
     const config: RequestInit = {
       method: FetchMethod.delete,
