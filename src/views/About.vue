@@ -34,6 +34,7 @@
     <section class="about__teammates">
       <img :src="`../../public/img/team/wwt-light-${$i18n.locale}.svg`" alt="wwt" />
       <div class="about__team">{{ $t(`about.teammates.main`) }}</div>
+      <about-teammate v-for="teammate in teammates" :key="`${teammate}`" :teammate="teammate"></about-teammate>
       <!-- <div class="about__teammates"> -->
       <!-- <div class="about__person">
           <img src="../../public/img/foto.png" alt="photo" class="about__foto" />
@@ -75,6 +76,7 @@
 
 <script lang="ts">
 import AboutSection from '@/components/about/AboutSection.vue';
+import AboutTeammate from '@/components/about/AboutTeammate.vue';
 
 export default {
   name: 'AboutView',
@@ -88,6 +90,7 @@ export default {
 
   components: {
     AboutSection,
+    AboutTeammate,
   },
 };
 </script>
