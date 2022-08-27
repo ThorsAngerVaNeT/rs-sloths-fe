@@ -1,6 +1,6 @@
 <template>
   <div class="sorting">
-    <select name="select" class="sorting__select" v-model="sorting" @change="sortingList">
+    <select name="select" class="sorting__select select-element" v-model="sorting" @change="sortingList">
       <option disabled value="">{{ title }}</option>
       <option v-for="(item, index) in options" :key="index" :value="item.value">{{ $t(item.text) }}</option>
     </select>
@@ -51,4 +51,18 @@ export default sortingList;
 export type SortingListElement = InstanceType<typeof sortingList>;
 </script>
 
-<style scoped></style>
+<style>
+.sorting {
+  padding: 0.5rem 0;
+
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.sorting__select {
+  width: 100%;
+
+  color: inherit;
+  background-color: var(--color-background);
+}
+</style>

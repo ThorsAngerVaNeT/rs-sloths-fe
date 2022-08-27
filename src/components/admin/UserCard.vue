@@ -65,6 +65,8 @@ export default defineComponent({
   padding: 0.5rem;
   overflow: hidden;
 
+  width: calc(50% - var(--gap));
+
   display: flex;
   align-items: center;
   gap: 1rem;

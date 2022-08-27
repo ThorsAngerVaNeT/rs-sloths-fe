@@ -13,7 +13,7 @@
         <div
           v-for="(tab, index) in tabs"
           :key="index"
-          :class="['btn btn-tab', { active: currentGame === index }]"
+          :class="['btn btn-tab', { 'btn-tab_active': currentGame === index }]"
           @click="currentGame = index"
         >
           {{ $t(`profile.btn.${tab}`) }}

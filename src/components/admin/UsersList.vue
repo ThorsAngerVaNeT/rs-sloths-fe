@@ -1,7 +1,8 @@
 <template>
   <div class="users">
-    <div class="users__aside">
+    <div class="users__aside list-aside">
       <h3>{{ $t('admin.users.title') }}: {{ count }}</h3>
+      <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
       <list-controls
         @search="getUsers"
         @tags="getUsers"
@@ -14,27 +15,28 @@
         :text="$t('btn.reset')"
       >
       </list-controls>
-      <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
+    </div>
+    <div class="users__main list-main">
       <list-pagination :size="count" @getPage="getUsers"></list-pagination>
+      <div class="users__list">
+        <user-card
+          v-for="user in users"
+          :key="user.id"
+          :userInfo="user"
+          @delUser="delUser"
+          @editUser="showUserInfoEdit"
+          @showUser="showUserInfoView"
+        ></user-card>
+      </div>
+      <user-modal
+        :isUserInfoVisible="isUserInfoVisible"
+        :headerText="getHeaderUserInfo"
+        :modalEvents="modalEvents"
+        @closeUserInfo="closeUserInfo"
+        @createUser="createUser"
+        @updUser="updUser"
+      ></user-modal>
     </div>
-    <div class="users__list">
-      <user-card
-        v-for="user in users"
-        :key="user.id"
-        :userInfo="user"
-        @delUser="delUser"
-        @editUser="showUserInfoEdit"
-        @showUser="showUserInfoView"
-      ></user-card>
-    </div>
-    <user-modal
-      :isUserInfoVisible="isUserInfoVisible"
-      :headerText="getHeaderUserInfo"
-      :modalEvents="modalEvents"
-      @closeUserInfo="closeUserInfo"
-      @createUser="createUser"
-      @updUser="updUser"
-    ></user-modal>
   </div>
 </template>
 
@@ -220,19 +222,16 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-}
-.users__aside {
-  width: var(--width-panel);
+  gap: var(--gap);
 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  color: var(--color-text);
 }
+
 .users__list {
-  margin: 0.5em;
+  margin: 0.5em 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 1em;
+  gap: var(--gap);
 }
 </style>

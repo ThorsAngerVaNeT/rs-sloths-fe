@@ -8,18 +8,23 @@
       v-model="searchText"
       @change="search"
     />
-    <div class="btn btn-search" @click="clearSearch">X</div>
+    <custom-btn @click="clearSearch" text="X" className="btn btn-search"></custom-btn>
   </div>
 </template>
 
 <script lang="ts">
 import useSearchText from '@/stores/search-text';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { defineComponent } from 'vue';
 
 const { setSearchText } = useSearchText();
 
 const searchText = defineComponent({
   name: 'SearchText',
+
+  components: {
+    CustomBtn,
+  },
 
   data() {
     return {
@@ -55,4 +60,20 @@ export default searchText;
 export type SearchTextElement = InstanceType<typeof searchText>;
 </script>
 
-<style scoped></style>
+<style>
+.search {
+  position: relative;
+  color: var(--color-text);
+}
+.search__text {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
+
+  width: 100%;
+
+  border: none;
+  border-bottom: 0.2rem solid gray;
+  background-color: var(--color-background);
+  color: inherit;
+}
+</style>
