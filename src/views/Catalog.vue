@@ -92,7 +92,7 @@ export default defineComponent({
       isSlothInfoVisible: false,
       modalEvents: ModalEvents.view,
       searchText: '',
-      tags: ['mentor', 'student'],
+      tags: [] as string[],
       sortingOptions: SLOTH_SORTING,
     };
   },
@@ -113,6 +113,7 @@ export default defineComponent({
 
   mounted() {
     this.getSloths();
+    this.getTags();
   },
 
   methods: {
@@ -191,6 +192,21 @@ export default defineComponent({
         if (!res.ok) throw Error(); // todo
 
         await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      } finally {
+        this.isLoad = false;
+      }
+    },
+
+    async getTags() {
+      this.isLoad = true;
+      try {
+        const res = await SlothsService.getTags();
+
+        if (!res.ok) throw Error(); // todo
+
+        this.tags = res.data.map((el) => el.value);
       } catch (error) {
         errorHandler(error);
       } finally {

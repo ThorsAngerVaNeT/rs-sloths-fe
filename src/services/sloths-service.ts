@@ -1,5 +1,5 @@
-import type { API, Sloth, SlothRating, WhereField, WhereFieldFilter } from '@/common/types';
-import { getORFields, getFieldContainsFilter, getFieldEqualFilter, getANDFields } from '@/utils/query-string';
+import type { API, Sloth, SlothRating, Tag, WhereField, WhereFieldFilter, WhereFieldSome } from '@/common/types';
+import { getORFields, getFieldContainsFilter, getANDFields } from '@/utils/query-string';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 
@@ -8,15 +8,17 @@ const getFilter = (searchText: string, selected: string[]): string => {
     ? getORFields(['caption', 'description'].map((field) => getFieldContainsFilter(field, searchText)))
     : null;
 
-  const select: WhereFieldFilter | WhereField | null = selected.length
-    ? getORFields(selected.map((field) => getFieldEqualFilter('role', field)))
-    : null;
+  const select: WhereFieldSome | null = selected.length ? { tags: { some: { value: { in: selected } } } } : null;
 
   return getANDFields([search, select]);
 };
 
 export class SlothsService implements API<Sloth> {
   private service = new APIService<Sloth>(Endpoints.sloths);
+
+  public getAllList() {
+    return this.service.getAllList();
+  }
 
   public getAll(searchText = '', sorting = '', selected = [] as string[]) {
     return this.service.getAll(getFilter(searchText, selected), sorting);
@@ -50,6 +52,12 @@ export class SlothsService implements API<Sloth> {
 
   public deleteById(id: string) {
     return this.service.deleteById(id);
+  }
+
+  public static getTags() {
+    const tagsService = new APIService<Tag>(`${Endpoints.sloths}/tags`);
+
+    return tagsService.getAllList();
   }
 }
 

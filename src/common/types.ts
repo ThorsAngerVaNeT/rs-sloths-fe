@@ -13,6 +13,8 @@ export type GetList<T> = {
 };
 
 export interface API<T> {
+  getAllList(): Promise<APIRequestResult<T[]>>;
+
   getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>>>;
 
   getPage(page: number, limit: number, filter: string, sorting: string): Promise<APIRequestResult<GetList<T>>>;
@@ -86,3 +88,5 @@ type WhereFieldEquals = {
 export type WhereField = WhereFieldContains | WhereFieldEquals;
 
 export type WhereFieldFilter = { OR: WhereField[] };
+
+export type WhereFieldSome = { tags: { some: { value: { in: string[] } } } };
