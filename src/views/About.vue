@@ -33,22 +33,21 @@
     </section> -->
     <section class="about__teammates">
       <img :src="`../../public/img/team/wwt-light-${$i18n.locale}.svg`" alt="wwt" />
-      <div class="about__team">
-        Команда ВОВ ВОВ - команда единомышленников, которым интересно создавать нечто новое, интересное и прекрасное. Мы
-        - за деловое отношение к юмору и юморное отношение к делу!
-      </div>
-      <div class="about__teammates">
-        <img src="../../public/img/foto.png" alt="photo" class="about__foto" />
-        <div class="about__teammate">
-          <div class="about__main">WiiJoy</div>
-          <div class="about__descr">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa soluta neque, sequi quasi reprehenderit labore
-            sint maxime nihil voluptates itaque in expedita facere ullam quos laudantium. Similique aliquid labore
-            consequatur.
+      <div class="about__team">{{ $t(`about.teammates.main`) }}</div>
+      <!-- <div class="about__teammates"> -->
+      <!-- <div class="about__person">
+          <img src="../../public/img/foto.png" alt="photo" class="about__foto" />
+          <div class="about__wrap">
+            <div class="about__main">WiiJoy</div>
+            <div class="about__descr">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa soluta neque, sequi quasi reprehenderit labore
+              sint maxime nihil voluptates itaque in expedita facere ullam quos laudantium. Similique aliquid labore
+              consequatur.
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="about__teammate">
+        </div> -->
+
+      <!-- <div class="about__person">
         <img src="../../public/img/foto.png" alt="photo" class="about__foto" />
         <div class="about__teammate">
           <div class="about__main">Ogimly</div>
@@ -58,8 +57,8 @@
             porro velit deleniti voluptatibus iusto.
           </div>
         </div>
-      </div>
-      <div class="about__teammate">
+      </div> -->
+      <!-- <div class="about__person">
         <img src="../../public/img/foto.png" alt="photo" class="about__foto" />
         <div class="about__teammate">
           <div class="about__main">VaNeT</div>
@@ -68,7 +67,8 @@
             ab sunt qui amet, voluptate, quas aspernatur nihil nobis rem, autem in vero pariatur non.
           </div>
         </div>
-      </div>
+      </div> -->
+      <!-- </div> -->
     </section>
   </div>
 </template>
