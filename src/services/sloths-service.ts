@@ -49,7 +49,9 @@ export class SlothsService implements API<Sloth> {
     const formData = new FormData();
     formData.append('caption', sloth.caption);
     formData.append('description', sloth.description);
-    formData.append('tags', JSON.stringify(sloth.tags));
+
+    if (sloth.tags) formData.append('tags', JSON.stringify(sloth.tags));
+
     formData.append('file', file);
 
     return this.service.createImage(formData);
