@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <img class="about__logo" src="../../public/img/logo.svg" alt="logo" />
     <about-section
       v-for="(section, i) in sections"
       :key="`${section}`"
@@ -90,3 +91,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.about {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.about__logo {
+  height: 50rem;
+}
+</style>
