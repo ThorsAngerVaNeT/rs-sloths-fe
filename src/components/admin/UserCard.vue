@@ -97,4 +97,10 @@ export default defineComponent({
   align-items: center;
   gap: 0.5rem;
 }
+
+@media (max-width: 1000px) {
+  .user-info {
+    width: 100%;
+  }
+}
 </style>

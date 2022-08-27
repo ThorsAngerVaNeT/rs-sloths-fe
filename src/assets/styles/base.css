@@ -55,6 +55,15 @@ html {
   width: calc(100% - var(--width-panel) - var(--gap));
 }
 
+@media (max-width: 768px) {
+  .list-aside {
+    width: 100%;
+  }
+  .list-main {
+    width: 100%;
+  }
+}
+
 .select-element {
   margin: 0.5rem 0;
   padding: 0.5rem 0;

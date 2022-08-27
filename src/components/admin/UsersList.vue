@@ -234,4 +234,10 @@ export default defineComponent({
   flex-wrap: wrap;
   gap: var(--gap);
 }
+
+@media (max-width: 768px) {
+  .users {
+    flex-direction: column;
+  }
+}
 </style>

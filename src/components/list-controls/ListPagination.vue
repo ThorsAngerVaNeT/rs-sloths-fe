@@ -129,13 +129,14 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 
 <style>
 .pagination {
-  display: flex;
-  align-items: center;
-  gap: var(--gap);
+  position: relative;
+  margin-right: var(--gap);
 }
 
 .pagination__per-page {
-  width: 25rem;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .pagination__select {
@@ -148,7 +149,7 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 }
 
 .pagination__btns {
-  width: calc(100% - 50rem - 3 * var(--gap));
+  width: 100%;
 
   display: flex;
   align-items: center;
@@ -171,5 +172,18 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 
 .pagination__page span {
   font-weight: bold;
+}
+
+@media (max-width: 1100px) {
+  .pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pagination__per-page {
+    position: static;
+  }
 }
 </style>
