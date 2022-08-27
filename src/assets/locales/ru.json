@@ -26,9 +26,9 @@
     },
     "teammates": {
       "main": "Команда ВОВ ВОВ - команда единомышленников, которые стремятся создавать нечто новое, интересное и прекрасное. Мы - за деловое отношение к юмору и юморное отношение к делу!",
-      "wiijoy": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa soluta neque, sequi quasi reprehenderit labore sint maxime nihil voluptates itaque in expedita facere ullam quos laudantium. Similique aliquid labore consequatur.",
-      "ogimly": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident tempora excepturi cumque quasi architecto, minus animi temporibus totam similique doloremque aperiam asperiores doloribus tempore quia porro velit deleniti voluptatibus iusto.",
-      "vanet": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae libero laborum commodi omnis similique fuga ab sunt qui amet, voluptate, quas aspernatur nihil nobis rem, autem in vero pariatur non."
+      "wiijoy": "Дизигнер и продвигатель Vue.js. Выполнял первоначальную настройку, создавал дизайн-макет и проводил работы над фронтенд-частью проекта.",
+      "ogimly": "Королева TypeScript'a, повелительница api-запросов и просто хороший человек. Работала над фронтенд-частью проекта, выполнила все работы по общению фронтенд-составляющей с его серверной частью.",
+      "vanet": "Гений, миллиардер, плейбой, филантроп. Одним словом - тимлид. Собрал команду, решал все организационные вопросы (да и просто решал), разработал бэкенд проекта."
     }
   },
 
