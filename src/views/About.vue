@@ -32,9 +32,11 @@
       </div>
     </section> -->
     <section class="about__teammates">
-      <img :src="`../../public/img/team/wwt-light-${$i18n.locale}.svg`" alt="wwt" />
+      <img class="about__wwt" :src="`../../public/img/team/wwt-light-${$i18n.locale}.svg`" alt="wwt" />
       <div class="about__team">{{ $t(`about.teammates.main`) }}</div>
-      <about-teammate v-for="teammate in teammates" :key="`${teammate}`" :teammate="teammate"></about-teammate>
+      <div class="about__teammates__wrap">
+        <about-teammate v-for="teammate in teammates" :key="`${teammate}`" :teammate="teammate"></about-teammate>
+      </div>
       <!-- <div class="about__teammates"> -->
       <!-- <div class="about__person">
           <img src="../../public/img/foto.png" alt="photo" class="about__foto" />
@@ -103,7 +105,69 @@ export default {
   gap: 4rem;
 }
 
-.about__logo {
+.about__logo,
+.about__wwt {
+  display: block;
+  margin: 0 auto;
+}
+
+.about__log {
   height: 50rem;
+}
+
+.about__wwt {
+  width: 40rem;
+}
+
+.about__team {
+  font-size: 2.2rem;
+  line-height: 3.2rem;
+  color: var(--color-text);
+}
+
+.about__teammates {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.about__teammates__wrap {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 5rem;
+}
+
+@media (max-width: 1200px) {
+  .about {
+    padding: 3rem 0;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .about__wwt {
+    width: 32rem;
+  }
+
+  .about__teammates__wrap {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    width: 90%;
+  }
+
+  .about__teammates__wrap {
+    gap: 7rem;
+  }
+
+  .about__log {
+    height: 40rem;
+  }
+
+  .about__wwt {
+    width: 28rem;
+  }
 }
 </style>

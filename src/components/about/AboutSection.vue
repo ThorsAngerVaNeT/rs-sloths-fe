@@ -40,6 +40,7 @@ export default defineComponent({
   font-weight: 700;
   text-transform: uppercase;
   text-align: center;
+  color: var(--color-heading);
 }
 
 .about__project {
@@ -51,10 +52,12 @@ export default defineComponent({
 .about__main {
   font-size: 2.8rem;
   text-align: v-bind(softClass);
+  color: var(--color-heading);
 }
 
 .about__descr {
   font-size: 2.2rem;
   line-height: 3.2rem;
+  color: var(--color-text);
 }
 </style>
