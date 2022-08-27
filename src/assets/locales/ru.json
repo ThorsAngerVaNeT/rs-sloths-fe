@@ -13,7 +13,23 @@
   },
 
   "about": {
-    "title": "О нас"
+    "title": "О нас",
+    "sloths": {
+      "title": "О RS SLOTHS",
+      "main": "Все ленивцы в одном месте!",
+      "descr": "Мы собрали для тебя всех ленивцев вместе! Теперь достаточно лишь зайти в каталог, выбрать необходимых и скачать их. Есть идеи, но нет таких ленивцев? Предложи! Это может быть уже готовый ленивец, рисунок-набросок или просто текстовое описание - и если идея найдет отклик у почитателей ленивцев, она обязательно воплотится в жизнь!"
+    },
+    "interactives": {
+      "title": "Интерактивы",
+      "main": "Ленивцы - это про отдых!",
+      "descr": "Мы постарались сделать так, чтобы ты мог отдохнуть во время своего пребывания на нашем ресурсе. Расслабься и сыграй в \"Найди пару\", попробуй правильно отгадать всех ленивцев в одноименной игре, или создавай мемасики на основе существующих стикеров: потехе время, делу час! И раз уж ты зашел сюда - не забудь узнать, какой же ленивец сегодня ты!"
+    },
+    "teammates": {
+      "main": "Команда ВОВ ВОВ - команда единомышленников, которые стремятся создавать нечто новое, интересное и прекрасное. Мы - за деловое отношение к юмору и юморное отношение к делу!",
+      "wiijoy": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa soluta neque, sequi quasi reprehenderit labore sint maxime nihil voluptates itaque in expedita facere ullam quos laudantium. Similique aliquid labore consequatur.",
+      "ogimly": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident tempora excepturi cumque quasi architecto, minus animi temporibus totam similique doloremque aperiam asperiores doloribus tempore quia porro velit deleniti voluptatibus iusto.",
+      "vanet": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae libero laborum commodi omnis similique fuga ab sunt qui amet, voluptate, quas aspernatur nihil nobis rem, autem in vero pariatur non."
+    }
   },
 
   "profile": {

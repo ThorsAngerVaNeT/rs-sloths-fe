@@ -13,7 +13,23 @@
   },
 
   "about": {
-    "title": "About"
+    "title": "About",
+    "sloths": {
+      "title": "About RS SLOTHS",
+      "main": "All sloths in one site!",
+      "descr": "We have gathered all the sloths together for you! Now you just need to go to the catalog, select the necessary ones and download them. Any ideas, but no such sloth? Suggest! It can be a ready-made sloth, a sketch drawing or just a text description - and if the idea resonates with sloth fans, it will definitely come true!"
+    },
+    "interactives": {
+      "title": "Interactive",
+      "main": "Sloths are about chilling!",
+      "descr": "We have tried to make sure that you can relax during your stay on our resource. Relax and play Memory Game, try to correctly guess all the sloths in the game of the same name, or create memes based on existing stickers: fun time, work hour! And since you've come here, don't forget to find out what kind of sloth you're today!"
+    },
+    "teammates": {
+      "main": "WOV WOV Team is a team of like-minded people who strive to create something new, interesting and beautiful. We're for a businesslike attitude to humor and a humorous attitude to business!",
+      "wiijoy": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa soluta neque, sequi quasi reprehenderit labore sint maxime nihil voluptates itaque in expedita facere ullam quos laudantium. Similique aliquid labore consequatur.",
+      "ogimly": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident tempora excepturi cumque quasi architecto, minus animi temporibus totam similique doloremque aperiam asperiores doloribus tempore quia porro velit deleniti voluptatibus iusto.",
+      "vanet": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae libero laborum commodi omnis similique fuga ab sunt qui amet, voluptate, quas aspernatur nihil nobis rem, autem in vero pariatur non."
+    }
   },
 
   "profile": {
