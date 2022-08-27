@@ -1,5 +1,5 @@
 <template>
-  <div class="background" :class="`background-${currTheme}`"></div>
+  <div class="background" :class="`background-${$route.name === 'about' ? $route.name : 'home'}-${currTheme}`"></div>
 </template>
 
 <script lang="ts">
@@ -28,11 +28,19 @@ export default defineComponent({
   transition: 0.5s ease;
 }
 
-.background-light {
+.background-home-light {
   background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-home-light.svg');
 }
 
-.background-dark {
+.background-home-dark {
   background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-home-dark.svg');
+}
+
+.background-about-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-about-light.svg');
+}
+
+.background-about-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-about-dark.svg');
 }
 </style>

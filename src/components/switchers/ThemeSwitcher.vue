@@ -24,6 +24,7 @@ import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 
 import themeProp from '../../stores/theme';
+import getUserTheme from '../../utils/userTheme';
 
 export default defineComponent({
   name: 'ThemeSwitcher',
@@ -42,7 +43,7 @@ export default defineComponent({
   },
 
   mounted() {
-    this.currTheme = this.getLastTheme() || this.getUserTheme();
+    this.currTheme = this.getLastTheme() || getUserTheme();
   },
 
   watch: {
@@ -52,19 +53,13 @@ export default defineComponent({
   },
 
   methods: {
-    getUserTheme(): string {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-      }
-      return 'light';
-    },
-
     getLastTheme(): string | null {
       return localStorage.getItem('rs-sloths-theme');
     },
 
     setTheme(theme: string): void {
       localStorage.setItem('rs-sloths-theme', theme);
+      this.currTheme = theme;
       document.documentElement.className = theme;
     },
   },
