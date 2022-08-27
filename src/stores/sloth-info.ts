@@ -1,29 +1,23 @@
 import { defineStore } from 'pinia';
 import type { Sloth } from '@/common/types';
 
-const newSloth: Sloth = {
-  id: '',
-  caption: '',
-  description: '',
-  image_url: '',
-  rating: 0,
-  createdAt: Date.now(),
-};
-
 const useSlothInfo = defineStore({
   id: 'slothInfo',
 
   state: () => ({
-    slothsInfo: newSloth,
+    slothInfo: {} as Sloth,
+    tagsStr: '',
   }),
 
   actions: {
     setEmptySlothInfo() {
-      this.slothsInfo = { ...newSloth };
+      this.slothInfo = {} as Sloth;
+      this.tagsStr = '';
     },
 
     setSlothInfo(newSlothInfo: Sloth) {
-      this.slothsInfo = { ...newSlothInfo };
+      this.slothInfo = { ...newSlothInfo };
+      this.tagsStr = newSlothInfo.tags.map((el) => el.value).join(' ');
     },
   },
 });

@@ -58,7 +58,7 @@ import usePagination from '@/stores/pagination';
 import useSearchText from '@/stores/search-text';
 import useSelectedTags from '@/stores/tag-cloud';
 import useSortingList from '@/stores/sorting-list';
-import useSlothInfo from '@/stores/slothInfo';
+import useSlothInfo from '@/stores/sloth-info';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ListControls from '@/components/list-controls/ListControls.vue';
 import ListPagination from '@/components/list-controls/ListPagination.vue';
@@ -113,7 +113,6 @@ export default defineComponent({
 
   mounted() {
     this.getSloths();
-    this.getTags();
   },
 
   methods: {
@@ -132,6 +131,8 @@ export default defineComponent({
 
         this.sloths = res.data.items;
         this.count = res.data.count;
+
+        await this.getTags();
       } catch (error) {
         errorHandler(error);
       } finally {
@@ -158,7 +159,6 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const res = await service.createImage(sloth, file);
-        // const res = await service.create(sloth);
 
         if (!res.ok) throw Error(); // todo
 
@@ -188,7 +188,7 @@ export default defineComponent({
     async updSloth(sloth: Sloth) {
       this.isLoad = true;
       try {
-        const res = await service.updateById(sloth.id, sloth);
+        const res = await SlothsService.updateByIdAndTags(sloth.id, sloth);
 
         if (!res.ok) throw Error(); // todo
 

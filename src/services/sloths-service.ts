@@ -1,4 +1,13 @@
-import type { API, Sloth, SlothRating, Tag, WhereField, WhereFieldFilter, WhereFieldSome } from '@/common/types';
+import type {
+  API,
+  Sloth,
+  SlothRating,
+  SlothTags,
+  Tag,
+  WhereField,
+  WhereFieldFilter,
+  WhereFieldSome,
+} from '@/common/types';
 import { getORFields, getFieldContainsFilter, getANDFields } from '@/utils/query-string';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
@@ -40,6 +49,7 @@ export class SlothsService implements API<Sloth> {
     const formData = new FormData();
     formData.append('caption', sloth.caption);
     formData.append('description', sloth.description);
+    formData.append('tags', JSON.stringify(sloth.tags));
     formData.append('file', file);
 
     return this.service.createImage(formData);
@@ -50,6 +60,15 @@ export class SlothsService implements API<Sloth> {
     const imageUrl = sloth.image_url;
     const body = { id, caption, description, image_url: imageUrl };
     return this.service.updateById(slothId, body);
+  }
+
+  public static updateByIdAndTags(slothId: string, sloth: Sloth) {
+    const tagsService = new APIService<SlothTags>(Endpoints.sloths);
+
+    const { id, caption, description, tags } = sloth;
+    const imageUrl = sloth.image_url;
+    const body = { id, caption, description, image_url: imageUrl, tags: JSON.stringify(tags) };
+    return tagsService.updateById(slothId, body);
   }
 
   public static updateRatingById(slothId: string, rate: number) {

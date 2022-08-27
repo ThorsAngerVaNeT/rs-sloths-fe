@@ -53,6 +53,15 @@ export type Sloth = {
   createdAt: number;
   tags: Tags;
 };
+export type SlothTags = {
+  id: string;
+  caption: string;
+  description: string;
+  image_url: string;
+  rating: number;
+  createdAt: number;
+  tags: string;
+};
 
 export type SlothRating = {
   slothId: string;
