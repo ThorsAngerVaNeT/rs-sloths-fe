@@ -6,6 +6,7 @@
       :key="`${section}`"
       :section="section"
       :softClass="i % 2 ? 'left' : 'right'"
+      :index="i"
     ></about-section>
 
     <section class="about__teammates">

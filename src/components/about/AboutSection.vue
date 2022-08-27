@@ -1,5 +1,5 @@
 <template>
-  <section class="about__section">
+  <section :class="`about__section about__section_${section}-${currTheme}`">
     <h2 class="about__title">{{ $t(`about.${section}.title`) }}</h2>
     <div class="about__project">
       <p class="about__main">{{ $t(`about.${section}.main`) }}</p>
@@ -10,6 +10,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+import { mapWritableState } from 'pinia';
+import themeProp from '../../stores/theme';
 
 export default defineComponent({
   name: 'AboutSection',
@@ -24,6 +27,14 @@ export default defineComponent({
       required: true,
       default: () => '',
     },
+    index: {
+      type: Number,
+      required: true,
+    },
+  },
+
+  computed: {
+    ...mapWritableState(themeProp, ['currTheme']),
   },
 });
 </script>
@@ -33,6 +44,39 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  position: relative;
+}
+
+.about__section_sloths-light::before,
+.about__section_sloths-dark::before,
+.about__section_interactives-light::before,
+.about__section_interactives-dark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 30rem;
+  height: 30rem;
+  transition: 0.5s ease;
+}
+
+.about__section_sloths-light::before {
+  left: 10rem;
+  background: no-repeat center center / contain url('../../assets/icons/about/section-sloths-light.svg');
+}
+
+.about__section_interactives-light::before {
+  right: 10rem;
+  background: no-repeat center center / contain url('../../assets/icons/about/section-interactives-light.svg');
+}
+
+.about__section_sloths-dark::before {
+  left: 10rem;
+  background: no-repeat center center / contain url('../../assets/icons/about/section-sloths-dark.svg');
+}
+
+.about__section_interactives-dark::before {
+  right: 10rem;
+  background: no-repeat center center / contain url('../../assets/icons/about/section-interactives-dark.svg');
 }
 
 .about__title {
@@ -41,6 +85,7 @@ export default defineComponent({
   text-transform: uppercase;
   text-align: center;
   color: var(--color-heading);
+  transition: 0.5s ease;
 }
 
 .about__project {
@@ -53,11 +98,13 @@ export default defineComponent({
   font-size: 2.8rem;
   text-align: v-bind(softClass);
   color: var(--color-heading);
+  transition: 0.5s ease;
 }
 
 .about__descr {
   font-size: 2.2rem;
   line-height: 3.2rem;
   color: var(--color-text);
+  transition: 0.5s ease;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="teammate">
-    <img class="teammate__photo" src="@/../public/img/foto.png" alt="photo" />
+    <img class="teammate__photo" :src="`@/../public/img/photo/${teammate}.png`" alt="photo" />
     <div class="teammate__wrap">
       <div class="teammate__main">{{ `${teammate}` }}</div>
       <div class="teammate__descr">{{ $t(`about.teammates.${teammate}`) }}</div>
@@ -35,6 +35,8 @@ export default defineComponent({
 .teammate__photo {
   border-radius: 50%;
   border: 0.5rem solid var(--color-border-inverse);
+  width: 25rem;
+  transition: 0.5s ease;
 }
 
 .teammate__wrap {
@@ -48,12 +50,14 @@ export default defineComponent({
   color: var(--color-heading);
   text-transform: uppercase;
   text-align: center;
+  transition: 0.5s ease;
 }
 
 .teammate__descr {
   font-size: 2.2rem;
   line-height: 3.2rem;
   color: var(--color-text);
+  transition: 0.5s ease;
 }
 
 @media (max-width: 1200px) {
