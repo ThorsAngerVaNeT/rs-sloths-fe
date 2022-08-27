@@ -1,13 +1,9 @@
 <template>
   <section class="about__section">
-    <h2 class="about__title">О RS SLOTHS</h2>
+    <h2 :class="`about__title about__title_${softClass}`">{{ $t(`about.${section}.title`) }}</h2>
     <div class="about__project">
-      <p class="about__main">Все ленивцы в одном месте!</p>
-      <div class="about__descr">
-        Мы собрали для Вас всех ленивцев вместе! Теперь достаточно лишь зайти в каталог, выбрать необходимых и скачать
-        их. Есть идеи, но нет таких ленивцев? Предложи! Это может быть уже готовый ленивец, рисунок-набросок или просто
-        текстовое описание - и если идея найдет отклик у почитателей ленивцев, она обязательно воплотится в жизнь!
-      </div>
+      <p class="about__main">{{ $t(`about.${section}.main`) }}</p>
+      <p class="about__descr">{{ $t(`about.${section}.descr`) }}</p>
     </div>
   </section>
 </template>
@@ -17,5 +13,17 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'AboutSection',
+
+  props: {
+    section: {
+      type: String,
+      required: true,
+    },
+    softClass: {
+      type: String,
+      required: true,
+      default: () => '',
+    },
+  },
 });
 </script>

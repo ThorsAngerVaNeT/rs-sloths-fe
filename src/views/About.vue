@@ -1,6 +1,12 @@
 <template>
   <div class="about">
-    <section class="about__section">
+    <about-section
+      v-for="(section, i) in sections"
+      :key="`${section}`"
+      :section="section"
+      :softClass="i % 2 ? 'left' : 'right'"
+    ></about-section>
+    <!-- <section class="about__section">
       <h2 class="about__title">О RS SLOTHS</h2>
       <div class="about__project">
         <p class="about__main">Все ленивцы в одном месте!</p>
@@ -23,8 +29,8 @@
           какой ленивец сегодня ты!
         </div>
       </div>
-    </section>
-    <section class="about__section">
+    </section> -->
+    <section class="about__teammates">
       <img :src="`../../public/img/team/wwt-light-${$i18n.locale}.svg`" alt="wwt" />
       <div class="about__team">
         Команда ВОВ ВОВ - команда единомышленников, которым интересно создавать нечто новое, интересное и прекрасное. Мы
@@ -67,7 +73,20 @@
 </template>
 
 <script lang="ts">
+import AboutSection from '@/components/about/AboutSection.vue';
+
 export default {
   name: 'AboutView',
+
+  data() {
+    return {
+      sections: ['sloths', 'interactives'],
+      teammates: ['wiijoy', 'ogimly', 'vanet'],
+    };
+  },
+
+  components: {
+    AboutSection,
+  },
 };
 </script>
