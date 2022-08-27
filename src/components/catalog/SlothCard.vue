@@ -1,12 +1,14 @@
 <template>
   <div :class="`${getPageName}-sloths-info`">
-    <div :class="`${getPageName}-sloths-info__sloths`">
+    <div :class="`${getPageName}-sloths-info__sloth`">
       <img :class="`${getPageName}-sloths-info__img`" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
+      <div class="sloths-info__tags tags">
+        <span class="sloths-info__tag tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
+      </div>
     </div>
     <div>
       <div :class="`${getPageName}-sloths-info__props`">
         <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
-        <p class="sloths-info__property">{{ slothsInfo.description }}</p>
         <p v-show="!isCatalog" class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
         <div v-show="isCatalog">
           <label for="range" class="sloths-info__label">{{ slothsInfo.rating }}⭐</label>
@@ -20,10 +22,9 @@
             @change="$emit('editRating', slothsInfo, +newRating)"
           />
         </div>
-        <p class="sloths-info__property">{{ new Date(slothsInfo.createdAt).toLocaleDateString() }}</p>
-        <div class="sloths-info__tags">
-          <span class="sloths-info__tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
-        </div>
+        <p v-show="isAdmin" class="sloths-info__property">
+          {{ new Date(slothsInfo.createdAt).toLocaleDateString() }}
+        </p>
       </div>
       <div class="sloths-info__btn">
         <custom-btn
@@ -115,6 +116,11 @@ export default defineComponent({
 .catalog-sloths-info:hover {
   box-shadow: 0px 0px 0.5rem;
 }
+.catalog-sloths-info__sloth {
+  position: relative;
+
+  overflow: hidden;
+}
 
 .admin-sloths-info__img {
   width: calc(10rem - 1rem);
@@ -142,12 +148,22 @@ export default defineComponent({
   gap: 0.5rem;
 }
 .sloths-info__tags {
-  padding: 0.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  transform: translateY(-500px);
+  transition: transform 0.3s;
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+}
+.catalog-sloths-info__sloth:hover .sloths-info__tags {
+  transform: translateY(0);
 }
 .sloths-info__tag {
   padding: 0.2rem 0.5rem;

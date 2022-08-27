@@ -1,39 +1,40 @@
 <template>
   <div class="sloths-info">
     <modal-window v-show="isSlothInfoVisible" @close="closeModal">
-      <template v-slot:header> {{ headerText }} </template>
+      <template v-slot:header> {{ getHeader }} </template>
 
       <template v-slot:body>
         <div class="sloths-info__props">
           <div v-show="!isNew" :class="'sloths-info__sloths'">
             <img :class="'sloths-info__img'" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
           </div>
-          <div class="sloths-info__property">
+          <div v-show="!isView" class="sloths-info__property">
             <label for="caption" class="sloths-info__label">{{ $t('catalog.caption') }} </label>
-            <input v-show="!isView" type="text" id="caption" class="sloths-info__input" v-model="slothsInfo.caption" />
-            <p v-show="isView" id="caption" class="sloths-info__text">{{ slothsInfo.caption }}</p>
+            <input type="text" id="caption" class="sloths-info__input" v-model="slothsInfo.caption" />
           </div>
           <div class="sloths-info__property">
-            <label for="description" class="sloths-info__label">{{ $t('catalog.description') }} </label>
-            <textarea
-              v-show="!isView"
-              rows="5"
-              id="description"
-              class="sloths-info__input"
-              v-model="slothsInfo.description"
-            ></textarea>
+            <div v-show="!isView">
+              <label for="description" class="sloths-info__label">{{ $t('catalog.description') }} </label>
+              <textarea
+                rows="5"
+                id="description"
+                class="sloths-info__input"
+                v-model="slothsInfo.description"
+              ></textarea>
+            </div>
             <p v-show="isView" id="description" class="sloths-info__text">{{ slothsInfo.description }}</p>
           </div>
-          <div class="sloths-info__property">
+          <div v-show="isNew" :class="'sloths-info__sloths'">
+            <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage()" />
+          </div>
+          <div v-show="isView" class="sloths-info__property">
+            <div class="tags">
+              <span class="tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
+            </div>
+          </div>
+          <div v-show="!isNew" class="sloths-info__property">
             <label for="image_url" class="sloths-info__label">{{ $t('catalog.image_url') }} </label>
-            <input
-              v-show="!isView"
-              type="text"
-              id="image_url"
-              class="sloths-info__input"
-              v-model="slothsInfo.image_url"
-            />
-            <p v-show="isView" id="image_url" class="sloths-info__text">{{ slothsInfo.image_url }}</p>
+            <p id="image_url" class="sloths-info__text">{{ slothsInfo.image_url }}</p>
           </div>
           <div v-show="!isNew" class="sloths-info__property">
             <label for="rating" class="sloths-info__label">{{ $t('catalog.rating') }} </label>
@@ -61,12 +62,14 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import { storeToRefs } from 'pinia';
-import ModalWindow from '../modal/ModalWindow.vue';
-import CustomBtn from '../buttons/CustomBtn.vue';
-import useSlothInfo from '../../stores/slothInfo';
-import { ModalEvents } from '../../common/enums/modal-events';
+import ModalWindow from '@/components/modal/ModalWindow.vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import useSlothInfo from '@/stores/slothInfo';
+import { ModalEvents } from '@/common/enums/modal-events';
+import useAlertModal from '@/stores/alert-modal';
 
 const { slothsInfo } = storeToRefs(useSlothInfo());
+const { showAlertModal } = useAlertModal();
 
 export default defineComponent({
   name: 'SlothInfo',
@@ -79,6 +82,7 @@ export default defineComponent({
   data() {
     return {
       slothsInfo,
+      newFile: {} as File,
       isModalVisible: false,
     };
   },
@@ -99,26 +103,46 @@ export default defineComponent({
   },
 
   computed: {
-    isNew() {
+    isNew(): boolean {
       return this.modalEvents === ModalEvents.new;
     },
-    isView() {
+
+    isView(): boolean {
       return this.modalEvents === ModalEvents.view;
+    },
+
+    getHeader(): string {
+      return this.isNew ? this.headerText : slothsInfo.value.caption;
     },
   },
 
   methods: {
     saveSloth() {
       if (this.modalEvents === ModalEvents.new) {
-        this.$emit('createSloth', this.slothsInfo);
+        if (!this.newFile.name) {
+          showAlertModal('modal.header.error', `${this.$t('modal.body.emptyFile')}`);
+          return;
+        }
+        this.$emit('createSloth', this.slothsInfo, this.newFile);
+        this.closeModal();
       } else if (this.modalEvents === ModalEvents.edit) {
         this.$emit('updSloth', this.slothsInfo);
+        this.closeModal();
       }
-      this.closeModal();
     },
 
     closeModal() {
       this.$emit('closeSlothInfo');
+    },
+
+    uploadImage() {
+      const { uploadBtn } = this.$refs;
+
+      if (uploadBtn instanceof HTMLInputElement) {
+        const { files } = uploadBtn;
+
+        if (files?.length) [this.newFile] = files;
+      }
     },
   },
 });
@@ -126,9 +150,10 @@ export default defineComponent({
 
 <style scoped>
 .sloths-info__props {
+  max-width: 50rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.5em;
 }
 .sloths-info__img {

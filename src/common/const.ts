@@ -7,6 +7,7 @@ export const BASE = 'http://localhost:3000'; // todo
 
 // custom Errors
 export const JSON_ERROR: ErrorDescription = { code: 'NOT_JSON', message: 'Response is not a JSON!' };
+export const IMAGE_ERROR: ErrorDescription = { code: 'NOT_IMAGE', message: 'File not selected!' };
 
 export const USERS_ERROR_GET_LIST: ErrorDescription = {
   code: 'USERS_GET_LIST',

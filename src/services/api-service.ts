@@ -81,6 +81,17 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
+  public createImage(body: FormData): Promise<APIRequestResult<T>> {
+    const url = `${this.endpoint}`;
+    const config: RequestInit = {
+      method: FetchMethod.post,
+      credentials,
+      body,
+    };
+
+    return apiRequest(url, config);
+  }
+
   public updateById(id: string, body: Partial<T>): Promise<APIRequestResult<Partial<T>>> {
     const url = `${this.endpoint}/${id}`;
     const headers: HeadersInit = {

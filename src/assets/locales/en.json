@@ -42,6 +42,7 @@
     "rating": "Rating",
     "image_url": "Image url",
     "createdAt": "Created at",
+    "tags": "Tags",
     "btn": {
       "new": "New Sloth"
     }
@@ -105,7 +106,8 @@
       "authorization": "Please login via GitHub"
     },
     "body": {
-      "authorization": "In order to access the RS Sloths, you need to login with your GitHub account"
+      "authorization": "In order to access the RS Sloths, you need to login with your GitHub account",
+      "emptyFile": "File not selected!"
     },
     "btn": {
       "close": "Close",

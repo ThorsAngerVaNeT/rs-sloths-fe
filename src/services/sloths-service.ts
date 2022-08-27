@@ -36,9 +36,19 @@ export class SlothsService implements API<Sloth> {
     return this.service.create(body);
   }
 
+  public createImage(sloth: Sloth, file: File) {
+    const formData = new FormData();
+    formData.append('caption', sloth.caption);
+    formData.append('description', sloth.description);
+    formData.append('file', file);
+
+    return this.service.createImage(formData);
+  }
+
   public updateById(slothId: string, sloth: Sloth) {
     const { id, caption, description } = sloth;
-    const body = { id, caption, description };
+    const imageUrl = sloth.image_url;
+    const body = { id, caption, description, image_url: imageUrl };
     return this.service.updateById(slothId, body);
   }
 

@@ -154,10 +154,11 @@ export default defineComponent({
       }
     },
 
-    async createSloth(sloth: Sloth) {
+    async createSloth(sloth: Sloth, file: File) {
       this.isLoad = true;
       try {
-        const res = await service.create(sloth);
+        const res = await service.createImage(sloth, file);
+        // const res = await service.create(sloth);
 
         if (!res.ok) throw Error(); // todo
 
