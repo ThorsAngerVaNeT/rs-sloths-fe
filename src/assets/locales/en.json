@@ -9,7 +9,11 @@
 
   "home": {
     "title": "Home",
-    "more": "Read more"
+    "more": "Read more",
+    "about": {
+      "project": "Our project is a depository of sloths. View all existing stickers, download the necessary ones or chill a bit - why not? Feel a sloth!",
+      "team": "We are a team of beginner frontend developers. We welcome you to our project, which we completed as part of the final task of the JS/FE2022Q1 Rolling Scopes School course!"
+    }
   },
 
   "about": {
@@ -27,7 +31,7 @@
     "teammates": {
       "main": "WOV WOV Team is a team of like-minded people who strive to create something new, interesting and beautiful. We're for a businesslike attitude to humor and a humorous attitude to business!",
       "wiijoy": "Designer, memolog and Vue.js promoter. Performed the initial setup, created a design layout and carried out work on the front-end part of the project.",
-      "ogimly": "Queen of TypeScript, mistress of api requests and just a good person. Worked on the front-end part of the project, completed all the work on communicating the front-end component with its server part.",
+      "ogimly": "Queen of TypeScript, mistress of API requests and just a good person. Worked on the front-end part of the project, completed all the work on communicating the front-end component with its server part.",
       "vanet": "Genius, billionaire, playboy, philanthropist. In short, team-lead. Gathered a team, solved all organizational questions (and just solved), developed the backend of the project."
     }
   },

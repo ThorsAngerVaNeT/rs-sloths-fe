@@ -6,16 +6,8 @@
       <input class="home__radio" type="radio" name="about-radio" id="slide2" />
 
       <div class="home__slider">
-        <div class="home__slide home__slide_1">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, sit? Aspernatur dolores mollitia at
-          exercitationem rerum, optio perspiciatis provident placeat est ipsa? Quo sed itaque iure, magni ea molestiae
-          tempore?
-        </div>
-        <div class="home__slide home__slide_2">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex distinctio ad, expedita ducimus ab, dolore
-          provident est dicta corporis consectetur dolorem illum! Pariatur, quaerat maxime perspiciatis mollitia omnis
-          eum sint.
-        </div>
+        <div class="home__slide home__slide_1">{{ $t('home.about.project') }}</div>
+        <div class="home__slide home__slide_2">{{ $t('home.about.team') }}</div>
       </div>
 
       <div class="home__controls">
