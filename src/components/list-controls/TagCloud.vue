@@ -57,15 +57,36 @@ export default tagCloud;
 export type TagCloudElement = InstanceType<typeof tagCloud>;
 </script>
 
-<style scoped>
+<style>
 .tags {
   padding: 0.5rem 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+
+  color: var(--color-text);
+}
+.tags-center {
+  justify-content: center;
 }
 .tag {
-  padding: 0.5rem;
+  padding: 0.5rem 0.7rem;
   cursor: pointer;
+
+  color: inherit;
+  background-color: var(--color-background);
+
+  transition: background-color 0.3s ease, color 0.5s ease;
+
+  border-radius: 1rem;
 }
+.tag:hover,
 .active {
-  border: 1px solid;
+  color: var(--color-text-inverse);
+  background-color: var(--color-background-inverse);
 }
 </style>

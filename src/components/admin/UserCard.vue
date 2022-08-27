@@ -65,9 +65,11 @@ export default defineComponent({
   padding: 0.5rem;
   overflow: hidden;
 
+  width: calc(50% - var(--gap));
+
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--gap);
 
   border: 1px solid var(--dark-addict);
   border-radius: 0.5rem;
@@ -77,7 +79,7 @@ export default defineComponent({
 }
 
 .user-info__img {
-  width: calc(10rem - 1rem);
+  width: calc(10rem - var(--gap));
 }
 
 .user-info__props {
@@ -94,5 +96,11 @@ export default defineComponent({
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+@media (max-width: 1000px) {
+  .user-info {
+    width: 100%;
+  }
 }
 </style>

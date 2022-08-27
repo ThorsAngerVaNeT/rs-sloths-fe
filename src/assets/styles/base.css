@@ -42,3 +42,39 @@ html {
   overflow-x: hidden;
   z-index: 2;
 }
+
+.list-aside {
+  width: var(--width-panel);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap);
+}
+.list-main {
+  width: calc(100% - var(--width-panel) - var(--gap));
+}
+
+@media (max-width: 768px) {
+  .list-aside {
+    width: 100%;
+  }
+  .list-main {
+    width: 100%;
+  }
+}
+
+.select-element {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
+
+  cursor: pointer;
+
+  border: none;
+  border-bottom: 0.2rem solid gray;
+  border-radius: 0;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}

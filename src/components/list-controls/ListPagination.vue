@@ -1,15 +1,47 @@
 <template>
   <div class="pagination">
-    <label for="perPage">{{ $t('pagination.perPage') }}</label>
-    <select name="perPage" id="perPage" v-model="perPage" @change="setPerPage">
-      <option v-for="item in perPageArr" :key="item" :value="item">{{ item }}</option>
-    </select>
-    <div>
-      <button :disabled="checkTop" @click="top" class="btn btn-primary">{{ $t('pagination.top') }}</button>
-      <button :disabled="checkTop" @click="prev" class="btn btn-primary">{{ $t('pagination.prev') }}</button>
-      <span>{{ currPage }}</span>
-      <button :disabled="checkBottom" @click="next" class="btn btn-primary">{{ $t('pagination.next') }}</button>
-      <button :disabled="checkBottom" @click="bottom" class="btn btn-primary">{{ $t('pagination.bottom') }}</button>
+    <div class="pagination__per-page">
+      <label class="pagination__label" for="perPage">{{ $t('pagination.perPage') }}: </label>
+      <select
+        class="pagination__select select-element"
+        name="perPage"
+        id="perPage"
+        v-model="perPage"
+        @change="setPerPage"
+      >
+        <option v-for="item in perPageArr" :key="item" :value="item">{{ item }}</option>
+      </select>
+    </div>
+    <div class="pagination__btns">
+      <custom-btn
+        :text="$t('pagination.top')"
+        className="btn btn-pagination"
+        @click="top"
+        :disabled="checkTop"
+      ></custom-btn>
+      <custom-btn
+        :text="$t('pagination.prev')"
+        className="btn btn-pagination"
+        @click="prev"
+        :disabled="checkTop"
+      ></custom-btn>
+
+      <div class="pagination__page">
+        <span>{{ currPage }}</span>
+      </div>
+
+      <custom-btn
+        :text="$t('pagination.next')"
+        className="btn btn-pagination"
+        @click="next"
+        :disabled="checkBottom"
+      ></custom-btn>
+      <custom-btn
+        :text="$t('pagination.bottom')"
+        className="btn btn-pagination"
+        @click="bottom"
+        :disabled="checkBottom"
+      ></custom-btn>
     </div>
   </div>
 </template>
@@ -17,12 +49,17 @@
 <script lang="ts">
 import { PAGINATION_OPTIONS } from '@/common/const';
 import usePagination from '@/stores/pagination';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { defineComponent } from 'vue';
 
 const { setPerPage, setCurrPage } = usePagination();
 
 const paginationList = defineComponent({
   name: 'ListPagination',
+
+  components: {
+    CustomBtn,
+  },
 
   data() {
     return {
@@ -90,4 +127,63 @@ export default paginationList;
 export type PaginationListElement = InstanceType<typeof paginationList>;
 </script>
 
-<style scoped></style>
+<style>
+.pagination {
+  position: relative;
+  margin-right: var(--gap);
+}
+
+.pagination__per-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.pagination__select {
+  width: 4rem;
+
+  text-align: center;
+
+  color: inherit;
+  background-color: var(--color-background);
+}
+
+.pagination__btns {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap);
+}
+
+.pagination__page {
+  width: 4rem;
+  height: 4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: var(--color-background);
+}
+
+.pagination__page span {
+  font-weight: bold;
+}
+
+@media (max-width: 1100px) {
+  .pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pagination__per-page {
+    position: static;
+  }
+}
+</style>

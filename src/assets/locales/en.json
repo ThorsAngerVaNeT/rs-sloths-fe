@@ -140,9 +140,9 @@
 
   "pagination": {
     "perPage": "Items per page",
-    "next": ">",
-    "prev": "<",
-    "top": "<<",
-    "bottom": ">>"
+    "next": "❯",
+    "prev": "❮",
+    "top": "❮❮",
+    "bottom": "❯❯"
   }
 }

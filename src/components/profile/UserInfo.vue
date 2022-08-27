@@ -22,7 +22,7 @@
     <select
       v-show="isAdmin"
       name="select"
-      class="user-info__select"
+      class="user-info__select select-element"
       :title="$t('profile.role')"
       v-model="userInfo.role"
     >
@@ -82,7 +82,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: var(--gap);
   width: 100%;
   border: 0.1rem solid;
   border-radius: 0.5rem;
@@ -102,7 +102,7 @@ export default defineComponent({
 .user-info__select {
   margin: 0.5rem 0;
   padding: 0.5rem 0;
-  width: 60%;
+  width: 80%;
   text-align: center;
   border: none;
   border-bottom: 0.2rem solid gray;
@@ -112,13 +112,5 @@ export default defineComponent({
 .user-info__property,
 .user-info__property:focus {
   outline: none;
-}
-
-.user-info__select {
-  cursor: pointer;
-  border-radius: 0;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
 }
 </style>

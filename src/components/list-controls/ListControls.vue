@@ -62,4 +62,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.controls {
+  width: 100%;
+}
+</style>
