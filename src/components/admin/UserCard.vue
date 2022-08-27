@@ -69,7 +69,7 @@ export default defineComponent({
 
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--gap);
 
   border: 1px solid var(--dark-addict);
   border-radius: 0.5rem;
@@ -79,7 +79,7 @@ export default defineComponent({
 }
 
 .user-info__img {
-  width: calc(10rem - 1rem);
+  width: calc(10rem - var(--gap));
 }
 
 .user-info__props {

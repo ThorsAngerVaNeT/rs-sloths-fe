@@ -82,7 +82,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: var(--gap);
   width: 100%;
   border: 0.1rem solid;
   border-radius: 0.5rem;
