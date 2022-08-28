@@ -5,16 +5,8 @@
         <img class="user-info__img" :src="getAvatar" :alt="userInfo.name" />
       </div>
       <div class="user-info__btn">
-        <custom-btn
-          :text="$t('btn.edit')"
-          className="btn btn-primary"
-          @click="$emit('editUser', userInfo)"
-        ></custom-btn>
-        <custom-btn
-          :text="$t('btn.del')"
-          className="btn btn-primary"
-          @click="$emit('delUser', userInfo.id)"
-        ></custom-btn>
+        <custom-btn className="btn btn-icon icon-edit" @click="$emit('editUser', userInfo)"></custom-btn>
+        <custom-btn className="btn btn-icon icon-del" @click="$emit('delUser', userInfo.id)"></custom-btn>
       </div>
     </div>
     <div class="user-info__props">

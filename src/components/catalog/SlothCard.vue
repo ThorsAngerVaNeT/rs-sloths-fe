@@ -29,14 +29,12 @@
       <div class="sloths-info__btn">
         <custom-btn
           v-show="isAdmin"
-          :text="$t('btn.edit')"
-          className="btn btn-primary"
+          className="btn btn-icon icon-edit"
           @click="$emit('editSloth', slothsInfo)"
         ></custom-btn>
         <custom-btn
           v-show="isAdmin"
-          :text="$t('btn.del')"
-          className="btn btn-primary"
+          className="btn btn-icon icon-del"
           @click="$emit('delSloth', slothsInfo.id)"
         ></custom-btn>
         <custom-btn
