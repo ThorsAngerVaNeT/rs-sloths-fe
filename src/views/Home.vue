@@ -15,12 +15,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import HomeCategory from '../components/home/HomeCategory.vue';
 import HomeAbout from '../components/home/HomeAbout.vue';
 import HomeCatalog from '../components/home/HomeCatalog.vue';
 
 import useCurrUser from '../stores/curr-user';
+import useAuthorizationModal from '../stores/authorization-modal';
 
 export default defineComponent({
   name: 'HomeView',
@@ -39,6 +40,8 @@ export default defineComponent({
 
   computed: {
     ...mapState(useCurrUser, ['hasAuth']),
+    // ...mapActions(useAuthorizationModal, ['showAuthorizationModal']),
+    ...mapWritableState(useAuthorizationModal, ['isAuthorization']),
   },
 
   mounted() {
@@ -56,6 +59,7 @@ export default defineComponent({
 
     handleAuth() {
       console.log('Go to auth');
+      this.isAuthorization = true;
     },
   },
 });
