@@ -17,42 +17,43 @@
       </div>
     </div>
     <div class="meme__generator list-main">
-      <div>
-        <div class="meme__text">
-          <label class="meme__label" for="top">{{ $t('create.top') }}</label>
-          <input type="text" class="meme__text" id="top" v-model="topText" @change="draw()" />
-        </div>
-
-        <div class="meme__canvas-wrapper">
-          <div class="meme__control-buttons">
-            <button @click="scaleUp" type="button" class="scale-up">+</button>
-            <button @click="scaleDown" type="button" class="scale-down">-</button>
+      <div class="meme__settings">
+        <div class="meme__settings-col">
+          <div class="meme__property">
+            <label class="meme__label" for="top">{{ $t('create.top') }}</label>
+            <input type="text" class="meme__text" id="top" v-model="topText" @change="draw()" />
           </div>
-          <canvas class="meme__canvas" ref="canvas"></canvas>
+          <div class="meme__property">
+            <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
+            <input type="text" class="meme__text" id="bottom" v-model="bottomText" @change="draw()" />
+          </div>
+          <div class="meme__property">
+            <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.save') }}</button>
+            <button @click="copyImage" class="btn btn-primary" type="button">{{ $t('btn.copy') }}</button>
+          </div>
         </div>
-
-        <div class="meme__text">
-          <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
-          <input type="text" class="meme__text" id="bottom" v-model="bottomText" @change="draw()" />
+        <div class="meme__settings-col">
+          <div class="meme__property">
+            <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
+            <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @change="draw()" />
+          </div>
+          <div class="meme__property">
+            <label class="meme__label" for="color">{{ $t('create.color') }}</label>
+            <input type="color" id="color" class="meme__color" v-model="color" @change="draw()" />
+          </div>
+          <div class="meme__property">
+            <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
+            <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @change="draw()" />
+          </div>
         </div>
-
-        <button @click="saveImage" type="button">Save</button>
-        <button @click="copyImage" type="button">Copy</button>
       </div>
 
-      <div class="meme__settings">
-        <div>
-          <label class="meme__label" for="color">{{ $t('create.color') }}</label>
-          <input type="color" id="color" class="meme__color" v-model="color" @change="draw()" />
+      <div class="meme__canvas-wrapper">
+        <div class="meme__control-buttons">
+          <button @click="scaleUp" type="button" class="btn btn-pagination">+</button>
+          <button @click="scaleDown" type="button" class="btn btn-pagination">-</button>
         </div>
-        <div>
-          <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
-          <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @change="draw()" />
-        </div>
-        <div>
-          <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
-          <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @change="draw()" />
-        </div>
+        <canvas class="meme__canvas" ref="canvas"> </canvas>
       </div>
     </div>
   </div>
@@ -84,7 +85,7 @@ export default defineComponent({
       imageBottom: 0,
       color: '#ffffff',
       strokeStyle: '#000000',
-      margin: 0,
+      margin: 50,
     };
   },
 
@@ -258,7 +259,6 @@ export default defineComponent({
     },
 
     saveImage() {
-      // console.log(this.canvas.toDataURL());
       this.canvas.toDataURL();
       const link = document.createElement('a');
       link.download = 'download.png';
@@ -287,29 +287,86 @@ export default defineComponent({
 
   color: var(--color-text);
 }
+.meme__generator {
+  flex-direction: column;
+  align-items: center;
+}
+
+.meme__memes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gap);
+}
 
 .meme__image {
-  width: 15rem;
-  height: 15rem;
+  width: 14rem;
+  height: 14rem;
+}
+
+.meme__property,
+.meme__settings {
+  /* margin: 0.5rem; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+
+.meme__settings-col {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+
+.meme__text,
+.meme__number {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
+
+  border: none;
+  border-bottom: 0.2rem solid gray;
+  background-color: var(--color-background);
+  color: inherit;
+}
+.meme__color {
+  margin: 0.5rem 0;
+  padding: 0 0;
+
+  border: none;
+  border-bottom: 0.2rem solid gray;
+  background-color: var(--color-background);
+  color: inherit;
 }
 
 .meme__canvas-wrapper {
   position: relative;
+  padding-top: 2rem;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .meme__control-buttons {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
 }
 
 .meme__control-buttons button {
   margin: 0;
   padding: 0;
-  width: 2.5rem;
-  height: 2.5rem;
-  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
 }
 
 .meme__canvas {

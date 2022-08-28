@@ -93,7 +93,7 @@
     "description": "Choose an image, enter text and copy the result",
     "top": "Text Top",
     "bottom": "Text Bottom",
-    "margin": "Image margin",
+    "margin": "Image Margin",
     "color": "Text Color",
     "stroke": "Text Stroke Color"
   },
@@ -161,7 +161,8 @@
     "edit": "Edit",
     "save": "Save",
     "show": "Detail info",
-    "pick": "Pick"
+    "pick": "Pick",
+    "copy": "Copy"
   },
 
   "pagination": {
