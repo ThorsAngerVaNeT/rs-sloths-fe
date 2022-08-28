@@ -20,7 +20,7 @@
       <div>
         <div class="meme__text">
           <label class="meme__label" for="top">{{ $t('create.top') }}</label>
-          <textarea type="text" class="meme__text" id="top" v-model="topText" @change="draw()"></textarea>
+          <input type="text" class="meme__text" id="top" v-model="topText" @change="draw()" />
         </div>
 
         <div class="meme__canvas-wrapper">
@@ -201,7 +201,6 @@ export default defineComponent({
       const fontSize = Math.floor(width / 10);
       const yOffset = height / 25;
 
-      // Prepare text
       this.ctx.strokeStyle = this.strokeStyle; // 'black';
       this.ctx.lineWidth = Math.floor(fontSize / 4);
       this.ctx.fillStyle = this.color; // 'white';
@@ -209,15 +208,53 @@ export default defineComponent({
       this.ctx.lineJoin = 'round';
       this.ctx.font = `${fontSize}px sans-serif`;
 
-      // Add top text
       this.ctx.textBaseline = 'top';
-      this.ctx.strokeText(this.topText, width / 2, yOffset);
-      this.ctx.fillText(this.topText, width / 2, yOffset);
+      this.drawTextMultiLineTop(this.topText, width / 2, yOffset, this.canvas.width, fontSize);
 
-      // Add bottom text
       this.ctx.textBaseline = 'bottom';
-      this.ctx.strokeText(this.bottomText, width / 2, height - yOffset);
-      this.ctx.fillText(this.bottomText, width / 2, height - yOffset);
+      this.drawTextMultiLineBottom(this.bottomText, width / 2, height - yOffset, this.canvas.width, fontSize);
+    },
+
+    drawTextMultiLineTop(text: string, x: number, top: number, maxWidth: number, lineHeight: number) {
+      const words = text.split(' ');
+      let line = '';
+      let y = top;
+      words.forEach((word, index) => {
+        const testLine = `${line + word} `;
+        const metrics = this.ctx.measureText(testLine);
+        const testWidth = metrics.width;
+        if (testWidth > maxWidth && index > 0) {
+          this.ctx.strokeText(line, x, y);
+          this.ctx.fillText(line, x, y);
+          line = `${word} `;
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      });
+      this.ctx.strokeText(line, x, y);
+      this.ctx.fillText(line, x, y);
+    },
+
+    drawTextMultiLineBottom(text: string, x: number, top: number, maxWidth: number, lineHeight: number) {
+      const words = text.split(' ').reverse();
+      let line = '';
+      let y = top;
+      words.forEach((word, index) => {
+        const testLine = ` ${word + line}`;
+        const metrics = this.ctx.measureText(testLine);
+        const testWidth = metrics.width;
+        if (testWidth > maxWidth && index > 0) {
+          this.ctx.strokeText(line, x, y);
+          this.ctx.fillText(line, x, y);
+          line = ` ${word}`;
+          y -= lineHeight;
+        } else {
+          line = testLine;
+        }
+      });
+      this.ctx.strokeText(line, x, y);
+      this.ctx.fillText(line, x, y);
     },
 
     saveImage() {
