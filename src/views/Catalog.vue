@@ -253,6 +253,9 @@ export default defineComponent({
 
   color: var(--color-text);
 }
+.catalog__aside {
+  margin: 0.5em;
+}
 
 .catalog__list {
   margin: 0.5em 0;
@@ -260,5 +263,11 @@ export default defineComponent({
   flex-direction: row;
   flex-wrap: wrap;
   gap: var(--gap);
+}
+
+@media (max-width: 768px) {
+  .catalog {
+    flex-direction: column;
+  }
 }
 </style>

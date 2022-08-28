@@ -71,15 +71,18 @@ export default defineComponent({
   align-items: center;
   gap: var(--gap);
 
-  border: 1px solid var(--dark-addict);
+  background-color: var(--color-background-soft);
+  border: 1px solid gray;
   border-radius: 0.5rem;
 }
 .user-info:hover {
-  box-shadow: 0px 0px 0.5rem;
+  box-shadow: 0px 0px 0.5rem gray;
 }
 
 .user-info__img {
-  width: calc(10rem - var(--gap));
+  width: calc(10rem - 1rem);
+  height: calc(10rem - 1rem);
+  object-fit: contain;
 }
 
 .user-info__props {

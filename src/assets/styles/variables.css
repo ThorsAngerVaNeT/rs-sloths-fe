@@ -40,7 +40,7 @@
 
 :root.dark {
   --color-background: var(--dark-main);
-  --color-background-soft: var(var(--dark-addict));
+  --color-background-soft: var(--dark-addict);
 
   --color-background-inverse: var(--light-addict);
   --color-background-inverse-soft: var(--light-main);

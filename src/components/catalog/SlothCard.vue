@@ -3,7 +3,7 @@
     <div :class="`${getPageName}-sloths-info__sloth`">
       <img :class="`${getPageName}-sloths-info__img`" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
       <div class="sloths-info__tags tags">
-        <span class="sloths-info__tag tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
+        <span class="sloths-info__tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
       </div>
     </div>
     <div>
@@ -97,10 +97,13 @@ export default defineComponent({
   display: flex;
   align-items: center;
 
-  border: 1px solid var(--dark-addict);
+  background-color: var(--color-background-soft);
+  border: 1px solid gray;
 }
 .admin-sloths-info {
   padding: 0.5rem;
+
+  width: calc(50% - var(--gap));
 
   border-radius: 0.5rem;
 }
@@ -114,7 +117,7 @@ export default defineComponent({
 }
 .admin-sloths-info:hover,
 .catalog-sloths-info:hover {
-  box-shadow: 0px 0px 0.5rem;
+  box-shadow: 0px 0px 0.5rem gray;
 }
 .catalog-sloths-info__sloth {
   position: relative;
@@ -124,9 +127,13 @@ export default defineComponent({
 
 .admin-sloths-info__img {
   width: calc(10rem - 1rem);
+  height: calc(10rem - 1rem);
+  object-fit: contain;
 }
 .catalog-sloths-info__img {
   width: calc(20rem - 2rem);
+  height: calc(20rem - 2rem);
+  object-fit: contain;
 }
 
 .admin-sloths-info__props,
@@ -156,19 +163,25 @@ export default defineComponent({
   transform: translateY(-500px);
   transition: transform 0.3s;
 
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
-  gap: 0.5rem;
 }
 .catalog-sloths-info__sloth:hover .sloths-info__tags {
   transform: translateY(0);
 }
 .sloths-info__tag {
-  padding: 0.2rem 0.5rem;
+  padding: 0.5rem 0.7rem;
+  cursor: default;
 
-  border: 1px solid;
-  border-radius: 0.5rem;
+  color: inherit;
+  background-color: var(--color-background);
+
+  border-radius: 1rem;
+  border: 1px solid gray;
+}
+
+@media (max-width: 1000px) {
+  .admin-sloths-info {
+    width: 100%;
+  }
 }
 </style>
