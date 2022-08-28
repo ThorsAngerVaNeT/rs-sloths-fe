@@ -1,13 +1,11 @@
 <template>
   <div class="user-info">
-    <div>
-      <div class="user-info__user">
-        <img class="user-info__img" :src="getAvatar" :alt="userInfo.name" />
-      </div>
-      <div class="user-info__btn">
-        <custom-btn className="btn btn-icon icon-edit" @click="$emit('editUser', userInfo)"></custom-btn>
-        <custom-btn className="btn btn-icon icon-del" @click="$emit('delUser', userInfo.id)"></custom-btn>
-      </div>
+    <div class="user-info__user">
+      <img class="user-info__img" :src="getAvatar" :alt="userInfo.name" />
+    </div>
+    <div class="user-info__btn">
+      <custom-btn className="btn btn-icon icon-edit" @click="$emit('editUser', userInfo)"></custom-btn>
+      <custom-btn className="btn btn-icon icon-del" @click="$emit('delUser', userInfo.id)"></custom-btn>
     </div>
     <div class="user-info__props">
       <p class="user-info__property">{{ $t('profile.name') }}</p>
@@ -89,8 +87,10 @@ export default defineComponent({
 
 .user-info__btn {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: var(--gap);
 }
 
 @media (max-width: 1000px) {

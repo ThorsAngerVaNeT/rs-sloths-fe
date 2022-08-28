@@ -1,16 +1,43 @@
 <template>
-  <div :class="`${getPageName}-sloths-info`">
-    <div :class="`${getPageName}-sloths-info__sloth`">
-      <img :class="`${getPageName}-sloths-info__img`" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
+  <div v-if="isAdmin" class="admin-sloths-info">
+    <div class="admin-sloths-info__sloth">
+      <img class="admin-sloths-info__img" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
       <div class="sloths-info__tags tags">
         <span class="sloths-info__tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
       </div>
     </div>
+    <div class="sloths-info__btn">
+      <custom-btn className="btn btn-icon icon-edit" @click="$emit('editSloth', slothsInfo)"></custom-btn>
+      <custom-btn className="btn btn-icon icon-del" @click="$emit('delSloth', slothsInfo.id)"></custom-btn>
+    </div>
     <div>
-      <div :class="`${getPageName}-sloths-info__props`">
+      <div class="admin-sloths-info__props">
         <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
-        <p v-show="!isCatalog" class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
-        <div v-show="isCatalog">
+        <p class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
+        <p class="sloths-info__property">
+          {{ new Date(slothsInfo.createdAt).toLocaleDateString() }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div v-if="isCatalog" class="catalog-sloths-info">
+    <div class="catalog-sloths-info__sloth">
+      <img class="catalog-sloths-info__img" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
+      <div class="sloths-info__tags tags">
+        <span class="sloths-info__tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
+      </div>
+    </div>
+    <div class="sloths-info__btn">
+      <custom-btn
+        :text="$t('btn.show')"
+        className="btn btn-primary"
+        @click="$emit('showSloth', slothsInfo)"
+      ></custom-btn>
+    </div>
+    <div>
+      <div class="catalog-sloths-info__props">
+        <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
+        <div>
           <label for="range" class="sloths-info__label">{{ slothsInfo.rating }}⭐</label>
           <input
             type="range"
@@ -22,27 +49,6 @@
             @change="$emit('editRating', slothsInfo, +newRating)"
           />
         </div>
-        <p v-show="isAdmin" class="sloths-info__property">
-          {{ new Date(slothsInfo.createdAt).toLocaleDateString() }}
-        </p>
-      </div>
-      <div class="sloths-info__btn">
-        <custom-btn
-          v-show="isAdmin"
-          className="btn btn-icon icon-edit"
-          @click="$emit('editSloth', slothsInfo)"
-        ></custom-btn>
-        <custom-btn
-          v-show="isAdmin"
-          className="btn btn-icon icon-del"
-          @click="$emit('delSloth', slothsInfo.id)"
-        ></custom-btn>
-        <custom-btn
-          v-show="isCatalog"
-          :text="$t('btn.show')"
-          className="btn btn-primary"
-          @click="$emit('showSloth', slothsInfo)"
-        ></custom-btn>
       </div>
     </div>
   </div>
@@ -149,8 +155,10 @@ export default defineComponent({
 
 .sloths-info__btn {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: var(--gap);
 }
 .sloths-info__tags {
   position: absolute;
