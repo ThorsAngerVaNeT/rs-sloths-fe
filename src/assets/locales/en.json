@@ -128,6 +128,7 @@
     "body": {
       "authorization": "In order to access the RS Sloths, you need to login with your GitHub account",
       "del-sloth": "Do you really want to delete this wonderful sloth?",
+      "del-user": "Do you really want to delete this wonderful user?",
       "empty-file": "File not selected!",
       "empty-caption": "Name the sloth!",
       "empty-description": "Describe the sloth!"
