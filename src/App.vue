@@ -21,6 +21,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
+import type { User } from '@/common/types';
+import router from './router';
 import HeaderView from './components/header/HeaderView.vue';
 import FooterView from './components/footer/FooterView.vue';
 import LoaderView from './components/loader/LoaderView.vue';
@@ -31,15 +33,10 @@ import AuthorizationModal from './components/modal/AuthorizationModal.vue';
 import useLoader from './stores/loader';
 import useAlertModal from './stores/alert-modal';
 import useAuthorizationModal from './stores/authorization-modal';
-import router from './router';
 import useAudioOn from './stores/audio-on';
+import useCurrUser from './stores/curr-user';
 
-// import { errorHandler } from './services/error-handling/error-handler';
-// import { UsersService } from './services/users-service';
-// import { USERS_ERROR_GET } from './common/const';
-// import { CustomError } from './services/error-handling/custom-error';
-
-// const service = new UsersService();
+const { setCurrUser } = useCurrUser();
 
 export default defineComponent({
   name: 'App',
@@ -71,7 +68,7 @@ export default defineComponent({
     // setTimeout(() => {
     //   this.isLoad = false;
     // }, 100);
-    await this.getCurrUser('cd86722d-e3cc-405c-9a46-8da7d7d2dfcf');
+    await this.getCurrUser();
   },
   methods: {
     closeAuthorization() {
@@ -79,7 +76,7 @@ export default defineComponent({
       router.push('/');
     },
 
-    async getCurrUser(id: string) {
+    async getCurrUser() {
       this.isLoad = true;
       try {
         const res = await fetch(`http://localhost:3000/users/session`, {
@@ -87,8 +84,9 @@ export default defineComponent({
           credentials: 'include',
         });
         if (!res.ok) console.log('res niok');
-        const data = await res.json();
+        const data: User = await res.json();
         console.log('res.data: ', data);
+        setCurrUser(data);
       } catch (error) {
         console.log(error);
       } finally {

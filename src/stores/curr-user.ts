@@ -5,7 +5,7 @@ import { Role } from '@/common/enums/user-role';
 const newUser = {} as User;
 newUser.role = Role.user;
 
-const useUserInfo = defineStore({
+const useCurrUser = defineStore({
   id: 'userInfo',
 
   state: () => ({
@@ -13,13 +13,9 @@ const useUserInfo = defineStore({
   }),
 
   getters: {
-    getUserId(): string {
-      return this.currUser.id;
-    },
+    getUserId: (state): string => state.currUser.id,
 
-    isAdmin(): boolean {
-      return this.currUser.role === Role.admin;
-    },
+    isAdmin: (state) => state.currUser.role === Role.admin,
   },
 
   actions: {
@@ -33,4 +29,4 @@ const useUserInfo = defineStore({
   },
 });
 
-export default useUserInfo;
+export default useCurrUser;
