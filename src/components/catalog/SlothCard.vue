@@ -187,6 +187,7 @@ export default defineComponent({
   transition: transform 0.3s;
 
   justify-content: center;
+  z-index: 10;
 }
 .catalog-sloth-info__sloth:hover .sloth-info__tags {
   transform: translateY(0);

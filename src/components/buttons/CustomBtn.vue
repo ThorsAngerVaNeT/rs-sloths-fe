@@ -60,6 +60,7 @@ export default defineComponent({
 }
 
 .btn-link {
+  color: var(--color-text);
   text-decoration: underline;
 }
 

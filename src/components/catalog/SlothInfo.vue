@@ -1,47 +1,59 @@
 <template>
-  <div class="sloths-info">
+  <div class="sloth-info">
     <modal-window v-show="isSlothInfoVisible" @close="closeModal">
       <template v-slot:header> {{ getHeader }} </template>
 
       <template v-slot:body>
-        <div class="sloths-info__props">
-          <div v-show="!isNew" :class="'sloths-info__sloths'">
-            <img :class="'sloths-info__img'" :src="slothInfo.image_url" :alt="slothInfo.caption" />
-          </div>
-          <div v-show="!isView" class="sloths-info__property">
-            <label for="caption" class="sloths-info__label">{{ $t('catalog.caption') }} </label>
-            <input type="text" id="caption" class="sloths-info__input" v-model="slothInfo.caption" />
-          </div>
-          <div v-show="!isView" class="sloths-info__property">
-            <label for="description" class="sloths-info__label">{{ $t('catalog.description') }} </label>
-            <textarea rows="5" id="description" class="sloths-info__input" v-model="slothInfo.description"></textarea>
-          </div>
-          <div v-show="isView" class="sloths-info__property">
-            <p v-show="isView" id="description" class="sloths-info__text">{{ slothInfo.description }}</p>
-          </div>
-          <div v-show="isNew" :class="'sloths-info__sloths'">
-            <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage()" />
-          </div>
-          <div v-show="isView" class="sloths-info__property">
-            <div class="tags">
-              <span class="tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
+        <div>
+          <div v-if="isView" class="sloth-info__props">
+            <div :class="'sloth-info__sloth'">
+              <img :class="'sloth-info__img'" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+            </div>
+            <div class="sloth-info__property property-center">
+              <p class="sloth-info__text">{{ slothInfo.description }}</p>
+            </div>
+            <div class="sloth-info__property property-center">
+              <div class="tags">
+                <span class="tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
+              </div>
+            </div>
+            <div class="sloth-info__property property-center">
+              <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }} </label>
+              <p id="rating" class="sloth-info__text">{{ slothInfo.rating }}⭐</p>
+            </div>
+            <div class="sloth-info__property property-center">
+              <label for="createdAt" class="sloth-info__label">{{ $t('catalog.createdAt') }} </label>
+              <p id="createdAt" class="sloth-info__text">{{ new Date(slothInfo.createdAt).toLocaleDateString() }}</p>
             </div>
           </div>
-          <div v-show="!isView" class="sloths-info__property">
-            <label for="tags" class="sloths-info__label">{{ $t('catalog.tags') }} </label>
-            <input type="text" id="tags" class="sloths-info__input" v-model="tags" />
-          </div>
-          <div v-show="!isNew" class="sloths-info__property">
-            <label for="image_url" class="sloths-info__label">{{ $t('catalog.image_url') }} </label>
-            <p id="image_url" class="sloths-info__text">{{ slothInfo.image_url }}</p>
-          </div>
-          <div v-show="!isNew" class="sloths-info__property">
-            <label for="rating" class="sloths-info__label">{{ $t('catalog.rating') }} </label>
-            <p id="rating" class="sloths-info__text">{{ slothInfo.rating }}⭐</p>
-          </div>
-          <div v-show="!isNew" class="sloths-info__property">
-            <label for="createdAt" class="sloths-info__label">{{ $t('catalog.createdAt') }} </label>
-            <p id="createdAt" class="sloths-info__text">{{ new Date(slothInfo.createdAt).toLocaleDateString() }}</p>
+
+          <div v-else class="sloth-info__props">
+            <div v-show="isNew" :class="'sloth-info__sloth'">
+              <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage()" />
+            </div>
+            <div v-show="!isNew" :class="'sloth-info__sloth'">
+              <img :class="'sloth-info__img'" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+            </div>
+            <div class="sloth-info__property">
+              <label for="caption" class="sloth-info__label">{{ $t('catalog.caption') }} </label>
+              <input type="text" id="caption" class="sloth-info__input" v-model="slothInfo.caption" />
+            </div>
+            <div class="sloth-info__property">
+              <label for="description" class="sloth-info__label">{{ $t('catalog.description') }} </label>
+              <textarea rows="3" id="description" class="sloth-info__input" v-model="slothInfo.description"></textarea>
+            </div>
+            <div class="sloth-info__property">
+              <label for="tags" class="sloth-info__label">{{ $t('catalog.tags') }} </label>
+              <input type="text" id="tags" class="sloth-info__input" v-model="tags" />
+            </div>
+            <div v-show="!isNew" class="sloth-info__property">
+              <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }} </label>
+              <p id="rating" class="sloth-info__text">{{ slothInfo.rating }}⭐</p>
+            </div>
+            <div v-show="!isNew" class="sloth-info__property">
+              <label for="createdAt" class="sloth-info__label">{{ $t('catalog.createdAt') }} </label>
+              <p id="createdAt" class="sloth-info__text">{{ new Date(slothInfo.createdAt).toLocaleDateString() }}</p>
+            </div>
           </div>
         </div>
       </template>
@@ -158,20 +170,39 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.sloths-info__props {
+.sloth-info__props {
   max-width: 50rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5em;
+  gap: var(--gap);
 }
-.sloths-info__img {
-  width: 200px;
-}
-.sloths-info__property {
+.sloth-info__property {
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 1em;
+  gap: var(--gap);
+}
+.property-center {
+  justify-content: center;
+}
+.sloth-info__img {
+  height: 20rem;
+}
+.sloth-info__text {
+  text-align: center;
+}
+
+.sloth-info__input {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
+
+  width: 30rem !important;
+
+  border: none;
+  border-bottom: 0.2rem solid gray;
+  background-color: var(--color-background);
+  color: inherit;
 }
 </style>
