@@ -92,7 +92,13 @@
   },
 
   "create": {
-    "title": "Create a meme"
+    "title": "Create a meme",
+    "description": "Choose an image, enter text and copy the result",
+    "top": "Text Top",
+    "bottom": "Text Bottom",
+    "margin": "Image Margin",
+    "color": "Text Color",
+    "stroke": "Text Stroke Color"
   },
 
   "sloth": {
@@ -163,7 +169,9 @@
     "edit": "Edit",
     "save": "Save",
     "show": "Detail info",
-    "pick": "Pick"
+    "pick": "Pick",
+    "copy": "Copy",
+    "download": "Download"
   },
 
   "pagination": {
