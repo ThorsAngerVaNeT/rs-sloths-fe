@@ -21,6 +21,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
+import { UsersService } from '@/services/users-service';
+import { USERS_ERROR_GET, USERS_ERROR_UPD } from '@/common/const';
+import { CustomError } from '@/services/error-handling/custom-error';
+import { errorHandler } from '@/services/error-handling/error-handler';
 import HeaderView from './components/header/HeaderView.vue';
 import FooterView from './components/footer/FooterView.vue';
 import LoaderView from './components/loader/LoaderView.vue';
@@ -33,6 +37,8 @@ import useAlertModal from './stores/alert-modal';
 import useAuthorizationModal from './stores/authorization-modal';
 import router from './router';
 import useAudioOn from './stores/audio-on';
+
+const service = new UsersService();
 
 export default defineComponent({
   name: 'App',
@@ -54,21 +60,39 @@ export default defineComponent({
     ...mapWritableState(useAudioOn, ['isAudioOn']),
   },
   created() {
-    this.isLoad = true;
+    // this.isLoad = true;
     this.isAlert = false;
     this.header = 'modal.header.alert';
     this.message = '';
-    this.isAudioOn = true; // todo local storage
+    // this.isAudioOn = true; // todo local storage
   },
-  mounted() {
-    setTimeout(() => {
-      this.isLoad = false;
-    }, 100);
+  async mounted() {
+    await this.getUser('cd86722d-e3cc-405c-9a46-8da7d7d2dfcf');
+    // setTimeout(() => {
+    //   this.isLoad = false;
+    // }, 100);
   },
   methods: {
     closeAuthorization() {
       this.isAuthorization = false;
       router.push('/');
+    },
+
+    async getUser(id: string) {
+      this.isLoad = true;
+      try {
+        const res = await service.getById(id);
+        if (!res.ok) throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${id})`);
+        // this.user = res.data;
+
+        console.log('res.data: ', res.data);
+
+        // setUserInfo(this.user);
+      } catch (error) {
+        errorHandler(error);
+      } finally {
+        this.isLoad = false;
+      }
     },
   },
 });
