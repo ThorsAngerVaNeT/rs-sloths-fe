@@ -132,7 +132,6 @@ export default defineComponent({
   height: 3rem;
   border-radius: 0.5rem;
 
-  color: var(--color-text-inverse);
   background-color: var(--color-background-inverse);
   background-repeat: no-repeat;
   background-position: center center;

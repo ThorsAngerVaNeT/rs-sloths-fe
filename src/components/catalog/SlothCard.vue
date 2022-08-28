@@ -1,55 +1,63 @@
 <template>
-  <div v-if="isAdmin" class="admin-sloths-info">
-    <div class="admin-sloths-info__sloth">
-      <img class="admin-sloths-info__img" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
-      <div class="sloths-info__tags tags">
-        <span class="sloths-info__tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
+  <div :class="`${getPageName}-sloth-info`">
+    <div v-if="isAdmin" class="admin-sloth-info__inner">
+      <div class="admin-sloth-info__sloth">
+        <img class="admin-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <div class="sloth-info__tags tags">
+          <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
+        </div>
       </div>
-    </div>
-    <div class="sloths-info__btn">
-      <custom-btn className="btn btn-icon icon-edit" @click="$emit('editSloth', slothsInfo)"></custom-btn>
-      <custom-btn className="btn btn-icon icon-del" @click="$emit('delSloth', slothsInfo.id)"></custom-btn>
-    </div>
-    <div>
-      <div class="admin-sloths-info__props">
-        <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
-        <p class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
-        <p class="sloths-info__property">
-          {{ new Date(slothsInfo.createdAt).toLocaleDateString() }}
+      <div class="sloth-info__btn">
+        <custom-btn className="btn btn-icon icon-edit" @click="$emit('editSloth', slothInfo)"></custom-btn>
+        <custom-btn className="btn btn-icon icon-del" @click="$emit('delSloth', slothInfo.id)"></custom-btn>
+      </div>
+      <div class="admin-sloth-info__props">
+        <p class="sloth-info__property">{{ $t('catalog.caption') }}</p>
+        <p class="sloth-info__property">{{ $t('catalog.rating') }}</p>
+        <p class="sloth-info__property">{{ $t('catalog.createdAt') }}</p>
+      </div>
+      <div class="admin-sloth-info__props">
+        <p class="sloth-info__property">{{ slothInfo.caption }}</p>
+        <p class="sloth-info__property">{{ slothInfo.rating }}⭐</p>
+        <p class="sloth-info__property">
+          {{ new Date(slothInfo.createdAt).toLocaleDateString() }}
         </p>
       </div>
     </div>
-  </div>
-  <div v-if="isCatalog" class="catalog-sloths-info">
-    <div class="catalog-sloths-info__sloth">
-      <img class="catalog-sloths-info__img" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
-      <div class="sloths-info__tags tags">
-        <span class="sloths-info__tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
+    <div v-if="isCatalog" class="catalog-sloth-info__inner">
+      <div class="catalog-sloth-info__sloth">
+        <img class="catalog-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <div class="sloth-info__tags tags">
+          <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
+        </div>
       </div>
-    </div>
-    <div class="sloths-info__btn">
+      <custom-btn :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"></custom-btn>
+      <!-- <custom-btn
+      :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"
+      @click="$emit('checkSloth', slothInfo)"
+    ></custom-btn> -->
+      <div>
+        <div class="catalog-sloth-info__props">
+          <p class="sloth-info__property">{{ slothInfo.caption }}</p>
+          <div class="sloth-info__property">
+            <label for="range" class="sloth-info__label">{{ slothInfo.rating }}⭐</label>
+            <input
+              type="range"
+              id="range"
+              min="0"
+              max="5"
+              step="1"
+              v-model="newRating"
+              @change="$emit('editRating', slothInfo, +newRating)"
+            />
+          </div>
+        </div>
+      </div>
       <custom-btn
         :text="$t('btn.show')"
         className="btn btn-primary"
-        @click="$emit('showSloth', slothsInfo)"
+        @click="$emit('showSloth', slothInfo)"
       ></custom-btn>
-    </div>
-    <div>
-      <div class="catalog-sloths-info__props">
-        <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
-        <div>
-          <label for="range" class="sloths-info__label">{{ slothsInfo.rating }}⭐</label>
-          <input
-            type="range"
-            id="range"
-            min="0"
-            max="5"
-            step="1"
-            v-model="newRating"
-            @change="$emit('editRating', slothsInfo, +newRating)"
-          />
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -71,7 +79,7 @@ export default defineComponent({
   },
 
   props: {
-    slothsInfo: {
+    slothInfo: {
       type: Object as PropType<Sloth>,
       required: true,
     },
@@ -94,73 +102,82 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.catalog-sloths-info,
-.admin-sloths-info {
+.catalog-sloth-info,
+.admin-sloth-info {
   overflow: hidden;
-
-  display: flex;
-  align-items: center;
 
   background-color: var(--color-background-soft);
   border: 1px solid gray;
 }
-.admin-sloths-info {
+.admin-sloth-info {
   padding: 0.5rem;
-
   width: calc(50% - var(--gap));
 
   border-radius: 0.5rem;
 }
-.catalog-sloths-info {
+.catalog-sloth-info {
+  position: relative;
   padding: 1rem;
   width: 20rem;
 
-  flex-direction: column;
-
   border-radius: 1rem;
 }
-.admin-sloths-info:hover,
-.catalog-sloths-info:hover {
+.admin-sloth-info:hover,
+.catalog-sloth-info:hover {
   box-shadow: 0px 0px 0.5rem gray;
 }
-.catalog-sloths-info__sloth {
+
+.catalog-sloth-info__inner,
+.admin-sloth-info__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+}
+.catalog-sloth-info__inner {
+  flex-direction: column;
+}
+
+.catalog-sloth-info__sloth {
   position: relative;
 
   overflow: hidden;
 }
 
-.admin-sloths-info__img {
+.admin-sloth-info__img {
   width: calc(10rem - 1rem);
   height: calc(10rem - 1rem);
   object-fit: contain;
 }
-.catalog-sloths-info__img {
+.catalog-sloth-info__img {
   width: calc(20rem - 2rem);
   height: calc(20rem - 2rem);
   object-fit: contain;
 }
 
-.admin-sloths-info__props,
-.catalog-sloths-info__props {
+.admin-sloth-info__props,
+.catalog-sloth-info__props {
   display: flex;
-  align-items: center;
-}
-.catalog-sloths-info__props {
   flex-direction: column;
 }
+.admin-sloth-info__props {
+  align-items: flex-start;
+}
+.catalog-sloth-info__props {
+  align-items: center;
+}
 
-.sloths-info__property {
+.sloth-info__property {
   padding: 0.25rem;
 }
 
-.sloths-info__btn {
+.sloth-info__btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--gap);
 }
-.sloths-info__tags {
+.sloth-info__tags {
   position: absolute;
   top: 0;
   left: 0;
@@ -171,10 +188,10 @@ export default defineComponent({
 
   justify-content: center;
 }
-.catalog-sloths-info__sloth:hover .sloths-info__tags {
+.catalog-sloth-info__sloth:hover .sloth-info__tags {
   transform: translateY(0);
 }
-.sloths-info__tag {
+.sloth-info__tag {
   padding: 0.5rem 0.7rem;
   cursor: default;
 
@@ -185,8 +202,28 @@ export default defineComponent({
   border: 1px solid gray;
 }
 
+.icon {
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+.icon_check-on {
+  background-image: url('@/assets/icons/btn/check-circle-fill.svg');
+}
+.icon_check-off {
+  background-image: url('@/assets/icons/btn/check-circle.svg');
+}
+
 @media (max-width: 1000px) {
-  .admin-sloths-info {
+  .admin-sloth-info {
     width: 100%;
   }
 }

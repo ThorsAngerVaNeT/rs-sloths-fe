@@ -52,6 +52,7 @@ export type Sloth = {
   rating: number;
   createdAt: number;
   tags: Tags;
+  checked?: boolean;
 };
 export type SlothTags = {
   id: string;

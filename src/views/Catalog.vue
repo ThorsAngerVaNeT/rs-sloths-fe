@@ -27,7 +27,7 @@
         <sloth-card
           v-for="sloth in sloths"
           :key="sloth.id"
-          :slothsInfo="sloth"
+          :slothInfo="sloth"
           @editRating="updSlothRating"
           @delSloth="delSloth"
           @editSloth="showSlothInfoEdit"
