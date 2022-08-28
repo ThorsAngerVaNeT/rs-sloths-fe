@@ -125,7 +125,8 @@ export default defineComponent({
     },
 
     getHeader(): string {
-      return this.isNew ? this.headerText : slothInfo.value.caption;
+      if (this.isNew) return this.headerText;
+      return this.isView ? this.slothInfo.caption : this.slothInfo.id;
     },
 
     getImage(): string {
