@@ -28,7 +28,7 @@
             <input type="text" class="meme__text" id="bottom" v-model="bottomText" @change="draw()" />
           </div>
           <div class="meme__property">
-            <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.save') }}</button>
+            <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.download') }}</button>
             <button @click="copyImage" class="btn btn-primary" type="button">{{ $t('btn.copy') }}</button>
           </div>
         </div>

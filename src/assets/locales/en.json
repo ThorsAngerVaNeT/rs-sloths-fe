@@ -162,7 +162,8 @@
     "save": "Save",
     "show": "Detail info",
     "pick": "Pick",
-    "copy": "Copy"
+    "copy": "Copy",
+    "download": "Download"
   },
 
   "pagination": {
