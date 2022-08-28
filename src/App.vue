@@ -36,7 +36,7 @@ import useAuthorizationModal from './stores/authorization-modal';
 import useAudioOn from './stores/audio-on';
 import useCurrUser from './stores/curr-user';
 
-const { setCurrUser } = useCurrUser();
+// const { setCurrUser } = useCurrUser();
 
 export default defineComponent({
   name: 'App',
@@ -56,6 +56,8 @@ export default defineComponent({
     ...mapWritableState(useAuthorizationModal, ['isAuthorization']),
 
     ...mapWritableState(useAudioOn, ['isAudioOn']),
+
+    ...mapWritableState(useCurrUser, ['currUser']),
   },
   created() {
     // this.isLoad = true;
@@ -86,7 +88,7 @@ export default defineComponent({
         if (!res.ok) console.log('res niok');
         const data: User = await res.json();
         console.log('res.data: ', data);
-        setCurrUser(data);
+        this.currUser = data;
       } catch (error) {
         console.log(error);
       } finally {
