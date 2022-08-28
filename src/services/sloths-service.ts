@@ -1,42 +1,76 @@
-import type { API, Sloth, SlothRating } from '@/common/types';
+import type {
+  API,
+  Sloth,
+  SlothRating,
+  SlothTags,
+  Tag,
+  WhereField,
+  WhereFieldFilter,
+  WhereFieldSome,
+} from '@/common/types';
+import { getORFields, getFieldContainsFilter, getANDFields } from '@/utils/query-string';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
-import { getAllSloths, getByIdSloth, getDeleteSloth } from './mocks/sloths-mocks';
+
+const getFilter = (searchText: string, selected: string[]): string => {
+  const search: WhereFieldFilter | WhereField | null = searchText
+    ? getORFields(['caption', 'description'].map((field) => getFieldContainsFilter(field, searchText)))
+    : null;
+
+  const select: WhereFieldSome | null = selected.length ? { tags: { some: { value: { in: selected } } } } : null;
+
+  return getANDFields([search, select]);
+};
 
 export class SlothsService implements API<Sloth> {
   private service = new APIService<Sloth>(Endpoints.sloths);
 
-  private getAllResult = getAllSloths;
-
-  private getByIdResult = getByIdSloth;
-
-  private getDeleteResult = getDeleteSloth;
-
-  public getAll() {
-    return this.service.getAll();
-    // return Promise.resolve(this.getAllResult);
+  public getAllList() {
+    return this.service.getAllList();
   }
 
-  public getPage(page: number, limit: number) {
-    return this.service.getPage(page, limit);
-    // return Promise.resolve(this.getAllResult);
+  public getAll(searchText = '', sorting = '', selected = [] as string[]) {
+    return this.service.getAll(getFilter(searchText, selected), sorting);
+  }
+
+  public getPage(page: number, limit: number, searchText = '', sorting = '', selected = [] as string[]) {
+    return this.service.getPage(page, limit, getFilter(searchText, selected), sorting);
   }
 
   public getById(id: string) {
     return this.service.getById(id);
-    // return Promise.resolve(this.getByIdResult);
   }
 
   public create(body: Sloth) {
     return this.service.create(body);
-    // return Promise.resolve(this.getByIdResult);
+  }
+
+  public createImage(sloth: Sloth, file: File) {
+    const formData = new FormData();
+    formData.append('caption', sloth.caption);
+    formData.append('description', sloth.description);
+
+    if (sloth.tags) formData.append('tags', JSON.stringify(sloth.tags));
+
+    formData.append('file', file);
+
+    return this.service.createImage(formData);
   }
 
   public updateById(slothId: string, sloth: Sloth) {
     const { id, caption, description } = sloth;
-    const body = { id, caption, description };
+    const imageUrl = sloth.image_url;
+    const body = { id, caption, description, image_url: imageUrl };
     return this.service.updateById(slothId, body);
-    // return Promise.resolve(this.getByIdResult);
+  }
+
+  public static updateByIdAndTags(slothId: string, sloth: Sloth) {
+    const tagsService = new APIService<SlothTags>(Endpoints.sloths);
+
+    const { id, caption, description, tags } = sloth;
+    const imageUrl = sloth.image_url;
+    const body = { id, caption, description, image_url: imageUrl, tags: JSON.stringify(tags) };
+    return tagsService.updateById(slothId, body);
   }
 
   public static updateRatingById(slothId: string, rate: number) {
@@ -49,7 +83,12 @@ export class SlothsService implements API<Sloth> {
 
   public deleteById(id: string) {
     return this.service.deleteById(id);
-    // return Promise.resolve(this.getDeleteResult);
+  }
+
+  public static getTags() {
+    const tagsService = new APIService<Tag>(`${Endpoints.sloths}/tags`);
+
+    return tagsService.getAllList();
   }
 }
 

@@ -14,6 +14,16 @@ export class APIService<T> implements API<T> {
     this.endpoint = `${BASE}/${endpoint}`;
   }
 
+  public getAllList(): Promise<APIRequestResult<T[]>> {
+    const url = `${this.endpoint}`;
+    const config: RequestInit = {
+      method: FetchMethod.get,
+      credentials,
+    };
+
+    return apiRequest(url, config);
+  }
+
   public getAll(filter: string, order: string): Promise<APIRequestResult<GetList<T>>> {
     const param = makeParamString({
       filter,
@@ -66,6 +76,17 @@ export class APIService<T> implements API<T> {
       credentials,
       body: JSON.stringify(body),
       headers,
+    };
+
+    return apiRequest(url, config);
+  }
+
+  public createImage(body: FormData): Promise<APIRequestResult<T>> {
+    const url = `${this.endpoint}`;
+    const config: RequestInit = {
+      method: FetchMethod.post,
+      credentials,
+      body,
     };
 
     return apiRequest(url, config);

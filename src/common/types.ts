@@ -13,6 +13,8 @@ export type GetList<T> = {
 };
 
 export interface API<T> {
+  getAllList(): Promise<APIRequestResult<T[]>>;
+
   getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>>>;
 
   getPage(page: number, limit: number, filter: string, sorting: string): Promise<APIRequestResult<GetList<T>>>;
@@ -25,6 +27,11 @@ export interface API<T> {
 
   deleteById(id: string): Promise<APIRequestResult<T>>;
 }
+
+export type Tags = Tag[];
+export type Tag = {
+  value: string;
+};
 
 export type Users = User[];
 export type User = {
@@ -44,6 +51,16 @@ export type Sloth = {
   image_url: string;
   rating: number;
   createdAt: number;
+  tags: Tags;
+};
+export type SlothTags = {
+  id: string;
+  caption: string;
+  description: string;
+  image_url: string;
+  rating: number;
+  createdAt: number;
+  tags: string;
 };
 
 export type SlothRating = {
@@ -80,3 +97,5 @@ type WhereFieldEquals = {
 export type WhereField = WhereFieldContains | WhereFieldEquals;
 
 export type WhereFieldFilter = { OR: WhereField[] };
+
+export type WhereFieldSome = { tags: { some: { value: { in: string[] } } } };

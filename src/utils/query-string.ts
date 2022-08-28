@@ -1,4 +1,4 @@
-import type { WhereField, WhereFieldFilter } from '@/common/types';
+import type { WhereField, WhereFieldFilter, WhereFieldSome } from '@/common/types';
 
 export const getFieldContainsFilter = (field: string, value: string): WhereField => ({
   [field]: {
@@ -19,7 +19,7 @@ export const getORFields = (fields: WhereField[]): WhereFieldFilter | WhereField
   return { OR: arr };
 };
 
-export const getANDFields = (fields: (WhereFieldFilter | WhereField | null)[]): string => {
+export const getANDFields = (fields: (WhereFieldFilter | WhereField | WhereFieldSome | null)[]): string => {
   const arr = fields.filter((el) => el !== null);
 
   if (!arr.length) return '';
