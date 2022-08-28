@@ -95,4 +95,8 @@ export default defineComponent({
 .sound-switcher__label_dark-off {
   background: center center / cover url('@/assets/icons/sounds/sound-dark-off.svg') no-repeat;
 }
+
+.sound-switcher__label:hover {
+  transform: scale(1.1) rotate(-5deg);
+}
 </style>

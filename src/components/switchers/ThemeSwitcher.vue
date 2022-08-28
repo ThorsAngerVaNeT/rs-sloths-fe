@@ -86,4 +86,8 @@ export default defineComponent({
 .theme-switcher__label_dark {
   background: center center / cover url('@/assets/icons/themes/dark.svg') no-repeat;
 }
+
+.theme-switcher__label:hover {
+  transform: scale(1.1) rotate(-5deg);
+}
 </style>

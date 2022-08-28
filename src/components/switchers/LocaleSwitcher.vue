@@ -82,4 +82,8 @@ export default defineComponent({
 .switcher__label_ru {
   background: center center / cover url('@/assets/icons/locales/ru.svg') no-repeat;
 }
+
+.switcher__label:hover {
+  transform: scale(1.1) rotate(5deg);
+}
 </style>

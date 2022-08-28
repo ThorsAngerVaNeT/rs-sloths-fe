@@ -2,7 +2,7 @@
   <header class="header" :class="$route.name !== 'home' ? '' : 'header_home'">
     <router-link class="header__title" v-show="$route.name !== 'home'" to="/">RS SLOTHS</router-link>
     <div class="header__tools">
-      <div class="header__admin" v-show="isAdmin" @click="pushToAdmin"></div>
+      <div class="header__admin" v-show="isAdmin" @click="pushToAdmin" :title="$t('admin.title')"></div>
       <sound-switcher />
       <locale-switcher />
       <theme-switcher />
@@ -78,5 +78,10 @@ export default defineComponent({
   height: 3rem;
   background: no-repeat center center / contain url('@/assets/icons/admin/admin.svg');
   cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.header__admin:hover {
+  transform: scale(1.1) rotate(5deg);
 }
 </style>
