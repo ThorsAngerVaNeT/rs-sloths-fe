@@ -1,25 +1,29 @@
 <template>
   <div class="create">
     <h2>{{ $t('create.title') }}</h2>
-    <div class="journey">
-      <div class="list">
+    <h3>{{ $t('create.description') }}</h3>
+    <div class="meme">
+      <div class="meme__list">
         <img
           ref="imgs"
           v-for="(item, index) in images"
           :key="index"
           :src="getImg(index)"
           alt="images"
+          class="meme__image"
           @click="updImage(index)"
         />
       </div>
+      <div class="meme__text">
+        <label class="meme__label" for="top">{{ $t('create.top') }}</label>
+        <input type="text" class="meme__input" id="top" v-model="topText" @change="updMemeCanvas" />
+      </div>
+      <div class="meme__text">
+        <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
+        <input type="text" class="meme__input" id="bottom" v-model="bottomText" @change="updMemeCanvas" />
+      </div>
 
-      <label>Top Text</label>
-      <input type="text" v-model="topText" @change="updMemeCanvas" />
-
-      <label>Bottom Text</label>
-      <input type="text" v-model="bottomText" @change="updMemeCanvas" />
-
-      <canvas id="imageCanvas" ref="canvas"></canvas>
+      <canvas class="meme__canvas" ref="canvas"></canvas>
     </div>
   </div>
 </template>
@@ -74,43 +78,41 @@ export default defineComponent({
 
     updMemeCanvas() {
       const { canvas, imgs } = this.$refs;
-      if (!(imgs instanceof Array)) {
-        return;
-      }
+      if (!(imgs instanceof Array)) return;
+
       const image = imgs[this.index];
-      if (canvas instanceof HTMLCanvasElement && image instanceof HTMLImageElement) {
-        const ctx = canvas.getContext('2d');
+      if (!(canvas instanceof HTMLCanvasElement && image instanceof HTMLImageElement)) return;
 
-        if (!ctx) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-        const { width } = image;
-        const { height } = image;
-        const fontSize = Math.floor(width / 10);
-        const yOffset = height / 25;
+      const { width } = image;
+      const { height } = image;
+      const fontSize = Math.floor(width / 10);
+      const yOffset = height / 25;
 
-        // Update canvas background
-        canvas.width = width;
-        canvas.height = height;
-        ctx.drawImage(image, 0, 0);
+      // Update canvas background
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(image, 0, 0);
 
-        // Prepare text
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = Math.floor(fontSize / 4);
-        ctx.fillStyle = 'white';
-        ctx.textAlign = 'center';
-        ctx.lineJoin = 'round';
-        ctx.font = `${fontSize}px sans-serif`;
+      // Prepare text
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = Math.floor(fontSize / 4);
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center';
+      ctx.lineJoin = 'round';
+      ctx.font = `${fontSize}px sans-serif`;
 
-        // Add top text
-        ctx.textBaseline = 'top';
-        ctx.strokeText(this.topText, width / 2, yOffset);
-        ctx.fillText(this.topText, width / 2, yOffset);
+      // Add top text
+      ctx.textBaseline = 'top';
+      ctx.strokeText(this.topText, width / 2, yOffset);
+      ctx.fillText(this.topText, width / 2, yOffset);
 
-        // Add bottom text
-        ctx.textBaseline = 'bottom';
-        ctx.strokeText(this.bottomText, width / 2, height - yOffset);
-        ctx.fillText(this.bottomText, width / 2, height - yOffset);
-      }
+      // Add bottom text
+      ctx.textBaseline = 'bottom';
+      ctx.strokeText(this.bottomText, width / 2, height - yOffset);
+      ctx.fillText(this.bottomText, width / 2, height - yOffset);
     },
   },
 });

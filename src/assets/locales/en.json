@@ -89,7 +89,10 @@
   },
 
   "create": {
-    "title": "Create a meme"
+    "title": "Create a meme",
+    "description": "Choose an image, enter text and copy the result",
+    "top": "Text Top",
+    "bottom": "Text Bottom"
   },
 
   "sloth": {
