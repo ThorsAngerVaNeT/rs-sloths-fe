@@ -34,6 +34,13 @@ import useAuthorizationModal from './stores/authorization-modal';
 import router from './router';
 import useAudioOn from './stores/audio-on';
 
+// import { errorHandler } from './services/error-handling/error-handler';
+// import { UsersService } from './services/users-service';
+// import { USERS_ERROR_GET } from './common/const';
+// import { CustomError } from './services/error-handling/custom-error';
+
+// const service = new UsersService();
+
 export default defineComponent({
   name: 'App',
   components: {
@@ -54,21 +61,39 @@ export default defineComponent({
     ...mapWritableState(useAudioOn, ['isAudioOn']),
   },
   created() {
-    this.isLoad = true;
+    // this.isLoad = true;
     this.isAlert = false;
     this.header = 'modal.header.alert';
     this.message = '';
-    this.isAudioOn = true; // todo local storage
+    // this.isAudioOn = true; // todo local storage
   },
-  mounted() {
-    setTimeout(() => {
-      this.isLoad = false;
-    }, 100);
+  async mounted() {
+    // setTimeout(() => {
+    //   this.isLoad = false;
+    // }, 100);
+    await this.getCurrUser('cd86722d-e3cc-405c-9a46-8da7d7d2dfcf');
   },
   methods: {
     closeAuthorization() {
       this.isAuthorization = false;
       router.push('/');
+    },
+
+    async getCurrUser(id: string) {
+      this.isLoad = true;
+      try {
+        const res = await fetch(`http://localhost:3000/users/session`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        if (!res.ok) console.log('res niok');
+        const data = await res.json();
+        console.log('res.data: ', data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.isLoad = false;
+      }
     },
   },
 });
