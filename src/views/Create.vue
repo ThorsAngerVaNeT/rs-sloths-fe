@@ -2,13 +2,22 @@
   <div class="create">
     <h2>{{ $t('create.title') }}</h2>
     <div class="journey">
-      <img ref="image" src="http://localhost:5173/memory-level-junior.png" alt="s" @click="updateMemeCanvas" />
+      <div class="list">
+        <img
+          ref="imgs"
+          v-for="(item, index) in images"
+          :key="index"
+          :src="getImg(index)"
+          alt="images"
+          @click="updImage(index)"
+        />
+      </div>
 
       <label>Top Text</label>
-      <input type="text" v-model="topText" @change="updateMemeCanvas" />
+      <input type="text" v-model="topText" @change="updMemeCanvas" />
 
       <label>Bottom Text</label>
-      <input type="text" v-model="bottomText" @change="updateMemeCanvas" />
+      <input type="text" v-model="bottomText" @change="updMemeCanvas" />
 
       <canvas id="imageCanvas" ref="canvas"></canvas>
     </div>
@@ -23,14 +32,52 @@ export default defineComponent({
 
   data() {
     return {
+      images: [] as string[],
+      index: 0,
       topText: '',
       bottomText: '',
     };
   },
 
+  mounted() {
+    this.getImages();
+  },
+
   methods: {
-    updateMemeCanvas() {
-      const { canvas, image } = this.$refs;
+    async getImages() {
+      // todo fetch
+
+      this.images = [
+        './test01.png',
+        './test02.png',
+        './test03.png',
+        './test04.png',
+        './test05.png',
+        './test06.png',
+        './test07.png',
+        './test08.png',
+        './test09.png',
+        './test10.png',
+        './test11.png',
+        './test12.png',
+      ];
+    },
+
+    getImg(i: number): string {
+      return this.images[i];
+    },
+
+    updImage(i: number) {
+      this.index = i;
+      this.updMemeCanvas();
+    },
+
+    updMemeCanvas() {
+      const { canvas, imgs } = this.$refs;
+      if (!(imgs instanceof Array)) {
+        return;
+      }
+      const image = imgs[this.index];
       if (canvas instanceof HTMLCanvasElement && image instanceof HTMLImageElement) {
         const ctx = canvas.getContext('2d');
 
