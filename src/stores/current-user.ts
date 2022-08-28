@@ -17,8 +17,8 @@ const useCurrUserInfo = defineStore({
       return this.currUser.id;
     },
 
-    getUserRole(): string {
-      return this.currUser.role;
+    isAdmin(): boolean {
+      return this.currUser.role === Role.admin;
     },
   },
 
