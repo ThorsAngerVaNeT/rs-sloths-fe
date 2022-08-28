@@ -28,12 +28,10 @@
           </div>
 
           <div v-else class="sloth-info__props">
-            <div v-show="isNew" :class="'sloth-info__sloth'">
+            <div :class="'sloth-info__sloth'">
               <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
-              <img class="sloth-info__img" :src="preview" alt="preview" />
-            </div>
-            <div v-show="!isNew" :class="'sloth-info__sloth'">
-              <img class="sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+              <img v-show="isNew" class="sloth-info__img" :src="preview" alt="preview" />
+              <img v-show="!isNew" class="sloth-info__img" :src="getImage" :alt="slothInfo.caption" />
             </div>
             <div class="sloth-info__property">
               <label for="caption" class="sloth-info__label">{{ $t('catalog.caption') }} </label>
@@ -129,6 +127,10 @@ export default defineComponent({
     getHeader(): string {
       return this.isNew ? this.headerText : slothInfo.value.caption;
     },
+
+    getImage(): string {
+      return this.newFile.name ? this.preview : this.slothInfo.image_url;
+    },
   },
 
   methods: {
@@ -158,7 +160,12 @@ export default defineComponent({
         this.$emit('createSloth', this.slothInfo, this.newFile);
         this.closeModal();
       } else if (this.modalEvents === ModalEvents.edit) {
-        this.$emit('updSloth', this.slothInfo);
+        if (this.newFile.name) {
+          this.$emit('updSlothImage', this.slothInfo, this.newFile);
+        } else {
+          this.$emit('updSloth', this.slothInfo);
+        }
+
         this.closeModal();
       }
     },
@@ -169,6 +176,7 @@ export default defineComponent({
       const { uploadBtn } = this.$refs;
       if (uploadBtn instanceof HTMLInputElement) uploadBtn.value = '';
       this.preview = CATALOG_SLOTH_PREVIEW;
+      this.newFile = {} as File;
     },
 
     uploadImage() {

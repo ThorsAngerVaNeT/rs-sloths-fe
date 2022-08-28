@@ -41,6 +41,7 @@
         @closeSlothInfo="closeSlothInfo"
         @createSloth="createSloth"
         @updSloth="updSloth"
+        @updSlothImage="updSlothImage"
       ></sloth-info>
     </div>
   </div>
@@ -190,6 +191,21 @@ export default defineComponent({
       this.isLoad = true;
       try {
         const res = await SlothsService.updateByIdAndTags(sloth.id, sloth);
+
+        if (!res.ok) throw Error(); // todo
+
+        await this.getSloths();
+      } catch (error) {
+        errorHandler(error);
+      } finally {
+        this.isLoad = false;
+      }
+    },
+
+    async updSlothImage(sloth: Sloth, file: File) {
+      this.isLoad = true;
+      try {
+        const res = await SlothsService.updateByIdAndTagsImage(sloth.id, sloth, file);
 
         if (!res.ok) throw Error(); // todo
 
