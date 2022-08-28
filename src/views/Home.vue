@@ -7,7 +7,7 @@
         v-for="(category, i) in categories"
         :key="`${i}_${category}`"
         :category="category"
-        @click="handleCategoryClick(category)"
+        @click="hasAuth ? handleCategoryClick(category) : handleAuth()"
       ></home-category>
     </div>
   </div>
@@ -15,9 +15,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapState } from 'pinia';
 import HomeCategory from '../components/home/HomeCategory.vue';
 import HomeAbout from '../components/home/HomeAbout.vue';
 import HomeCatalog from '../components/home/HomeCatalog.vue';
+
+import useCurrUser from '../stores/curr-user';
 
 export default defineComponent({
   name: 'HomeView',
@@ -34,6 +37,14 @@ export default defineComponent({
     };
   },
 
+  computed: {
+    ...mapState(useCurrUser, ['hasAuth']),
+  },
+
+  mounted() {
+    console.log('hasAuth: ', this.hasAuth);
+  },
+
   methods: {
     handleCategoryClick(category: string): void {
       if (category === 'sloth') {
@@ -41,6 +52,10 @@ export default defineComponent({
       } else {
         this.$router.push({ name: `${category}` });
       }
+    },
+
+    handleAuth() {
+      console.log('Go to auth');
     },
   },
 });
