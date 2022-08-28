@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapWritableState } from 'pinia';
+import { mapState, mapWritableState } from 'pinia';
 import type { User } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { UsersService } from '@/services/users-service';
@@ -37,6 +37,7 @@ import GuessInfo from '@/components/profile/GuessInfo.vue';
 import SuggestInfo from '@/components/profile/SuggestInfo.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useUserInfo from '@/stores/user-info';
+import useCurrUser from '@/stores/curr-user';
 import { USERS_ERROR_GET, USERS_ERROR_UPD } from '@/common/const';
 import { CustomError } from '@/services/error-handling/custom-error';
 import { Role } from '@/common/enums/user-role';
@@ -65,32 +66,33 @@ export default defineComponent({
     };
   },
 
-  props: {
-    id: {
-      type: String,
-      default: 'cd86722d-e3cc-405c-9a46-8da7d7d2dfcf', // todo // required: true,
-    },
-  },
+  // props: {
+  //   id: {
+  //     type: String,
+  //     default: 'cd86722d-e3cc-405c-9a46-8da7d7d2dfcf', // todo // required: true,
+  //   },
+  // },
 
   computed: {
+    ...mapState(useCurrUser, ['isAdmin', 'getUserId']),
     ...mapWritableState(useLoader, ['isLoad']),
 
-    isAdmin(): boolean {
-      return this.user.role === Role.admin;
-    },
+    // isAdmin(): boolean {
+    //   return this.user.role === Role.admin;
+    // },
   },
 
   mounted() {
-    this.getUser();
+    // this.getUser();
   },
 
   methods: {
     async getUser() {
       this.isLoad = true;
       try {
-        const res = await service.getById(this.id);
+        const res = await service.getById(this.getUserId);
         if (!res.ok)
-          throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.id})`);
+          throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.getUserId})`);
         this.user = res.data;
 
         setUserInfo(this.user);

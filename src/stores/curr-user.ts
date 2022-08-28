@@ -15,7 +15,9 @@ const useCurrUser = defineStore({
   getters: {
     getUserId: (state): string => state.currUser.id,
 
-    isAdmin: (state) => state.currUser.role === Role.admin,
+    isAdmin: (state): boolean => state.currUser.role === Role.admin,
+
+    getCurrUserInfo: (state): User => state.currUser,
   },
 
   actions: {
