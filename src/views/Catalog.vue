@@ -1,7 +1,13 @@
 <template>
   <div class="catalog">
-    <div class="catalog__aside">
+    <div class="catalog__aside list-aside">
       <h3>{{ $t('catalog.title') }}: {{ count }}</h3>
+      <custom-btn
+        :text="$t('catalog.btn.new')"
+        className="btn btn-primary"
+        @click="showSlothInfoNew"
+        v-show="getPageName === 'admin'"
+      ></custom-btn>
       <list-controls
         @search="getSloths"
         @tags="getSloths"
@@ -14,34 +20,29 @@
         :text="$t('btn.reset')"
       >
       </list-controls>
-
-      <custom-btn
-        :text="$t('catalog.btn.new')"
-        className="btn btn-primary"
-        @click="showSlothInfoNew"
-        v-show="getPageName === 'admin'"
-      ></custom-btn>
+    </div>
+    <div class="catalog__main list-main">
       <list-pagination :size="count" @getPage="getSloths"></list-pagination>
+      <div class="catalog__list">
+        <sloth-card
+          v-for="sloth in sloths"
+          :key="sloth.id"
+          :slothsInfo="sloth"
+          @editRating="updSlothRating"
+          @delSloth="delSloth"
+          @editSloth="showSlothInfoEdit"
+          @showSloth="showSlothInfoView"
+        ></sloth-card>
+      </div>
+      <sloth-info
+        :isSlothInfoVisible="isSlothInfoVisible"
+        :headerText="getHeaderSlothInfo"
+        :modalEvents="modalEvents"
+        @closeSlothInfo="closeSlothInfo"
+        @createSloth="createSloth"
+        @updSloth="updSloth"
+      ></sloth-info>
     </div>
-    <div class="catalog__list">
-      <sloth-card
-        v-for="sloth in sloths"
-        :key="sloth.id"
-        :slothsInfo="sloth"
-        @editRating="updSlothRating"
-        @delSloth="delSloth"
-        @editSloth="showSlothInfoEdit"
-        @showSloth="showSlothInfoView"
-      ></sloth-card>
-    </div>
-    <sloth-info
-      :isSlothInfoVisible="isSlothInfoVisible"
-      :headerText="getHeaderSlothInfo"
-      :modalEvents="modalEvents"
-      @closeSlothInfo="closeSlothInfo"
-      @createSloth="createSloth"
-      @updSloth="updSloth"
-    ></sloth-info>
   </div>
 </template>
 
@@ -249,19 +250,15 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-}
-.catalog__aside {
-  width: var(--width-panel);
 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  color: var(--color-text);
 }
+
 .catalog__list {
-  margin: 0.5rem;
+  margin: 0.5em 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 1em;
+  gap: var(--gap);
 }
 </style>
