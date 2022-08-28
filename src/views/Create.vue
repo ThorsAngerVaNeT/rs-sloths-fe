@@ -10,34 +10,49 @@
           :key="index"
           :src="getImg(index)"
           alt="images"
+          object-fit="contain"
           class="meme__image"
           @click="updImage(index)"
         />
       </div>
     </div>
     <div class="meme__generator list-main">
-      <div class="meme__text">
-        <label class="meme__label" for="color">{{ $t('create.color') }}</label>
-        <input type="color" id="color" v-model="color" @change="draw(false)" />
-        <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
-        <input type="color" id="strokeStyle" v-model="strokeStyle" @change="draw(false)" />
-      </div>
-      <div class="meme__text">
-        <label class="meme__label" for="top">{{ $t('create.top') }}</label>
-        <input type="text" class="meme__input" id="top" v-model="topText" @change="draw(false)" />
-      </div>
-
-      <div class="meme__canvas-wrapper">
-        <div class="meme__control-buttons">
-          <button @click="scaleUp" type="button" class="scale-up">+</button>
-          <button @click="scaleDown" type="button" class="scale-down">-</button>
+      <div>
+        <div class="meme__text">
+          <label class="meme__label" for="top">{{ $t('create.top') }}</label>
+          <textarea type="text" class="meme__text" id="top" v-model="topText" @change="draw()"></textarea>
         </div>
-        <canvas class="meme__canvas" ref="canvas"></canvas>
+
+        <div class="meme__canvas-wrapper">
+          <div class="meme__control-buttons">
+            <button @click="scaleUp" type="button" class="scale-up">+</button>
+            <button @click="scaleDown" type="button" class="scale-down">-</button>
+          </div>
+          <canvas class="meme__canvas" ref="canvas"></canvas>
+        </div>
+
+        <div class="meme__text">
+          <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
+          <input type="text" class="meme__text" id="bottom" v-model="bottomText" @change="draw()" />
+        </div>
+
+        <button @click="saveImage" type="button">Save</button>
+        <button @click="copyImage" type="button">Copy</button>
       </div>
 
-      <div class="meme__text">
-        <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
-        <input type="text" class="meme__input" id="bottom" v-model="bottomText" @change="draw(false)" />
+      <div class="meme__settings">
+        <div>
+          <label class="meme__label" for="color">{{ $t('create.color') }}</label>
+          <input type="color" id="color" class="meme__color" v-model="color" @change="draw()" />
+        </div>
+        <div>
+          <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
+          <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @change="draw()" />
+        </div>
+        <div>
+          <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
+          <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @change="draw()" />
+        </div>
       </div>
     </div>
   </div>
@@ -69,6 +84,7 @@ export default defineComponent({
       imageBottom: 0,
       color: '#ffffff',
       strokeStyle: '#000000',
+      margin: 0,
     };
   },
 
@@ -91,18 +107,18 @@ export default defineComponent({
       // todo fetch
 
       this.images = [
-        './test01.png',
-        './test02.png',
-        './test03.png',
-        './test04.png',
-        './test05.png',
-        './test06.png',
-        './test07.png',
-        './test08.png',
-        './test09.png',
-        './test10.png',
-        './test11.png',
-        './test12.png',
+        './test01.svg',
+        './test02.svg',
+        './test03.svg',
+        './test04.svg',
+        './test05.svg',
+        './test06.svg',
+        './test07.svg',
+        './test08.svg',
+        './test09.svg',
+        './test10.svg',
+        './test11.svg',
+        './test12.svg',
       ];
     },
 
@@ -112,33 +128,41 @@ export default defineComponent({
 
     scaleUp() {
       this.scaleSteps -= 1;
-      this.draw(false);
+      this.draw();
     },
 
     scaleDown() {
       this.scaleSteps += 1;
-      this.draw(false);
+      this.draw();
     },
 
-    draw(withBorders = false) {
+    draw() {
       // clear the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       // some maths
       const scaleFactor = 1 - this.scaleSteps * 0.1;
-      this.scaledImageWidth = this.img.width * scaleFactor;
-      this.scaledImageHeight = this.scaledImageWidth * (this.img.height / this.img.width);
+      this.scaledImageWidth = this.img.naturalWidth * scaleFactor;
+      this.scaledImageHeight = this.scaledImageWidth * (this.img.naturalHeight / this.img.naturalWidth);
 
-      this.canvas.width = this.scaledImageWidth || this.canvas.width;
-      this.canvas.height = this.scaledImageHeight || this.canvas.height;
+      this.imageX = this.margin * scaleFactor;
+      this.imageY = this.margin * scaleFactor;
+
+      // canvas size
+      this.canvas.width = this.scaledImageWidth
+        ? this.scaledImageWidth + this.margin * 2 * scaleFactor
+        : this.canvas.width;
+      this.canvas.height = this.scaledImageHeight
+        ? this.scaledImageHeight + this.margin * 2 * scaleFactor
+        : this.canvas.height;
 
       // draw the image
       this.ctx.drawImage(
         this.img,
         0,
         0,
-        this.img.width,
-        this.img.height,
+        this.img.naturalWidth,
+        this.img.naturalHeight,
         this.imageX,
         this.imageY,
         this.scaledImageWidth,
@@ -149,9 +173,6 @@ export default defineComponent({
       this.imageBottom = this.imageY + this.scaledImageHeight;
 
       this.drawText();
-
-      // optionally draw a box around the image (indicates "selected")
-      if (withBorders) this.drawBorders();
     },
 
     updImage(i: number) {
@@ -172,15 +193,11 @@ export default defineComponent({
       this.imageBottom = this.imageY + this.imageHeight;
 
       // Update CTX
-      this.draw(false);
-
-      // Notify component
-      // this.isImageLoaded = true;
+      this.draw();
     },
 
     drawText() {
-      const width = this.scaledImageWidth;
-      const height = this.scaledImageHeight;
+      const { width, height } = this.canvas;
       const fontSize = Math.floor(width / 10);
       const yOffset = height / 25;
 
@@ -203,26 +220,40 @@ export default defineComponent({
       this.ctx.fillText(this.bottomText, width / 2, height - yOffset);
     },
 
-    drawBorders() {
-      this.ctx.beginPath();
-      this.ctx.moveTo(this.imageX, this.imageY);
-      this.ctx.lineTo(this.imageRight, this.imageY);
-      this.ctx.lineTo(this.imageRight, this.imageBottom);
-      this.ctx.lineTo(this.imageX, this.imageBottom);
-      this.ctx.closePath();
-      this.ctx.stroke();
+    saveImage() {
+      // console.log(this.canvas.toDataURL());
+      this.canvas.toDataURL();
+      const link = document.createElement('a');
+      link.download = 'download.png';
+      link.href = this.canvas.toDataURL();
+      link.click();
+    },
+
+    copyImage() {
+      this.canvas.toBlob((blob) => {
+        const type = blob?.type;
+        if (!type) return;
+        const item = new ClipboardItem({ [type]: blob });
+        navigator.clipboard.write([item]);
+      });
     },
   },
 });
 </script>
 <style>
-.meme {
+.meme,
+.meme__generator {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: var(--gap);
 
   color: var(--color-text);
+}
+
+.meme__image {
+  width: 15rem;
+  height: 15rem;
 }
 
 .meme__canvas-wrapper {
@@ -245,8 +276,6 @@ export default defineComponent({
 }
 
 .meme__canvas {
-  /* width: 30rem;
-  height: 30rem; */
-  border: 1px solid;
+  border: 0.2px solid gray;
 }
 </style>

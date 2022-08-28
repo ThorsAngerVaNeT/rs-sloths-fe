@@ -93,6 +93,7 @@
     "description": "Choose an image, enter text and copy the result",
     "top": "Text Top",
     "bottom": "Text Bottom",
+    "margin": "Image margin",
     "color": "Text Color",
     "stroke": "Text Stroke Color"
   },
