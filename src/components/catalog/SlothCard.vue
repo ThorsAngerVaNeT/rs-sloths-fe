@@ -9,7 +9,7 @@
       </div>
       <div class="sloth-info__btn">
         <custom-btn className="btn btn-icon icon-edit" @click="$emit('editSloth', slothInfo)"></custom-btn>
-        <custom-btn className="btn btn-icon icon-del" @click="$emit('delSloth', slothInfo.id)"></custom-btn>
+        <custom-btn className="btn btn-icon icon-del" @click="delItem"></custom-btn>
       </div>
       <div class="admin-sloth-info__props">
         <p class="sloth-info__property">{{ $t('catalog.caption') }}</p>
@@ -59,23 +59,37 @@
         @click="$emit('showSloth', slothInfo)"
       ></custom-btn>
     </div>
+    <modal-window v-show="isApproveShow" @close="closeModal">
+      <template v-slot:header> {{ $t('modal.header.alert') }} </template>
+
+      <template v-slot:body> {{ $t('modal.body.del-sloth') }} </template>
+
+      <template v-slot:footer>
+        <div class="sloth-info__btn btn-horizontal">
+          <custom-btn :text="$t('btn.yes')" className="btn btn-primary" :onClick="approveDelItem"></custom-btn>
+          <custom-btn :text="$t('btn.no')" className="btn btn-primary" :onClick="closeModal"></custom-btn>
+        </div>
+      </template>
+    </modal-window>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import type { Sloth } from '@/common/types';
-import CustomBtn from '../buttons/CustomBtn.vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import ModalWindow from '@/components/modal/ModalWindow.vue';
 
 export default defineComponent({
   name: 'SlothCard',
 
   components: {
     CustomBtn,
+    ModalWindow,
   },
 
   data() {
-    return { newRating: 0 };
+    return { newRating: 0, isApproveShow: false };
   },
 
   props: {
@@ -96,6 +110,19 @@ export default defineComponent({
 
     isCatalog() {
       return this.$route.name === 'catalog';
+    },
+  },
+
+  methods: {
+    delItem() {
+      this.isApproveShow = true;
+    },
+    approveDelItem() {
+      this.$emit('delSloth', this.slothInfo.id);
+      this.closeModal();
+    },
+    closeModal() {
+      this.isApproveShow = false;
     },
   },
 });
@@ -176,6 +203,9 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   gap: var(--gap);
+}
+.btn-horizontal {
+  flex-direction: row;
 }
 .sloth-info__tags {
   position: absolute;

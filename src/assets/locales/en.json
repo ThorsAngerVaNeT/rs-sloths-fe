@@ -127,7 +127,10 @@
     },
     "body": {
       "authorization": "In order to access the RS Sloths, you need to login with your GitHub account",
-      "emptyFile": "File not selected!"
+      "del-sloth": "Do you really want to delete this wonderful sloth?",
+      "empty-file": "File not selected!",
+      "empty-caption": "Name the sloth!",
+      "empty-description": "Describe the sloth!"
     },
     "btn": {
       "close": "Close",
@@ -163,7 +166,8 @@
     "edit": "Edit",
     "save": "Save",
     "show": "Detail info",
-    "pick": "Pick"
+    "yes": "Yes",
+    "no": "No"
   },
 
   "pagination": {

@@ -29,10 +29,11 @@
 
           <div v-else class="sloth-info__props">
             <div v-show="isNew" :class="'sloth-info__sloth'">
-              <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage()" />
+              <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
+              <img class="sloth-info__img" :src="preview" alt="preview" />
             </div>
             <div v-show="!isNew" :class="'sloth-info__sloth'">
-              <img :class="'sloth-info__img'" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+              <img class="sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
             </div>
             <div class="sloth-info__property">
               <label for="caption" class="sloth-info__label">{{ $t('catalog.caption') }} </label>
@@ -78,6 +79,7 @@ import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useSlothInfo from '@/stores/sloth-info';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useAlertModal from '@/stores/alert-modal';
+import { CATALOG_SLOTH_PREVIEW } from '@/common/const';
 
 const { slothInfo, tagsStr } = storeToRefs(useSlothInfo());
 const { showAlertModal } = useAlertModal();
@@ -95,6 +97,7 @@ export default defineComponent({
       slothInfo,
       tags: tagsStr,
       newFile: {} as File,
+      preview: CATALOG_SLOTH_PREVIEW,
       isModalVisible: false,
     };
   },
@@ -140,7 +143,15 @@ export default defineComponent({
 
       if (this.modalEvents === ModalEvents.new) {
         if (!this.newFile.name) {
-          showAlertModal('modal.header.error', `${this.$t('modal.body.emptyFile')}`);
+          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-file')}`);
+          return;
+        }
+        if (!this.slothInfo.caption) {
+          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-caption')}`);
+          return;
+        }
+        if (!this.slothInfo.description) {
+          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-description')}`);
           return;
         }
 
@@ -154,16 +165,23 @@ export default defineComponent({
 
     closeModal() {
       this.$emit('closeSlothInfo');
+
+      const { uploadBtn } = this.$refs;
+      if (uploadBtn instanceof HTMLInputElement) uploadBtn.value = '';
+      this.preview = CATALOG_SLOTH_PREVIEW;
     },
 
     uploadImage() {
       const { uploadBtn } = this.$refs;
+      if (!(uploadBtn instanceof HTMLInputElement)) return;
 
-      if (uploadBtn instanceof HTMLInputElement) {
-        const { files } = uploadBtn;
+      const { files } = uploadBtn;
+      if (!files?.length) return;
 
-        if (files?.length) [this.newFile] = files;
-      }
+      [this.newFile] = files;
+
+      const src = URL.createObjectURL(this.newFile);
+      this.preview = src;
     },
   },
 });
@@ -186,6 +204,12 @@ export default defineComponent({
 }
 .property-center {
   justify-content: center;
+}
+
+.sloth-info__sloth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .sloth-info__img {
   height: 20rem;
