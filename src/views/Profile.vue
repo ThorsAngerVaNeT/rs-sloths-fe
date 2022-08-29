@@ -40,7 +40,6 @@ import useUserInfo from '@/stores/user-info';
 import useCurrUser from '@/stores/curr-user';
 import { USERS_ERROR_GET, USERS_ERROR_UPD } from '@/common/const';
 import { CustomError } from '@/services/error-handling/custom-error';
-import { Role } from '@/common/enums/user-role';
 
 const service = new UsersService();
 
@@ -66,24 +65,9 @@ export default defineComponent({
     };
   },
 
-  // props: {
-  //   id: {
-  //     type: String,
-  //     default: 'cd86722d-e3cc-405c-9a46-8da7d7d2dfcf', // todo // required: true,
-  //   },
-  // },
-
   computed: {
     ...mapState(useCurrUser, ['isAdmin', 'getUserId']),
     ...mapWritableState(useLoader, ['isLoad']),
-
-    // isAdmin(): boolean {
-    //   return this.user.role === Role.admin;
-    // },
-  },
-
-  mounted() {
-    // this.getUser();
   },
 
   methods: {

@@ -21,7 +21,6 @@ const useCurrUser = defineStore({
 
     getCurrUserInfo: (state): User => state.currUser,
 
-    // hasAuth: (state): boolean => state.currUser.hasOwnProperty('id'),
     hasAuth: (state): boolean => Object.keys(state.currUser).includes('id'),
   },
 

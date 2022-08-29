@@ -35,12 +35,10 @@ import useAlertModal from './stores/alert-modal';
 import useAuthorizationModal from './stores/authorization-modal';
 import useAudioOn from './stores/audio-on';
 import useCurrUser from './stores/curr-user';
-// import type APIError from './services/error-handling/api-error';
-
-// const { setCurrUser } = useCurrUser();
 
 export default defineComponent({
   name: 'App',
+
   components: {
     HeaderView,
     FooterView,
@@ -49,31 +47,22 @@ export default defineComponent({
     AlertModal,
     AuthorizationModal,
   },
+
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
-
     ...mapWritableState(useAlertModal, ['isAlert', 'header', 'message']),
-
     ...mapWritableState(useAuthorizationModal, ['isAuthorization']),
-
     ...mapWritableState(useAudioOn, ['isAudioOn']),
-
     ...mapWritableState(useCurrUser, ['currUser']),
   },
+
   created() {
-    // this.isLoad = true;
     this.isAlert = false;
     this.header = 'modal.header.alert';
     this.message = '';
-    // this.isAudioOn = true; // todo local storage
   },
+
   async mounted() {
-    // setTimeout(() => {
-    //   this.isLoad = false;
-    // }, 100);
-
-    // console.log('this.doesHttpOnlyCookieExist: ', this.doesHttpOnlyCookieExist('rs-sloths-cookie'))
-
     if (this.isThereCookies('rs-sloths-cookie')) {
       this.isLoad = true;
       try {
@@ -85,6 +74,7 @@ export default defineComponent({
       }
     }
   },
+
   methods: {
     closeAuthorization() {
       this.isAuthorization = false;
@@ -92,14 +82,10 @@ export default defineComponent({
     },
 
     async getCurrUser(): Promise<void> {
-      // this.isLoad = true;
-
       const res = await fetch(`http://localhost:3000/users/session`, {
         method: 'GET',
         credentials: 'include',
       });
-
-      // console.log('res: ', res)
 
       if (res.status === 401) {
         this.isAuthorization = true;
@@ -108,7 +94,6 @@ export default defineComponent({
       if (res.status === 200) {
         const data: User = await res.json();
         this.currUser = data;
-        // localStorage.setItem('rs-sloths-user', data.id);
       }
     },
 

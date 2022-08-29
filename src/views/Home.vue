@@ -40,7 +40,6 @@ export default defineComponent({
 
   computed: {
     ...mapState(useCurrUser, ['hasAuth']),
-    // ...mapActions(useAuthorizationModal, ['showAuthorizationModal']),
     ...mapWritableState(useAuthorizationModal, ['isAuthorization']),
   },
 

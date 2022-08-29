@@ -59,10 +59,6 @@ export default defineComponent({
   border-radius: 50%;
 }
 
-/* .home-category_profile > .home-category__img {
-  background: no-repeat center center / contain url('../../assets/icons/home/profile.svg') var(--color-background-soft);
-} */
-
 .home-category_suggest > .home-category__img {
   background: no-repeat center center / contain url('../../assets/icons/home/suggest.svg') var(--color-background-soft);
 }
