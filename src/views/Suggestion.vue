@@ -63,7 +63,7 @@ import useSuggestionInfo from '@/stores/suggestion-info';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ListControls from '@/components/list-controls/ListControls.vue';
 import ListPagination from '@/components/list-controls/ListPagination.vue';
-import SuggestionCard from '@/components/suggest/suggestion-card.vue';
+import SuggestionCard from '@/components/suggest/SuggestionCard.vue';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
 // import SuggestionInfo from '@/components/catalog/SuggestionInfo.vue';
 
