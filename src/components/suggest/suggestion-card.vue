@@ -2,19 +2,21 @@
   <div :class="`${getPageName}-suggest-info`">
     <div v-if="isAdmin" class="admin-suggest-info__inner">
       <div class="admin-suggest-info__suggest">
-        <img class="admin-suggest-info__img" :src="suggestInfo.image_url" alt="suggestion" />
+        <img class="admin-suggest-info__img" :src="getImage" alt="suggestion" />
       </div>
       <div class="suggest-info__btn">
         <custom-btn className="btn btn-icon icon-edit" @click="$emit('editSuggest', suggestInfo)"></custom-btn>
         <custom-btn className="btn btn-icon icon-del" @click="delItem"></custom-btn>
       </div>
       <div class="admin-suggest-info__props">
-        <p class="suggest-info__property">{{ $t('suggest.caption') }}</p>
+        <p class="suggest-info__property">{{ $t('suggest.description') }}</p>
+        <p class="suggest-info__property">{{ $t('suggest.status') }}</p>
         <p class="suggest-info__property">{{ $t('suggest.rating') }}</p>
         <p class="suggest-info__property">{{ $t('suggest.createdAt') }}</p>
       </div>
       <div class="admin-suggest-info__props">
-        <p class="suggest-info__property">{{ suggestInfo.description }}</p>
+        <p class="suggest-info__property cut-text">{{ suggestInfo.description }}</p>
+        <p class="suggest-info__property">{{ suggestInfo.status }}</p>
         <p class="suggest-info__property">{{ suggestInfo.rating }}⭐</p>
         <p class="suggest-info__property">
           {{ new Date(suggestInfo.createdAt).toLocaleDateString() }}
@@ -23,11 +25,12 @@
     </div>
     <div v-if="isSuggest" class="suggest-suggest-info__inner">
       <div class="suggest-suggest-info__suggest">
-        <img class="suggest-suggest-info__img" :src="suggestInfo.image_url" alt="suggestion" />
+        <img class="suggest-suggest-info__img" :src="getImage" alt="suggestion" />
       </div>
       <div>
         <div class="suggest-suggest-info__props">
-          <p class="suggest-info__property">{{ suggestInfo.description }}</p>
+          <p class="suggest-info__property cut-text">{{ suggestInfo.description }}</p>
+          <p class="suggest-info__property">{{ suggestInfo.status }}</p>
           <div class="suggest-info__property">
             <label for="range" class="suggest-info__label">{{ suggestInfo.rating }}⭐</label>
             <input
@@ -68,6 +71,7 @@ import { defineComponent, type PropType } from 'vue';
 import type { Suggestion } from '@/common/types';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
+import { DEFAULT_USER_AVATAR } from '@/common/const';
 
 export default defineComponent({
   name: 'SuggestionCard',
@@ -99,6 +103,10 @@ export default defineComponent({
 
     isSuggest() {
       return this.$route.name === 'suggest';
+    },
+
+    getImage() {
+      return this.suggestInfo.image_url || DEFAULT_USER_AVATAR;
     },
   },
 
@@ -184,6 +192,13 @@ export default defineComponent({
 
 .suggest-info__property {
   padding: 0.25rem;
+}
+
+.cut-text {
+  width: 28rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .suggest-info__btn {

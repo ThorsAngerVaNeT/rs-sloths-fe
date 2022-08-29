@@ -91,6 +91,10 @@
     "title": "Suggest a new Sloth",
     "search": "...description",
     "sorting": "Sort by...",
+    "description": "Description",
+    "rating": "Rating",
+    "createdAt": "Created at",
+    "status": "Status",
     "btn": {
       "new": "Your Suggestion"
     }
@@ -140,6 +144,7 @@
       "authorization": "In order to access the RS Sloths, you need to login with your GitHub account",
       "del-sloth": "Do you really want to delete this wonderful sloth?",
       "del-user": "Do you really want to delete this wonderful user?",
+      "del-suggest": "Do you really want to delete this wonderful suggestion?",
       "empty-file": "File not selected!",
       "empty-caption": "Name the sloth!",
       "empty-description": "Describe the sloth!"
