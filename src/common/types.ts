@@ -1,3 +1,4 @@
+import type { SuggestionStatus } from './enums/suggestion-status';
 import type { Role } from './enums/user-role';
 
 export type APIRequestResult<T> = {
@@ -62,9 +63,24 @@ export type SlothTags = {
   createdAt: number;
   tags: string;
 };
-
 export type SlothRating = {
   slothId: string;
+  userId: string;
+  rate: number;
+};
+
+export type Suggestions = Suggestion[];
+export type Suggestion = {
+  id: string;
+  description: string;
+  image_url: string;
+  userId: string;
+  rating: number;
+  createdAt: Date;
+  status: SuggestionStatus;
+};
+export type SuggestionsRating = {
+  suggestionId: string;
   userId: string;
   rate: number;
 };
