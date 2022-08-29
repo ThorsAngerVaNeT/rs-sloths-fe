@@ -72,7 +72,9 @@ export default defineComponent({
     //   this.isLoad = false;
     // }, 100);
 
-    if (localStorage.getItem('rs-sloths-user')) {
+    // console.log('this.doesHttpOnlyCookieExist: ', this.doesHttpOnlyCookieExist('rs-sloths-cookie'))
+
+    if (this.isThereCookies('rs-sloths-cookie')) {
       this.isLoad = true;
       try {
         await this.getCurrUser();
@@ -89,7 +91,7 @@ export default defineComponent({
       router.push('/');
     },
 
-    async getCurrUser() {
+    async getCurrUser(): Promise<void> {
       // this.isLoad = true;
 
       const res = await fetch(`http://localhost:3000/users/session`, {
@@ -106,8 +108,17 @@ export default defineComponent({
       if (res.status === 200) {
         const data: User = await res.json();
         this.currUser = data;
-        localStorage.setItem('rs-sloths-user', data.id);
+        // localStorage.setItem('rs-sloths-user', data.id);
       }
+    },
+
+    isThereCookies(name: string): boolean {
+      const date = new Date();
+      date.setTime(date.getTime() + 1000);
+      const expires = `expires=${date.toUTCString()}`;
+
+      document.cookie = `${name}=new_value;path=/;${expires}`;
+      return document.cookie.indexOf(`${name}=`) === -1;
     },
   },
 });
