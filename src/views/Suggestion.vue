@@ -34,14 +34,14 @@
           @showSuggest="showSuggestionInfoView"
         ></suggestion-card>
       </div>
-      <!-- <suggestion-info
+      <suggestion-info
         :isSuggestInfoVisible="isSuggestionInfoVisible"
         :headerText="getHeaderSuggestionInfo"
         :modalEvents="modalEvents"
         @closeSuggestInfo="closeSuggestionInfo"
         @createSuggest="createSuggestion"
         @updSuggest="updSuggestion"
-      ></suggestion-info> -->
+      ></suggestion-info>
     </div>
   </div>
 </template>
@@ -64,8 +64,8 @@ import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ListControls from '@/components/list-controls/ListControls.vue';
 import ListPagination from '@/components/list-controls/ListPagination.vue';
 import SuggestionCard from '@/components/suggest/SuggestionCard.vue';
+import SuggestionInfo from '@/components/suggest/SuggestionInfo.vue';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
-// import SuggestionInfo from '@/components/catalog/SuggestionInfo.vue';
 
 const service = new SuggestionsService();
 
@@ -82,7 +82,7 @@ export default defineComponent({
   components: {
     CustomBtn,
     SuggestionCard,
-    // SuggestionInfo,
+    SuggestionInfo,
     ListControls,
     ListPagination,
   },

@@ -91,10 +91,12 @@
     "title": "Suggest a new Sloth",
     "search": "...description",
     "sorting": "Sort by...",
+    "info": "Detail info",
     "description": "Description",
     "rating": "Rating",
     "createdAt": "Created at",
     "status": "Status",
+    "user": "User",
     "btn": {
       "new": "Your Suggestion"
     }
