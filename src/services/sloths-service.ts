@@ -73,6 +73,21 @@ export class SlothsService implements API<Sloth> {
     return tagsService.updateById(slothId, body);
   }
 
+  public static updateByIdAndTagsImage(slothId: string, sloth: Sloth, file: File) {
+    const tagsService = new APIService<SlothTags>(Endpoints.sloths);
+
+    const formData = new FormData();
+    formData.append('id', sloth.id);
+    formData.append('caption', sloth.caption);
+    formData.append('description', sloth.description);
+    formData.append('image_url', sloth.image_url);
+
+    if (sloth.tags) formData.append('tags', JSON.stringify(sloth.tags));
+
+    formData.append('file', file);
+    return tagsService.updateByIdAndImage(slothId, formData);
+  }
+
   public static updateRatingById(slothId: string, rate: number) {
     const ratingService = new APIService<SlothRating>(`${Endpoints.sloths}/${slothId}/rating`);
     const userId = '09edb293-9e8c-4768-8d32-3ee2784959fa'; // todo user id

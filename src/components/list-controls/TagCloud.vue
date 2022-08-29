@@ -1,5 +1,5 @@
 <template>
-  <div class="tags">
+  <div class="tags tags-center">
     <span class="tag" :class="{ active: isHas(item) }" v-for="item in tags" :key="item" @click="select(item)">
       {{ item }}
     </span>
@@ -66,7 +66,7 @@ export type TagCloudElement = InstanceType<typeof tagCloud>;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.5rem;
+  gap: calc(var(--gap) / 2);
 
   color: var(--color-text);
 }

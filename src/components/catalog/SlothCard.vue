@@ -1,73 +1,99 @@
 <template>
-  <div :class="`${getPageName}-sloths-info`">
-    <div :class="`${getPageName}-sloths-info__sloth`">
-      <img :class="`${getPageName}-sloths-info__img`" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
-      <div class="sloths-info__tags tags">
-        <span class="sloths-info__tag tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
-      </div>
-    </div>
-    <div>
-      <div :class="`${getPageName}-sloths-info__props`">
-        <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
-        <p v-show="!isCatalog" class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
-        <div v-show="isCatalog">
-          <label for="range" class="sloths-info__label">{{ slothsInfo.rating }}⭐</label>
-          <input
-            type="range"
-            id="range"
-            min="0"
-            max="5"
-            step="1"
-            v-model="newRating"
-            @change="$emit('editRating', slothsInfo, +newRating)"
-          />
+  <div :class="`${getPageName}-sloth-info`">
+    <div v-if="isAdmin" class="admin-sloth-info__inner">
+      <div class="admin-sloth-info__sloth">
+        <img class="admin-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <div class="sloth-info__tags tags">
+          <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
         </div>
-        <p v-show="isAdmin" class="sloths-info__property">
-          {{ new Date(slothsInfo.createdAt).toLocaleDateString() }}
+      </div>
+      <div class="sloth-info__btn">
+        <custom-btn className="btn btn-icon icon-edit" @click="$emit('editSloth', slothInfo)"></custom-btn>
+        <custom-btn className="btn btn-icon icon-del" @click="delItem"></custom-btn>
+      </div>
+      <div class="admin-sloth-info__props">
+        <p class="sloth-info__property">{{ $t('catalog.caption') }}</p>
+        <p class="sloth-info__property">{{ $t('catalog.rating') }}</p>
+        <p class="sloth-info__property">{{ $t('catalog.createdAt') }}</p>
+      </div>
+      <div class="admin-sloth-info__props">
+        <p class="sloth-info__property">{{ slothInfo.caption }}</p>
+        <p class="sloth-info__property">{{ slothInfo.rating }}⭐</p>
+        <p class="sloth-info__property">
+          {{ new Date(slothInfo.createdAt).toLocaleDateString() }}
         </p>
       </div>
-      <div class="sloths-info__btn">
-        <custom-btn
-          v-show="isAdmin"
-          :text="$t('btn.edit')"
-          className="btn btn-primary"
-          @click="$emit('editSloth', slothsInfo)"
-        ></custom-btn>
-        <custom-btn
-          v-show="isAdmin"
-          :text="$t('btn.del')"
-          className="btn btn-primary"
-          @click="$emit('delSloth', slothsInfo.id)"
-        ></custom-btn>
-        <custom-btn
-          v-show="isCatalog"
-          :text="$t('btn.show')"
-          className="btn btn-primary"
-          @click="$emit('showSloth', slothsInfo)"
-        ></custom-btn>
-      </div>
     </div>
+    <div v-if="isCatalog" class="catalog-sloth-info__inner">
+      <div class="catalog-sloth-info__sloth">
+        <img class="catalog-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <div class="sloth-info__tags tags">
+          <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
+        </div>
+      </div>
+      <custom-btn :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"></custom-btn>
+      <!-- <custom-btn
+      :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"
+      @click="$emit('checkSloth', slothInfo)"
+    ></custom-btn> -->
+      <div>
+        <div class="catalog-sloth-info__props">
+          <p class="sloth-info__property">{{ slothInfo.caption }}</p>
+          <div class="sloth-info__property">
+            <label for="range" class="sloth-info__label">{{ slothInfo.rating }}⭐</label>
+            <input
+              type="range"
+              id="range"
+              min="0"
+              max="5"
+              step="1"
+              v-model="newRating"
+              @change="$emit('editRating', slothInfo, +newRating)"
+            />
+          </div>
+        </div>
+      </div>
+      <custom-btn
+        :text="$t('btn.show')"
+        className="btn btn-primary"
+        @click="$emit('showSloth', slothInfo)"
+      ></custom-btn>
+    </div>
+    <modal-window v-show="isApproveShow" @close="closeModal">
+      <template v-slot:header> {{ $t('modal.header.alert') }} </template>
+
+      <template v-slot:body> {{ $t('modal.body.del-sloth') }} </template>
+
+      <template v-slot:footer>
+        <div class="sloth-info__btn btn-horizontal">
+          <custom-btn :text="$t('btn.yes')" className="btn btn-primary" :onClick="approveDelItem"></custom-btn>
+          <custom-btn :text="$t('btn.no')" className="btn btn-primary" :onClick="closeModal"></custom-btn>
+        </div>
+      </template>
+    </modal-window>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import type { Sloth } from '@/common/types';
-import CustomBtn from '../buttons/CustomBtn.vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import ModalWindow from '@/components/modal/ModalWindow.vue';
 
 export default defineComponent({
   name: 'SlothCard',
 
   components: {
     CustomBtn,
+    ModalWindow,
   },
 
   data() {
-    return { newRating: 0 };
+    return { newRating: 0, isApproveShow: false };
   },
 
   props: {
-    slothsInfo: {
+    slothInfo: {
       type: Object as PropType<Sloth>,
       required: true,
     },
@@ -86,68 +112,102 @@ export default defineComponent({
       return this.$route.name === 'catalog';
     },
   },
+
+  methods: {
+    delItem() {
+      this.isApproveShow = true;
+    },
+    approveDelItem() {
+      this.$emit('delSloth', this.slothInfo.id);
+      this.closeModal();
+    },
+    closeModal() {
+      this.isApproveShow = false;
+    },
+  },
 });
 </script>
 
 <style scoped>
-.catalog-sloths-info,
-.admin-sloths-info {
+.catalog-sloth-info,
+.admin-sloth-info {
   overflow: hidden;
 
-  display: flex;
-  align-items: center;
-
-  border: 1px solid var(--dark-addict);
+  background-color: var(--color-background-soft);
+  border: 1px solid gray;
 }
-.admin-sloths-info {
+.admin-sloth-info {
   padding: 0.5rem;
+  width: calc(50% - var(--gap));
 
   border-radius: 0.5rem;
 }
-.catalog-sloths-info {
+.catalog-sloth-info {
+  position: relative;
   padding: 1rem;
   width: 20rem;
 
-  flex-direction: column;
-
   border-radius: 1rem;
 }
-.admin-sloths-info:hover,
-.catalog-sloths-info:hover {
-  box-shadow: 0px 0px 0.5rem;
+.admin-sloth-info:hover,
+.catalog-sloth-info:hover {
+  box-shadow: 0px 0px 0.5rem gray;
 }
-.catalog-sloths-info__sloth {
+
+.catalog-sloth-info__inner,
+.admin-sloth-info__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+}
+.catalog-sloth-info__inner {
+  flex-direction: column;
+}
+
+.catalog-sloth-info__sloth {
   position: relative;
 
   overflow: hidden;
 }
 
-.admin-sloths-info__img {
+.admin-sloth-info__img {
   width: calc(10rem - 1rem);
+  height: calc(10rem - 1rem);
+  object-fit: contain;
 }
-.catalog-sloths-info__img {
+.catalog-sloth-info__img {
   width: calc(20rem - 2rem);
+  height: calc(20rem - 2rem);
+  object-fit: contain;
 }
 
-.admin-sloths-info__props,
-.catalog-sloths-info__props {
+.admin-sloth-info__props,
+.catalog-sloth-info__props {
   display: flex;
-  align-items: center;
-}
-.catalog-sloths-info__props {
   flex-direction: column;
 }
+.admin-sloth-info__props {
+  align-items: flex-start;
+}
+.catalog-sloth-info__props {
+  align-items: center;
+}
 
-.sloths-info__property {
+.sloth-info__property {
   padding: 0.25rem;
 }
 
-.sloths-info__btn {
+.sloth-info__btn {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: var(--gap);
 }
-.sloths-info__tags {
+.btn-horizontal {
+  flex-direction: row;
+}
+.sloth-info__tags {
   position: absolute;
   top: 0;
   left: 0;
@@ -156,19 +216,46 @@ export default defineComponent({
   transform: translateY(-500px);
   transition: transform 0.3s;
 
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  z-index: 10;
 }
-.catalog-sloths-info__sloth:hover .sloths-info__tags {
+.catalog-sloth-info__sloth:hover .sloth-info__tags {
   transform: translateY(0);
 }
-.sloths-info__tag {
-  padding: 0.2rem 0.5rem;
+.sloth-info__tag {
+  padding: 0.5rem 0.7rem;
+  cursor: default;
 
-  border: 1px solid;
-  border-radius: 0.5rem;
+  color: inherit;
+  background-color: var(--color-background);
+
+  border-radius: 1rem;
+  border: 1px solid gray;
+}
+
+.icon {
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+.icon_check-on {
+  background-image: url('@/assets/icons/btn/check-circle-fill.svg');
+}
+.icon_check-off {
+  background-image: url('@/assets/icons/btn/check-circle.svg');
+}
+
+@media (max-width: 1000px) {
+  .admin-sloth-info {
+    width: 100%;
+  }
 }
 </style>

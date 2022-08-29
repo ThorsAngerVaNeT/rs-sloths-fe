@@ -1,5 +1,5 @@
 <template>
-  <button v-if="imgPath === ''" :class="className" @click="onClick" :disabled="disabled">{{ text }}</button>
+  <button v-if="imgPath === ''" :class="getClassNameTheme" @click="onClick" :disabled="disabled">{{ text }}</button>
   <button v-else class="btn-img" :class="className" @click="onClick" :disabled="disabled">
     <img :src="imgPath" :alt="text" />
   </button>
@@ -7,6 +7,8 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
+import { mapWritableState } from 'pinia';
+import themeProp from '@/stores/theme';
 
 export default defineComponent({
   name: 'CustomBtn',
@@ -33,6 +35,16 @@ export default defineComponent({
       default: false,
     },
   },
+
+  computed: {
+    ...mapWritableState(themeProp, ['currTheme']),
+
+    getClassNameTheme() {
+      return this.className.includes('icon-')
+        ? this.className.replace('icon-', `icon-${this.currTheme}-`)
+        : this.className;
+    },
+  },
 });
 </script>
 
@@ -48,10 +60,12 @@ export default defineComponent({
 }
 
 .btn-link {
+  color: var(--color-text);
   text-decoration: underline;
 }
 
 .btn-primary {
+  border-radius: 0.3rem;
   color: var(--color-text-inverse);
   background-color: var(--color-background-inverse);
 }
@@ -112,5 +126,31 @@ export default defineComponent({
 
   background: none;
   color: inherit;
+}
+
+.btn-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+
+  background-color: var(--color-background-inverse);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.btn-icon:hover {
+  background-color: var(--color-background-inverse-soft);
+}
+.icon-light-del {
+  background-image: url('@/assets/icons/btn/trash.svg');
+}
+.icon-dark-del {
+  background-image: url('@/assets/icons/btn/trash-black.svg');
+}
+
+.icon-light-edit {
+  background-image: url('@/assets/icons/btn/pencil.svg');
+}
+.icon-dark-edit {
+  background-image: url('@/assets/icons/btn/pencil-black.svg');
 }
 </style>

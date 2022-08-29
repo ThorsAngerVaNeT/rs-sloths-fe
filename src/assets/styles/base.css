@@ -56,11 +56,9 @@ html {
 }
 
 @media (max-width: 768px) {
-  .list-aside {
-    width: 100%;
-  }
+  .list-aside,
   .list-main {
-    width: 100%;
+    width: calc(100% - var(--gap));
   }
 }
 

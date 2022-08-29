@@ -226,7 +226,9 @@ export default defineComponent({
 
   color: var(--color-text);
 }
-
+.users__aside {
+  margin: 0.5em;
+}
 .users__list {
   margin: 0.5em 0;
   display: flex;
