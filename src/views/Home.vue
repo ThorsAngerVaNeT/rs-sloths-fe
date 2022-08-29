@@ -75,6 +75,7 @@ export default defineComponent({
   justify-content: center;
   grid-template-columns: 30rem 40rem 30rem;
   margin: 0 auto;
+  padding: 2rem 0;
 }
 
 .home__menu {
