@@ -20,42 +20,45 @@
       <div class="meme__settings">
         <div class="meme__property">
           <label class="meme__label" for="top">{{ $t('create.top') }}</label>
-          <input type="text" class="meme__text" id="top" v-model="topText" @change="draw()" />
+          <input type="text" class="meme__text" id="top" v-model="topText" @input="draw()" />
         </div>
         <div class="meme__property">
           <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
-          <input type="text" class="meme__text" id="bottom" v-model="bottomText" @change="draw()" />
+          <input type="text" class="meme__text" id="bottom" v-model="bottomText" @input="draw()" />
         </div>
-      </div>
-
-      <div class="meme__canvas-wrapper">
-        <div class="meme__control-buttons">
-          <button @click="scaleUp" type="button" class="btn btn-pagination">+</button>
-          <button @click="scaleTrue" type="button" class="btn btn-pagination">=</button>
-          <button @click="scaleDown" type="button" class="btn btn-pagination">-</button>
-        </div>
-        <canvas class="meme__canvas" ref="canvas"> </canvas>
       </div>
       <div class="meme__settings">
+        <div class="meme__property">
+          <label class="meme__label" for="color">{{ $t('create.color') }}</label>
+          <input type="color" id="color" class="meme__color" v-model="color" @input="draw()" />
+        </div>
+        <div class="meme__property">
+          <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
+          <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @input="draw()" />
+        </div>
+        <div class="meme__property">
+          <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
+          <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @input="draw()" />
+        </div>
+      </div>
+      <!-- <div class="meme__settings">
         <div class="meme__property">
           <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.download') }}</button>
           <button @click="copyImage" class="btn btn-primary" type="button">{{ $t('btn.copy') }}</button>
         </div>
-      </div>
+      </div> -->
 
-      <div class="meme__settings">
-        <div class="meme__property">
-          <label class="meme__label" for="color">{{ $t('create.color') }}</label>
-          <input type="color" id="color" class="meme__color" v-model="color" @change="draw()" />
+      <div class="meme__canvas-wrapper">
+        <div class="meme__control-buttons">
+          <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.download') }}</button>
+          <div class="meme__control-buttons-scale">
+            <button @click="scaleUp" type="button" class="btn btn-pagination">+</button>
+            <button @click="scaleTrue" type="button" class="btn btn-pagination">=</button>
+            <button @click="scaleDown" type="button" class="btn btn-pagination">-</button>
+          </div>
+          <button @click="copyImage" class="btn btn-primary" type="button">{{ $t('btn.copy') }}</button>
         </div>
-        <div class="meme__property">
-          <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
-          <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @change="draw()" />
-        </div>
-        <div class="meme__property">
-          <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
-          <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @change="draw()" />
-        </div>
+        <canvas class="meme__canvas" ref="canvas"> </canvas>
       </div>
     </div>
   </div>
@@ -361,13 +364,19 @@ export default defineComponent({
 .meme__control-buttons {
   position: absolute;
   top: 0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  /* left: 50%;
+  transform: translateX(-50%); */
+  left: 0;
+  right: 0;
   z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 }
 
-.meme__control-buttons button {
-  margin: 0;
+.meme__control-buttons-scale button {
+  margin: 0 0.5rem;
   padding: 0;
   width: 3rem;
   height: 3rem;
