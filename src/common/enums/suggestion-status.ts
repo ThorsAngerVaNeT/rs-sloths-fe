@@ -1,6 +1,6 @@
 export enum SuggestionStatus {
-  PENDING,
-  ACCEPTED,
-  DECLINE,
+  pending = 'PENDING',
+  accepted = 'ACCEPTED',
+  decline = 'DECLINE',
 }
 export default SuggestionStatus;
