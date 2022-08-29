@@ -54,12 +54,15 @@
 
   "catalog": {
     "title": "Catalog",
+    "search": "...caption or description",
+    "sorting": "Sort by...",
     "info": "Detail info",
     "caption": "Caption",
     "description": "Description",
     "rating": "Rating",
     "image_url": "Image url",
     "createdAt": "Created at",
+    "tags": "Tags",
     "btn": {
       "new": "New Sloth"
     }
@@ -89,7 +92,13 @@
   },
 
   "create": {
-    "title": "Create a meme"
+    "title": "Create a meme",
+    "description": "Choose an image, enter text and copy the result",
+    "top": "Text Top",
+    "bottom": "Text Bottom",
+    "margin": "Image Margin",
+    "color": "Text Color",
+    "stroke": "Text Stroke Color"
   },
 
   "sloth": {
@@ -123,7 +132,8 @@
       "authorization": "Please login via GitHub"
     },
     "body": {
-      "authorization": "In order to access the RS Sloths, you need to login with your GitHub account"
+      "authorization": "In order to access the RS Sloths, you need to login with your GitHub account",
+      "emptyFile": "File not selected!"
     },
     "btn": {
       "close": "Close",
@@ -146,7 +156,11 @@
     "github+": "Sort by GitHub (ascending)",
     "github-": "Sort by GitHub (descending)",
     "createdAt+": "Sort by creation date (ascending)",
-    "createdAt-": "Sort by creation date (descending)"
+    "createdAt-": "Sort by creation date (descending)",
+    "caption+": "Sort by Caption (ascending)",
+    "caption-": "Sort by Caption (descending)",
+    "rating+": "Sort by Rating (ascending)",
+    "rating-": "Sort by Rating (descending)"
   },
 
   "btn": {
@@ -155,7 +169,9 @@
     "edit": "Edit",
     "save": "Save",
     "show": "Detail info",
-    "pick": "Pick"
+    "pick": "Pick",
+    "copy": "Copy",
+    "download": "Download"
   },
 
   "pagination": {

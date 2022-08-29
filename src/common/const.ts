@@ -7,6 +7,7 @@ export const BASE = 'http://localhost:3000'; // todo
 
 // custom Errors
 export const JSON_ERROR: ErrorDescription = { code: 'NOT_JSON', message: 'Response is not a JSON!' };
+export const IMAGE_ERROR: ErrorDescription = { code: 'NOT_IMAGE', message: 'File not selected!' };
 
 export const USERS_ERROR_GET_LIST: ErrorDescription = {
   code: 'USERS_GET_LIST',
@@ -46,6 +47,33 @@ export const USER_SORTING: SelectOptions[] = [
   {
     value: JSON.stringify({ github: 'asc' }),
     text: 'sorting.github+',
+  },
+  {
+    value: JSON.stringify({ createdAt: 'desc' }),
+    text: 'sorting.createdAt-',
+  },
+  {
+    value: JSON.stringify({ createdAt: 'asc' }),
+    text: 'sorting.createdAt+',
+  },
+];
+
+export const SLOTH_SORTING: SelectOptions[] = [
+  {
+    value: JSON.stringify({ caption: 'desc' }),
+    text: 'sorting.caption-',
+  },
+  {
+    value: JSON.stringify({ caption: 'asc' }),
+    text: 'sorting.caption+',
+  },
+  {
+    value: JSON.stringify({ rating: 'desc' }),
+    text: 'sorting.rating-',
+  },
+  {
+    value: JSON.stringify({ rating: 'asc' }),
+    text: 'sorting.rating+',
   },
   {
     value: JSON.stringify({ createdAt: 'desc' }),

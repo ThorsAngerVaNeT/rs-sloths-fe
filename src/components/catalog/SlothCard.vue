@@ -1,15 +1,17 @@
 <template>
   <div :class="`${getPageName}-sloths-info`">
-    <div :class="`${getPageName}-sloths-info__sloths`">
+    <div :class="`${getPageName}-sloths-info__sloth`">
       <img :class="`${getPageName}-sloths-info__img`" :src="slothsInfo.image_url" :alt="slothsInfo.caption" />
+      <div class="sloths-info__tags tags">
+        <span class="sloths-info__tag tag" v-for="tag in slothsInfo.tags" :key="tag.value">{{ tag.value }}</span>
+      </div>
     </div>
     <div>
       <div :class="`${getPageName}-sloths-info__props`">
         <p class="sloths-info__property">{{ slothsInfo.caption }}</p>
-        <p class="sloths-info__property">{{ slothsInfo.description }}</p>
-        <p class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
+        <p v-show="!isCatalog" class="sloths-info__property">{{ slothsInfo.rating }}⭐</p>
         <div v-show="isCatalog">
-          <label for="range" class="sloths-info__label">⭐</label>
+          <label for="range" class="sloths-info__label">{{ slothsInfo.rating }}⭐</label>
           <input
             type="range"
             id="range"
@@ -20,7 +22,9 @@
             @change="$emit('editRating', slothsInfo, +newRating)"
           />
         </div>
-        <p class="sloths-info__property">{{ new Date(slothsInfo.createdAt).toLocaleDateString() }}</p>
+        <p v-show="isAdmin" class="sloths-info__property">
+          {{ new Date(slothsInfo.createdAt).toLocaleDateString() }}
+        </p>
       </div>
       <div class="sloths-info__btn">
         <custom-btn
@@ -96,28 +100,33 @@ export default defineComponent({
   border: 1px solid var(--dark-addict);
 }
 .admin-sloths-info {
-  padding: 0.5em;
+  padding: 0.5rem;
 
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
 }
 .catalog-sloths-info {
-  padding: 1em;
-  width: 200px;
+  padding: 1rem;
+  width: 20rem;
 
   flex-direction: column;
 
-  border-radius: 1em;
+  border-radius: 1rem;
 }
 .admin-sloths-info:hover,
 .catalog-sloths-info:hover {
-  box-shadow: 0px 0px 5px;
+  box-shadow: 0px 0px 0.5rem;
+}
+.catalog-sloths-info__sloth {
+  position: relative;
+
+  overflow: hidden;
 }
 
 .admin-sloths-info__img {
-  width: calc(100px - 1em);
+  width: calc(10rem - 1rem);
 }
 .catalog-sloths-info__img {
-  width: calc(200px - 2em);
+  width: calc(20rem - 2rem);
 }
 
 .admin-sloths-info__props,
@@ -130,12 +139,36 @@ export default defineComponent({
 }
 
 .sloths-info__property {
-  padding: 0.25em;
+  padding: 0.25rem;
 }
 
 .sloths-info__btn {
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5rem;
+}
+.sloths-info__tags {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  transform: translateY(-500px);
+  transition: transform 0.3s;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.catalog-sloths-info__sloth:hover .sloths-info__tags {
+  transform: translateY(0);
+}
+.sloths-info__tag {
+  padding: 0.2rem 0.5rem;
+
+  border: 1px solid;
+  border-radius: 0.5rem;
 }
 </style>

@@ -18,6 +18,10 @@ const getFilter = (searchText: string, selected: string[]): string => {
 export class UsersService implements API<User> {
   private service = new APIService<User>(Endpoints.users);
 
+  public getAllList() {
+    return this.service.getAllList();
+  }
+
   public getAll(searchText = '', sorting = '', selected = [] as string[]) {
     return this.service.getAll(getFilter(searchText, selected), sorting);
   }
