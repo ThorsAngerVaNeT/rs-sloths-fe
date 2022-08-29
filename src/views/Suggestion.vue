@@ -24,7 +24,7 @@
     <div class="suggest__main list-main">
       <list-pagination :size="count" @getPage="getSuggestions"></list-pagination>
       <div class="suggest__list">
-        <!-- <suggestion-card
+        <suggestion-card
           v-for="suggest in suggestions"
           :key="suggest.id"
           :suggestInfo="suggest"
@@ -32,7 +32,7 @@
           @delSuggest="delSuggestion"
           @editSuggest="showSuggestionInfoEdit"
           @showSuggest="showSuggestionInfoView"
-        ></suggestion-card> -->
+        ></suggestion-card>
       </div>
       <!-- <suggestion-info
         :isSuggestInfoVisible="isSuggestionInfoVisible"
@@ -63,7 +63,8 @@ import useSuggestionInfo from '@/stores/suggestion-info';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ListControls from '@/components/list-controls/ListControls.vue';
 import ListPagination from '@/components/list-controls/ListPagination.vue';
-// import SuggestionCard from '@/components/catalog/SuggestionCard.vue';
+import SuggestionCard from '@/components/suggest/suggestion-card.vue';
+import { SuggestionStatus } from '@/common/enums/suggestion-status';
 // import SuggestionInfo from '@/components/catalog/SuggestionInfo.vue';
 
 const service = new SuggestionsService();
@@ -80,7 +81,7 @@ export default defineComponent({
 
   components: {
     CustomBtn,
-    // SuggestionCard,
+    SuggestionCard,
     // SuggestionInfo,
     ListControls,
     ListPagination,
@@ -113,7 +114,20 @@ export default defineComponent({
   },
 
   mounted() {
-    this.getSuggestions();
+    // this.getSuggestions();
+    this.suggestions = [
+      {
+        id: 'cd86722d-e3cc-405c-9a46-8da7d7d2dfcf',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        image_url: 'https://avatars.githubusercontent.com/u/101447709?v=4',
+        userId: 'cd86722d-e3cc-405c-9a46-8da7d7d2dfcf',
+        rating: 3,
+        createdAt: new Date('2022-08-29T17:32:47.207Z'),
+        status: SuggestionStatus.pending,
+      },
+    ];
+    this.count = 1;
   },
 
   methods: {
@@ -227,3 +241,30 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.suggest {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  color: var(--color-text);
+}
+.suggest__aside {
+  margin: 0.5em;
+}
+
+.suggest__list {
+  margin: 0.5em 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+@media (max-width: 768px) {
+  .suggest {
+    flex-direction: column;
+  }
+}
+</style>
