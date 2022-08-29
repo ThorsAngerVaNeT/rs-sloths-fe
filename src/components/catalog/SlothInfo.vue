@@ -18,7 +18,7 @@
               </div>
             </div>
             <div class="sloth-info__property property-center">
-              <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }} </label>
+              <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }}</label>
               <p id="rating" class="sloth-info__text">{{ slothInfo.rating }}⭐</p>
             </div>
             <div class="sloth-info__property property-center">
@@ -29,6 +29,7 @@
 
           <div v-else class="sloth-info__props">
             <div :class="'sloth-info__sloth'">
+              <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
               <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
               <img v-show="isNew" class="sloth-info__img" :src="preview" alt="preview" />
               <img v-show="!isNew" class="sloth-info__img" :src="getImage" :alt="slothInfo.caption" />
@@ -204,6 +205,8 @@ export default defineComponent({
   align-items: center;
   gap: var(--gap);
 }
+
+.sloth-info__sloth,
 .sloth-info__property {
   width: 100%;
   display: flex;
@@ -219,6 +222,9 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+input[type='file'] {
+  display: none;
 }
 .sloth-info__img {
   height: 20rem;
