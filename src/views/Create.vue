@@ -149,20 +149,18 @@ export default defineComponent({
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       // some maths
-      // const scaleFactor = 1 - this.scaleSteps * 0.1;
-      const scaleFactor = this.scaleSteps;
-      this.scaledImageWidth = this.img.naturalWidth * scaleFactor;
+      this.scaledImageWidth = this.img.naturalWidth * this.scaleSteps;
       this.scaledImageHeight = this.scaledImageWidth * (this.img.naturalHeight / this.img.naturalWidth);
 
-      this.imageX = this.margin * scaleFactor;
-      this.imageY = this.margin * scaleFactor;
+      this.imageX = this.margin * this.scaleSteps;
+      this.imageY = this.margin * this.scaleSteps;
 
       // canvas size
       this.canvas.width = this.scaledImageWidth
-        ? this.scaledImageWidth + this.margin * 2 * scaleFactor
+        ? this.scaledImageWidth + this.margin * 2 * this.scaleSteps
         : this.canvas.width;
       this.canvas.height = this.scaledImageHeight
-        ? this.scaledImageHeight + this.margin * 2 * scaleFactor
+        ? this.scaledImageHeight + this.margin * 2 * this.scaleSteps
         : this.canvas.height;
 
       // draw the image
