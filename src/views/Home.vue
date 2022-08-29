@@ -43,10 +43,6 @@ export default defineComponent({
     ...mapWritableState(useAuthorizationModal, ['isAuthorization']),
   },
 
-  mounted() {
-    console.log('hasAuth: ', this.hasAuth);
-  },
-
   methods: {
     handleCategoryClick(category: string): void {
       if (category === 'sloth') {
@@ -57,7 +53,6 @@ export default defineComponent({
     },
 
     handleAuth() {
-      console.log('Go to auth');
       this.isAuthorization = true;
     },
   },

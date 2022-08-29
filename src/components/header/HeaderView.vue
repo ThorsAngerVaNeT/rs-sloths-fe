@@ -28,10 +28,6 @@ export default defineComponent({
     ...mapState(useCurrUser, ['isAdmin']),
   },
 
-  mounted() {
-    console.log('isAdmin: ', this.isAdmin);
-  },
-
   methods: {
     pushToAdmin() {
       this.$router.push({ name: 'admin' });
