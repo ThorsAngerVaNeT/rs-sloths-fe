@@ -35,6 +35,7 @@ import useAlertModal from './stores/alert-modal';
 import useAuthorizationModal from './stores/authorization-modal';
 import useAudioOn from './stores/audio-on';
 import useCurrUser from './stores/curr-user';
+// import type APIError from './services/error-handling/api-error';
 
 // const { setCurrUser } = useCurrUser();
 
@@ -70,7 +71,17 @@ export default defineComponent({
     // setTimeout(() => {
     //   this.isLoad = false;
     // }, 100);
-    await this.getCurrUser();
+
+    if (localStorage.getItem('rs-sloths-user')) {
+      this.isLoad = true;
+      try {
+        await this.getCurrUser();
+      } catch (error: string | unknown) {
+        throw new Error(error as string);
+      } finally {
+        this.isLoad = false;
+      }
+    }
   },
   methods: {
     closeAuthorization() {
@@ -79,20 +90,23 @@ export default defineComponent({
     },
 
     async getCurrUser() {
-      this.isLoad = true;
-      try {
-        const res = await fetch(`http://localhost:3000/users/session`, {
-          method: 'GET',
-          credentials: 'include',
-        });
-        if (!res.ok) console.log('res niok');
+      // this.isLoad = true;
+
+      const res = await fetch(`http://localhost:3000/users/session`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      // console.log('res: ', res)
+
+      if (res.status === 401) {
+        this.isAuthorization = true;
+      }
+
+      if (res.status === 200) {
         const data: User = await res.json();
-        console.log('res.data: ', data);
         this.currUser = data;
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.isLoad = false;
+        localStorage.setItem('rs-sloths-user', data.id);
       }
     },
   },
