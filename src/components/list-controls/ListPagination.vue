@@ -137,6 +137,7 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
 }
 
 .pagination__select {

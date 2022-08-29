@@ -7,7 +7,6 @@ export const BASE = 'http://localhost:3000'; // todo
 
 // custom Errors
 export const JSON_ERROR: ErrorDescription = { code: 'NOT_JSON', message: 'Response is not a JSON!' };
-export const IMAGE_ERROR: ErrorDescription = { code: 'NOT_IMAGE', message: 'File not selected!' };
 
 export const USERS_ERROR_GET_LIST: ErrorDescription = {
   code: 'USERS_GET_LIST',
@@ -111,3 +110,5 @@ export const MEMORY_LEVELS = [
 export const MEMORY_GAME_TIMEOUT = 1000;
 export const MEMORY_GAME_COVER = './card-cover.png';
 export const MEMORY_GAME_WINNER = './winner1.png';
+
+export const CATALOG_SLOTH_PREVIEW = './preview.svg';

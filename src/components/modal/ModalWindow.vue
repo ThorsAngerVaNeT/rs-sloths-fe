@@ -64,8 +64,8 @@ export default defineComponent({
   align-items: center;
 
   overflow-x: auto;
-
-  background-color: var(--light-addict);
+  color: var(--color-text);
+  background-color: var(--color-background-soft);
   border-radius: 1em;
   box-shadow: 0px 0px 5px;
 }

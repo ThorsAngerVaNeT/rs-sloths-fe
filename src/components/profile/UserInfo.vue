@@ -78,35 +78,38 @@ export default defineComponent({
 
 <style scoped>
 .user-info {
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--gap);
   width: 100%;
-  border: 0.1rem solid;
+  color: var(--color-text);
+  background-color: var(--color-background-soft);
+  border: 0.1rem solid gray;
   border-radius: 0.5rem;
 }
 
 .user-info__avatar {
   display: inline-block;
-  width: 20rem;
-  height: 20rem;
+  width: 25rem;
+  height: 25rem;
   overflow: hidden;
   border-radius: 50%;
 }
 .user-info__img {
-  height: 20rem;
+  height: 25rem;
 }
 .user-info__property,
 .user-info__select {
   margin: 0.5rem 0;
   padding: 0.5rem 0;
-  width: 80%;
+  width: 90%;
   text-align: center;
+  color: inherit;
+  background-color: var(--color-background);
   border: none;
   border-bottom: 0.2rem solid gray;
-  background: none;
 }
 
 .user-info__property,

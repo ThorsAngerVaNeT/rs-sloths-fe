@@ -41,8 +41,8 @@ export class APIService<T> implements API<T> {
 
   public getPage(page: number, limit: number, filter: string, order: string): Promise<APIRequestResult<GetList<T>>> {
     const param = makeParamString({
-      _page: page.toString(),
-      _limit: limit.toString(),
+      page: page.toString(),
+      limit: limit.toString(),
       filter,
       order,
     });
@@ -102,6 +102,17 @@ export class APIService<T> implements API<T> {
       credentials,
       body: JSON.stringify(body),
       headers,
+    };
+
+    return apiRequest(url, config);
+  }
+
+  public updateByIdAndImage(id: string, body: FormData): Promise<APIRequestResult<Partial<T>>> {
+    const url = `${this.endpoint}/${id}`;
+    const config: RequestInit = {
+      method: FetchMethod.put,
+      credentials,
+      body,
     };
 
     return apiRequest(url, config);
