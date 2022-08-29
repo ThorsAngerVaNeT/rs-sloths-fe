@@ -15,7 +15,7 @@ const getFilter = (searchText: string, selected: string[]): string => {
   return getANDFields([search, select]);
 };
 
-export class UsersService implements API<Suggestion> {
+export class SuggestionsService implements API<Suggestion> {
   private service = new APIService<Suggestion>(Endpoints.suggestions);
 
   public getAllList() {
@@ -68,4 +68,4 @@ export class UsersService implements API<Suggestion> {
   }
 }
 
-export default UsersService;
+export default SuggestionsService;

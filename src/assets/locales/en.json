@@ -88,7 +88,12 @@
   },
 
   "suggest": {
-    "title": "Suggest a new Sloth"
+    "title": "Suggest a new Sloth",
+    "search": "...description",
+    "sorting": "Sort by...",
+    "btn": {
+      "new": "Your Suggestion"
+    }
   },
 
   "create": {
@@ -164,7 +169,9 @@
     "caption+": "Sort by Caption (ascending)",
     "caption-": "Sort by Caption (descending)",
     "rating+": "Sort by Rating (ascending)",
-    "rating-": "Sort by Rating (descending)"
+    "rating-": "Sort by Rating (descending)",
+    "status+": "Sort by Status (ascending)",
+    "status-": "Sort by Status (descending)"
   },
 
   "btn": {
