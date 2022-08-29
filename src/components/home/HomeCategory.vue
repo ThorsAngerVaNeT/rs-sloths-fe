@@ -4,7 +4,7 @@
       <template v-if="category === 'profile'">
         <img
           class="home-category__photo"
-          :src="hasAuth ? getUserAvatar : '/img/profile/default.svg'"
+          :src="hasAuth ? getUserAvatar : imageSrc"
           :alt="hasAuth ? 'Profile' : 'Authorization'"
         />
       </template>
@@ -18,8 +18,16 @@ import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
 import useCurrUser from '@/stores/curr-user';
 
+import { DEFAULT_USER_AVATAR } from '@/common/const';
+
 export default defineComponent({
   name: 'HomeCategory',
+
+  data() {
+    return {
+      imageSrc: DEFAULT_USER_AVATAR,
+    };
+  },
 
   props: {
     category: {
