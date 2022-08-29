@@ -3,9 +3,9 @@
 
   <main class="main">
     <router-view v-slot="{ Component }">
-      <transition name="fade">
+      <Transition name="fade" mode="out-in">
         <component :is="Component" />
-      </transition>
+      </Transition>
     </router-view>
   </main>
 
