@@ -18,42 +18,44 @@
     </div>
     <div class="meme__generator list-main">
       <div class="meme__settings">
-        <div class="meme__settings-col">
-          <div class="meme__property">
-            <label class="meme__label" for="top">{{ $t('create.top') }}</label>
-            <input type="text" class="meme__text" id="top" v-model="topText" @change="draw()" />
-          </div>
-          <div class="meme__property">
-            <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
-            <input type="text" class="meme__text" id="bottom" v-model="bottomText" @change="draw()" />
-          </div>
-          <div class="meme__property">
-            <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.download') }}</button>
-            <button @click="copyImage" class="btn btn-primary" type="button">{{ $t('btn.copy') }}</button>
-          </div>
+        <div class="meme__property">
+          <label class="meme__label" for="top">{{ $t('create.top') }}</label>
+          <input type="text" class="meme__text" id="top" v-model="topText" @change="draw()" />
         </div>
-        <div class="meme__settings-col">
-          <div class="meme__property">
-            <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
-            <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @change="draw()" />
-          </div>
-          <div class="meme__property">
-            <label class="meme__label" for="color">{{ $t('create.color') }}</label>
-            <input type="color" id="color" class="meme__color" v-model="color" @change="draw()" />
-          </div>
-          <div class="meme__property">
-            <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
-            <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @change="draw()" />
-          </div>
+        <div class="meme__property">
+          <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
+          <input type="text" class="meme__text" id="bottom" v-model="bottomText" @change="draw()" />
         </div>
       </div>
 
       <div class="meme__canvas-wrapper">
         <div class="meme__control-buttons">
           <button @click="scaleUp" type="button" class="btn btn-pagination">+</button>
+          <button @click="scaleTrue" type="button" class="btn btn-pagination">=</button>
           <button @click="scaleDown" type="button" class="btn btn-pagination">-</button>
         </div>
         <canvas class="meme__canvas" ref="canvas"> </canvas>
+      </div>
+      <div class="meme__settings">
+        <div class="meme__property">
+          <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.download') }}</button>
+          <button @click="copyImage" class="btn btn-primary" type="button">{{ $t('btn.copy') }}</button>
+        </div>
+      </div>
+
+      <div class="meme__settings">
+        <div class="meme__property">
+          <label class="meme__label" for="color">{{ $t('create.color') }}</label>
+          <input type="color" id="color" class="meme__color" v-model="color" @change="draw()" />
+        </div>
+        <div class="meme__property">
+          <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
+          <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @change="draw()" />
+        </div>
+        <div class="meme__property">
+          <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
+          <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @change="draw()" />
+        </div>
       </div>
     </div>
   </div>
@@ -71,7 +73,7 @@ export default defineComponent({
       index: 0,
       topText: '',
       bottomText: '',
-      scaleSteps: 0,
+      scaleSteps: 1,
       canvas: {} as HTMLCanvasElement,
       ctx: {} as CanvasRenderingContext2D,
       img: {} as HTMLImageElement,
@@ -128,12 +130,17 @@ export default defineComponent({
     },
 
     scaleUp() {
-      this.scaleSteps -= 1;
+      this.scaleSteps = Math.min(2, this.scaleSteps + 0.1);
+      this.draw();
+    },
+
+    scaleTrue() {
+      this.scaleSteps = 1;
       this.draw();
     },
 
     scaleDown() {
-      this.scaleSteps += 1;
+      this.scaleSteps = Math.max(0.1, this.scaleSteps - 0.1);
       this.draw();
     },
 
@@ -142,7 +149,8 @@ export default defineComponent({
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       // some maths
-      const scaleFactor = 1 - this.scaleSteps * 0.1;
+      // const scaleFactor = 1 - this.scaleSteps * 0.1;
+      const scaleFactor = this.scaleSteps;
       this.scaledImageWidth = this.img.naturalWidth * scaleFactor;
       this.scaledImageHeight = this.scaledImageWidth * (this.img.naturalHeight / this.img.naturalWidth);
 
@@ -305,21 +313,18 @@ export default defineComponent({
   height: 14rem;
 }
 
-.meme__property,
 .meme__settings {
-  /* margin: 0.5rem; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.meme__property {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--gap);
-}
-
-.meme__settings-col {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
   justify-content: space-between;
   gap: var(--gap);
 }
@@ -328,6 +333,7 @@ export default defineComponent({
 .meme__number {
   margin: 0.5rem 0;
   padding: 0.5rem 0;
+  /* width: 5rem; */
 
   border: none;
   border-bottom: 0.2rem solid gray;
