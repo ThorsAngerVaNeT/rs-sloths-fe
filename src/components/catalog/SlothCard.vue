@@ -61,14 +61,16 @@
     </div>
 
     <div v-else class="download-sloth-info__inner">
+      <custom-btn
+        :className="slothInfo.checked ? 'download-icon icon_check-on' : 'download-icon icon_check-off'"
+        @click="$emit('checkSloth', slothInfo)"
+      ></custom-btn>
       <div class="download-sloth-info__sloth">
         <img class="download-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
       </div>
-      <custom-btn
-        :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"
-        @click="$emit('checkSloth', slothInfo)"
-      ></custom-btn>
+      <p class="sloth-info__property">{{ slothInfo.caption }}</p>
     </div>
+
     <modal-window v-show="isApproveShow" @close="closeModal">
       <template v-slot:header> {{ $t('modal.header.alert') }} </template>
 
@@ -170,7 +172,8 @@ export default defineComponent({
 }
 
 .catalog-sloth-info__inner,
-.admin-sloth-info__inner {
+.admin-sloth-info__inner,
+.download-sloth-info__inner {
   display: flex;
   align-items: center;
   gap: var(--gap);
@@ -261,6 +264,19 @@ export default defineComponent({
   background-size: contain;
   background-position: center center;
 }
+.download-icon {
+  /* position: absolute;
+  bottom: 0rem;
+  right: 0rem; */
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
 .icon_check-on {
   background-image: url('@/assets/icons/btn/check-circle-fill.svg');
 }
@@ -269,14 +285,13 @@ export default defineComponent({
 }
 
 .download-sloth-info {
+  padding: 0.5rem 1rem;
   position: relative;
-  width: 10rem;
-  height: 10rem;
+  height: 6rem;
 }
-
 .download-sloth-info__img {
-  width: 10rem;
-  height: 10rem;
+  width: 6rem;
+  height: 6rem;
 }
 
 @media (max-width: 1000px) {

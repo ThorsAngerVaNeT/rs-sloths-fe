@@ -52,10 +52,9 @@
       ></sloth-info>
     </div>
     <modal-window v-show="isDownloadShow" @close="closeModal">
-      <template v-slot:header> {{ $t('modal.header.alert') }} </template>
+      <template v-slot:header> {{ $t('modal.body.download') }} </template>
 
       <template v-slot:body>
-        {{ $t('modal.body.download') }}
         <div class="catalog__download">
           <sloth-card
             v-for="sloth in checked"
@@ -303,7 +302,8 @@ export default defineComponent({
     },
 
     approveDownload() {
-      // console.log(this.checked);
+      const forDownload = this.sloths.filter((el) => el.checked);
+      console.log(forDownload);
       //  todo
       this.checked = [] as Sloths;
       this.closeModal();
@@ -338,9 +338,12 @@ export default defineComponent({
 
 .catalog__download {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--gap);
+
+  max-height: 50rem;
+  overflow: scroll;
 }
 
 .catalog__btn {
