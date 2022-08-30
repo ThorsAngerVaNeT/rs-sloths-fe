@@ -110,8 +110,8 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    this.getUsers();
+  async mounted() {
+    await this.getUsers();
   },
 
   methods: {
@@ -130,6 +130,7 @@ export default defineComponent({
 
         this.users = res.data.items;
         this.count = res.data.count;
+        console.log('this.users: ', this.users);
       } catch (error) {
         errorHandler(error);
       } finally {

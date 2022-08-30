@@ -4,7 +4,7 @@
       <template v-slot:header> {{ getHeader }} </template>
 
       <template v-slot:body>
-        <user-info @updUser="saveUser"></user-info>
+        <user-info :adminPanel="true" @updUser="saveUser"></user-info>
       </template>
     </modal-window>
   </div>

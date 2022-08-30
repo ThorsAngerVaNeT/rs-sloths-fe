@@ -1,7 +1,7 @@
 <template>
   <div class="user-info">
     <div class="user-info__avatar">
-      <img class="user-info__img" :src="currUser['avatar_url']" :alt="$t('profile.avatar')" />
+      <img class="user-info__img" :src="(adminPanel ? userInfo : currUser)['avatar_url']" :alt="$t('profile.avatar')" />
     </div>
     <input
       type="text"
@@ -9,7 +9,7 @@
       autocomplete="off"
       :placeholder="$t('profile.name')"
       :title="$t('profile.name')"
-      v-model="currUser.name"
+      v-model="(adminPanel ? userInfo : currUser).name"
     />
     <input
       type="text"
@@ -17,14 +17,14 @@
       autocomplete="off"
       :placeholder="$t('profile.github')"
       :title="$t('profile.github')"
-      v-model="currUser.github"
+      v-model="(adminPanel ? userInfo : currUser).github"
     />
     <select
       v-show="isAdmin"
       name="select"
       class="user-info__select select-element"
       :title="$t('profile.role')"
-      v-model="currUser.role"
+      v-model="(adminPanel ? userInfo : currUser).role"
     >
       <option :value="admin">{{ admin }}</option>
       <option :value="user">{{ user }}</option>
@@ -59,6 +59,13 @@ export default defineComponent({
       admin: Role.admin,
       user: Role.user,
     };
+  },
+
+  props: {
+    adminPanel: {
+      type: Boolean,
+      required: true,
+    },
   },
 
   computed: {

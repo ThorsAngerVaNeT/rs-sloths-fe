@@ -2,7 +2,7 @@
   <div class="profile">
     <h2 class="profile__title">{{ $t('profile.title') }}</h2>
     <aside class="profile__aside">
-      <user-info @updUser="updUser"></user-info>
+      <user-info :adminPanel="false" @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
       <router-link v-show="isAdmin" to="/admin">
         <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
