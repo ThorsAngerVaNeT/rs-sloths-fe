@@ -137,6 +137,10 @@ export default defineComponent({
   color: inherit;
 }
 
+.btn__text {
+  color: var(--color-text-inverse);
+}
+
 .btn-icon {
   width: 3rem;
   height: 3rem;
