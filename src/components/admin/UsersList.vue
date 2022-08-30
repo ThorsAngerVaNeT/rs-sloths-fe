@@ -130,7 +130,6 @@ export default defineComponent({
 
         this.users = res.data.items;
         this.count = res.data.count;
-        console.log('this.users: ', this.users);
       } catch (error) {
         errorHandler(error);
       } finally {
