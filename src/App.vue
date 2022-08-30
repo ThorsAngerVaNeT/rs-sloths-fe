@@ -22,6 +22,7 @@
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 import type { User } from '@/common/types';
+import { BASE } from '@/common/const';
 import router from './router';
 import HeaderView from './components/header/HeaderView.vue';
 import FooterView from './components/footer/FooterView.vue';
@@ -82,7 +83,7 @@ export default defineComponent({
     },
 
     async getCurrUser(): Promise<void> {
-      const res = await fetch(`http://localhost:3000/users/session`, {
+      const res = await fetch(`${BASE}/users/session`, {
         method: 'GET',
         credentials: 'include',
       });
