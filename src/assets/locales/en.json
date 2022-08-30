@@ -137,7 +137,8 @@
       "del-user": "Do you really want to delete this wonderful user?",
       "empty-file": "File not selected!",
       "empty-caption": "Name the sloth!",
-      "empty-description": "Describe the sloth!"
+      "empty-description": "Describe the sloth!",
+      "download": "Download selected files?"
     },
     "btn": {
       "close": "Close",

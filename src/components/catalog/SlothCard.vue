@@ -24,18 +24,18 @@
         </p>
       </div>
     </div>
-    <div v-if="isCatalog" class="catalog-sloth-info__inner">
+
+    <div v-else-if="isCatalog && !isDownload" class="catalog-sloth-info__inner">
       <div class="catalog-sloth-info__sloth">
         <img class="catalog-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
         <div class="sloth-info__tags tags">
           <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
         </div>
       </div>
-      <custom-btn :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"></custom-btn>
-      <!-- <custom-btn
-      :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"
-      @click="$emit('checkSloth', slothInfo)"
-    ></custom-btn> -->
+      <custom-btn
+        :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"
+        @click="$emit('checkSloth', slothInfo)"
+      ></custom-btn>
       <div>
         <div class="catalog-sloth-info__props">
           <p class="sloth-info__property">{{ slothInfo.caption }}</p>
@@ -57,6 +57,16 @@
         :text="$t('btn.show')"
         className="btn btn-primary"
         @click="$emit('showSloth', slothInfo)"
+      ></custom-btn>
+    </div>
+
+    <div v-else class="download-sloth-info__inner">
+      <div class="download-sloth-info__sloth">
+        <img class="download-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+      </div>
+      <custom-btn
+        :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"
+        @click="$emit('checkSloth', slothInfo)"
       ></custom-btn>
     </div>
     <modal-window v-show="isApproveShow" @close="closeModal">
@@ -97,18 +107,23 @@ export default defineComponent({
       type: Object as PropType<Sloth>,
       required: true,
     },
+    isDownload: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
-    getPageName() {
+    getPageName(): string {
+      if (this.isDownload) return 'download';
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
     },
 
-    isAdmin() {
+    isAdmin(): boolean {
       return this.$route.name === 'admin';
     },
 
-    isCatalog() {
+    isCatalog(): boolean {
       return this.$route.name === 'catalog';
     },
   },
@@ -235,7 +250,7 @@ export default defineComponent({
 
 .icon {
   position: absolute;
-  top: 0rem;
+  bottom: 0rem;
   right: 0rem;
   width: 3rem;
   height: 3rem;
@@ -251,6 +266,17 @@ export default defineComponent({
 }
 .icon_check-off {
   background-image: url('@/assets/icons/btn/check-circle.svg');
+}
+
+.download-sloth-info {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+}
+
+.download-sloth-info__img {
+  width: 10rem;
+  height: 10rem;
 }
 
 @media (max-width: 1000px) {
