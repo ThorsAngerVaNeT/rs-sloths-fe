@@ -38,7 +38,7 @@ import SuggestInfo from '@/components/profile/SuggestInfo.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useUserInfo from '@/stores/user-info';
 import useCurrUser from '@/stores/curr-user';
-import { USERS_ERROR_GET, USERS_ERROR_UPD } from '@/common/const';
+import { USERS_ERROR_GET, USERS_ERROR_UPD, BASE } from '@/common/const';
 import { CustomError } from '@/services/error-handling/custom-error';
 
 const service = new UsersService();
@@ -104,7 +104,7 @@ export default defineComponent({
 
     async logOut() {
       try {
-        await fetch(`http://localhost:3000/auth/github/logout`, {
+        await fetch(`${BASE}/auth/github/logout`, {
           method: 'GET',
           credentials: 'include',
           mode: 'no-cors',
