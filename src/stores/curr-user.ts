@@ -6,7 +6,7 @@ const newUser = {} as User;
 newUser.role = Role.user;
 
 const useCurrUser = defineStore({
-  id: 'userInfo',
+  id: 'currUser',
 
   state: () => ({
     currUser: newUser,
