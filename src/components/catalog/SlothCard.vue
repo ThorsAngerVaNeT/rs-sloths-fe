@@ -251,10 +251,8 @@ export default defineComponent({
   border: 1px solid gray;
 }
 
-.icon {
-  position: absolute;
-  bottom: 0rem;
-  right: 0rem;
+.icon,
+.download-icon {
   width: 3rem;
   height: 3rem;
   cursor: pointer;
@@ -264,18 +262,10 @@ export default defineComponent({
   background-size: contain;
   background-position: center center;
 }
-.download-icon {
-  /* position: absolute;
+.icon {
+  position: absolute;
   bottom: 0rem;
-  right: 0rem; */
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
+  right: 0rem;
 }
 .icon_check-on {
   background-image: url('@/assets/icons/btn/check-circle-fill.svg');
@@ -285,7 +275,6 @@ export default defineComponent({
 }
 
 .download-sloth-info {
-  padding: 0.5rem 1rem;
   position: relative;
   height: 6rem;
 }
