@@ -13,7 +13,7 @@
 
         <template v-slot:footer>
           <div class="btn btn-primary">
-            <a :href="url">{{ $t('modal.btn.authorization') }}</a>
+            <a class="btn__text" :href="url">{{ $t('modal.btn.authorization') }}</a>
           </div>
         </template>
       </modal-window>

@@ -88,7 +88,18 @@
   },
 
   "suggest": {
-    "title": "Suggest a new Sloth"
+    "title": "Suggest a new Sloth",
+    "search": "...description",
+    "sorting": "Sort by...",
+    "info": "Detail info",
+    "description": "Description",
+    "rating": "Rating",
+    "createdAt": "Created at",
+    "status": "Status",
+    "user": "User",
+    "btn": {
+      "new": "Your Suggestion"
+    }
   },
 
   "create": {
@@ -135,6 +146,7 @@
       "authorization": "In order to access the RS Sloths, you need to login with your GitHub account",
       "del-sloth": "Do you really want to delete this wonderful sloth?",
       "del-user": "Do you really want to delete this wonderful user?",
+      "del-suggest": "Do you really want to delete this wonderful suggestion?",
       "empty-file": "File not selected!",
       "empty-caption": "Name the sloth!",
       "empty-description": "Describe the sloth!"
@@ -164,7 +176,9 @@
     "caption+": "Sort by Caption (ascending)",
     "caption-": "Sort by Caption (descending)",
     "rating+": "Sort by Rating (ascending)",
-    "rating-": "Sort by Rating (descending)"
+    "rating-": "Sort by Rating (descending)",
+    "status+": "Sort by Status (ascending)",
+    "status-": "Sort by Status (descending)"
   },
 
   "btn": {
@@ -178,7 +192,10 @@
     "no": "No",
     "pick": "Pick",
     "copy": "Copy",
-    "download": "Download"
+    "download": "Download",
+    "trueSize": "True Size",
+    "scaleUp": "Scale Up",
+    "scaleDown": "Scale Down"
   },
 
   "pagination": {

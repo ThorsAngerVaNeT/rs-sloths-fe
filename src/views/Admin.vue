@@ -1,14 +1,16 @@
 <template>
   <div class="admin">
-    <h3>{{ $t('admin.title') }}</h3>
     <div class="admin__aside">
-      <div
-        v-for="(page, index) in pages"
-        :key="index"
-        :class="['btn', { 'btn-primary': currentPage === index }, { 'btn-link': currentPage !== index }]"
-        @click="currentPage = index"
-      >
-        {{ $t(`admin.btn.${page}`) }}
+      <h3>{{ $t('admin.title') }}</h3>
+      <div class="admin__nav">
+        <div
+          v-for="(page, index) in pages"
+          :key="index"
+          :class="['btn', { 'btn-primary': currentPage === index }, { 'btn-link': currentPage !== index }]"
+          @click="currentPage = index"
+        >
+          {{ $t(`admin.btn.${page}`) }}
+        </div>
       </div>
     </div>
     <div class="admin__main">
@@ -22,10 +24,10 @@ import { defineComponent } from 'vue';
 
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import UsersList from '@/components/admin/UsersList.vue';
-import SuggestInfo from '@/components/profile/SuggestInfo.vue';
 import GuessInfo from '@/components/profile/GuessInfo.vue';
 import MemoryInfo from '@/components/profile/MemoryInfo.vue';
 import CatalogView from './Catalog.vue';
+import SuggestionView from './Suggestion.vue';
 
 export default defineComponent({
   name: 'AdminView',
@@ -34,7 +36,7 @@ export default defineComponent({
     CustomBtn,
     UsersList,
     CatalogView,
-    SuggestInfo,
+    SuggestionView,
     GuessInfo,
     MemoryInfo,
   },
@@ -43,7 +45,7 @@ export default defineComponent({
     return {
       currentPage: 0,
       pages: ['users', 'sloths', 'suggest', 'guess', 'memory'],
-      components: ['UsersList', 'CatalogView', 'SuggestInfo', 'GuessInfo', 'MemoryInfo'],
+      components: ['UsersList', 'CatalogView', 'SuggestionView', 'GuessInfo', 'MemoryInfo'],
     };
   },
 });
@@ -54,10 +56,13 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  color: var(--color-text);
 }
 .admin__aside {
-  padding: 1rem;
-
+  padding: 1rem 2rem;
+}
+.admin__nav {
   display: flex;
   flex-direction: row;
 }
