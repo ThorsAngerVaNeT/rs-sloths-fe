@@ -6,6 +6,9 @@
       <template v-slot:body>
         <div>
           <div v-if="isView" class="suggest-info__props">
+            <div class="suggest-info__sloth">
+              <img class="suggest-info__img" :src="getImage" alt="getHeader" />
+            </div>
             <div class="suggest-info__property property-center">
               <p class="suggest-info__text">{{ suggestInfo.description }}</p>
             </div>
@@ -25,20 +28,24 @@
           </div>
 
           <div v-else class="suggest-info__props">
-            <div :class="'suggest-info__suggest'">
+            <div v-show="isNew" class="suggest-info__suggest">
               <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
               <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
               <img v-show="isNew" class="suggest-info__img" :src="preview" alt="preview" />
-              <img v-show="!isNew" class="suggest-info__img" :src="getImage" alt="suggestion" />
+            </div>
+            <div v-show="!isNew" :class="'suggest-info__sloth'">
+              <img class="suggest-info__img" :src="getImage" alt="getHeader" />
             </div>
             <div class="suggest-info__property">
               <label for="description" class="suggest-info__label">{{ $t('suggest.description') }} </label>
               <textarea
+                v-show="isNew"
                 rows="3"
                 id="description"
                 class="suggest-info__input"
                 v-model="suggestInfo.description"
               ></textarea>
+              <p v-show="!isNew" id="description" class="suggest-info__text">{{ suggestInfo.description }}</p>
             </div>
             <div v-show="!isNew" class="suggest-info__property">
               <label for="status" class="suggest-info__label">{{ $t('suggest.status') }} </label>
@@ -86,7 +93,7 @@ import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useSuggestInfo from '@/stores/suggestion-info';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useAlertModal from '@/stores/alert-modal';
-import { CATALOG_SLOTH_PREVIEW } from '@/common/const';
+import { CATALOG_SLOTH_PREVIEW, DEFAULT_USER_AVATAR } from '@/common/const';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
 
 const { suggestionInfo } = storeToRefs(useSuggestInfo());
@@ -142,17 +149,14 @@ export default defineComponent({
     },
 
     getImage(): string {
-      return this.newFile.name ? this.preview : this.suggestInfo.image_url;
+      // if (this.newFile.name) return this.preview;
+      return this.suggestInfo.image_url || DEFAULT_USER_AVATAR;
     },
   },
 
   methods: {
     saveSuggest() {
       if (this.modalEvents === ModalEvents.new) {
-        if (!this.newFile.name) {
-          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-file')}`);
-          return;
-        }
         if (!this.suggestInfo.description) {
           showAlertModal('modal.header.error', `${this.$t('modal.body.empty-description')}`);
           return;
@@ -161,12 +165,7 @@ export default defineComponent({
         this.$emit('createSuggest', this.suggestInfo, this.newFile);
         this.closeModal();
       } else if (this.modalEvents === ModalEvents.edit) {
-        if (this.newFile.name) {
-          this.$emit('updSuggestImage', this.suggestInfo, this.newFile);
-        } else {
-          this.$emit('updSuggest', this.suggestInfo);
-        }
-
+        this.$emit('updSuggest', this.suggestInfo);
         this.closeModal();
       }
     },
