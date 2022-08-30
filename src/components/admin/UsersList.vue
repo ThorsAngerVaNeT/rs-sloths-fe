@@ -110,8 +110,8 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    this.getUsers();
+  async mounted() {
+    await this.getUsers();
   },
 
   methods: {

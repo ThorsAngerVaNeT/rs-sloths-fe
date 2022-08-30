@@ -2,7 +2,7 @@
   <div class="profile">
     <h2 class="profile__title">{{ $t('profile.title') }}</h2>
     <aside class="profile__aside">
-      <user-info @updUser="updUser"></user-info>
+      <user-info :adminPanel="false" @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
       <router-link v-show="isAdmin" to="/admin">
         <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapWritableState } from 'pinia';
+import { mapState, mapWritableState } from 'pinia';
 import type { User } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { UsersService } from '@/services/users-service';
@@ -37,13 +37,14 @@ import GuessInfo from '@/components/profile/GuessInfo.vue';
 import SuggestInfo from '@/components/profile/SuggestInfo.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useUserInfo from '@/stores/user-info';
-import { USERS_ERROR_GET, USERS_ERROR_UPD } from '@/common/const';
+import useCurrUser from '@/stores/curr-user';
+import { USERS_ERROR_GET, USERS_ERROR_UPD, BASE } from '@/common/const';
 import { CustomError } from '@/services/error-handling/custom-error';
-import { Role } from '@/common/enums/user-role';
 
 const service = new UsersService();
 
 const { setUserInfo } = useUserInfo();
+const { setClearUser } = useCurrUser();
 
 export default defineComponent({
   name: 'ProfileView',
@@ -65,32 +66,18 @@ export default defineComponent({
     };
   },
 
-  props: {
-    id: {
-      type: String,
-      default: 'cd86722d-e3cc-405c-9a46-8da7d7d2dfcf', // todo // required: true,
-    },
-  },
-
   computed: {
+    ...mapState(useCurrUser, ['isAdmin', 'getUserId']),
     ...mapWritableState(useLoader, ['isLoad']),
-
-    isAdmin(): boolean {
-      return this.user.role === Role.admin;
-    },
-  },
-
-  mounted() {
-    this.getUser();
   },
 
   methods: {
     async getUser() {
       this.isLoad = true;
       try {
-        const res = await service.getById(this.id);
+        const res = await service.getById(this.getUserId);
         if (!res.ok)
-          throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.id})`);
+          throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.getUserId})`);
         this.user = res.data;
 
         setUserInfo(this.user);
@@ -115,8 +102,19 @@ export default defineComponent({
       }
     },
 
-    logOut() {
-      // todo
+    async logOut() {
+      try {
+        await fetch(`${BASE}/auth/github/logout`, {
+          method: 'GET',
+          credentials: 'include',
+          mode: 'no-cors',
+        });
+
+        setClearUser();
+        this.$router.push({ name: 'home' });
+      } catch (error: string | unknown) {
+        throw new Error(error as string);
+      }
     },
   },
 });

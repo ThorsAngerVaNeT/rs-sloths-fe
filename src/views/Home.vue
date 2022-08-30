@@ -7,7 +7,7 @@
         v-for="(category, i) in categories"
         :key="`${i}_${category}`"
         :category="category"
-        @click="handleCategoryClick(category)"
+        @click="hasAuth ? handleCategoryClick(category) : handleAuth()"
       ></home-category>
     </div>
   </div>
@@ -15,9 +15,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import HomeCategory from '../components/home/HomeCategory.vue';
 import HomeAbout from '../components/home/HomeAbout.vue';
 import HomeCatalog from '../components/home/HomeCatalog.vue';
+
+import useCurrUser from '../stores/curr-user';
+import useAuthorizationModal from '../stores/authorization-modal';
 
 export default defineComponent({
   name: 'HomeView',
@@ -34,6 +38,11 @@ export default defineComponent({
     };
   },
 
+  computed: {
+    ...mapState(useCurrUser, ['hasAuth']),
+    ...mapWritableState(useAuthorizationModal, ['isAuthorization']),
+  },
+
   methods: {
     handleCategoryClick(category: string): void {
       if (category === 'sloth') {
@@ -41,6 +50,10 @@ export default defineComponent({
       } else {
         this.$router.push({ name: `${category}` });
       }
+    },
+
+    handleAuth() {
+      this.isAuthorization = true;
     },
   },
 });
@@ -56,6 +69,7 @@ export default defineComponent({
   justify-content: center;
   grid-template-columns: 30rem 40rem 30rem;
   margin: 0 auto;
+  padding: 2rem 0;
 }
 
 .home__menu {

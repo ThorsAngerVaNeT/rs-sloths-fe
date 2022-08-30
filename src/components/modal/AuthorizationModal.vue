@@ -55,8 +55,9 @@ export default defineComponent({
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 100;
 
-  background-color: var(--color-background);
+  background-color: var(--dark-opacity);
 }
 .authorization-modal__body {
   display: flex;
