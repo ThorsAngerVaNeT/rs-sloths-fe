@@ -36,15 +36,20 @@
             </div>
             <div class="sloth-info__property">
               <label for="caption" class="sloth-info__label">{{ $t('catalog.caption') }} </label>
-              <input type="text" id="caption" class="sloth-info__input" v-model="slothInfo.caption" />
+              <input type="text" id="caption" class="sloth-info__input input-text" v-model="slothInfo.caption" />
             </div>
             <div class="sloth-info__property">
               <label for="description" class="sloth-info__label">{{ $t('catalog.description') }} </label>
-              <textarea rows="3" id="description" class="sloth-info__input" v-model="slothInfo.description"></textarea>
+              <textarea
+                rows="3"
+                id="description"
+                class="sloth-info__input input-text"
+                v-model="slothInfo.description"
+              ></textarea>
             </div>
             <div class="sloth-info__property">
               <label for="tags" class="sloth-info__label">{{ $t('catalog.tags') }} </label>
-              <input type="text" id="tags" class="sloth-info__input" v-model="tags" />
+              <input type="text" id="tags" class="sloth-info__input input-text" v-model="tags" />
             </div>
             <div v-show="!isNew" class="sloth-info__property">
               <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }} </label>
@@ -234,14 +239,6 @@ input[type='file'] {
 }
 
 .sloth-info__input {
-  margin: 0.5rem 0;
-  padding: 0.5rem 0;
-
   width: 30rem !important;
-
-  border: none;
-  border-bottom: 0.2rem solid gray;
-  background-color: var(--color-background);
-  color: inherit;
 }
 </style>

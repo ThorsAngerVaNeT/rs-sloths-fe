@@ -67,7 +67,7 @@ export type SearchTextElement = InstanceType<typeof searchText>;
 }
 .search__text {
   margin: 0.5rem 0;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
 
   width: 100%;
 

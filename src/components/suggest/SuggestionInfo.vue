@@ -42,7 +42,7 @@
                 v-show="isNew"
                 rows="3"
                 id="description"
-                class="suggest-info__input"
+                class="suggest-info__input input-text"
                 v-model="suggestInfo.description"
               ></textarea>
               <p v-show="!isNew" id="description" class="suggest-info__text">{{ suggestInfo.description }}</p>
