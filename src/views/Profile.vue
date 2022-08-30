@@ -103,13 +103,18 @@ export default defineComponent({
     },
 
     async logOut() {
-      setClearUser();
-      this.$router.push({ name: 'home' });
+      try {
+        await fetch(`http://localhost:3000/auth/github/logout`, {
+          method: 'GET',
+          credentials: 'include',
+          mode: 'no-cors',
+        });
 
-      await fetch(`http://localhost:3000/auth/github/logout`, {
-        method: 'GET',
-        credentials: 'include',
-      });
+        setClearUser();
+        this.$router.push({ name: 'home' });
+      } catch (error: string | unknown) {
+        throw new Error(error as string);
+      }
     },
   },
 });
