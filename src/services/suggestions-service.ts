@@ -42,16 +42,14 @@ export class SuggestionsService implements API<Suggestion> {
     const formData = new FormData();
     formData.append('description', suggestion.description);
     formData.append('userId', suggestion.userId);
-    formData.append('status', suggestion.status.toString());
     formData.append('file', file);
 
     return this.service.createImage(formData);
   }
 
   public updateById(suggestionId: string, suggestion: Suggestion) {
-    const { id, description, userId, status } = suggestion;
-    const imageUrl = suggestion.image_url;
-    const body = { id, description, image_url: imageUrl, userId, status };
+    const { id, status } = suggestion;
+    const body = { id, status };
     return this.service.updateById(suggestionId, body);
   }
 
