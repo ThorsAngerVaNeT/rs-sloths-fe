@@ -44,6 +44,7 @@ import { CustomError } from '@/services/error-handling/custom-error';
 const service = new UsersService();
 
 const { setUserInfo } = useUserInfo();
+const { setClearUser } = useCurrUser();
 
 export default defineComponent({
   name: 'ProfileView',
@@ -101,8 +102,14 @@ export default defineComponent({
       }
     },
 
-    logOut() {
-      // todo
+    async logOut() {
+      setClearUser();
+      this.$router.push({ name: 'home' });
+
+      await fetch(`http://localhost:3000/auth/github/logout`, {
+        method: 'GET',
+        credentials: 'include',
+      });
     },
   },
 });
