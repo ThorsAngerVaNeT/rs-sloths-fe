@@ -178,7 +178,10 @@
     "no": "No",
     "pick": "Pick",
     "copy": "Copy",
-    "download": "Download"
+    "download": "Download",
+    "trueSize": "True Size",
+    "scaleUp": "Scale Up",
+    "scaleDown": "Scale Down"
   },
 
   "pagination": {

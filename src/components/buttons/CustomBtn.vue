@@ -1,5 +1,14 @@
 <template>
-  <button v-if="imgPath === ''" :class="getClassNameTheme" @click="onClick" :disabled="disabled">{{ text }}</button>
+  <button v-if="imgPath === ''" :class="getClassNameTheme" @click="onClick" :disabled="disabled" :title="text">
+    {{ text }}
+  </button>
+  <button
+    v-else-if="imgPath === 'icon'"
+    :class="getClassNameTheme"
+    @click="onClick"
+    :disabled="disabled"
+    :title="text"
+  ></button>
   <button v-else class="btn-img" :class="className" @click="onClick" :disabled="disabled">
     <img :src="imgPath" :alt="text" />
   </button>
@@ -134,6 +143,7 @@ export default defineComponent({
   border-radius: 0.5rem;
 
   background-color: var(--color-background-inverse);
+  background-size: 65%;
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -152,5 +162,40 @@ export default defineComponent({
 }
 .icon-dark-edit {
   background-image: url('@/assets/icons/btn/pencil-black.svg');
+}
+
+.icon-light-download {
+  background-image: url('@/assets/icons/btn/download.svg');
+}
+.icon-dark-download {
+  background-image: url('@/assets/icons/btn/download-black.svg');
+}
+
+.icon-light-copy {
+  background-image: url('@/assets/icons/btn/clipboard.svg');
+}
+.icon-dark-copy {
+  background-image: url('@/assets/icons/btn/clipboard-black.svg');
+}
+
+.icon-light-plus {
+  background-image: url('@/assets/icons/btn/plus-square.svg');
+}
+.icon-dark-plus {
+  background-image: url('@/assets/icons/btn/plus-square-black.svg');
+}
+
+.icon-light-true {
+  background-image: url('@/assets/icons/btn/check-square.svg');
+}
+.icon-dark-true {
+  background-image: url('@/assets/icons/btn/check-square-black.svg');
+}
+
+.icon-light-minus {
+  background-image: url('@/assets/icons/btn/dash-square.svg');
+}
+.icon-dark-minus {
+  background-image: url('@/assets/icons/btn/dash-square-black.svg');
 }
 </style>

@@ -41,22 +41,41 @@
           <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @input="draw()" />
         </div>
       </div>
-      <!-- <div class="meme__settings">
-        <div class="meme__property">
-          <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.download') }}</button>
-          <button @click="copyImage" class="btn btn-primary" type="button">{{ $t('btn.copy') }}</button>
-        </div>
-      </div> -->
 
       <div class="meme__canvas-wrapper">
         <div class="meme__control-buttons">
-          <button @click="saveImage" class="btn btn-primary" type="button">{{ $t('btn.download') }}</button>
+          <custom-btn
+            :text="$t('btn.download')"
+            imgPath="icon"
+            className="btn btn-icon icon-download"
+            @click="saveImage"
+          ></custom-btn>
           <div class="meme__control-buttons-scale">
-            <button @click="scaleUp" type="button" class="btn btn-pagination">+</button>
-            <button @click="scaleTrue" type="button" class="btn btn-pagination">=</button>
-            <button @click="scaleDown" type="button" class="btn btn-pagination">-</button>
+            <custom-btn
+              :text="$t('btn.scaleUp')"
+              imgPath="icon"
+              className="btn btn-icon icon-plus"
+              @click="scaleUp"
+            ></custom-btn>
+            <custom-btn
+              :text="$t('btn.trueSize')"
+              imgPath="icon"
+              className="btn btn-icon icon-true"
+              @click="scaleTrue"
+            ></custom-btn>
+            <custom-btn
+              :text="$t('btn.scaleDown')"
+              imgPath="icon"
+              className="btn btn-icon icon-minus"
+              @click="scaleDown"
+            ></custom-btn>
           </div>
-          <button @click="copyImage" class="btn btn-primary" type="button">{{ $t('btn.copy') }}</button>
+          <custom-btn
+            :text="$t('btn.copy')"
+            imgPath="icon"
+            className="btn btn-icon icon-copy"
+            @click="copyImage"
+          ></custom-btn>
         </div>
         <canvas class="meme__canvas" ref="canvas"> </canvas>
       </div>
@@ -66,9 +85,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
 
 export default defineComponent({
   name: 'CreateView',
+
+  components: {
+    CustomBtn,
+  },
 
   data() {
     return {
@@ -334,7 +358,6 @@ export default defineComponent({
 .meme__number {
   margin: 0.5rem 0;
   padding: 0.5rem 0;
-  /* width: 5rem; */
 
   border: none;
   border-bottom: 0.2rem solid gray;
@@ -357,29 +380,22 @@ export default defineComponent({
   width: 100%;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 .meme__control-buttons {
-  position: absolute;
-  top: 0.5rem;
-  /* left: 50%;
-  transform: translateX(-50%); */
-  left: 0;
-  right: 0;
   z-index: 10;
 
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .meme__control-buttons-scale button {
-  margin: 0 0.5rem;
+  margin: 0 0.25rem;
   padding: 0;
-  width: 3rem;
-  height: 3rem;
 }
 
 .meme__canvas {
