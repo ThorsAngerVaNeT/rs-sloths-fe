@@ -137,6 +137,8 @@ export default defineComponent({
 
 .suggest-new__title {
   font-size: 3.6rem;
+  color: var(--color-text);
+  transition: 0.5s ease;
 }
 
 .form {
@@ -171,6 +173,8 @@ export default defineComponent({
 
 .form__label {
   font-size: 2.2rem;
+  transition: 0.5s ease;
+  color: var(--color-text);
 }
 
 .form__file {
@@ -188,6 +192,8 @@ export default defineComponent({
   height: 100%;
   width: 100%;
   object-fit: contain;
+  border-radius: 1rem;
+  transition: 0.5s ease;
 }
 
 .form__input {
@@ -201,5 +207,8 @@ export default defineComponent({
   height: 100%;
   width: 100%;
   resize: none;
+  transition: 0.5s ease;
+  background-color: var(--color-background-soft);
+  color: var(--color-text);
 }
 </style>
