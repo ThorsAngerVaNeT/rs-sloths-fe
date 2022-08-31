@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <div v-else class="suggest__new">New suggest</div>
+    <suggestion-new v-else class="suggest__new">New suggest</suggestion-new>
   </div>
 </template>
 
@@ -72,6 +72,7 @@ import ListControls from '@/components/list-controls/ListControls.vue';
 import ListPagination from '@/components/list-controls/ListPagination.vue';
 import SuggestionCard from '@/components/suggest/SuggestionCard.vue';
 import SuggestionInfo from '@/components/suggest/SuggestionInfo.vue';
+import SuggestionNew from '@/components/suggest/SuggestionNew.vue';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
 
 const service = new SuggestionsService();
@@ -92,6 +93,7 @@ export default defineComponent({
     SuggestionInfo,
     ListControls,
     ListPagination,
+    SuggestionNew,
   },
 
   data() {
