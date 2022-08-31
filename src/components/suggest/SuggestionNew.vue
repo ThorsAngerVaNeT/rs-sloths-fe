@@ -92,10 +92,7 @@ export default defineComponent({
       ev.preventDefault();
       ev.stopPropagation();
 
-      console.log('handleDrop: ', ev);
-
       const { files } = ev.dataTransfer as DataTransfer;
-      console.log('files: ', files);
       this.renderFile(files[0]);
     },
 
@@ -106,7 +103,6 @@ export default defineComponent({
 
     handleUploadChange(ev: InputEvent) {
       const file: File = (ev.target as HTMLFormElement).files[0];
-      console.log('file in change: ', file);
       this.renderFile(file);
     },
 
@@ -118,9 +114,7 @@ export default defineComponent({
 
       reader.onload = (e) => {
         const imgEl = this.$refs.img as HTMLImageElement;
-        console.log('imgEl: ', typeof imgEl);
         imgEl.src = (e.target as FileReader).result as string;
-        // this.url = (e.target as FileReader).result as string;
       };
     },
   },
