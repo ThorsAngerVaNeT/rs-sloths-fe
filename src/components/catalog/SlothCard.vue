@@ -2,7 +2,7 @@
   <div :class="`${getPageName}-sloth-info`">
     <div v-if="isAdmin" class="admin-sloth-info__inner">
       <div class="admin-sloth-info__sloth">
-        <img class="admin-sloth-info__img" :src="detImageUrl" :alt="slothInfo.caption" />
+        <img class="admin-sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
         <div class="sloth-info__tags tags">
           <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
         </div>
@@ -27,7 +27,7 @@
 
     <div v-else-if="isCatalog && !isDownload" class="catalog-sloth-info__inner">
       <div class="catalog-sloth-info__sloth">
-        <img class="catalog-sloth-info__img" :src="detImageUrl" :alt="slothInfo.caption" />
+        <img class="catalog-sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
         <div class="sloth-info__tags tags">
           <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
         </div>
@@ -66,7 +66,7 @@
         @click="$emit('checkSloth', slothInfo)"
       ></custom-btn>
       <div class="download-sloth-info__sloth">
-        <img class="download-sloth-info__img" :src="detImageUrl" :alt="slothInfo.caption" />
+        <img class="download-sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
       </div>
       <p class="sloth-info__property">{{ slothInfo.caption }}</p>
     </div>
@@ -117,7 +117,7 @@ export default defineComponent({
   },
 
   computed: {
-    detImageUrl(): string {
+    getImageUrl(): string {
       return `${BASE}/${this.slothInfo.image_url}`;
     },
 
@@ -164,6 +164,7 @@ export default defineComponent({
 
   border-radius: 0.5rem;
 }
+
 .catalog-sloth-info {
   position: relative;
   padding: 1rem;
@@ -171,6 +172,7 @@ export default defineComponent({
 
   border-radius: 1rem;
 }
+
 .admin-sloth-info:hover,
 .catalog-sloth-info:hover {
   box-shadow: 0px 0px 0.5rem gray;
@@ -183,6 +185,7 @@ export default defineComponent({
   align-items: center;
   gap: var(--gap);
 }
+
 .catalog-sloth-info__inner {
   flex-direction: column;
 }
@@ -198,6 +201,7 @@ export default defineComponent({
   height: calc(10rem - 1rem);
   object-fit: contain;
 }
+
 .catalog-sloth-info__img {
   width: calc(20rem - 2rem);
   height: calc(20rem - 2rem);
@@ -209,9 +213,11 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 }
+
 .admin-sloth-info__props {
   align-items: flex-start;
 }
+
 .catalog-sloth-info__props {
   align-items: center;
 }
@@ -227,9 +233,11 @@ export default defineComponent({
   justify-content: center;
   gap: var(--gap);
 }
+
 .btn-horizontal {
   flex-direction: row;
 }
+
 .sloth-info__tags {
   position: absolute;
   top: 0;
@@ -242,9 +250,11 @@ export default defineComponent({
   justify-content: center;
   z-index: 10;
 }
+
 .catalog-sloth-info__sloth:hover .sloth-info__tags {
   transform: translateY(0);
 }
+
 .sloth-info__tag {
   padding: 0.5rem 0.7rem;
   cursor: default;
@@ -267,14 +277,17 @@ export default defineComponent({
   background-size: contain;
   background-position: center center;
 }
+
 .icon {
   position: absolute;
   bottom: 0rem;
   right: 0rem;
 }
+
 .icon_check-on {
   background-image: url('@/assets/icons/btn/check-circle-fill.svg');
 }
+
 .icon_check-off {
   background-image: url('@/assets/icons/btn/check-circle.svg');
 }
@@ -283,6 +296,7 @@ export default defineComponent({
   position: relative;
   height: 6rem;
 }
+
 .download-sloth-info__img {
   height: 6rem;
 }

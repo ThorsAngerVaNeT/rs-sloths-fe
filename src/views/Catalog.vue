@@ -341,6 +341,7 @@ export default defineComponent({
 
   color: var(--color-text);
 }
+
 .catalog__aside {
   margin: 0.5em;
 }

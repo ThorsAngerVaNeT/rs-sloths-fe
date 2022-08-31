@@ -214,6 +214,7 @@ export default defineComponent({
   justify-content: space-between;
   gap: var(--gap);
 }
+
 .property-center {
   justify-content: center;
 }
@@ -223,12 +224,15 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
+
 input[type='file'] {
   display: none;
 }
+
 .sloth-info__img {
   height: 20rem;
 }
+
 .sloth-info__text {
   text-align: center;
 }
