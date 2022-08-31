@@ -81,7 +81,7 @@ import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 import type { Sloth, Sloths } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { SLOTH_SORTING } from '@/common/const';
+import { BASE, SLOTH_SORTING } from '@/common/const';
 import { SlothsService } from '@/services/sloths-service';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useLoader from '@/stores/loader';
@@ -302,9 +302,16 @@ export default defineComponent({
     },
 
     approveDownload() {
-      const forDownload = this.sloths.filter((el) => el.checked);
-      console.log(forDownload);
-      //  todo
+      const forDownload = this.sloths.filter((el) => el.checked).map((el) => el.id);
+
+      if (!forDownload.length) return;
+
+      const downloadUrl = `${BASE}/download/${forDownload.join(',')}`;
+      // download
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.click();
+
       this.checked = [] as Sloths;
       this.closeModal();
     },

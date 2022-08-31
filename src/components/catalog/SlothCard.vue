@@ -2,7 +2,7 @@
   <div :class="`${getPageName}-sloth-info`">
     <div v-if="isAdmin" class="admin-sloth-info__inner">
       <div class="admin-sloth-info__sloth">
-        <img class="admin-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <img class="admin-sloth-info__img" :src="detImageUrl" :alt="slothInfo.caption" />
         <div class="sloth-info__tags tags">
           <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
         </div>
@@ -27,7 +27,7 @@
 
     <div v-else-if="isCatalog && !isDownload" class="catalog-sloth-info__inner">
       <div class="catalog-sloth-info__sloth">
-        <img class="catalog-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <img class="catalog-sloth-info__img" :src="detImageUrl" :alt="slothInfo.caption" />
         <div class="sloth-info__tags tags">
           <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
         </div>
@@ -66,7 +66,7 @@
         @click="$emit('checkSloth', slothInfo)"
       ></custom-btn>
       <div class="download-sloth-info__sloth">
-        <img class="download-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <img class="download-sloth-info__img" :src="detImageUrl" :alt="slothInfo.caption" />
       </div>
       <p class="sloth-info__property">{{ slothInfo.caption }}</p>
     </div>
@@ -91,6 +91,7 @@ import { defineComponent, type PropType } from 'vue';
 import type { Sloth } from '@/common/types';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
+import { BASE } from '@/common/const';
 
 export default defineComponent({
   name: 'SlothCard',
@@ -116,6 +117,10 @@ export default defineComponent({
   },
 
   computed: {
+    detImageUrl(): string {
+      return `${BASE}/${this.slothInfo.image_url}`;
+    },
+
     getPageName(): string {
       if (this.isDownload) return 'download';
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
@@ -279,7 +284,6 @@ export default defineComponent({
   height: 6rem;
 }
 .download-sloth-info__img {
-  width: 6rem;
   height: 6rem;
 }
 
