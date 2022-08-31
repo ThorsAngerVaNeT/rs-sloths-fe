@@ -69,9 +69,11 @@ export default defineComponent({
   color: var(--color-text-inverse);
   background-color: var(--color-background-inverse);
 }
+
 .btn-primary:hover:not([disabled]) {
   background-color: var(--color-background-inverse-soft);
 }
+
 .btn-primary:disabled,
 .btn-pagination:disabled {
   cursor: default;
@@ -88,6 +90,7 @@ export default defineComponent({
   color: var(--color-text-inverse);
   background-color: var(--color-background-inverse);
 }
+
 .btn-pagination:hover:not([disabled]) {
   background-color: var(--color-background-inverse-soft);
 }
@@ -96,6 +99,7 @@ export default defineComponent({
   overflow: hidden;
   border: 0.2rem solid var(--color-border-inverse);
 }
+
 .btn-img:hover {
   transform: scale(1.1) rotate(10deg);
 }
@@ -138,9 +142,11 @@ export default defineComponent({
   background-repeat: no-repeat;
   background-position: center center;
 }
+
 .btn-icon:hover {
   background-color: var(--color-background-inverse-soft);
 }
+
 .icon-light-del {
   background-image: url('@/assets/icons/btn/trash.svg');
 }
