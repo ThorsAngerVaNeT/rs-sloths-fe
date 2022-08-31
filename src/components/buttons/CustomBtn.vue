@@ -69,7 +69,13 @@ export default defineComponent({
   color: var(--color-text-inverse);
   background-color: var(--color-background-inverse);
 }
-.btn-primary:hover {
+.btn-primary:hover:not([disabled]) {
+  background-color: var(--color-background-inverse-soft);
+}
+.btn-primary:disabled,
+.btn-pagination:disabled {
+  cursor: default;
+  color: gray;
   background-color: var(--color-background-inverse-soft);
 }
 
@@ -84,11 +90,6 @@ export default defineComponent({
 }
 .btn-pagination:hover:not([disabled]) {
   background-color: var(--color-background-inverse-soft);
-}
-
-.btn-pagination:disabled {
-  cursor: not-allowed;
-  background-color: gray;
 }
 
 .btn-img img {

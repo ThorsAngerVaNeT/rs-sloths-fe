@@ -10,6 +10,7 @@
       ></custom-btn>
       <custom-btn
         v-show="getPageName === 'catalog'"
+        :disabled="!isChecked"
         :text="$t('btn.download')"
         className="btn btn-primary"
         @click="downloadFiles"
@@ -68,7 +69,12 @@
 
       <template v-slot:footer>
         <div class="catalog__btn">
-          <custom-btn :text="$t('btn.yes')" className="btn btn-primary" :onClick="approveDownload"></custom-btn>
+          <custom-btn
+            :text="$t('btn.yes')"
+            className="btn btn-primary"
+            :onClick="approveDownload"
+            :disabled="!isChecked"
+          ></custom-btn>
           <custom-btn :text="$t('btn.no')" className="btn btn-primary" :onClick="closeModal"></custom-btn>
         </div>
       </template>
@@ -135,14 +141,18 @@ export default defineComponent({
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
 
-    getPageName() {
+    getPageName(): string {
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
     },
 
-    getHeaderSlothInfo() {
+    getHeaderSlothInfo(): string {
       if (this.modalEvents === ModalEvents.new) return this.$t('catalog.btn.new');
       if (this.modalEvents === ModalEvents.edit) return this.$t('btn.edit');
       return this.$t('catalog.info');
+    },
+
+    isChecked(): boolean {
+      return !!this.sloths.filter((el) => el.checked).length;
     },
   },
 
