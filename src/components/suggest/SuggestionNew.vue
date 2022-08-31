@@ -3,17 +3,6 @@
     <h3 class="suggest-new__title">Suggest new Sloth</h3>
     <form @submit.prevent="handleSubmit" class="suggest-new__form form">
       <div class="form__block form__block_1">
-        <label for="name" class="form__label" required>Name</label>
-        <input
-          class="form__input form__text"
-          type="text"
-          v-model="name"
-          placeholder="Name"
-          id="name"
-          autocomplete="off"
-        />
-      </div>
-      <div class="form__block form__block_2">
         <input class="form__file" type="file" name="upload-file" id="drop" @change="handleUploadChange" />
         <label for="drop" class="form__drop" @drop="handleDrop" @dragover="handleDrag">
           <img
@@ -24,7 +13,7 @@
           />
         </label>
       </div>
-      <div class="form__block form__block_3">
+      <div class="form__block form__block_2">
         <label for="descr" class="form__label">Description</label>
         <textarea
           class="form__input form__textarea"
@@ -33,6 +22,9 @@
           id="descr"
           autocomplete="off"
         />
+      </div>
+      <div class="form__block form__block_3">
+        <custom-btn text="Submit" className="btn btn-primary" type="submit" class="form__submit"></custom-btn>
       </div>
     </form>
   </div>
@@ -43,12 +35,17 @@ import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 import themeProp from '@/stores/theme';
 
+import CustomBtn from '../buttons/CustomBtn.vue';
+
 export default defineComponent({
   name: 'SuggestionNew',
 
+  components: {
+    CustomBtn,
+  },
+
   data() {
     return {
-      name: '',
       descr: '',
       url: '',
     };
@@ -115,11 +112,11 @@ export default defineComponent({
 
 .form {
   display: grid;
-  grid-template-rows: repeat(2, auto);
   grid-template-columns: 25rem 50rem;
+  grid-template-rows: repeat(2, auto);
   grid-template-areas:
     'A B'
-    'C B';
+    'C C';
   justify-content: center;
   gap: 3rem;
 }
@@ -136,11 +133,11 @@ export default defineComponent({
 }
 
 .form__block_2 {
-  grid-area: C;
+  grid-area: B;
 }
 
 .form__block_3 {
-  grid-area: B;
+  grid-area: C;
 }
 
 .form__label {
