@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <suggestion-new v-else class="suggest__new">New suggest</suggestion-new>
+    <suggestion-new v-else class="suggest__new" @update-suggestions="getSuggestions">New suggest</suggestion-new>
   </div>
 </template>
 

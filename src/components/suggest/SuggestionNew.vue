@@ -17,7 +17,7 @@
         <label for="descr" class="form__label">Description</label>
         <textarea
           class="form__input form__textarea"
-          v-model="descr"
+          v-model="suggest.description"
           placeholder="Description"
           id="descr"
           autocomplete="off"
@@ -33,9 +33,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
+
+import type { Suggestion } from '@/common/types';
+
 import themeProp from '@/stores/theme';
+import useLoader from '@/stores/loader';
+
+import { SuggestionsService } from '@/services/suggestions-service';
+import { errorHandler } from '@/services/error-handling/error-handler';
 
 import CustomBtn from '../buttons/CustomBtn.vue';
+
+const service = new SuggestionsService();
 
 export default defineComponent({
   name: 'SuggestionNew',
@@ -46,18 +55,32 @@ export default defineComponent({
 
   data() {
     return {
-      descr: '',
-      url: '',
+      suggest: {} as Suggestion,
+      image: {} as File,
     };
   },
 
   computed: {
     ...mapWritableState(themeProp, ['currTheme']),
+    ...mapWritableState(useLoader, ['isLoad']),
   },
 
   methods: {
-    handleSubmit() {
-      console.log('submit!');
+    async handleSubmit() {
+      this.isLoad = true;
+      try {
+        const res = await service.createImage(this.suggest, this.image);
+
+        if (!res.ok) throw Error(); // todo
+
+        this.suggest = {} as Suggestion;
+        this.image = {} as File;
+        this.$emit('update-suggestions');
+      } catch (error) {
+        errorHandler(error);
+      } finally {
+        this.isLoad = false;
+      }
     },
 
     handleDrop(ev: DragEvent) {
@@ -83,6 +106,7 @@ export default defineComponent({
     },
 
     renderFile(file: File) {
+      this.image = file;
       const reader = new FileReader();
 
       reader.readAsDataURL(file);
@@ -91,7 +115,7 @@ export default defineComponent({
         const imgEl = this.$refs.img as HTMLImageElement;
         console.log('imgEl: ', typeof imgEl);
         imgEl.src = (e.target as FileReader).result as string;
-        this.url = (e.target as FileReader).result as string;
+        // this.url = (e.target as FileReader).result as string;
       };
     },
   },
