@@ -1,6 +1,6 @@
 <template>
   <div class="suggest-new">
-    <h3 class="suggest-new__title">Suggest new Sloth</h3>
+    <h3 class="suggest-new__title">{{ $t('suggest.new') }}</h3>
     <form @submit.prevent="handleSubmit" class="suggest-new__form form">
       <div class="form__block form__block_1">
         <input class="form__file" type="file" name="upload-file" id="drop" @change="handleUploadChange" />
@@ -14,17 +14,22 @@
         </label>
       </div>
       <div class="form__block form__block_2">
-        <label for="descr" class="form__label">Description</label>
+        <label for="descr" class="form__label">{{ $t('suggest.description') }}</label>
         <textarea
           class="form__input form__textarea"
           v-model="suggest.description"
-          placeholder="Description"
+          :placeholder="$t('suggest.placeholder')"
           id="descr"
           autocomplete="off"
         />
       </div>
       <div class="form__block form__block_3">
-        <custom-btn text="Submit" className="btn btn-primary" type="submit" class="form__submit"></custom-btn>
+        <custom-btn
+          :text="$t('suggest.btn.submit')"
+          className="btn btn-primary"
+          type="submit"
+          class="form__submit"
+        ></custom-btn>
       </div>
     </form>
   </div>

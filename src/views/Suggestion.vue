@@ -1,7 +1,11 @@
 <template>
   <div class="suggest">
     <div class="suggest__tools">
-      <custom-btn text="Switch" className="btn btn-primary" @click="handleSwitchMode"></custom-btn>
+      <custom-btn
+        :text="mode === 'watch' ? `${$t('suggest.btn.switch.to-new')}` : `${$t('suggest.btn.switch.to-watch')}`"
+        className="btn btn-primary"
+        @click="handleSwitchMode"
+      ></custom-btn>
     </div>
     <div v-if="mode === 'watch'" class="suggest__watch">
       <div class="suggest__aside list-aside">
@@ -247,6 +251,7 @@ export default defineComponent({
 .suggest {
   display: flex;
   flex-direction: column;
+  padding: 0 3rem;
 }
 
 .suggest__watch {
