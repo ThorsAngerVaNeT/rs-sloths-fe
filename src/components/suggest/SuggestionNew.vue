@@ -1,23 +1,38 @@
 <template>
   <div class="suggest-new">
+    <h3 class="suggest-new__title">Suggest new Sloth</h3>
     <form @submit.prevent="handleSubmit" class="suggest-new__form form">
-      <div class="form__block">
-        <label for="name" class="form__label" required>Name:</label>
-        <input type="text" v-model="name" placeholder="name" id="name" />
+      <div class="form__block form__block_1">
+        <label for="name" class="form__label" required>Name</label>
+        <input
+          class="form__input form__text"
+          type="text"
+          v-model="name"
+          placeholder="Name"
+          id="name"
+          autocomplete="off"
+        />
       </div>
-      <div class="form__block">
-        <div class="form__drop" id="drop" @drop="handleDrop" @dragover="handleDrag">
+      <div class="form__block form__block_2">
+        <input class="form__file" type="file" name="upload-file" id="drop" @change="handleUploadChange" />
+        <label for="drop" class="form__drop" @drop="handleDrop" @dragover="handleDrag">
           <img
             class="form__img"
             ref="img"
             :src="`/img/suggest/upload-${$i18n.locale}-${currTheme}.svg`"
             alt="upload-image"
           />
-        </div>
+        </label>
       </div>
-      <div class="form__block">
-        <label for="descr" class="form__label">Description:</label>
-        <input type="textarea" v-model="descr" placeholder="name" id="descr" />
+      <div class="form__block form__block_3">
+        <label for="descr" class="form__label">Description</label>
+        <textarea
+          class="form__input form__textarea"
+          v-model="descr"
+          placeholder="Description"
+          id="descr"
+          autocomplete="off"
+        />
       </div>
     </form>
   </div>
@@ -35,6 +50,7 @@ export default defineComponent({
     return {
       name: '',
       descr: '',
+      url: '',
     };
   },
 
@@ -48,7 +64,6 @@ export default defineComponent({
     },
 
     handleDrop(ev: DragEvent) {
-      const reader = new FileReader();
       ev.preventDefault();
       ev.stopPropagation();
 
@@ -56,28 +71,88 @@ export default defineComponent({
 
       const { files } = ev.dataTransfer as DataTransfer;
       console.log('files: ', files);
-
-      reader.readAsDataURL(files[0]);
-
-      reader.onload = (e) => {
-        const imgEl = this.$refs.img as HTMLImageElement;
-        console.log('imgEl: ', typeof imgEl);
-        imgEl.src = (e.target as FileReader).result as string;
-      };
+      this.renderFile(files[0]);
     },
 
     handleDrag(ev: DragEvent) {
       ev.preventDefault();
       ev.stopPropagation();
-      // (ev.dataTransfer as DataTransfer).dropEffect = 'copy'
-      // console.log('handleDrag: ', ev)
+    },
+
+    handleUploadChange(ev: InputEvent) {
+      const file: File = (ev.target as HTMLFormElement).files[0];
+      console.log('file in change: ', file);
+      this.renderFile(file);
+    },
+
+    renderFile(file: File) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = (e) => {
+        const imgEl = this.$refs.img as HTMLImageElement;
+        console.log('imgEl: ', typeof imgEl);
+        imgEl.src = (e.target as FileReader).result as string;
+        this.url = (e.target as FileReader).result as string;
+      };
     },
   },
 });
 </script>
 
 <style scoped>
+.suggest-new {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+}
+
+.suggest-new__title {
+  font-size: 3.6rem;
+}
+
+.form {
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: 25rem 50rem;
+  grid-template-areas:
+    'A B'
+    'C B';
+  justify-content: center;
+  gap: 3rem;
+}
+
+.form__block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.form__block_1 {
+  grid-area: A;
+}
+
+.form__block_2 {
+  grid-area: C;
+}
+
+.form__block_3 {
+  grid-area: B;
+}
+
+.form__label {
+  font-size: 2.2rem;
+}
+
+.form__file {
+  display: none;
+}
+
 .form__drop {
+  display: block;
   width: 25rem;
   height: 25rem;
   border-radius: 1rem;
@@ -87,5 +162,18 @@ export default defineComponent({
   height: 100%;
   width: 100%;
   object-fit: contain;
+}
+
+.form__input {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.form__textarea {
+  height: 100%;
+  width: 100%;
+  resize: none;
 }
 </style>
