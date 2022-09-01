@@ -102,7 +102,10 @@ export default defineComponent({
   },
 
   data() {
-    return { newRating: 0, isApproveShow: false };
+    return {
+      newRating: this.slothInfo.ratings[0]?.rate ?? 0,
+      isApproveShow: false,
+    };
   },
 
   props: {
