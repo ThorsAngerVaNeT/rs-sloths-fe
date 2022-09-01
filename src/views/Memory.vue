@@ -1,7 +1,6 @@
 <template>
   <div class="memory">
     <div class="memory__aside">
-      <h2 class="memory__title">{{ $t('memory.title') }}</h2>
       <h3 class="memory__subtitle">{{ $t('memory.level') }}</h3>
       <h2 class="memory__title">{{ $t(getLevel) }}</h2>
       <div class="memory__level">
