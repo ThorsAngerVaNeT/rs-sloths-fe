@@ -82,6 +82,7 @@
           ></custom-btn>
         </div>
         <canvas class="meme__canvas" ref="canvas"> </canvas>
+        <custom-btn text="load" className="btn btn-primary" @click="loadStore"></custom-btn>
       </div>
     </div>
   </div>
@@ -90,6 +91,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import usePagesStore from '@/stores/pages-store';
+
+const { getPageCrateState, setPageCrateState } = usePagesStore();
 
 export default defineComponent({
   name: 'CreateView',
@@ -126,15 +130,43 @@ export default defineComponent({
   mounted() {
     this.getImages();
 
-    const { canvas } = this.$refs;
-    if (!(canvas instanceof HTMLCanvasElement)) return;
+    this.$nextTick(() => {
+      this.loadStore();
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+      const { canvas } = this.$refs;
+      if (!(canvas instanceof HTMLCanvasElement)) return;
 
-    this.canvas = canvas;
-    this.ctx = ctx;
-    this.img = document.createElement('img');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      this.canvas = canvas;
+      this.ctx = ctx;
+      this.img = document.createElement('img');
+
+      // this.imageRight = this.imageX + this.img.width;
+      // this.imageBottom = this.imageY + this.img.height;
+
+      // // Update CTX
+      // this.draw();
+    });
+
+    // // this.loadStore();
+
+    // const { canvas } = this.$refs;
+    // if (!(canvas instanceof HTMLCanvasElement)) return;
+
+    // const ctx = canvas.getContext('2d');
+    // if (!ctx) return;
+
+    // this.canvas = canvas;
+    // this.ctx = ctx;
+    // this.img = document.createElement('img');
+
+    // // this.updImage(this.index);
+  },
+
+  beforeRouteLeave() {
+    setPageCrateState(JSON.stringify(this.$data));
   },
 
   methods: {
@@ -228,10 +260,8 @@ export default defineComponent({
       this.img = image;
 
       // Grab position info
-      this.imageWidth = this.img.width;
-      this.imageHeight = this.img.height;
-      this.imageRight = this.imageX + this.imageWidth;
-      this.imageBottom = this.imageY + this.imageHeight;
+      this.imageRight = this.imageX + this.img.width;
+      this.imageBottom = this.imageY + this.img.height;
 
       // Update CTX
       this.draw();
@@ -313,6 +343,29 @@ export default defineComponent({
         const item = new ClipboardItem({ [type]: blob });
         navigator.clipboard.write([item]);
       });
+    },
+
+    loadStore() {
+      const str = getPageCrateState();
+      if (!str) return;
+
+      const data = JSON.parse(str);
+      if (!data) return;
+
+      Object.keys(data).forEach((key) => {
+        this.$data[key] = data[key];
+      });
+
+      const { canvas } = this.$refs;
+      if (!(canvas instanceof HTMLCanvasElement)) return;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      this.canvas = canvas;
+      this.ctx = ctx;
+
+      this.updImage(this.index);
     },
   },
 });

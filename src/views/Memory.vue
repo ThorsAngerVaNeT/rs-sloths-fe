@@ -24,8 +24,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import GameField from '../components/memory/GameField.vue';
-import { MEMORY_LEVELS } from '../common/const';
+import GameField from '@/components/memory/GameField.vue';
+import { MEMORY_LEVELS } from '@/common/const';
+import usePagesStore from '@/stores/pages-store';
+
+const { getPageMemoryState, setPageMemoryState } = usePagesStore();
 
 export default defineComponent({
   name: 'MemoryView',
@@ -40,10 +43,25 @@ export default defineComponent({
       activeLevel: 1,
     };
   },
+
   computed: {
     getLevel(): string {
       return `memory.${this.levels[this.activeLevel].level}`;
     },
+  },
+
+  mounted() {
+    const str = getPageMemoryState();
+    if (!str) return;
+
+    const data = JSON.parse(str);
+    if (!data) return;
+
+    this.activeLevel = data.activeLevel;
+  },
+
+  beforeRouteLeave() {
+    setPageMemoryState(JSON.stringify(this.$data));
   },
 
   methods: {
