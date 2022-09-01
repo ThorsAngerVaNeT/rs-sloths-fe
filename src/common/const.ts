@@ -138,6 +138,6 @@ export const MEMORY_LEVELS: MemoryLevel[] = [
 ];
 export const MEMORY_GAME_TIMEOUT = 1000;
 export const MEMORY_GAME_COVER = './card-cover.png';
-export const MEMORY_GAME_WINNER = './winner1.png';
+export const MEMORY_GAME_WINNER = './winner1.svg';
 
 export const CATALOG_SLOTH_PREVIEW = './preview.svg';
