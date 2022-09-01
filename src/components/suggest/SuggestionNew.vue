@@ -44,12 +44,7 @@ import type { Suggestion } from '@/common/types';
 import themeProp from '@/stores/theme';
 import useLoader from '@/stores/loader';
 
-import { SuggestionsService } from '@/services/suggestions-service';
-import { errorHandler } from '@/services/error-handling/error-handler';
-
 import CustomBtn from '../buttons/CustomBtn.vue';
-
-const service = new SuggestionsService();
 
 export default defineComponent({
   name: 'SuggestionNew',
@@ -71,21 +66,11 @@ export default defineComponent({
   },
 
   methods: {
-    async handleSubmit() {
-      this.isLoad = true;
-      try {
-        const res = await service.createImage(this.suggest, this.image);
-
-        if (!res.ok) throw Error(); // todo
-
-        this.suggest = {} as Suggestion;
-        this.image = {} as File;
-        this.$emit('update-suggestions');
-      } catch (error) {
-        errorHandler(error);
-      } finally {
-        this.isLoad = false;
-      }
+    handleSubmit() {
+      this.$emit('createSuggest', this.suggest, this.image);
+      this.suggest = {} as Suggestion;
+      this.image = {} as File;
+      (this.$refs.img as HTMLImageElement).src = `/img/suggest/upload-${this.$i18n.locale}-${this.currTheme}.svg`;
     },
 
     handleDrop(ev: DragEvent) {

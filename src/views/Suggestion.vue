@@ -5,17 +5,12 @@
         :text="mode === 'watch' ? `${$t('suggest.btn.switch.to-new')}` : `${$t('suggest.btn.switch.to-watch')}`"
         className="btn btn-primary"
         @click="handleSwitchMode"
+        v-show="getPageName !== 'admin'"
       ></custom-btn>
     </div>
     <div v-if="mode === 'watch'" class="suggest__watch">
       <div class="suggest__aside list-aside">
         <h3>{{ $t('suggest.title') }}: {{ count }}</h3>
-        <custom-btn
-          :text="$t('suggest.btn.new')"
-          className="btn btn-primary"
-          @click="showSuggestionInfoNew"
-          v-show="getPageName === 'admin'"
-        ></custom-btn>
         <list-controls
           @search="getSuggestions"
           @tags="getSuggestions"
@@ -53,7 +48,7 @@
       </div>
     </div>
 
-    <suggestion-new v-else class="suggest__new" @update-suggestions="getSuggestions">New suggest</suggestion-new>
+    <suggestion-new v-else class="suggest__new" @create-suggest="createSuggestion"></suggestion-new>
   </div>
 </template>
 
