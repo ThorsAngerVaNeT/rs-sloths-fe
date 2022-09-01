@@ -1,7 +1,17 @@
-import type { API, WhereFieldFilter, WhereField, Suggestion, SuggestionsRating } from '@/common/types';
+import type {
+  API,
+  WhereFieldFilter,
+  WhereField,
+  Suggestion,
+  SuggestionsRating,
+  APIRequestResult,
+} from '@/common/types';
+import useCurrUser from '@/stores/curr-user';
 import { getANDFields, getFieldContainsFilter, getFieldEqualFilter, getORFields } from '@/utils/query-string';
-import { Endpoints } from '../common/enums/endpoints';
+import { Endpoints } from '@/common/enums/endpoints';
 import { APIService } from './api-service';
+import { APIError } from './error-handling/api-error';
+import { errorHandler } from './error-handling/error-handler';
 
 const getFilter = (searchText: string, selected: string[]): string => {
   const search: WhereFieldFilter | WhereField | null = searchText
@@ -14,6 +24,8 @@ const getFilter = (searchText: string, selected: string[]): string => {
 
   return getANDFields([search, select]);
 };
+
+const { hasAuth, getUserId } = useCurrUser();
 
 export class SuggestionsService implements API<Suggestion> {
   private service = new APIService<Suggestion>(Endpoints.suggestions);
@@ -54,11 +66,24 @@ export class SuggestionsService implements API<Suggestion> {
   }
 
   public static updateRatingById(suggestionId: string, rate: number) {
-    const ratingService = new APIService<SuggestionsRating>(`${Endpoints.suggestions}/${suggestionId}/rating`);
-    const userId = '09edb293-9e8c-4768-8d32-3ee2784959fa'; // todo user id
+    const res: APIRequestResult<SuggestionsRating> = {
+      ok: false,
+      status: 401,
+      data: {} as SuggestionsRating,
+      headers: {} as Headers,
+    };
+    try {
+      const ratingService = new APIService<SuggestionsRating>(`${Endpoints.suggestions}/${suggestionId}/rating`);
+      const userId = getUserId;
 
-    const body: SuggestionsRating = { suggestionId, userId, rate };
-    return ratingService.update(body);
+      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
+
+      const body: SuggestionsRating = { suggestionId, userId, rate };
+      return ratingService.update(body);
+    } catch (error) {
+      errorHandler(error);
+    }
+    return res;
   }
 
   public deleteById(id: string) {

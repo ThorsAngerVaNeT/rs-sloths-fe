@@ -103,8 +103,7 @@ export class SlothsService implements API<Sloth> {
     };
     try {
       const ratingService = new APIService<SlothRating>(`${Endpoints.sloths}/${slothId}/rating`);
-      const userId = getUserId; // '09edb293-9e8c-4768-8d32-3ee2784959fa'; // todo user id
-      console.log(userId);
+      const userId = getUserId;
 
       if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
 
