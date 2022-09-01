@@ -1,5 +1,5 @@
 <template>
-  <div class="background" :class="`background-${$route.name === 'about' ? $route.name : 'home'}-${currTheme}`"></div>
+  <div class="background" :class="`background-${routeName}-${currTheme}`"></div>
 </template>
 
 <script lang="ts">
@@ -13,6 +13,20 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(themeProp, ['currTheme']),
+
+    // temp realization, todo
+    routeName() {
+      switch (this.$route.name) {
+        case 'about':
+          return 'about';
+        case 'memory':
+          return 'memory';
+        case 'suggest':
+          return 'suggest';
+        default:
+          return 'home';
+      }
+    },
   },
 });
 </script>
@@ -42,5 +56,21 @@ export default defineComponent({
 
 .background-about-dark {
   background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-about-dark.svg');
+}
+
+.background-memory-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-memory-light.svg');
+}
+
+.background-memory-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-memory-dark.svg');
+}
+
+.background-suggest-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-suggest-light.svg');
+}
+
+.background-suggest-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-suggest-dark.svg');
 }
 </style>
