@@ -7,7 +7,7 @@
         <div>
           <div v-if="isView" class="sloth-info__props">
             <div :class="'sloth-info__sloth'">
-              <img :class="'sloth-info__img'" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+              <img :class="'sloth-info__img'" :src="getImageUrl" :alt="slothInfo.caption" />
             </div>
             <div class="sloth-info__property property-center">
               <p class="sloth-info__text">{{ slothInfo.description }}</p>
@@ -32,7 +32,7 @@
               <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
               <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
               <img v-show="isNew" class="sloth-info__img" :src="preview" alt="preview" />
-              <img v-show="!isNew" class="sloth-info__img" :src="getImage" :alt="slothInfo.caption" />
+              <img v-show="!isNew" class="sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
             </div>
             <div class="sloth-info__property">
               <label for="caption" class="sloth-info__label">{{ $t('catalog.caption') }} </label>
@@ -83,7 +83,7 @@ import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useSlothInfo from '@/stores/sloth-info';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useAlertModal from '@/stores/alert-modal';
-import { CATALOG_SLOTH_PREVIEW } from '@/common/const';
+import { BASE, CATALOG_SLOTH_PREVIEW } from '@/common/const';
 
 const { slothInfo, tagsStr } = storeToRefs(useSlothInfo());
 const { showAlertModal } = useAlertModal();
@@ -135,8 +135,8 @@ export default defineComponent({
       return this.isView ? this.slothInfo.caption : this.slothInfo.id;
     },
 
-    getImage(): string {
-      return this.newFile.name ? this.preview : this.slothInfo.image_url;
+    getImageUrl(): string {
+      return this.newFile.name ? this.preview : `${BASE}/${this.slothInfo.image_url}`;
     },
   },
 
@@ -219,6 +219,7 @@ export default defineComponent({
   justify-content: space-between;
   gap: var(--gap);
 }
+
 .property-center {
   justify-content: center;
 }
@@ -228,12 +229,15 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
+
 input[type='file'] {
   display: none;
 }
+
 .sloth-info__img {
   height: 20rem;
 }
+
 .sloth-info__text {
   text-align: center;
 }

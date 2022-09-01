@@ -3,10 +3,17 @@
     <div class="catalog__aside list-aside">
       <h3>{{ $t('catalog.title') }}: {{ count }}</h3>
       <custom-btn
+        v-show="getPageName === 'admin'"
         :text="$t('catalog.btn.new')"
         className="btn btn-primary"
         @click="showSlothInfoNew"
-        v-show="getPageName === 'admin'"
+      ></custom-btn>
+      <custom-btn
+        v-show="getPageName === 'catalog'"
+        :disabled="!isChecked"
+        :text="$t('btn.download')"
+        className="btn btn-primary"
+        @click="downloadFiles"
       ></custom-btn>
       <list-controls
         @search="getSloths"
@@ -32,6 +39,7 @@
           @delSloth="delSloth"
           @editSloth="showSlothInfoEdit"
           @showSloth="showSlothInfoView"
+          @checkSloth="checkSlothInfoView"
         ></sloth-card>
       </div>
       <sloth-info
@@ -44,6 +52,33 @@
         @updSlothImage="updSlothImage"
       ></sloth-info>
     </div>
+    <modal-window v-show="isDownloadShow" @close="closeModal">
+      <template v-slot:header> {{ $t('modal.body.download') }} </template>
+
+      <template v-slot:body>
+        <div class="catalog__download">
+          <sloth-card
+            v-for="sloth in checked"
+            :key="sloth.id"
+            :slothInfo="sloth"
+            :isDownload="true"
+            @checkSloth="checkSlothInfoView"
+          ></sloth-card>
+        </div>
+      </template>
+
+      <template v-slot:footer>
+        <div class="catalog__btn">
+          <custom-btn
+            :text="$t('btn.yes')"
+            className="btn btn-primary"
+            :onClick="approveDownload"
+            :disabled="!isChecked"
+          ></custom-btn>
+          <custom-btn :text="$t('btn.no')" className="btn btn-primary" :onClick="closeModal"></custom-btn>
+        </div>
+      </template>
+    </modal-window>
   </div>
 </template>
 
@@ -52,7 +87,7 @@ import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 import type { Sloth, Sloths } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { SLOTH_SORTING } from '@/common/const';
+import { BASE, SLOTH_SORTING } from '@/common/const';
 import { SlothsService } from '@/services/sloths-service';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useLoader from '@/stores/loader';
@@ -66,6 +101,7 @@ import ListControls from '@/components/list-controls/ListControls.vue';
 import ListPagination from '@/components/list-controls/ListPagination.vue';
 import SlothCard from '@/components/catalog/SlothCard.vue';
 import SlothInfo from '@/components/catalog/SlothInfo.vue';
+import ModalWindow from '@/components/modal/ModalWindow.vue';
 
 const service = new SlothsService();
 
@@ -85,6 +121,7 @@ export default defineComponent({
     SlothInfo,
     ListControls,
     ListPagination,
+    ModalWindow,
   },
 
   data() {
@@ -96,25 +133,31 @@ export default defineComponent({
       searchText: '',
       tags: [] as string[],
       sortingOptions: SLOTH_SORTING,
+      isDownloadShow: false,
+      checked: [] as Sloths,
     };
   },
 
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
 
-    getPageName() {
+    getPageName(): string {
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
     },
 
-    getHeaderSlothInfo() {
+    getHeaderSlothInfo(): string {
       if (this.modalEvents === ModalEvents.new) return this.$t('catalog.btn.new');
       if (this.modalEvents === ModalEvents.edit) return this.$t('btn.edit');
       return this.$t('catalog.info');
     },
+
+    isChecked(): boolean {
+      return !!this.sloths.filter((el) => el.checked).length;
+    },
   },
 
-  mounted() {
-    this.getSloths();
+  async mounted() {
+    await this.getSloths();
   },
 
   methods: {
@@ -232,6 +275,11 @@ export default defineComponent({
       }
     },
 
+    checkSlothInfoView(sloth: Sloth) {
+      const i = this.sloths.findIndex((el) => el.id === sloth.id);
+      this.sloths[i].checked = !this.sloths[i].checked;
+    },
+
     showSlothInfoView(sloth: Sloth) {
       this.modalEvents = ModalEvents.view;
       setSlothInfo(sloth);
@@ -257,6 +305,30 @@ export default defineComponent({
     closeSlothInfo() {
       this.isSlothInfoVisible = false;
     },
+
+    downloadFiles() {
+      this.checked = this.sloths.filter((el) => el.checked);
+      if (this.checked.length) this.isDownloadShow = true;
+    },
+
+    approveDownload() {
+      const forDownload = this.sloths.filter((el) => el.checked).map((el) => el.id);
+
+      if (!forDownload.length) return;
+
+      const downloadUrl = `${BASE}/download/${forDownload.join(',')}`;
+      // download
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.click();
+
+      this.checked = [] as Sloths;
+      this.closeModal();
+    },
+
+    closeModal() {
+      this.isDownloadShow = false;
+    },
   },
 });
 </script>
@@ -269,6 +341,7 @@ export default defineComponent({
 
   color: var(--color-text);
 }
+
 .catalog__aside {
   margin: 0.5em;
 }
@@ -278,6 +351,23 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+.catalog__download {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap);
+
+  max-height: 50rem;
+  overflow: scroll;
+}
+
+.catalog__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: var(--gap);
 }
 

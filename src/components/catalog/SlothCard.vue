@@ -2,7 +2,7 @@
   <div :class="`${getPageName}-sloth-info`">
     <div v-if="isAdmin" class="admin-sloth-info__inner">
       <div class="admin-sloth-info__sloth">
-        <img class="admin-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <img class="admin-sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
         <div class="sloth-info__tags tags">
           <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
         </div>
@@ -24,18 +24,18 @@
         </p>
       </div>
     </div>
-    <div v-if="isCatalog" class="catalog-sloth-info__inner">
+
+    <div v-else-if="isCatalog && !isDownload" class="catalog-sloth-info__inner">
       <div class="catalog-sloth-info__sloth">
-        <img class="catalog-sloth-info__img" :src="slothInfo.image_url" :alt="slothInfo.caption" />
+        <img class="catalog-sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
         <div class="sloth-info__tags tags">
           <span class="sloth-info__tag" v-for="tag in slothInfo.tags" :key="tag.value">{{ tag.value }}</span>
         </div>
       </div>
-      <custom-btn :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"></custom-btn>
-      <!-- <custom-btn
-      :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"
-      @click="$emit('checkSloth', slothInfo)"
-    ></custom-btn> -->
+      <custom-btn
+        :className="slothInfo.checked ? 'icon icon_check-on' : 'icon icon_check-off'"
+        @click="$emit('checkSloth', slothInfo)"
+      ></custom-btn>
       <div>
         <div class="catalog-sloth-info__props">
           <p class="sloth-info__property">{{ slothInfo.caption }}</p>
@@ -59,6 +59,18 @@
         @click="$emit('showSloth', slothInfo)"
       ></custom-btn>
     </div>
+
+    <div v-else class="download-sloth-info__inner">
+      <custom-btn
+        :className="slothInfo.checked ? 'download-icon icon_check-on' : 'download-icon icon_check-off'"
+        @click="$emit('checkSloth', slothInfo)"
+      ></custom-btn>
+      <div class="download-sloth-info__sloth">
+        <img class="download-sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
+      </div>
+      <p class="sloth-info__property">{{ slothInfo.caption }}</p>
+    </div>
+
     <modal-window v-show="isApproveShow" @close="closeModal">
       <template v-slot:header> {{ $t('modal.header.alert') }} </template>
 
@@ -79,6 +91,7 @@ import { defineComponent, type PropType } from 'vue';
 import type { Sloth } from '@/common/types';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
+import { BASE } from '@/common/const';
 
 export default defineComponent({
   name: 'SlothCard',
@@ -97,18 +110,27 @@ export default defineComponent({
       type: Object as PropType<Sloth>,
       required: true,
     },
+    isDownload: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
-    getPageName() {
+    getImageUrl(): string {
+      return `${BASE}/${this.slothInfo.image_url}`;
+    },
+
+    getPageName(): string {
+      if (this.isDownload) return 'download';
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
     },
 
-    isAdmin() {
+    isAdmin(): boolean {
       return this.$route.name === 'admin';
     },
 
-    isCatalog() {
+    isCatalog(): boolean {
       return this.$route.name === 'catalog';
     },
   },
@@ -142,6 +164,7 @@ export default defineComponent({
 
   border-radius: 0.5rem;
 }
+
 .catalog-sloth-info {
   position: relative;
   padding: 1rem;
@@ -149,17 +172,20 @@ export default defineComponent({
 
   border-radius: 1rem;
 }
+
 .admin-sloth-info:hover,
 .catalog-sloth-info:hover {
   box-shadow: 0px 0px 0.5rem gray;
 }
 
 .catalog-sloth-info__inner,
-.admin-sloth-info__inner {
+.admin-sloth-info__inner,
+.download-sloth-info__inner {
   display: flex;
   align-items: center;
   gap: var(--gap);
 }
+
 .catalog-sloth-info__inner {
   flex-direction: column;
 }
@@ -175,6 +201,7 @@ export default defineComponent({
   height: calc(10rem - 1rem);
   object-fit: contain;
 }
+
 .catalog-sloth-info__img {
   width: calc(20rem - 2rem);
   height: calc(20rem - 2rem);
@@ -186,9 +213,11 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 }
+
 .admin-sloth-info__props {
   align-items: flex-start;
 }
+
 .catalog-sloth-info__props {
   align-items: center;
 }
@@ -204,9 +233,11 @@ export default defineComponent({
   justify-content: center;
   gap: var(--gap);
 }
+
 .btn-horizontal {
   flex-direction: row;
 }
+
 .sloth-info__tags {
   position: absolute;
   top: 0;
@@ -219,9 +250,11 @@ export default defineComponent({
   justify-content: center;
   z-index: 10;
 }
+
 .catalog-sloth-info__sloth:hover .sloth-info__tags {
   transform: translateY(0);
 }
+
 .sloth-info__tag {
   padding: 0.5rem 0.7rem;
   cursor: default;
@@ -233,10 +266,8 @@ export default defineComponent({
   border: 1px solid gray;
 }
 
-.icon {
-  position: absolute;
-  top: 0rem;
-  right: 0rem;
+.icon,
+.download-icon {
   width: 3rem;
   height: 3rem;
   cursor: pointer;
@@ -246,11 +277,28 @@ export default defineComponent({
   background-size: contain;
   background-position: center center;
 }
+
+.icon {
+  position: absolute;
+  bottom: 0rem;
+  right: 0rem;
+}
+
 .icon_check-on {
   background-image: url('@/assets/icons/btn/check-circle-fill.svg');
 }
+
 .icon_check-off {
   background-image: url('@/assets/icons/btn/check-circle.svg');
+}
+
+.download-sloth-info {
+  position: relative;
+  height: 6rem;
+}
+
+.download-sloth-info__img {
+  height: 6rem;
 }
 
 @media (max-width: 1000px) {
