@@ -70,7 +70,11 @@ export default defineComponent({
       this.$emit('createSuggest', this.suggest, this.image);
       this.suggest = {} as Suggestion;
       this.image = {} as File;
-      (this.$refs.img as HTMLImageElement).src = `/img/suggest/upload-${this.$i18n.locale}-${this.currTheme}.svg`;
+
+      if (this.$refs.img instanceof HTMLImageElement) {
+        const imgEl = this.$refs.img;
+        imgEl.src = `/img/suggest/upload-${this.$i18n.locale}-${this.currTheme}.svg`;
+      }
     },
 
     handleDrop(ev: DragEvent) {
@@ -98,8 +102,10 @@ export default defineComponent({
       reader.readAsDataURL(file);
 
       reader.onload = (e) => {
-        const imgEl = this.$refs.img as HTMLImageElement;
-        imgEl.src = (e.target as FileReader).result as string;
+        if (this.$refs.img instanceof HTMLImageElement && e.target instanceof FileReader) {
+          const imgEl = this.$refs.img;
+          imgEl.src = `${e.target.result}`;
+        }
       };
     },
   },
