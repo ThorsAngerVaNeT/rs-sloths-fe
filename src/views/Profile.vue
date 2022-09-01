@@ -19,7 +19,7 @@
           {{ $t(`profile.btn.${tab}`) }}
         </div>
       </div>
-      <component :is="components[currentGame]" class="profile__tab" :id="components[currentGame]"></component>
+      <component :is="components[currentGame]" class="profile__tab" :userId="getUserId"></component>
     </main>
   </div>
 </template>

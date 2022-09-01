@@ -23,8 +23,9 @@ const { hasAuth, getUserId } = useCurrUser();
 export class GameResultService implements API<GameResult> {
   private service: APIService<GameResult>;
 
-  constructor(gameId: string) {
-    this.service = new APIService<GameResult>(`${Endpoints.games}/${gameId}/${Endpoints.results}`);
+  constructor(gameId: string, userId = '') {
+    const userIdStr = userId ? `?userId=${userId}` : '';
+    this.service = new APIService<GameResult>(`${Endpoints.games}/${gameId}/${Endpoints.results}${userIdStr}`);
   }
 
   public getAllList() {
