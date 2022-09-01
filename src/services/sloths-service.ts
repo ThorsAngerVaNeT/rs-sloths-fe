@@ -1,5 +1,6 @@
 import type {
   API,
+  APIRequestResult,
   Sloth,
   SlothRating,
   SlothTags,
@@ -9,8 +10,11 @@ import type {
   WhereFieldSome,
 } from '@/common/types';
 import { getORFields, getFieldContainsFilter, getANDFields } from '@/utils/query-string';
-import { Endpoints } from '../common/enums/endpoints';
+import { Endpoints } from '@/common/enums/endpoints';
+import useCurrUser from '@/stores/curr-user';
 import { APIService } from './api-service';
+import { APIError } from './error-handling/api-error';
+import { errorHandler } from './error-handling/error-handler';
 
 const getFilter = (searchText: string, selected: string[]): string => {
   const search: WhereFieldFilter | WhereField | null = searchText
@@ -21,6 +25,8 @@ const getFilter = (searchText: string, selected: string[]): string => {
 
   return getANDFields([search, select]);
 };
+
+const { hasAuth, getUserId } = useCurrUser();
 
 export class SlothsService implements API<Sloth> {
   private service = new APIService<Sloth>(Endpoints.sloths);
@@ -89,11 +95,25 @@ export class SlothsService implements API<Sloth> {
   }
 
   public static updateRatingById(slothId: string, rate: number) {
-    const ratingService = new APIService<SlothRating>(`${Endpoints.sloths}/${slothId}/rating`);
-    const userId = '09edb293-9e8c-4768-8d32-3ee2784959fa'; // todo user id
+    const res: APIRequestResult<SlothRating> = {
+      ok: false,
+      status: 401,
+      data: {} as SlothRating,
+      headers: {} as Headers,
+    };
+    try {
+      const ratingService = new APIService<SlothRating>(`${Endpoints.sloths}/${slothId}/rating`);
+      const userId = getUserId; // '09edb293-9e8c-4768-8d32-3ee2784959fa'; // todo user id
+      console.log(userId);
 
-    const body: SlothRating = { slothId, userId, rate };
-    return ratingService.update(body);
+      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
+
+      const body: SlothRating = { slothId, userId, rate };
+      return ratingService.update(body);
+    } catch (error) {
+      errorHandler(error);
+    }
+    return res;
   }
 
   public deleteById(id: string) {
