@@ -109,7 +109,8 @@
     "bottom": "Text Bottom",
     "margin": "Image Margin",
     "color": "Text Color",
-    "stroke": "Text Stroke Color"
+    "stroke": "Text Stroke Color",
+    "backgroundColor": "Background Color"
   },
 
   "sloth": {

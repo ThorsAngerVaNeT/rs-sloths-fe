@@ -37,6 +37,10 @@
           <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @input="draw()" />
         </div>
         <div class="meme__property">
+          <label class="meme__label" for="backgroundColor">{{ $t('create.backgroundColor') }}</label>
+          <input type="color" id="backgroundColor" class="meme__color" v-model="backgroundColor" @input="draw()" />
+        </div>
+        <div class="meme__property">
           <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
           <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @input="draw()" />
         </div>
@@ -113,6 +117,7 @@ export default defineComponent({
       imageRight: 0,
       imageBottom: 0,
       color: '#ffffff',
+      backgroundColor: '#777777',
       strokeStyle: '#000000',
       margin: 50,
     };
@@ -172,9 +177,7 @@ export default defineComponent({
     },
 
     draw() {
-      // clear the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
       // some maths
       this.scaledImageWidth = this.img.naturalWidth * this.scaleSteps;
       this.scaledImageHeight = this.scaledImageWidth * (this.img.naturalHeight / this.img.naturalWidth);
@@ -189,6 +192,10 @@ export default defineComponent({
       this.canvas.height = this.scaledImageHeight
         ? this.scaledImageHeight + this.margin * 2 * this.scaleSteps
         : this.canvas.height;
+
+      // image background
+      this.ctx.fillStyle = this.backgroundColor;
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       // draw the image
       this.ctx.drawImage(
