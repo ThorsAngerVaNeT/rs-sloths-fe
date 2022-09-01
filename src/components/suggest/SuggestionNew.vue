@@ -81,8 +81,10 @@ export default defineComponent({
       ev.preventDefault();
       ev.stopPropagation();
 
-      const { files } = ev.dataTransfer as DataTransfer;
-      this.renderFile(files[0]);
+      if (ev.dataTransfer instanceof DataTransfer) {
+        const { files } = ev.dataTransfer;
+        this.renderFile(files[0]);
+      }
     },
 
     handleDrag(ev: DragEvent) {
@@ -91,8 +93,10 @@ export default defineComponent({
     },
 
     handleUploadChange(ev: InputEvent) {
-      const file: File = (ev.target as HTMLFormElement).files[0];
-      this.renderFile(file);
+      if (ev.target instanceof HTMLFormElement) {
+        const file: File = ev.target.files[0];
+        this.renderFile(file);
+      }
     },
 
     renderFile(file: File) {
