@@ -93,7 +93,7 @@ import { defineComponent } from 'vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import usePagesStore from '@/stores/pages-store';
 
-const { getPageCrateState, setPageCrateState } = usePagesStore();
+const { getPageCreateState, setPageCreateState } = usePagesStore();
 
 export default defineComponent({
   name: 'CreateView',
@@ -166,7 +166,7 @@ export default defineComponent({
   },
 
   beforeRouteLeave() {
-    setPageCrateState(JSON.stringify(this.$data));
+    setPageCreateState(JSON.stringify(this.$data));
   },
 
   methods: {
@@ -346,7 +346,7 @@ export default defineComponent({
     },
 
     loadStore() {
-      const str = getPageCrateState();
+      const str = getPageCreateState();
       if (!str) return;
 
       const data = JSON.parse(str);
