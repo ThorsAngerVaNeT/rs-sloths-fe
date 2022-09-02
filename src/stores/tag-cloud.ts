@@ -1,4 +1,3 @@
-import type { TagCloud } from '@/common/types';
 import { defineStore } from 'pinia';
 
 const useSelectedTags = defineStore({
@@ -13,7 +12,7 @@ const useSelectedTags = defineStore({
       return [...this.selected];
     },
 
-    setSelected(s: TagCloud) {
+    setSelected(s: string[]) {
       this.selected = [...s];
     },
   },

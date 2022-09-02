@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts">
-import type { TagCloud } from '@/common/types';
 import useSelectedTags from '@/stores/tag-cloud';
 import { defineComponent, type PropType } from 'vue';
 
@@ -18,7 +17,7 @@ const tagCloud = defineComponent({
 
   data() {
     return {
-      selected: new Set(getSelected()) as TagCloud,
+      selected: getSelected(),
     };
   },
 
@@ -31,15 +30,15 @@ const tagCloud = defineComponent({
 
   methods: {
     isHas(tag: string) {
-      return this.selected.has(tag);
+      return this.selected.includes(tag);
     },
 
     select(tag: string) {
-      const has = this.selected.has(tag);
-      if (has) {
-        this.selected.delete(tag);
+      const i = this.selected.indexOf(tag);
+      if (i !== -1) {
+        this.selected.splice(i, 1);
       } else {
-        this.selected.add(tag);
+        this.selected.push(tag);
       }
 
       setSelected(this.selected);
@@ -47,7 +46,7 @@ const tagCloud = defineComponent({
     },
 
     clearSelected() {
-      this.selected = new Set([]) as TagCloud;
+      this.selected = [] as string[];
 
       setSelected(this.selected);
     },

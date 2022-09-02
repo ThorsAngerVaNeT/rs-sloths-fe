@@ -49,9 +49,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
-import type { Suggestion, Suggestions } from '@/common/types';
+import type { PageSettings, Suggestion, Suggestions } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { SUGGESTION_SORTING } from '@/common/const';
+import { PAGINATION_OPTIONS, SUGGESTION_SORTING } from '@/common/const';
 import { SuggestionsService } from '@/services/suggestions-service';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useLoader from '@/stores/loader';
@@ -115,9 +115,12 @@ export default defineComponent({
     },
   },
 
+  created() {
+    this.loadStore();
+  },
+
   async mounted() {
     await this.getSuggestions();
-    this.loadStore();
   },
 
   beforeRouteLeave() {
@@ -241,17 +244,31 @@ export default defineComponent({
     },
 
     loadStore() {
+      const settings: PageSettings = {
+        currPage: 1,
+        perPage: PAGINATION_OPTIONS[0],
+        searchText: '',
+        selected: [] as string[],
+        sorting: '',
+      };
+
       const str = getPageSuggestionState();
-      if (!str) return;
+      if (str) {
+        const data = JSON.parse(str);
+        if (data) {
+          settings.currPage = data.currPage;
+          settings.perPage = data.perPage;
+          settings.searchText = data.searchText;
+          settings.selected = data.selected;
+          settings.sorting = data.sorting;
+        }
+      }
 
-      const data = JSON.parse(str);
-      if (!data) return;
-
-      setCurrPage(data.currPage);
-      setPerPage(data.perPage);
-      setSearchText(data.searchText);
-      setSelected(data.selected);
-      setSortingList(data.sortingList);
+      setCurrPage(settings.currPage);
+      setPerPage(settings.perPage);
+      setSearchText(settings.searchText);
+      setSelected(settings.selected);
+      setSortingList(settings.sorting);
     },
   },
 });
