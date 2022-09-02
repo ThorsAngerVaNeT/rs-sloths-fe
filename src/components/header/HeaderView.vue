@@ -1,7 +1,7 @@
 <template>
   <header class="header" :class="$route.name !== 'home' ? '' : 'header_home'">
     <router-link class="header__title" v-show="$route.name !== 'home'" to="/">RS SLOTHS</router-link>
-    <h2 v-show="$route.name !== 'home'" class="section__title">{{ $t(`${$route.name}.title`) }}</h2>
+    <h2 v-show="$route.name !== 'home'" class="section__title">{{ $route.name ? $t(`${$route.name}.title`) : '' }}</h2>
     <div class="header__tools">
       <div class="header__admin" v-show="isAdmin" @click="pushToAdmin" :title="$t('admin.title')"></div>
       <sound-switcher />
