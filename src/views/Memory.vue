@@ -83,7 +83,6 @@ export default defineComponent({
 }
 
 .memory__main {
-  /* width: calc(100% - 300px); */
   flex: 1;
   display: flex;
   align-items: center;

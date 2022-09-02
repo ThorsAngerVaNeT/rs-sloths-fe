@@ -33,7 +33,6 @@
         </transition>
       </div>
     </transition-group>
-    <!-- <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn> -->
     <modal-window v-show="getShowModal" @close="closeModal">
       <template v-slot:header> {{ $t('memory.congrats') }} </template>
 
@@ -328,6 +327,7 @@ export default defineComponent({
   color: var(--color-text-inverse);
   transition: 0.5s ease;
 }
+
 .game-field__cards {
   max-width: v-bind(grid);
   display: flex;
@@ -390,6 +390,7 @@ export default defineComponent({
 .success {
   animation: rainbow 0.5s;
 }
+
 /* Animations */
 .shuffle-list-move {
   transition: transform 0.6s;
@@ -398,6 +399,7 @@ export default defineComponent({
 .flip-enter-active {
   animation: flip-out 0.2s;
 }
+
 .flip-leave-active {
   animation: flip-in 0.2s;
 }
@@ -412,6 +414,7 @@ export default defineComponent({
     transform-style: preserve-3d;
   }
 }
+
 @keyframes flip-out {
   0% {
     transform: rotateY(270deg);
