@@ -12,14 +12,14 @@ import type { SelectOptions } from '@/common/types';
 import useSortingList from '@/stores/sorting-list';
 import { defineComponent, type PropType } from 'vue';
 
-const { setSortingList } = useSortingList();
+const { getSortingList, setSortingList } = useSortingList();
 
 const sortingList = defineComponent({
   name: 'SortingList',
 
   data() {
     return {
-      sorting: '',
+      sorting: getSortingList(),
     };
   },
 

@@ -102,15 +102,17 @@ import ListPagination from '@/components/list-controls/ListPagination.vue';
 import SlothCard from '@/components/catalog/SlothCard.vue';
 import SlothInfo from '@/components/catalog/SlothInfo.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
+import usePagesStore from '@/stores/pages-store';
 
 const service = new SlothsService();
 
 const { setEmptySlothInfo, setSlothInfo } = useSlothInfo();
 
-const { getPerPage, getCurrPage } = usePagination();
-const { getSearchText } = useSearchText();
-const { getSelected } = useSelectedTags();
-const { getSortingList } = useSortingList();
+const { getPerPage, getCurrPage, setPerPage, setCurrPage } = usePagination();
+const { getSearchText, setSearchText } = useSearchText();
+const { getSelected, setSelected } = useSelectedTags();
+const { getSortingList, setSortingList } = useSortingList();
+const { getPageCatalogState, setPageCatalogState } = usePagesStore();
 
 export default defineComponent({
   name: 'CatalogView',
@@ -158,6 +160,19 @@ export default defineComponent({
 
   async mounted() {
     await this.getSloths();
+    this.loadStore();
+  },
+
+  beforeRouteLeave() {
+    const savedProps = {
+      currPage: getCurrPage(),
+      perPage: getPerPage(),
+      searchText: getSearchText(),
+      selected: getSelected(),
+      sorting: getSortingList(),
+      checked: this.sloths.filter((el) => el.checked).map((el) => el.id),
+    };
+    setPageCatalogState(JSON.stringify(savedProps));
   },
 
   methods: {
@@ -328,6 +343,26 @@ export default defineComponent({
 
     closeModal() {
       this.isDownloadShow = false;
+    },
+
+    loadStore() {
+      const str = getPageCatalogState();
+      if (!str) return;
+
+      const data = JSON.parse(str);
+      if (!data) return;
+
+      setCurrPage(data.currPage);
+      setPerPage(data.perPage);
+      setSearchText(data.searchText);
+      setSelected(data.selected);
+      setSortingList(data.sortingList);
+
+      const { checked } = data;
+      checked.forEach((id: string) => {
+        const found = this.sloths.find((el) => el.id === id);
+        if (found) found.checked = true;
+      });
     },
   },
 });

@@ -11,14 +11,14 @@ import type { TagCloud } from '@/common/types';
 import useSelectedTags from '@/stores/tag-cloud';
 import { defineComponent, type PropType } from 'vue';
 
-const { setSelected } = useSelectedTags();
+const { getSelected, setSelected } = useSelectedTags();
 
 const tagCloud = defineComponent({
   name: 'TagCloud',
 
   data() {
     return {
-      selected: new Set([]) as TagCloud,
+      selected: new Set(getSelected()) as TagCloud,
     };
   },
 

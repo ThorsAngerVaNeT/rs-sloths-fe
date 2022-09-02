@@ -52,7 +52,7 @@ import usePagination from '@/stores/pagination';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { defineComponent } from 'vue';
 
-const { setPerPage, setCurrPage } = usePagination();
+const { getPerPage, getCurrPage, setPerPage, setCurrPage } = usePagination();
 
 const paginationList = defineComponent({
   name: 'ListPagination',
@@ -64,8 +64,8 @@ const paginationList = defineComponent({
   data() {
     return {
       perPageArr: PAGINATION_OPTIONS,
-      perPage: PAGINATION_OPTIONS[0],
-      currPage: 1,
+      perPage: getPerPage(),
+      currPage: getCurrPage(),
     };
   },
 

@@ -17,7 +17,7 @@ import useSearchText from '@/stores/search-text';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { defineComponent } from 'vue';
 
-const { setSearchText } = useSearchText();
+const { getSearchText, setSearchText } = useSearchText();
 
 const searchText = defineComponent({
   name: 'SearchText',
@@ -28,7 +28,7 @@ const searchText = defineComponent({
 
   data() {
     return {
-      searchText: '',
+      searchText: getSearchText(),
     };
   },
 
