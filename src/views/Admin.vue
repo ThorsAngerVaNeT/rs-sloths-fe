@@ -68,6 +68,7 @@ export default defineComponent({
 
   beforeRouteEnter(to, from, next) {
     if (!isAdmin) next('/404');
+    next();
   },
 
   created() {
