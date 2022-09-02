@@ -4,6 +4,7 @@ const usePagesStore = defineStore({
   id: 'pagesStore',
   state: () => ({
     pageCatalog: '',
+    pageSuggestion: '',
     pageCreate: '',
     pageMemory: '',
   }),
@@ -15,6 +16,14 @@ const usePagesStore = defineStore({
 
     setPageCatalogState(newState: string) {
       this.pageCatalog = newState;
+    },
+
+    getPageSuggestionState(): string {
+      return this.pageSuggestion;
+    },
+
+    setPageSuggestionState(newState: string) {
+      this.pageSuggestion = newState;
     },
 
     getPageCreateState(): string {

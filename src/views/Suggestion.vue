@@ -66,15 +66,17 @@ import ListPagination from '@/components/list-controls/ListPagination.vue';
 import SuggestionCard from '@/components/suggest/SuggestionCard.vue';
 import SuggestionInfo from '@/components/suggest/SuggestionInfo.vue';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
+import usePagesStore from '@/stores/pages-store';
 
 const service = new SuggestionsService();
 
 const { setEmptySuggestionInfo, setSuggestionInfo } = useSuggestionInfo();
 
-const { getPerPage, getCurrPage } = usePagination();
-const { getSearchText } = useSearchText();
-const { getSelected } = useSelectedTags();
-const { getSortingList } = useSortingList();
+const { getPerPage, getCurrPage, setPerPage, setCurrPage } = usePagination();
+const { getSearchText, setSearchText } = useSearchText();
+const { getSelected, setSelected } = useSelectedTags();
+const { getSortingList, setSortingList } = useSortingList();
+const { getPageSuggestionState, setPageSuggestionState } = usePagesStore();
 
 export default defineComponent({
   name: 'SuggestionView',
@@ -113,8 +115,20 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    this.getSuggestions();
+  async mounted() {
+    await this.getSuggestions();
+    this.loadStore();
+  },
+
+  beforeRouteLeave() {
+    const savedProps = {
+      currPage: getCurrPage(),
+      perPage: getPerPage(),
+      searchText: getSearchText(),
+      selected: getSelected(),
+      sorting: getSortingList(),
+    };
+    setPageSuggestionState(JSON.stringify(savedProps));
   },
 
   methods: {
@@ -224,6 +238,20 @@ export default defineComponent({
 
     closeSuggestionInfo() {
       this.isSuggestionInfoVisible = false;
+    },
+
+    loadStore() {
+      const str = getPageSuggestionState();
+      if (!str) return;
+
+      const data = JSON.parse(str);
+      if (!data) return;
+
+      setCurrPage(data.currPage);
+      setPerPage(data.perPage);
+      setSearchText(data.searchText);
+      setSelected(data.selected);
+      setSortingList(data.sortingList);
     },
   },
 });
