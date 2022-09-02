@@ -65,7 +65,8 @@
     "tags": "Tags",
     "btn": {
       "new": "New Sloth"
-    }
+    },
+    "count": "Total count"
   },
 
   "guess": {
@@ -106,7 +107,8 @@
       "submit": "Submit"
     },
     "new": "Create new Suggestion",
-    "placeholder": "Enter description of meme"
+    "placeholder": "Enter description of meme",
+    "count": "Total count"
   },
 
   "create": {

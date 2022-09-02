@@ -10,7 +10,7 @@
     </div>
     <div v-if="mode === 'watch'" class="suggest__watch">
       <div class="suggest__aside list-aside">
-        <h3>{{ $t('suggest.title') }}: {{ count }}</h3>
+        <h3>{{ $t('suggest.count') }}: {{ count }}</h3>
         <list-controls
           @search="getSuggestions"
           @tags="getSuggestions"

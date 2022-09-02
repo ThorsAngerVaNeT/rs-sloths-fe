@@ -18,7 +18,7 @@
 *::-webkit-scrollbar-thumb {
   width: 5px;
   height: 5px;
-  background-color: var(--dark-addict);
+  background-color: var(--color-background-inverse);
 }
 
 html {

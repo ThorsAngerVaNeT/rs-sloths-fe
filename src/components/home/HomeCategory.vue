@@ -55,7 +55,7 @@ export default defineComponent({
   height: 10rem;
   width: 100%;
   border-radius: 50%;
-  border: 0.3rem var(--color-border-theme) solid;
+  border: 0.3rem var(--color-border-inverse) solid;
   background-color: var(--color-background-soft);
   transition: 0.3s;
 }

@@ -1,11 +1,21 @@
 <template>
   <div class="game-field">
-    <div class="game-field__steps">
-      <p>{{ steps }}</p>
+    <div class="game-field__tools">
+      <div class="game-field__steps">
+        <p>{{ steps }}</p>
+      </div>
+      <custom-btn
+        :imgPath="`./img/memory/reload-${currTheme}.svg`"
+        :text="$t('memory.start')"
+        className="btn btn-memory"
+        :disabled="steps === 0"
+        :onClick="startGame"
+      ></custom-btn>
     </div>
     <transition-group name="shuffle-list" tag="div" class="game-field__cards">
       <div
         class="game-field__card"
+        :class="`game-field__card_${level.level}`"
         v-for="(item, index) in cards"
         :key="item.index"
         :item="item"
@@ -23,7 +33,6 @@
         </transition>
       </div>
     </transition-group>
-    <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
     <modal-window v-show="getShowModal" @close="closeModal">
       <template v-slot:header> {{ $t('memory.congrats') }} </template>
 
@@ -38,6 +47,7 @@
 </template>
 
 <script lang="ts">
+import { mapWritableState } from 'pinia';
 import { ruNounEnding } from '@/utils/ru-noun-ending';
 import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_GAME_WINNER, MEMORY_LEVELS } from '@/common/const';
 import type { MemoryLevel } from '@/common/types';
@@ -45,6 +55,7 @@ import { defineComponent, type PropType } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { playAudio, audioSlide, audioFlip, audioFail, audioSuccess, audioWin } from '@/utils/audio';
+import themeProp from '../../stores/theme';
 
 type Card = {
   img: string;
@@ -87,6 +98,8 @@ export default defineComponent({
   },
 
   computed: {
+    ...mapWritableState(themeProp, ['currTheme']),
+
     getLevel(): string {
       return `memory.${this.level.level}`;
     },
@@ -141,6 +154,7 @@ export default defineComponent({
     },
 
     getCards() {
+      this.changeScrollHidden('hidden');
       this.cards = [];
       let index = 0;
 
@@ -152,6 +166,14 @@ export default defineComponent({
         this.cards.push({ img: el, id: i, index, open: false, success: false });
         index += 1;
       });
+      setTimeout(() => this.changeScrollHidden(''), MEMORY_GAME_TIMEOUT);
+    },
+
+    changeScrollHidden(val = '') {
+      const mainEl: HTMLElement | null = document.querySelector('.main');
+      if (mainEl instanceof HTMLElement) {
+        mainEl.style.overflowY = val;
+      }
     },
 
     startGame() {
@@ -282,10 +304,20 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
 }
+
+.game-field__tools {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
 .game-field__steps {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   font-size: 2em;
   display: flex;
   align-items: center;
@@ -295,8 +327,8 @@ export default defineComponent({
   color: var(--color-text-inverse);
   transition: 0.5s ease;
 }
+
 .game-field__cards {
-  margin: 1em;
   max-width: v-bind(grid);
   display: flex;
   flex-wrap: wrap;
@@ -310,6 +342,16 @@ export default defineComponent({
   height: 200px;
   cursor: pointer;
   perspective: 600px;
+}
+
+.game-field__card_middle {
+  width: 125px;
+  height: 165px;
+}
+
+.game-field__card_senior {
+  width: 100px;
+  height: 133px;
 }
 
 .game-field__img {
@@ -326,9 +368,29 @@ export default defineComponent({
   box-shadow: 0px 0px 5px var(--color-text);
 }
 
+@media (max-width: 1200px) {
+  .game-field__card {
+    width: 100px;
+    height: 133px;
+    cursor: pointer;
+    perspective: 600px;
+  }
+
+  .game-field__card_middle {
+    width: 70px;
+    height: 94px;
+  }
+
+  .game-field__card_senior {
+    width: 70px;
+    height: 94px;
+  }
+}
+
 .success {
   animation: rainbow 0.5s;
 }
+
 /* Animations */
 .shuffle-list-move {
   transition: transform 0.6s;
@@ -337,9 +399,11 @@ export default defineComponent({
 .flip-enter-active {
   animation: flip-out 0.2s;
 }
+
 .flip-leave-active {
   animation: flip-in 0.2s;
 }
+
 @keyframes flip-in {
   0% {
     transform: rotateY(0deg);
@@ -350,6 +414,7 @@ export default defineComponent({
     transform-style: preserve-3d;
   }
 }
+
 @keyframes flip-out {
   0% {
     transform: rotateY(270deg);
