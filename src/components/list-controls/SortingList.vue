@@ -1,6 +1,5 @@
 <template>
   <div class="sorting">
-    {{ sorting }}
     <select name="select" class="sorting__select select-element" v-model="sorting" @change="sortingList">
       <option disabled value="">{{ title }}</option>
       <option v-for="(item, index) in options" :key="index" :value="item.value">{{ $t(item.text) }}</option>
