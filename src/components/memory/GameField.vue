@@ -50,11 +50,12 @@
 import { mapWritableState } from 'pinia';
 import { ruNounEnding } from '@/utils/ru-noun-ending';
 import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_GAME_WINNER, MEMORY_LEVELS } from '@/common/const';
-import type { MemoryLevel } from '@/common/types';
+import type { MemoryLevel, GameResult } from '@/common/types';
 import { defineComponent, type PropType } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { playAudio, audioSlide, audioFlip, audioFail, audioSuccess, audioWin } from '@/utils/audio';
+import { GameResultService } from '@/services/game-result-service';
 import themeProp from '../../stores/theme';
 
 type Card = {
@@ -257,7 +258,7 @@ export default defineComponent({
         const i2 = this.activeCard;
         this.activeCard = Infinity;
 
-        if (!this.checkGame()) this.cardsMatched(i, i2);
+        if (!this.isWin()) this.cardsMatched(i, i2);
       } else {
         const i2 = this.activeCard;
         this.activeCard = Infinity;
@@ -265,17 +266,18 @@ export default defineComponent({
         this.cardsNotMatched(i, i2);
       }
 
-      if (this.checkGame()) {
+      if (this.isWin()) {
         this.endTime = Date.now();
 
         setTimeout(() => {
           playAudio(audioWin);
           this.isModalVisible = true;
+          this.saveResult();
         }, 0);
       }
     },
 
-    checkGame(): boolean {
+    isWin(): boolean {
       return this.cards.every((el) => el.open);
     },
 
@@ -286,6 +288,19 @@ export default defineComponent({
     closeCard(i: number) {
       this.cards[i].open = false;
       this.cards[i].success = false;
+    },
+
+    async saveResult() {
+      const result = JSON.stringify({
+        steps: this.steps,
+        time: this.getTime,
+      });
+      const service = new GameResultService(this.level.gameId);
+      const gameResult: GameResult = {
+        gameId: this.level.gameId,
+        result,
+      };
+      await service.create(gameResult);
     },
 
     closeModal() {

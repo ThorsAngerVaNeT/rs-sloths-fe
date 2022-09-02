@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import type { ErrorDescription, SelectOptions } from './types';
+import type { ErrorDescription, MemoryLevel, SelectOptions } from './types';
 
 // Services
 export const BASE = 'http://localhost:3000'; // todo
@@ -119,22 +119,28 @@ export const AUTHORIZATION_IMG = './github.png';
 export const AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize?client_id=12e65e35ba7755d60466';
 
 // Memory Game
-export const MEMORY_LEVELS = [
+export const MEMORY_LEVELS: MemoryLevel[] = [
   {
     level: 'junior',
     n: 4,
+    gameId: '36fdb508-80e4-4e0d-a6b8-78fe7e66a5d5',
   },
   {
     level: 'middle',
     n: 8,
+    gameId: 'ca0305dc-9dab-4f36-84f1-45f8223818e0',
   },
   {
     level: 'senior',
     n: 12,
+    gameId: '42df7648-5c56-4a66-a288-ec6acf8b18b0',
   },
 ];
 export const MEMORY_GAME_TIMEOUT = 1000;
 export const MEMORY_GAME_COVER = './img/memory/card-cover.svg';
-export const MEMORY_GAME_WINNER = './winner1.png';
+export const MEMORY_GAME_WINNER = './winner1.svg';
+
+// Guess Game
+export const GUESS_GAME_ID = '431b4880-0ac6-4082-ae9f-b34f5f9a84a6';
 
 export const CATALOG_SLOTH_PREVIEW = './preview.svg';
