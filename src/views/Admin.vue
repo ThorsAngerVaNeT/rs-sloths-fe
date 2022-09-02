@@ -31,6 +31,7 @@ import usePagination from '@/stores/pagination';
 import useSearchText from '@/stores/search-text';
 import useSortingList from '@/stores/sorting-list';
 import useSelectedTags from '@/stores/tag-cloud';
+import useCurrUser from '@/stores/curr-user';
 import CatalogView from './Catalog.vue';
 import SuggestionView from './Suggestion.vue';
 
@@ -38,6 +39,8 @@ const { setPerPage, setCurrPage } = usePagination();
 const { setSearchText } = useSearchText();
 const { setSelected } = useSelectedTags();
 const { setSortingList } = useSortingList();
+
+const { isAdmin } = useCurrUser();
 
 export default defineComponent({
   name: 'AdminView',
@@ -61,6 +64,10 @@ export default defineComponent({
 
   beforeRouteLeave() {
     this.clearStore();
+  },
+
+  beforeRouteEnter(to, from, next) {
+    if (!isAdmin) next('/404');
   },
 
   created() {
