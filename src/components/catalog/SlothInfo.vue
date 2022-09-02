@@ -6,8 +6,8 @@
       <template v-slot:body>
         <div>
           <div v-if="isView" class="sloth-info__props">
-            <div :class="'sloth-info__sloth'">
-              <img :class="'sloth-info__img'" :src="getImageUrl" :alt="slothInfo.caption" />
+            <div class="sloth-info__sloth">
+              <img class="sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
             </div>
             <div class="sloth-info__property property-center">
               <p class="sloth-info__text">{{ slothInfo.description }}</p>
@@ -28,7 +28,7 @@
           </div>
 
           <div v-else class="sloth-info__props">
-            <div :class="'sloth-info__sloth'">
+            <div class="sloth-info__sloth">
               <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
               <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
               <img v-show="isNew" class="sloth-info__img" :src="preview" alt="preview" />
@@ -136,7 +136,8 @@ export default defineComponent({
     },
 
     getImageUrl(): string {
-      return this.newFile.name ? this.preview : `${BASE}/${this.slothInfo.image_url}`;
+      if (this.newFile.name) return this.preview;
+      return this.slothInfo.image_url ? `${BASE}/${this.slothInfo.image_url}` : CATALOG_SLOTH_PREVIEW;
     },
   },
 
