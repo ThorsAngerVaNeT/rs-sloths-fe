@@ -13,20 +13,6 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(themeProp, ['currTheme']),
-
-    // temp realization, todo
-    // routeName() {
-    //   switch (this.$route.name) {
-    //     case 'about':
-    //       return 'about';
-    //     case 'memory':
-    //       return 'memory';
-    //     case 'suggest':
-    //       return 'suggest';
-    //     default:
-    //       return 'home';
-    //   }
-    // },
   },
 });
 </script>
