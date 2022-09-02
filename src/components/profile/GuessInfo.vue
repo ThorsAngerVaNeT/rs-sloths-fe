@@ -1,7 +1,9 @@
 <template>
   <div class="game-info">
-    <div class="title">{{ userId }}</div>
-    <div v-for="(res, index) in results" :key="index">{{ res.result }} {{ res.createdAt }}</div>
+    <div class="title">{{ isAdmin ? 'all results' : userId }}</div>
+    <div v-for="(res, index) in results" :key="index">
+      {{ res.result }} {{ res.createdAt }} {{ isAdmin ? res.userId : '' }}
+    </div>
 
     <home-category category="guess" @click="$router.push({ name: 'guess' })"></home-category>
   </div>
@@ -34,7 +36,13 @@ export default defineComponent({
   props: {
     userId: {
       type: String,
-      required: true,
+      default: '',
+    },
+  },
+
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
     },
   },
 

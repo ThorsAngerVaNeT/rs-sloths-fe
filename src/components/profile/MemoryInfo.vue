@@ -1,9 +1,9 @@
 <template>
   <div class="game-info">
-    <div class="title">{{ userId }}</div>
+    <div class="title">{{ isAdmin ? 'all results' : userId }}</div>
     <div v-for="(res, index) in gameResults" :key="index">
       {{ res.level }}
-      <div v-for="(r, i) in res.results" :key="i">{{ r.result }} {{ r.createdAt }}</div>
+      <div v-for="(r, i) in res.results" :key="i">{{ r.result }} {{ r.createdAt }} {{ isAdmin ? r.userId : '' }}</div>
     </div>
 
     <home-category category="memory" @click="$router.push({ name: 'memory' })"></home-category>
@@ -38,10 +38,15 @@ export default defineComponent({
   props: {
     userId: {
       type: String,
-      required: true,
+      default: '',
     },
   },
 
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
+    },
+  },
   async mounted() {
     await this.getGameInfo();
   },
