@@ -21,13 +21,23 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import UsersList from '@/components/admin/UsersList.vue';
 import GuessInfo from '@/components/profile/GuessInfo.vue';
 import MemoryInfo from '@/components/profile/MemoryInfo.vue';
+import { PAGINATION_OPTIONS } from '@/common/const';
+import type { PageSettings } from '@/common/types';
+import usePagination from '@/stores/pagination';
+import useSearchText from '@/stores/search-text';
+import useSortingList from '@/stores/sorting-list';
+import useSelectedTags from '@/stores/tag-cloud';
 import CatalogView from './Catalog.vue';
 import SuggestionView from './Suggestion.vue';
+
+const { setPerPage, setCurrPage } = usePagination();
+const { setSearchText } = useSearchText();
+const { setSelected } = useSelectedTags();
+const { setSortingList } = useSortingList();
 
 export default defineComponent({
   name: 'AdminView',
@@ -47,6 +57,33 @@ export default defineComponent({
       pages: ['users', 'sloths', 'suggest', 'guess', 'memory'],
       components: ['UsersList', 'CatalogView', 'SuggestionView', 'GuessInfo', 'MemoryInfo'],
     };
+  },
+
+  beforeRouteLeave() {
+    this.clearStore();
+  },
+
+  created() {
+    this.clearStore();
+  },
+
+  methods: {
+    clearStore() {
+      const settings: PageSettings = {
+        currPage: 1,
+        perPage: PAGINATION_OPTIONS[0],
+        searchText: '',
+        selected: [] as string[],
+        sorting: '',
+        checked: [] as string[],
+      };
+
+      setCurrPage(settings.currPage);
+      setPerPage(settings.perPage);
+      setSearchText(settings.searchText);
+      setSelected(settings.selected);
+      setSortingList(settings.sorting);
+    },
   },
 });
 </script>

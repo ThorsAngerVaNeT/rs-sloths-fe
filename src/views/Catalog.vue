@@ -158,7 +158,7 @@ export default defineComponent({
   },
 
   created() {
-    this.loadStore();
+    if (this.getPageName === 'catalog') this.loadStore();
   },
 
   async mounted() {
@@ -166,15 +166,17 @@ export default defineComponent({
   },
 
   beforeRouteLeave() {
-    const savedProps = {
-      currPage: getCurrPage(),
-      perPage: getPerPage(),
-      searchText: getSearchText(),
-      selected: getSelected(),
-      sorting: getSortingList(),
-      checked: this.sloths.filter((el) => el.checked).map((el) => el.id),
-    };
-    setPageCatalogState(JSON.stringify(savedProps));
+    if (this.getPageName === 'catalog') {
+      const savedProps = {
+        currPage: getCurrPage(),
+        perPage: getPerPage(),
+        searchText: getSearchText(),
+        selected: getSelected(),
+        sorting: getSortingList(),
+        checked: this.sloths.filter((el) => el.checked).map((el) => el.id),
+      };
+      setPageCatalogState(JSON.stringify(savedProps));
+    }
   },
 
   methods: {
