@@ -82,7 +82,6 @@
           ></custom-btn>
         </div>
         <canvas class="meme__canvas" ref="canvas"> </canvas>
-        <custom-btn text="load" className="btn btn-primary" @click="loadStore"></custom-btn>
       </div>
     </div>
   </div>
@@ -130,39 +129,29 @@ export default defineComponent({
   mounted() {
     this.getImages();
 
-    this.$nextTick(() => {
-      this.loadStore();
+    this.loadStore();
 
-      const { canvas } = this.$refs;
-      if (!(canvas instanceof HTMLCanvasElement)) return;
+    const { canvas } = this.$refs;
+    if (!(canvas instanceof HTMLCanvasElement)) return;
 
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-      this.canvas = canvas;
-      this.ctx = ctx;
-      this.img = document.createElement('img');
+    this.canvas = canvas;
+    this.ctx = ctx;
 
-      // this.imageRight = this.imageX + this.img.width;
-      // this.imageBottom = this.imageY + this.img.height;
+    const image = new Image();
+    image.onload = () => {
+      // Grab position info
+      this.imageRight = this.imageX + this.img.width;
+      this.imageBottom = this.imageY + this.img.height;
 
-      // // Update CTX
-      // this.draw();
-    });
+      // Update CTX
+      this.draw();
+    };
+    image.src = this.images[this.index];
 
-    // // this.loadStore();
-
-    // const { canvas } = this.$refs;
-    // if (!(canvas instanceof HTMLCanvasElement)) return;
-
-    // const ctx = canvas.getContext('2d');
-    // if (!ctx) return;
-
-    // this.canvas = canvas;
-    // this.ctx = ctx;
-    // this.img = document.createElement('img');
-
-    // // this.updImage(this.index);
+    this.img = image;
   },
 
   beforeRouteLeave() {
@@ -352,20 +341,7 @@ export default defineComponent({
       const data = JSON.parse(str);
       if (!data) return;
 
-      Object.keys(data).forEach((key) => {
-        this.$data[key] = data[key];
-      });
-
-      const { canvas } = this.$refs;
-      if (!(canvas instanceof HTMLCanvasElement)) return;
-
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      this.canvas = canvas;
-      this.ctx = ctx;
-
-      this.updImage(this.index);
+      Object.assign(this.$data, data);
     },
   },
 });
