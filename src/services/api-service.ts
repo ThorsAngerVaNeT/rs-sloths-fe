@@ -1,19 +1,21 @@
-import type { API, APIRequestResult, GetList, Options } from '@/common/types';
+import type { API, APIRequestResult, GetList, QueryStringOptions } from '@/common/types';
 import { BASE } from '../common/const';
 import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
 
 const credentials = 'include';
+const headerJson: HeadersInit = {
+  'Content-Type': 'application/json',
+};
 
-const makeParamString = (options: Options) => {
+const makeParamString = (options: QueryStringOptions) => {
   let url = `?`;
 
   Object.keys(options).forEach((key) => {
-    if (options[key]) url += `${key}=${options[key]}&`;
+    if (options[key as keyof QueryStringOptions]) url += `${key}=${options[key as keyof QueryStringOptions]}&`;
   });
 
   return url.slice(0, -1);
-  // return `?${new URLSearchParams(options)}`;
 };
 
 export class APIService<T> implements API<T> {
@@ -31,11 +33,8 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public getAll(filter: string, order: string): Promise<APIRequestResult<GetList<T>>> {
-    const param = makeParamString({
-      filter,
-      order,
-    });
+  public getByOptions(options: QueryStringOptions): Promise<APIRequestResult<GetList<T>>> {
+    const param = makeParamString(options);
 
     const url = `${this.endpoint}${param}`;
     const config: RequestInit = {
@@ -46,12 +45,21 @@ export class APIService<T> implements API<T> {
     return apiRequest(url, config);
   }
 
-  public getPage(page: number, limit: number, filter: string, order: string): Promise<APIRequestResult<GetList<T>>> {
+  public getAll(
+    page: number,
+    limit: number,
+    order: string,
+    searchText: string,
+    filter: string,
+    userId: string
+  ): Promise<APIRequestResult<GetList<T>>> {
     const param = makeParamString({
+      userId,
       page: page.toString(),
       limit: limit.toString(),
-      filter,
       order,
+      searchText,
+      filter,
     });
 
     const url = `${this.endpoint}${param}`;
@@ -75,14 +83,11 @@ export class APIService<T> implements API<T> {
 
   public create(body: T): Promise<APIRequestResult<T>> {
     const url = `${this.endpoint}`;
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
     const config: RequestInit = {
       method: FetchMethod.post,
       credentials,
       body: JSON.stringify(body),
-      headers,
+      headers: headerJson,
     };
 
     return apiRequest(url, config);
@@ -101,14 +106,11 @@ export class APIService<T> implements API<T> {
 
   public updateById(id: string, body: Partial<T>): Promise<APIRequestResult<Partial<T>>> {
     const url = `${this.endpoint}/${id}`;
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
     const config: RequestInit = {
       method: FetchMethod.put,
       credentials,
       body: JSON.stringify(body),
-      headers,
+      headers: headerJson,
     };
 
     return apiRequest(url, config);
@@ -127,14 +129,11 @@ export class APIService<T> implements API<T> {
 
   public update(body: Partial<T>): Promise<APIRequestResult<Partial<T>>> {
     const url = `${this.endpoint}`;
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
     const config: RequestInit = {
       method: FetchMethod.put,
       credentials,
       body: JSON.stringify(body),
-      headers,
+      headers: headerJson,
     };
 
     return apiRequest(url, config);

@@ -1,29 +1,9 @@
-import type {
-  API,
-  WhereFieldFilter,
-  WhereField,
-  Suggestion,
-  SuggestionsRating,
-  APIRequestResult,
-} from '@/common/types';
+import type { API, Suggestion, SuggestionsRating, APIRequestResult, QueryStringOptions } from '@/common/types';
 import useCurrUser from '@/stores/curr-user';
-import { getANDFields, getFieldContainsFilter, getFieldEqualFilter, getORFields } from '@/utils/query-string';
 import { Endpoints } from '@/common/enums/endpoints';
 import { APIService } from './api-service';
 import { APIError } from './error-handling/api-error';
 import { errorHandler } from './error-handling/error-handler';
-
-const getFilter = (searchText: string, selected: string[]): string => {
-  const search: WhereFieldFilter | WhereField | null = searchText
-    ? getFieldContainsFilter('description', searchText)
-    : null;
-
-  const select: WhereFieldFilter | WhereField | null = selected.length
-    ? getORFields(selected.map((field) => getFieldEqualFilter('status', field)))
-    : null;
-
-  return getANDFields([search, select]);
-};
 
 const { hasAuth, getUserId } = useCurrUser();
 
@@ -34,12 +14,12 @@ export class SuggestionsService implements API<Suggestion> {
     return this.service.getAllList();
   }
 
-  public getAll(searchText = '', sorting = '', selected = [] as string[]) {
-    return this.service.getAll(getFilter(searchText, selected), sorting);
+  public getByOptions(options: QueryStringOptions) {
+    return this.service.getByOptions(options);
   }
 
-  public getPage(page: number, limit: number, searchText = '', sorting = '', selected = [] as string[]) {
-    return this.service.getPage(page, limit, getFilter(searchText, selected), sorting);
+  public getAll(page = 1, limit = 10, order = '', searchText = '', filter = '', userId = '') {
+    return this.service.getAll(page, limit, order, searchText, filter, userId);
   }
 
   public getById(id: string) {

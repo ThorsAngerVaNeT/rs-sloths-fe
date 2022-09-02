@@ -1,19 +1,6 @@
-import type { API, WhereFieldFilter, User, WhereField } from '@/common/types';
-import { getANDFields, getFieldContainsFilter, getFieldEqualFilter, getORFields } from '@/utils/query-string';
+import type { API, User, QueryStringOptions } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
-
-const getFilter = (searchText: string, selected: string[]): string => {
-  const search: WhereFieldFilter | WhereField | null = searchText
-    ? getORFields(['name', 'github'].map((field) => getFieldContainsFilter(field, searchText)))
-    : null;
-
-  const select: WhereFieldFilter | WhereField | null = selected.length
-    ? getORFields(selected.map((field) => getFieldEqualFilter('role', field)))
-    : null;
-
-  return getANDFields([search, select]);
-};
 
 export class UsersService implements API<User> {
   private service = new APIService<User>(Endpoints.users);
@@ -22,12 +9,12 @@ export class UsersService implements API<User> {
     return this.service.getAllList();
   }
 
-  public getAll(searchText = '', sorting = '', selected = [] as string[]) {
-    return this.service.getAll(getFilter(searchText, selected), sorting);
+  public getByOptions(options: QueryStringOptions) {
+    return this.service.getByOptions(options);
   }
 
-  public getPage(page: number, limit: number, searchText = '', sorting = '', selected = [] as string[]) {
-    return this.service.getPage(page, limit, getFilter(searchText, selected), sorting);
+  public getAll(page = 1, limit = 10, order = '', searchText = '', filter = '', userId = '') {
+    return this.service.getAll(page, limit, order, searchText, filter, userId);
   }
 
   public getById(id: string) {

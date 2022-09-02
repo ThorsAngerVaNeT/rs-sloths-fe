@@ -124,7 +124,7 @@ export default defineComponent({
         const selected = getSelected();
         const sorting = getSortingList();
 
-        const res = await service.getPage(currPage, perPage, searchText, sorting, selected);
+        const res = await service.getAll(currPage, perPage, sorting, searchText, selected.join(','));
 
         if (!res.ok) throw new CustomError(res.status, USERS_ERROR_GET_LIST.code, USERS_ERROR_GET_LIST.message);
 

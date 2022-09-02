@@ -16,9 +16,16 @@ export type GetList<T> = {
 export interface API<T> {
   getAllList(): Promise<APIRequestResult<T[]>>;
 
-  getAll(filter: string, sorting: string): Promise<APIRequestResult<GetList<T>>>;
+  getByOptions(options: QueryStringOptions): Promise<APIRequestResult<GetList<T>>>;
 
-  getPage(page: number, limit: number, filter: string, sorting: string): Promise<APIRequestResult<GetList<T>>>;
+  getAll(
+    page: number,
+    limit: number,
+    order: string,
+    searchText: string,
+    filter: string,
+    userId: string
+  ): Promise<APIRequestResult<GetList<T>>>;
 
   getById(id: string): Promise<APIRequestResult<T>>;
 
@@ -112,7 +119,14 @@ export type ErrorDescription = {
   message: string;
 };
 
-export type Options = Record<string, string>;
+export type QueryStringOptions = {
+  page?: string;
+  limit?: string;
+  order?: string;
+  searchText?: string;
+  filter?: string;
+  userId?: string;
+};
 
 export type SelectOptions = {
   value: string;
@@ -120,15 +134,3 @@ export type SelectOptions = {
 };
 
 export type TagCloud = Set<string>;
-
-type WhereFieldContains = {
-  [keyof: string]: { contains: string; mode: string };
-};
-type WhereFieldEquals = {
-  [keyof: string]: string;
-};
-export type WhereField = WhereFieldContains | WhereFieldEquals;
-
-export type WhereFieldFilter = { OR: WhereField[] };
-
-export type WhereFieldSome = { tags: { some: { value: { in: string[] } } } };
