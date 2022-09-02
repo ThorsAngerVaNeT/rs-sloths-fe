@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <h2 class="profile__title">{{ $t('profile.title') }}</h2>
+    <!-- <h2 class="profile__title">{{ $t('profile.title') }}</h2> -->
     <aside class="profile__aside">
       <user-info :adminPanel="false" @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
@@ -124,16 +124,6 @@ export default defineComponent({
 .profile {
   display: grid;
   grid-template-columns: 300px auto;
-  grid-template-rows: repeat(2, auto);
-  grid-template-areas:
-    'A A'
-    'B C';
-}
-
-.profile__title {
-  grid-area: A;
-  text-align: center;
-  padding: 1rem;
 }
 
 .profile__aside {
@@ -143,11 +133,9 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  grid-area: B;
 }
 
 .profile__main {
-  grid-area: C;
   padding: 1rem;
 }
 

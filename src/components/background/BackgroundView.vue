@@ -1,5 +1,5 @@
 <template>
-  <div class="background" :class="`background-${routeName}-${currTheme}`"></div>
+  <div class="background" :class="`background-${currRoute}-${currTheme}`"></div>
 </template>
 
 <script lang="ts">
@@ -14,18 +14,8 @@ export default defineComponent({
   computed: {
     ...mapWritableState(themeProp, ['currTheme']),
 
-    // temp realization, todo
-    routeName() {
-      switch (this.$route.name) {
-        case 'about':
-          return 'about';
-        case 'memory':
-          return 'memory';
-        case 'suggest':
-          return 'suggest';
-        default:
-          return 'home';
-      }
+    currRoute() {
+      return String(this.$route.name);
     },
   },
 });
@@ -72,5 +62,53 @@ export default defineComponent({
 
 .background-suggest-dark {
   background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-suggest-dark.svg');
+}
+
+.background-404-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-404-light.svg');
+}
+
+.background-404-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-404-dark.svg');
+}
+
+.background-admin-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-admin-light.svg');
+}
+
+.background-admin-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-admin-dark.svg');
+}
+
+.background-catalog-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-catalog-light.svg');
+}
+
+.background-catalog-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-catalog-dark.svg');
+}
+
+.background-create-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-create-light.svg');
+}
+
+.background-create-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-create-dark.svg');
+}
+
+.background-guess-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-guess-light.svg');
+}
+
+.background-guess-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-guess-dark.svg');
+}
+
+.background-profile-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-profile-light.svg');
+}
+
+.background-profile-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-profile-dark.svg');
 }
 </style>

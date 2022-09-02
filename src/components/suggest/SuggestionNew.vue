@@ -92,7 +92,7 @@ export default defineComponent({
       ev.stopPropagation();
     },
 
-    handleUploadChange(ev: InputEvent) {
+    handleUploadChange(ev: Event) {
       if (ev.target instanceof HTMLFormElement) {
         const file: File = ev.target.files[0];
         this.renderFile(file);

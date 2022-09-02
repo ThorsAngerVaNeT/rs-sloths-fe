@@ -109,7 +109,7 @@ export default defineComponent({
   border: 0.2rem solid var(--color-border-inverse);
 }
 
-.btn-img:hover {
+.btn-img:hover:not([disabled]) {
   transform: scale(1.1) rotate(10deg);
 }
 
@@ -208,5 +208,30 @@ export default defineComponent({
 }
 .icon-dark-minus {
   background-image: url('@/assets/icons/btn/dash-square-black.svg');
+}
+
+.btn-memory {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-background-inverse-soft);
+  transition: 0.5s ease;
+}
+
+.btn-memory > img {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.btn-memory:disabled {
+  cursor: default;
+}
+
+.btn-memory:hover:not([disabled]) {
+  transform: scale(1.1) rotate(10deg);
 }
 </style>
