@@ -1,6 +1,6 @@
 <template>
   <div class="memory">
-    <div class="memory__aside">
+    <div class="memory__aside list-aside">
       <h3 class="memory__subtitle">{{ $t('memory.level') }}</h3>
       <h2 class="memory__title">{{ $t(getLevel) }}</h2>
       <div class="memory__level">
@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <div class="memory__main">
+    <div class="memory__main list-main">
       <game-field :level="levels[activeLevel]"></game-field>
     </div>
   </div>
@@ -63,7 +63,9 @@ export default defineComponent({
 
 <style scoped>
 .memory {
+  padding: 0 3rem;
   display: flex;
+  gap: 2rem;
 }
 
 .memory__aside {
@@ -81,7 +83,8 @@ export default defineComponent({
 }
 
 .memory__main {
-  width: calc(100% - 300px);
+  /* width: calc(100% - 300px); */
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,8 +96,8 @@ export default defineComponent({
   justify-content: center;
 }
 .memory__btn img {
-  width: 150px;
-  height: 150px;
+  width: 15rem;
+  height: 15rem;
   border-radius: 50%;
   background-color: lightgray;
 }
@@ -102,5 +105,16 @@ export default defineComponent({
 .active_lvl img {
   box-shadow: 0px 0px 5px;
   border-color: var(--red-active);
+}
+
+@media (max-width: 1200px) {
+  .memory__aside {
+    width: 15rem;
+  }
+
+  .memory__btn img {
+    width: 10rem;
+    height: 10rem;
+  }
 }
 </style>

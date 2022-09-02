@@ -155,6 +155,7 @@ export default defineComponent({
     },
 
     getCards() {
+      this.changeScrollHidden('hidden');
       this.cards = [];
       let index = 0;
 
@@ -166,6 +167,14 @@ export default defineComponent({
         this.cards.push({ img: el, id: i, index, open: false, success: false });
         index += 1;
       });
+      setTimeout(() => this.changeScrollHidden(''), MEMORY_GAME_TIMEOUT);
+    },
+
+    changeScrollHidden(val = '') {
+      const mainEl: HTMLElement | null = document.querySelector('.main');
+      if (mainEl instanceof HTMLElement) {
+        mainEl.style.overflowY = val;
+      }
     },
 
     startGame() {
@@ -296,9 +305,11 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
 }
 
 .game-field__tools {
+  padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -306,8 +317,8 @@ export default defineComponent({
 }
 
 .game-field__steps {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   font-size: 2em;
   display: flex;
   align-items: center;
@@ -318,7 +329,6 @@ export default defineComponent({
   transition: 0.5s ease;
 }
 .game-field__cards {
-  margin: 1em;
   max-width: v-bind(grid);
   display: flex;
   flex-wrap: wrap;
@@ -358,6 +368,25 @@ export default defineComponent({
   box-shadow: 0px 0px 5px var(--color-text);
 }
 
+@media (max-width: 1200px) {
+  .game-field__card {
+    width: 100px;
+    height: 133px;
+    cursor: pointer;
+    perspective: 600px;
+  }
+
+  .game-field__card_middle {
+    width: 70px;
+    height: 94px;
+  }
+
+  .game-field__card_senior {
+    width: 70px;
+    height: 94px;
+  }
+}
+
 .success {
   animation: rainbow 0.5s;
 }
@@ -372,6 +401,7 @@ export default defineComponent({
 .flip-leave-active {
   animation: flip-in 0.2s;
 }
+
 @keyframes flip-in {
   0% {
     transform: rotateY(0deg);
