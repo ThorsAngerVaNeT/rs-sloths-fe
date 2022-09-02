@@ -1,5 +1,5 @@
 <template>
-  <div class="background" :class="`background-${$route.name}-${currTheme}`"></div>
+  <div class="background" :class="`background-${currRoute}-${currTheme}`"></div>
 </template>
 
 <script lang="ts">
@@ -13,6 +13,10 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(themeProp, ['currTheme']),
+
+    currRoute() {
+      return String(this.$route.name);
+    },
   },
 });
 </script>
