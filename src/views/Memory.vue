@@ -8,7 +8,7 @@
           v-for="(level, index) in levels"
           :key="index"
           class="btn btn-img memory__btn"
-          :class="{ active: activeLevel === index }"
+          :class="{ active_lvl: activeLevel === index }"
           @click="setLevel(index)"
         >
           <img :src="getImg(index)" :alt="$t(getText(index))" />
@@ -99,7 +99,8 @@ export default defineComponent({
   background-color: lightgray;
 }
 
-.active img {
+.active_lvl img {
   box-shadow: 0px 0px 5px;
+  border-color: var(--red-active);
 }
 </style>

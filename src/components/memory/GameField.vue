@@ -1,11 +1,21 @@
 <template>
   <div class="game-field">
-    <div class="game-field__steps">
-      <p>{{ steps }}</p>
+    <div class="game-field__tools">
+      <div class="game-field__steps">
+        <p>{{ steps }}</p>
+      </div>
+      <custom-btn
+        :imgPath="`./img/memory/reload-${currTheme}.svg`"
+        :text="$t('memory.start')"
+        className="btn btn-memory"
+        :disabled="steps === 0"
+        :onClick="startGame"
+      ></custom-btn>
     </div>
     <transition-group name="shuffle-list" tag="div" class="game-field__cards">
       <div
         class="game-field__card"
+        :class="`game-field__card_${level.level}`"
         v-for="(item, index) in cards"
         :key="item.index"
         :item="item"
@@ -23,7 +33,7 @@
         </transition>
       </div>
     </transition-group>
-    <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
+    <!-- <custom-btn :text="$t('memory.start')" className="btn btn-primary" :onClick="startGame"></custom-btn> -->
     <modal-window v-show="getShowModal" @close="closeModal">
       <template v-slot:header> {{ $t('memory.congrats') }} </template>
 
@@ -38,6 +48,7 @@
 </template>
 
 <script lang="ts">
+import { mapWritableState } from 'pinia';
 import { ruNounEnding } from '@/utils/ru-noun-ending';
 import { MEMORY_GAME_COVER, MEMORY_GAME_TIMEOUT, MEMORY_GAME_WINNER, MEMORY_LEVELS } from '@/common/const';
 import type { MemoryLevel } from '@/common/types';
@@ -45,6 +56,7 @@ import { defineComponent, type PropType } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { playAudio, audioSlide, audioFlip, audioFail, audioSuccess, audioWin } from '@/utils/audio';
+import themeProp from '../../stores/theme';
 
 type Card = {
   img: string;
@@ -87,6 +99,8 @@ export default defineComponent({
   },
 
   computed: {
+    ...mapWritableState(themeProp, ['currTheme']),
+
     getLevel(): string {
       return `memory.${this.level.level}`;
     },
@@ -283,6 +297,14 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
+
+.game-field__tools {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
 .game-field__steps {
   width: 70px;
   height: 70px;
@@ -310,6 +332,16 @@ export default defineComponent({
   height: 200px;
   cursor: pointer;
   perspective: 600px;
+}
+
+.game-field__card_middle {
+  width: 125px;
+  height: 165px;
+}
+
+.game-field__card_senior {
+  width: 100px;
+  height: 133px;
 }
 
 .game-field__img {
