@@ -51,6 +51,7 @@ export type Sloth = {
   description: string;
   image_url: string;
   rating: number;
+  ratings: UserRate[];
   createdAt: number;
   tags: Tags;
   checked?: boolean;
@@ -77,12 +78,17 @@ export type Suggestion = {
   image_url: string;
   userId: string;
   rating: number;
+  ratings: UserRate[];
   createdAt: Date;
   status: SuggestionStatus;
 };
 export type SuggestionsRating = {
   suggestionId: string;
   userId: string;
+  rate: number;
+};
+
+export type UserRate = {
   rate: number;
 };
 

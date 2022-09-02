@@ -1,7 +1,7 @@
 <template>
   <div class="user-info">
     <div class="user-info__avatar">
-      <img class="user-info__img" :src="(adminPanel ? userInfo : currUser)['avatar_url']" :alt="$t('profile.avatar')" />
+      <img class="user-info__img" :src="getAvatar" :alt="$t('profile.avatar')" />
     </div>
     <input
       type="text"
@@ -70,7 +70,9 @@ export default defineComponent({
 
   computed: {
     getAvatar(): string {
-      return this.userInfo.avatar_url ?? DEFAULT_USER_AVATAR;
+      return this.adminPanel
+        ? this.userInfo.avatar_url ?? DEFAULT_USER_AVATAR
+        : this.currUser.avatar_url ?? DEFAULT_USER_AVATAR;
     },
 
     isAdmin() {
