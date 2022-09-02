@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import type { User } from '@/common/types';
 import { Role } from '@/common/enums/user-role';
+import { DEFAULT_USER_AVATAR } from '@/common/const';
 
 const newUser = {} as User;
 newUser.role = Role.user;
@@ -15,7 +16,7 @@ const useCurrUser = defineStore({
   getters: {
     getUserId: (state): string => state.currUser.id,
 
-    getUserAvatar: (state): string => state.currUser.avatar_url,
+    getUserAvatar: (state): string => state.currUser.avatar_url ?? DEFAULT_USER_AVATAR,
 
     isAdmin: (state): boolean => state.currUser.role === Role.admin,
 

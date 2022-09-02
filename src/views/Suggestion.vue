@@ -1,48 +1,54 @@
 <template>
   <div class="suggest">
-    <div class="suggest__aside list-aside">
-      <h3>{{ $t('suggest.title') }}: {{ count }}</h3>
+    <div class="suggest__tools">
       <custom-btn
-        :text="$t('suggest.btn.new')"
+        :text="mode === 'watch' ? `${$t('suggest.btn.switch.to-new')}` : `${$t('suggest.btn.switch.to-watch')}`"
         className="btn btn-primary"
-        @click="showSuggestionInfoNew"
-        v-show="getPageName === 'admin'"
+        @click="handleSwitchMode"
+        v-show="getPageName !== 'admin'"
       ></custom-btn>
-      <list-controls
-        @search="getSuggestions"
-        @tags="getSuggestions"
-        @sorting="getSuggestions"
-        @clearAll="getSuggestions"
-        :placeholder="$t('suggest.search')"
-        :tags="tags"
-        :title="$t('suggest.sorting')"
-        :options="sortingOptions"
-        :text="$t('btn.reset')"
-      >
-      </list-controls>
     </div>
-    <div class="suggest__main list-main">
-      <list-pagination :size="count" @getPage="getSuggestions"></list-pagination>
-      <div class="suggest__list">
-        <suggestion-card
-          v-for="suggest in suggestions"
-          :key="suggest.id"
-          :suggestInfo="suggest"
-          @editRating="updSuggestionRating"
-          @delSuggest="delSuggestion"
-          @editSuggest="showSuggestionInfoEdit"
-          @showSuggest="showSuggestionInfoView"
-        ></suggestion-card>
+    <div v-if="mode === 'watch'" class="suggest__watch">
+      <div class="suggest__aside list-aside">
+        <h3>{{ $t('suggest.title') }}: {{ count }}</h3>
+        <list-controls
+          @search="getSuggestions"
+          @tags="getSuggestions"
+          @sorting="getSuggestions"
+          @clearAll="getSuggestions"
+          :placeholder="$t('suggest.search')"
+          :tags="tags"
+          :title="$t('suggest.sorting')"
+          :options="sortingOptions"
+          :text="$t('btn.reset')"
+        >
+        </list-controls>
       </div>
-      <suggestion-info
-        :isSuggestInfoVisible="isSuggestionInfoVisible"
-        :headerText="getHeaderSuggestionInfo"
-        :modalEvents="modalEvents"
-        @closeSuggestInfo="closeSuggestionInfo"
-        @createSuggest="createSuggestion"
-        @updSuggest="updSuggestion"
-      ></suggestion-info>
+      <div class="suggest__main list-main">
+        <list-pagination :size="count" @getPage="getSuggestions"></list-pagination>
+        <div class="suggest__list">
+          <suggestion-card
+            v-for="suggest in suggestions"
+            :key="suggest.id"
+            :suggestInfo="suggest"
+            @editRating="updSuggestionRating"
+            @delSuggest="delSuggestion"
+            @editSuggest="showSuggestionInfoEdit"
+            @showSuggest="showSuggestionInfoView"
+          ></suggestion-card>
+        </div>
+        <suggestion-info
+          :isSuggestInfoVisible="isSuggestionInfoVisible"
+          :headerText="getHeaderSuggestionInfo"
+          :modalEvents="modalEvents"
+          @closeSuggestInfo="closeSuggestionInfo"
+          @createSuggest="createSuggestion"
+          @updSuggest="updSuggestion"
+        ></suggestion-info>
+      </div>
     </div>
+
+    <suggestion-new v-else class="suggest__new" @create-suggest="createSuggestion"></suggestion-new>
   </div>
 </template>
 
@@ -65,6 +71,7 @@ import ListControls from '@/components/list-controls/ListControls.vue';
 import ListPagination from '@/components/list-controls/ListPagination.vue';
 import SuggestionCard from '@/components/suggest/SuggestionCard.vue';
 import SuggestionInfo from '@/components/suggest/SuggestionInfo.vue';
+import SuggestionNew from '@/components/suggest/SuggestionNew.vue';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
 
 const service = new SuggestionsService();
@@ -85,6 +92,7 @@ export default defineComponent({
     SuggestionInfo,
     ListControls,
     ListPagination,
+    SuggestionNew,
   },
 
   data() {
@@ -96,6 +104,7 @@ export default defineComponent({
       searchText: '',
       tags: [SuggestionStatus.pending, SuggestionStatus.accepted, SuggestionStatus.decline],
       sortingOptions: SUGGESTION_SORTING,
+      mode: 'watch',
     };
   },
 
@@ -225,6 +234,10 @@ export default defineComponent({
     closeSuggestionInfo() {
       this.isSuggestionInfoVisible = false;
     },
+
+    handleSwitchMode() {
+      this.mode = this.mode === 'watch' ? 'new' : 'watch';
+    },
   },
 });
 </script>
@@ -232,11 +245,17 @@ export default defineComponent({
 <style scoped>
 .suggest {
   display: flex;
+  flex-direction: column;
+  padding: 0 3rem;
+}
+
+.suggest__watch {
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
-
   color: var(--color-text);
 }
+
 .suggest__aside {
   margin: 0.5em;
 }
@@ -250,7 +269,7 @@ export default defineComponent({
 }
 
 @media (max-width: 768px) {
-  .suggest {
+  .suggest__watch {
     flex-direction: column;
   }
 }

@@ -98,8 +98,15 @@
     "status": "Status",
     "user": "User",
     "btn": {
-      "new": "Your Suggestion"
-    }
+      "new": "Your Suggestion",
+      "switch": {
+        "to-new": "New Suggestion",
+        "to-watch": "All Suggestions"
+      },
+      "submit": "Submit"
+    },
+    "new": "Create new Suggestion",
+    "placeholder": "Enter description of meme"
   },
 
   "create": {
