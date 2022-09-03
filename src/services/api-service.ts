@@ -4,7 +4,7 @@ import { FetchMethod } from '../common/enums/fetch-methods';
 import { apiRequest } from './api-request';
 
 const credentials = 'include';
-const headerJson: HeadersInit = {
+const contentTypeHeader: HeadersInit = {
   'Content-Type': 'application/json',
 };
 
@@ -87,7 +87,7 @@ export class APIService<T> implements API<T> {
       method: FetchMethod.post,
       credentials,
       body: JSON.stringify(body),
-      headers: headerJson,
+      headers: contentTypeHeader,
     };
 
     return apiRequest(url, config);
@@ -110,7 +110,7 @@ export class APIService<T> implements API<T> {
       method: FetchMethod.put,
       credentials,
       body: JSON.stringify(body),
-      headers: headerJson,
+      headers: contentTypeHeader,
     };
 
     return apiRequest(url, config);
@@ -133,7 +133,7 @@ export class APIService<T> implements API<T> {
       method: FetchMethod.put,
       credentials,
       body: JSON.stringify(body),
-      headers: headerJson,
+      headers: contentTypeHeader,
     };
 
     return apiRequest(url, config);
