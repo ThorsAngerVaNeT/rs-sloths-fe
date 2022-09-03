@@ -8,9 +8,15 @@
       :onClick="startGame"
     ></custom-btn>
 
-    <div v-for="(item, index) in gameCards" :key="index" v-show="index === step">
-      <img :src="item.question.img" :alt="$t('guess.guess')" class="guess__img" />
-      <div class="guess__answers">
+    <div class="guess__imgs">
+      <div v-for="(item, index) in gameCards" :key="index" class="guess__img-wrapper">
+        <transition name="fade" mode="out-in">
+          <img v-show="index === step" :src="item.question.img" :alt="$t('guess.guess')" class="guess__img" />
+        </transition>
+      </div>
+    </div>
+    <div v-for="(item, index) in gameCards" :key="index">
+      <div v-show="index === step" class="guess__answers">
         <span
           v-for="(answer, i) in item.answers"
           :key="i"
@@ -21,12 +27,14 @@
         </span>
       </div>
     </div>
+
     <custom-btn
       v-show="step >= 0"
       :text="$t('guess.next')"
       className="btn btn-primary"
       :disabled="stepSelection < 0"
       :onClick="nextStep"
+      @keypress.enter="nextStep"
     ></custom-btn>
     <div v-show="step >= 0" class="guess__results">
       <div v-for="(res, index) in result" :key="index" :class="`guess__result ${getClassStepResult(index)}`"></div>
@@ -85,6 +93,7 @@ export default defineComponent({
       stepAnswer: false,
       cardWinner: GUESS_GAME_WINNER,
       cardWinnerAll: GUESS_GAME_WINNER_ALL,
+      isAnimated: false,
       isModalVisible: false,
     };
   },
@@ -241,16 +250,31 @@ export default defineComponent({
   text-align: center;
 }
 
-.guess__img {
+.guess__imgs {
   position: relative;
+  width: 40rem;
   height: 40rem;
+}
+
+.guess__img-wrapper {
+  position: absolute;
+  width: 40rem;
+  height: 40rem;
+  top: 0;
+  overflow: hidden;
+}
+
+.guess__img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .guess__answers {
-  padding: 0.5rem 0;
+  padding: 1rem 0;
 
   display: flex;
   align-items: center;
@@ -296,5 +320,34 @@ export default defineComponent({
 
 .is-not-guess {
   background-color: var(--red-active);
+}
+
+.fade-enter-active {
+  animation: fade-out 0.5s;
+}
+.fade-leave-active {
+  animation: fade-in 0.5s;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-150%);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 0;
+    transform: translateX(50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
 }
 </style>
