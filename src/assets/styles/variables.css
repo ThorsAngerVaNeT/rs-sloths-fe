@@ -7,6 +7,8 @@
 
   --blue-main: #e3e8ff;
 
+  --gray-main: #4b4b4b;
+
   --red-active: #b44a4a;
   --red-disactive: #deaaaa;
 
@@ -38,6 +40,7 @@
 
   --color-border-theme: var(--light-main);
   --color-border-inverse: var(--dark-main);
+  --color-border-inverse-soft: var(--gray-main);
 }
 
 :root.dark {
@@ -55,4 +58,5 @@
 
   --color-border-theme: var(--dark-main);
   --color-border-inverse: var(--light-main);
+  --color-border-inverse-soft: var(--gray-main);
 }

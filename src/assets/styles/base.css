@@ -65,24 +65,18 @@ html {
 }
 
 .select-element {
-  margin: 0.5rem 0;
   padding: 0.5rem;
-
   cursor: pointer;
-
   border: none;
   border-bottom: 0.2rem solid gray;
   border-radius: 0;
-
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
 .input-text {
-  margin: 0.5rem 0;
   padding: 0.5rem;
-
   border: none;
   border-bottom: 0.2rem solid gray;
   background-color: var(--color-background);

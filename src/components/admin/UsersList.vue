@@ -268,12 +268,11 @@ export default defineComponent({
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
+  gap: 3rem;
   color: var(--color-text);
 }
 
 .users__aside {
-  /* margin: 0.5em; */
   display: flex;
   flex-direction: row;
   align-items: center;

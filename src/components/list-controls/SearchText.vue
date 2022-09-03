@@ -73,11 +73,10 @@ export type SearchTextElement = InstanceType<typeof searchText>;
 }
 
 .search__text {
-  /* margin: 0.5rem 0; */
   padding: 0.5rem;
   padding-right: 2rem;
   width: 100%;
-  border: 0.2rem solid var(--color-border-theme);
+  border: 0.2rem solid var(--color-border-inverse-soft);
   background-color: var(--color-background);
   color: inherit;
   border-radius: 1rem;
