@@ -57,7 +57,7 @@ import { defineComponent } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { GUESS_GAME_WINNER, GUESS_GAME_WINNER_ALL, GUESS_GAME_ID } from '@/common/const';
-import { playAudio, audioWin, audioSadTrombone } from '@/utils/audio';
+import { playAudio, audioWin, audioSadTrombone, audioOvation } from '@/utils/audio';
 import type { GameResult } from '@/common/types';
 import { GameResultService } from '@/services/game-result-service';
 
@@ -202,7 +202,7 @@ export default defineComponent({
       if (this.step === this.gameCards.length) {
         // end
         this.endTime = Date.now();
-        playAudio(audioWin);
+        playAudio(audioOvation);
         this.isModalVisible = true;
         this.saveResult();
 
