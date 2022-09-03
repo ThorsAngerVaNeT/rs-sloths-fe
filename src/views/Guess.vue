@@ -10,7 +10,7 @@
 
     <div class="guess__imgs">
       <div v-for="(item, index) in gameCards" :key="index" class="guess__img-wrapper">
-        <transition name="fade" mode="out-in">
+        <transition name="slider" mode="out-in">
           <img v-show="index === step" :src="item.question.img" :alt="$t('guess.guess')" class="guess__img" />
         </transition>
       </div>
@@ -34,7 +34,6 @@
       className="btn btn-primary"
       :disabled="stepSelection < 0"
       :onClick="nextStep"
-      @keypress.enter="nextStep"
     ></custom-btn>
     <div v-show="step >= 0" class="guess__results">
       <div v-for="(res, index) in result" :key="index" :class="`guess__result ${getClassStepResult(index)}`"></div>
@@ -322,14 +321,14 @@ export default defineComponent({
   background-color: var(--red-active);
 }
 
-.fade-enter-active {
-  animation: fade-out 0.5s;
+.slider-enter-active {
+  animation: slider-out 1s;
 }
-.fade-leave-active {
-  animation: fade-in 0.5s;
+.slider-leave-active {
+  animation: slider-in 1s;
 }
 
-@keyframes fade-in {
+@keyframes slider-in {
   0% {
     opacity: 1;
     transform: translateX(-50%);
@@ -340,7 +339,7 @@ export default defineComponent({
   }
 }
 
-@keyframes fade-out {
+@keyframes slider-out {
   0% {
     opacity: 0;
     transform: translateX(50%);
