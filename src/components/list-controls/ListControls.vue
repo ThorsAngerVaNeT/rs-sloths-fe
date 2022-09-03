@@ -79,4 +79,11 @@ export default defineComponent({
   gap: 1rem;
   width: auto;
 }
+
+@media (max-width: 1000px) {
+  .controls_admin {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+  }
+}
 </style>

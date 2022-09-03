@@ -142,16 +142,13 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 
 .pagination__select {
   width: 4rem;
-
   text-align: center;
-
   color: inherit;
   background-color: var(--color-background);
 }
 
 .pagination__btns {
   width: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,13 +158,10 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 .pagination__page {
   width: 4rem;
   height: 4rem;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   background-color: var(--color-background);
 }
 
@@ -181,6 +175,7 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
   }
 
   .pagination__per-page {

@@ -275,8 +275,14 @@ export default defineComponent({
 .users__aside {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 2rem;
+  width: 100%;
+}
+
+.users__main {
   width: 100%;
 }
 
@@ -288,6 +294,9 @@ export default defineComponent({
   gap: var(--gap);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
+  .users__aside {
+    flex-direction: column;
+  }
 }
 </style>
