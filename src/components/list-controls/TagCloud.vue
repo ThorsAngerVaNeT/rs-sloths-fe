@@ -1,5 +1,5 @@
 <template>
-  <div class="tags tags-center">
+  <div class="tags tags-center" :class="isAdmin ? 'tags_admin' : ''">
     <span class="tag" :class="{ active: isHas(item) }" v-for="item in tags" :key="item" @click="select(item)">
       {{ item }}
     </span>
@@ -25,6 +25,12 @@ const tagCloud = defineComponent({
     tags: {
       type: Object as PropType<string[]>,
       required: true,
+    },
+  },
+
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
     },
   },
 
@@ -62,31 +68,33 @@ export type TagCloudElement = InstanceType<typeof tagCloud>;
 
 <style>
 .tags {
-  padding: 0.5rem 0;
-
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: calc(var(--gap) / 2);
-
   color: var(--color-text);
 }
+
 .tags-center {
   justify-content: center;
 }
+
+.tags_admin {
+  grid-area: A;
+  overflow-y: auto;
+}
+
 .tag {
   padding: 0.5rem 0.7rem;
   cursor: pointer;
-
   color: inherit;
   background-color: var(--color-background);
-
   transition: background-color 0.3s ease, color 0.5s ease;
-
   border-radius: 1rem;
 }
+
 .tag:hover,
 .active {
   color: var(--color-text-inverse);

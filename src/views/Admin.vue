@@ -98,20 +98,22 @@ export default defineComponent({
 <style scoped>
 .admin {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
+  gap: 2rem;
+  padding: 0 3rem;
   color: var(--color-text);
 }
+
 .admin__aside {
-  padding: 1rem 2rem;
+  width: 20rem;
 }
+
 .admin__nav {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 1rem;
 }
+
 .admin__main {
-  padding: 1rem;
   width: 100%;
 }
 </style>

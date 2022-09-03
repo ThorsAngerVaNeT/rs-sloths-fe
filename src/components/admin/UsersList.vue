@@ -1,7 +1,6 @@
 <template>
   <div class="users">
     <div class="users__aside list-aside">
-      <h3>{{ $t('admin.users.title') }}: {{ count }}</h3>
       <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
       <list-controls
         @search="getUsers"
@@ -265,16 +264,27 @@ export default defineComponent({
 
 <style scoped>
 .users {
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: var(--gap);
-
+  flex-direction: column;
+  gap: 3rem;
   color: var(--color-text);
 }
+
 .users__aside {
-  margin: 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
 }
+
+.users__main {
+  width: 100%;
+}
+
 .users__list {
   margin: 0.5em 0;
   display: flex;
@@ -283,8 +293,8 @@ export default defineComponent({
   gap: var(--gap);
 }
 
-@media (max-width: 768px) {
-  .users {
+@media (max-width: 1000px) {
+  .users__aside {
     flex-direction: column;
   }
 }

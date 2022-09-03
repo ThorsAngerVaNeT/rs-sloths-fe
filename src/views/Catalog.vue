@@ -1,7 +1,6 @@
 <template>
-  <div class="catalog">
+  <div class="catalog" :class="isAdmin ? 'catalog_admin' : ''">
     <div class="catalog__aside list-aside">
-      <h3>{{ $t('catalog.count') }}: {{ count }}</h3>
       <custom-btn
         v-show="getPageName === 'admin'"
         :text="$t('catalog.btn.new')"
@@ -154,6 +153,10 @@ export default defineComponent({
 
     isChecked(): boolean {
       return !!this.sloths.filter((el) => el.checked).length;
+    },
+
+    isAdmin() {
+      return this.$route.name === 'admin';
     },
   },
 
@@ -391,12 +394,28 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-
+  gap: 2rem;
   color: var(--color-text);
+}
+
+.catalog_admin {
+  flex-direction: column;
 }
 
 .catalog__aside {
   margin: 0.5em;
+}
+
+.catalog_admin > .catalog__aside {
+  width: 100%;
+  margin: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.catalog_admin > .catalog__main {
+  width: 100%;
 }
 
 .catalog__list {

@@ -1,5 +1,5 @@
 <template>
-  <div class="sorting">
+  <div class="sorting" :class="isAdmin ? 'sorting_admin' : ''">
     <select name="select" class="sorting__select select-element" v-model="sorting" @change="sortingList">
       <option disabled value="">{{ title }}</option>
       <option v-for="(item, index) in options" :key="index" :value="item.value">{{ $t(item.text) }}</option>
@@ -35,6 +35,12 @@ const sortingList = defineComponent({
     },
   },
 
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
+    },
+  },
+
   methods: {
     sortingList() {
       setSortingList(this.sorting);
@@ -53,16 +59,30 @@ export type SortingListElement = InstanceType<typeof sortingList>;
 
 <style>
 .sorting {
-  padding: 0.5rem 0;
-
   cursor: pointer;
   color: var(--color-text);
 }
 
+.sorting_admin {
+  padding: 0;
+  grid-area: D;
+}
+
 .sorting__select {
   width: 100%;
-
   color: inherit;
   background-color: var(--color-background);
+  border: 0.2rem solid var(--color-border-inverse-soft);
+  border-radius: 1rem;
+  transition: 0.5s ease;
+}
+
+.sorting__select,
+.sorting__select:focus {
+  outline: none;
+}
+
+.sorting__select:focus {
+  border-color: var(--color-border-inverse);
 }
 </style>

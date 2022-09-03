@@ -43,6 +43,9 @@
         :disabled="checkBottom"
       ></custom-btn>
     </div>
+    <div class="pagination__count">
+      <h3 class="pagination__value">{{ $t('pagination.count') }}: {{ size }}</h3>
+    </div>
   </div>
 </template>
 
@@ -130,28 +133,26 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 <style>
 .pagination {
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-right: var(--gap);
 }
 
 .pagination__per-page {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
+  flex: 1;
 }
 
 .pagination__select {
   width: 4rem;
-
   text-align: center;
-
   color: inherit;
   background-color: var(--color-background);
 }
 
 .pagination__btns {
+  flex: 1;
   width: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,13 +162,10 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 .pagination__page {
   width: 4rem;
   height: 4rem;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   background-color: var(--color-background);
 }
 
@@ -175,16 +173,36 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
   font-weight: bold;
 }
 
+.pagination__count {
+  flex: 1;
+}
+
+.pagination__value {
+  text-align: right;
+}
+
 @media (max-width: 1100px) {
   .pagination {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(2, auto);
+    grid-template-areas:
+      'A B'
+      'C C';
     justify-content: center;
+    gap: 1rem;
   }
 
   .pagination__per-page {
-    position: static;
+    grid-area: A;
+  }
+
+  .pagination__count {
+    grid-area: B;
+  }
+
+  .pagination__btns {
+    grid-area: C;
   }
 }
 </style>

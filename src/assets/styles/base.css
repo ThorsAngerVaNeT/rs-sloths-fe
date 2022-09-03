@@ -65,24 +65,27 @@ html {
 }
 
 .select-element {
-  margin: 0.5rem 0;
   padding: 0.5rem;
-
   cursor: pointer;
-
-  border: none;
-  border-bottom: 0.2rem solid gray;
-  border-radius: 0;
-
+  border: 0.2rem solid var(--color-border-inverse-soft);
+  border-radius: 1rem;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  transition: 0.5s ease;
+}
+
+.select-element,
+.select-element:focus {
+  outline: none;
+}
+
+.select-element:focus {
+  border-color: var(--color-border-inverse);
 }
 
 .input-text {
-  margin: 0.5rem 0;
   padding: 0.5rem;
-
   border: none;
   border-bottom: 0.2rem solid gray;
   background-color: var(--color-background);

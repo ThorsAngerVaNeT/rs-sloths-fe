@@ -224,7 +224,8 @@
     "next": "❯",
     "prev": "❮",
     "top": "❮❮",
-    "bottom": "❯❯"
+    "bottom": "❯❯",
+    "count": "Всего найдено"
   },
 
   "results": {

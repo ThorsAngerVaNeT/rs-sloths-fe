@@ -134,6 +134,10 @@ export default defineComponent({
   color: inherit;
 }
 
+.btn-search_admin {
+  top: 0;
+}
+
 .btn__text {
   color: var(--color-text-inverse);
 }
