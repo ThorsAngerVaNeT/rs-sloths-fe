@@ -62,7 +62,6 @@ export type TagCloudElement = InstanceType<typeof tagCloud>;
 
 <style>
 .tags {
-  /* padding: 0.5rem 0; */
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
