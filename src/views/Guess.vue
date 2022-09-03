@@ -1,5 +1,6 @@
 <template>
   <div class="guess">
+    <p class="guess__description">{{ $t('guess.description') }}</p>
     <custom-btn
       v-show="step < 0"
       :text="$t('guess.start')"
@@ -228,12 +229,16 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .guess {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.guess__description {
+  text-align: center;
 }
 
 .guess__img {

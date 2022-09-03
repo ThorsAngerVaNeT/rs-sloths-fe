@@ -71,6 +71,7 @@
 
   "guess": {
     "title": "Guess-a-Sloth Game",
+    "description": "Try to guess which sloth is hiding behind the dark outline? Only a real sloth can guess everyone!",
     "start": "Let's Go!",
     "congrats": "Congratulations!",
     "win": "You guessed everyone!",
