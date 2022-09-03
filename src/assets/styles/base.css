@@ -19,6 +19,7 @@
   width: 5px;
   height: 5px;
   background-color: var(--color-background-inverse);
+  border-radius: 1rem;
 }
 
 html {

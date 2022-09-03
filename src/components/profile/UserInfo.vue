@@ -98,7 +98,7 @@ export default defineComponent({
   width: 100%;
   color: var(--color-text);
   background-color: var(--color-background-soft);
-  border: 0.1rem solid gray;
+  border: 0.2rem solid gray;
   border-radius: 0.5rem;
   transition: 0.5s ease;
 }
@@ -109,10 +109,15 @@ export default defineComponent({
   height: 25rem;
   overflow: hidden;
   border-radius: 50%;
+  border: 0.2rem solid var(--color-border-inverse);
 }
+
 .user-info__img {
-  height: 25rem;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
+
 .user-info__property,
 .user-info__select {
   margin: 0.5rem 0;
@@ -121,11 +126,9 @@ export default defineComponent({
   text-align: center;
   color: inherit;
   background: none;
-  /* border: none; */
   border: 0.2rem solid var(--color-border-theme);
   border-radius: 1rem;
   transition: 0.5s ease;
-  /* border-bottom: 0.2rem solid gray; */
 }
 
 .user-info__property,

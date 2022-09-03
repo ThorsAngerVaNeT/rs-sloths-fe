@@ -127,6 +127,8 @@ export default defineComponent({
 .game-info__level {
   width: 25rem;
   min-height: 25rem;
+  max-height: 34rem;
+  overflow-y: auto;
   border-radius: 1rem;
   border: 0.2rem solid var(--color-border-inverse);
   background-color: var(--color-background-opacity);
