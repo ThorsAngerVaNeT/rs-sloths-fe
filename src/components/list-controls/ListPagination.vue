@@ -43,6 +43,9 @@
         :disabled="checkBottom"
       ></custom-btn>
     </div>
+    <div class="pagination__count">
+      <h3 class="pagination__value">{{ $t('pagination.count') }}: {{ size }}</h3>
+    </div>
   </div>
 </template>
 
@@ -130,14 +133,14 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 <style>
 .pagination {
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-right: var(--gap);
 }
 
 .pagination__per-page {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
+  flex: 1;
 }
 
 .pagination__select {
@@ -148,6 +151,7 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 }
 
 .pagination__btns {
+  flex: 1;
   width: 100%;
   display: flex;
   align-items: center;
@@ -167,6 +171,14 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 
 .pagination__page span {
   font-weight: bold;
+}
+
+.pagination__count {
+  flex: 1;
+}
+
+.pagination__value {
+  text-align: right;
 }
 
 @media (max-width: 1100px) {
