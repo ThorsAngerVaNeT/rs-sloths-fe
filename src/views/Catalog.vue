@@ -85,9 +85,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
-import type { Sloth, Sloths } from '@/common/types';
+import type { PageSettings, Sloth, Sloths } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { BASE, SLOTH_SORTING } from '@/common/const';
+import { BASE, PAGINATION_OPTIONS, SLOTH_SORTING } from '@/common/const';
 import { SlothsService } from '@/services/sloths-service';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useLoader from '@/stores/loader';
@@ -102,15 +102,17 @@ import ListPagination from '@/components/list-controls/ListPagination.vue';
 import SlothCard from '@/components/catalog/SlothCard.vue';
 import SlothInfo from '@/components/catalog/SlothInfo.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
+import usePagesStore from '@/stores/pages-store';
 
 const service = new SlothsService();
 
 const { setEmptySlothInfo, setSlothInfo } = useSlothInfo();
 
-const { getPerPage, getCurrPage } = usePagination();
-const { getSearchText } = useSearchText();
-const { getSelected } = useSelectedTags();
-const { getSortingList } = useSortingList();
+const { getPerPage, getCurrPage, setPerPage, setCurrPage } = usePagination();
+const { getSearchText, setSearchText } = useSearchText();
+const { getSelected, setSelected } = useSelectedTags();
+const { getSortingList, setSortingList } = useSortingList();
+const { getPageCatalogState, setPageCatalogState } = usePagesStore();
 
 export default defineComponent({
   name: 'CatalogView',
@@ -130,7 +132,6 @@ export default defineComponent({
       count: 0,
       isSlothInfoVisible: false,
       modalEvents: ModalEvents.view,
-      searchText: '',
       tags: [] as string[],
       sortingOptions: SLOTH_SORTING,
       isDownloadShow: false,
@@ -156,8 +157,24 @@ export default defineComponent({
     },
   },
 
+  created() {
+    this.loadStore();
+  },
+
   async mounted() {
     await this.getSloths();
+  },
+
+  beforeUnmount() {
+    const savedProps = {
+      currPage: getCurrPage(),
+      perPage: getPerPage(),
+      searchText: getSearchText(),
+      selected: getSelected(),
+      sorting: getSortingList(),
+      checked: this.sloths.filter((el) => el.checked).map((el) => el.id),
+    };
+    setPageCatalogState(JSON.stringify(savedProps));
   },
 
   methods: {
@@ -328,6 +345,42 @@ export default defineComponent({
 
     closeModal() {
       this.isDownloadShow = false;
+    },
+
+    loadStore() {
+      const settings: PageSettings = {
+        currPage: 1,
+        perPage: PAGINATION_OPTIONS[0],
+        searchText: '',
+        selected: [] as string[],
+        sorting: '',
+        checked: [] as string[],
+      };
+
+      const str = getPageCatalogState();
+      if (str) {
+        const data = JSON.parse(str);
+        if (data) {
+          settings.currPage = data.currPage;
+          settings.perPage = data.perPage;
+          settings.searchText = data.searchText;
+          settings.selected = data.selected;
+          settings.sorting = data.sorting;
+          settings.checked = data.checked;
+        }
+      }
+
+      setCurrPage(settings.currPage);
+      setPerPage(settings.perPage);
+      setSearchText(settings.searchText);
+      setSelected(settings.selected);
+      setSortingList(settings.sorting);
+
+      const { checked } = settings;
+      checked?.forEach((id: string) => {
+        const found = this.sloths.find((el) => el.id === id);
+        if (found) found.checked = true;
+      });
     },
   },
 });

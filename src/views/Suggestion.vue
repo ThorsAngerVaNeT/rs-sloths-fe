@@ -55,9 +55,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
-import type { Suggestion, Suggestions } from '@/common/types';
+import type { PageSettings, Suggestion, Suggestions } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { SUGGESTION_SORTING } from '@/common/const';
+import { PAGINATION_OPTIONS, SUGGESTION_SORTING } from '@/common/const';
 import { SuggestionsService } from '@/services/suggestions-service';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useLoader from '@/stores/loader';
@@ -73,15 +73,17 @@ import SuggestionCard from '@/components/suggest/SuggestionCard.vue';
 import SuggestionInfo from '@/components/suggest/SuggestionInfo.vue';
 import SuggestionNew from '@/components/suggest/SuggestionNew.vue';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
+import usePagesStore from '@/stores/pages-store';
 
 const service = new SuggestionsService();
 
 const { setEmptySuggestionInfo, setSuggestionInfo } = useSuggestionInfo();
 
-const { getPerPage, getCurrPage } = usePagination();
-const { getSearchText } = useSearchText();
-const { getSelected } = useSelectedTags();
-const { getSortingList } = useSortingList();
+const { getPerPage, getCurrPage, setPerPage, setCurrPage } = usePagination();
+const { getSearchText, setSearchText } = useSearchText();
+const { getSelected, setSelected } = useSelectedTags();
+const { getSortingList, setSortingList } = useSortingList();
+const { getPageSuggestionState, setPageSuggestionState } = usePagesStore();
 
 export default defineComponent({
   name: 'SuggestionView',
@@ -122,8 +124,23 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    this.getSuggestions();
+  created() {
+    this.loadStore();
+  },
+
+  async mounted() {
+    await this.getSuggestions();
+  },
+
+  beforeUnmount() {
+    const savedProps = {
+      currPage: getCurrPage(),
+      perPage: getPerPage(),
+      searchText: getSearchText(),
+      selected: getSelected(),
+      sorting: getSortingList(),
+    };
+    setPageSuggestionState(JSON.stringify(savedProps));
   },
 
   methods: {
@@ -237,6 +254,34 @@ export default defineComponent({
 
     handleSwitchMode() {
       this.mode = this.mode === 'watch' ? 'new' : 'watch';
+    },
+
+    loadStore() {
+      const settings: PageSettings = {
+        currPage: 1,
+        perPage: PAGINATION_OPTIONS[0],
+        searchText: '',
+        selected: [] as string[],
+        sorting: '',
+      };
+
+      const str = getPageSuggestionState();
+      if (str) {
+        const data = JSON.parse(str);
+        if (data) {
+          settings.currPage = data.currPage;
+          settings.perPage = data.perPage;
+          settings.searchText = data.searchText;
+          settings.selected = data.selected;
+          settings.sorting = data.sorting;
+        }
+      }
+
+      setCurrPage(settings.currPage);
+      setPerPage(settings.perPage);
+      setSearchText(settings.searchText);
+      setSelected(settings.selected);
+      setSortingList(settings.sorting);
     },
   },
 });

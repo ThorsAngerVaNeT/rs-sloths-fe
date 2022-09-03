@@ -132,3 +132,12 @@ export type WhereField = WhereFieldContains | WhereFieldEquals;
 export type WhereFieldFilter = { OR: WhereField[] };
 
 export type WhereFieldSome = { tags: { some: { value: { in: string[] } } } };
+
+export type PageSettings = {
+  currPage: number;
+  perPage: number;
+  searchText: string;
+  selected: string[];
+  sorting: string;
+  checked?: string[];
+};
