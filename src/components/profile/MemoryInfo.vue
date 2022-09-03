@@ -5,7 +5,6 @@
       <div class="game-info__level" v-for="(res, index) in gameResults" :key="index">
         <h4 class="result__level__title">{{ $t(`memory.${res.level}`) }}</h4>
         <div class="game-info__result" v-for="(r, i) in res.results" :key="i">
-          <!-- {{ r.result }} {{ r.createdAt }} {{ isAdmin ? r.userId : '' }} -->
           <span class="result__index">{{ `${i + 1}.` }}</span>
           <span class="result__steps">{{
             `${handleResultString(r.result).steps} ${getStepsText(handleResultString(r.result).steps)}`
@@ -24,7 +23,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
-// import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import HomeCategory from '@/components/home/HomeCategory.vue';
 import { ruNounEnding } from '@/utils/ru-noun-ending';
 import { MEMORY_LEVELS } from '@/common/const';
@@ -39,7 +37,6 @@ export default defineComponent({
   name: 'MemoryInfo',
 
   components: {
-    // CustomBtn,
     HomeCategory,
   },
 
@@ -110,10 +107,11 @@ export default defineComponent({
 .game-info {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .game-info__title {
+  padding-top: 1rem;
   color: var(--color-text);
   font-size: 2.4rem;
   transition: 0.5s ease;
@@ -169,5 +167,16 @@ export default defineComponent({
   align-items: center;
   gap: 2rem;
   transition: 0.5s ease;
+}
+
+@media (max-width: 1200px) {
+  .game-info__title {
+    text-align: center;
+  }
+
+  .game-info__wrap {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
 </style>

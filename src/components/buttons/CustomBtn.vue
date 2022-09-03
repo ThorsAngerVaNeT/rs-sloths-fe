@@ -244,4 +244,12 @@ export default defineComponent({
   border-color: var(--color-border-theme);
   background-color: var(--color-background-soft);
 }
+
+@media (max-width: 1200px) {
+  .btn-tab {
+    border-radius: 0.5rem;
+    margin: 0;
+    text-align: center;
+  }
+}
 </style>
