@@ -80,7 +80,7 @@ export default defineComponent({
   width: auto;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
   .controls_admin {
     display: grid;
     grid-template-columns: repeat(2, auto);

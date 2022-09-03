@@ -1,5 +1,5 @@
 <template>
-  <div class="suggest">
+  <div class="suggest" :class="isAdmin ? 'suggest_admin' : ''">
     <div class="suggest__tools">
       <custom-btn
         :text="mode === 'watch' ? `${$t('suggest.btn.switch.to-new')}` : `${$t('suggest.btn.switch.to-watch')}`"
@@ -10,7 +10,7 @@
     </div>
     <div v-if="mode === 'watch'" class="suggest__watch">
       <div class="suggest__aside list-aside">
-        <h3>{{ $t('suggest.count') }}: {{ count }}</h3>
+        <h3 class="suggest__count">{{ $t('suggest.count') }}: {{ count }}</h3>
         <list-controls
           @search="getSuggestions"
           @tags="getSuggestions"
@@ -121,6 +121,10 @@ export default defineComponent({
       if (this.modalEvents === ModalEvents.new) return this.$t('suggest.btn.new');
       if (this.modalEvents === ModalEvents.edit) return this.$t('btn.edit');
       return this.$t('suggest.info');
+    },
+
+    isAdmin() {
+      return this.$route.name === 'admin';
     },
   },
 
@@ -294,6 +298,10 @@ export default defineComponent({
   padding: 0 3rem;
 }
 
+.suggest_admin {
+  padding: 0;
+}
+
 .suggest__watch {
   display: flex;
   flex-direction: row;
@@ -301,8 +309,27 @@ export default defineComponent({
   color: var(--color-text);
 }
 
+.suggest_admin > .suggest__watch {
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
 .suggest__aside {
   margin: 0.5em;
+}
+
+.suggest_admin > .suggest__watch > .suggest__aside {
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.suggest_admin > .suggest__watch > .suggest__aside,
+.suggest_admin > .suggest__watch > .suggest__main {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .suggest__list {
