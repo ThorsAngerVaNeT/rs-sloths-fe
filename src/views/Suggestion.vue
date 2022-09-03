@@ -123,7 +123,7 @@ export default defineComponent({
     await this.getSuggestions();
   },
 
-  beforeRouteLeave() {
+  beforeUnmount() {
     const savedProps = {
       currPage: getCurrPage(),
       perPage: getPerPage(),

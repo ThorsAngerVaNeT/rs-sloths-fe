@@ -158,25 +158,23 @@ export default defineComponent({
   },
 
   created() {
-    if (this.getPageName === 'catalog') this.loadStore();
+    this.loadStore();
   },
 
   async mounted() {
     await this.getSloths();
   },
 
-  beforeRouteLeave() {
-    if (this.getPageName === 'catalog') {
-      const savedProps = {
-        currPage: getCurrPage(),
-        perPage: getPerPage(),
-        searchText: getSearchText(),
-        selected: getSelected(),
-        sorting: getSortingList(),
-        checked: this.sloths.filter((el) => el.checked).map((el) => el.id),
-      };
-      setPageCatalogState(JSON.stringify(savedProps));
-    }
+  beforeUnmount() {
+    const savedProps = {
+      currPage: getCurrPage(),
+      perPage: getPerPage(),
+      searchText: getSearchText(),
+      selected: getSelected(),
+      sorting: getSortingList(),
+      checked: this.sloths.filter((el) => el.checked).map((el) => el.id),
+    };
+    setPageCatalogState(JSON.stringify(savedProps));
   },
 
   methods: {

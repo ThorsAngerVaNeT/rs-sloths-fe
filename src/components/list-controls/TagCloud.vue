@@ -17,7 +17,7 @@ const tagCloud = defineComponent({
 
   data() {
     return {
-      selected: getSelected(),
+      selected: [] as string[],
     };
   },
 
@@ -26,6 +26,10 @@ const tagCloud = defineComponent({
       type: Object as PropType<string[]>,
       required: true,
     },
+  },
+
+  mounted() {
+    this.selected = getSelected();
   },
 
   methods: {

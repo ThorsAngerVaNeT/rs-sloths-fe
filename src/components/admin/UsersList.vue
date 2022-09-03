@@ -46,6 +46,7 @@ import { mapWritableState } from 'pinia';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { CustomError } from '@/services/error-handling/custom-error';
 import {
+  PAGINATION_OPTIONS,
   USERS_ERROR_CREATE,
   USERS_ERROR_DEL,
   USERS_ERROR_GET_LIST,
@@ -53,7 +54,7 @@ import {
   USER_SORTING,
 } from '@/common/const';
 import { UsersService } from '@/services/users-service';
-import type { User, Users } from '@/common/types';
+import type { PageSettings, User, Users } from '@/common/types';
 import { ModalEvents } from '@/common/enums/modal-events';
 import usePagination from '@/stores/pagination';
 import useSearchText from '@/stores/search-text';
@@ -65,6 +66,7 @@ import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ListControls from '@/components/list-controls/ListControls.vue';
 import ListPagination from '@/components/list-controls/ListPagination.vue';
 import { Role } from '@/common/enums/user-role';
+import usePagesStore from '@/stores/pages-store';
 import UserModal from './UserModal.vue';
 import UserCard from './UserCard.vue';
 
@@ -72,10 +74,11 @@ const service = new UsersService();
 
 const { setEmptyUserInfo, setUserInfo } = useUserInfo();
 
-const { getPerPage, getCurrPage } = usePagination();
-const { getSearchText } = useSearchText();
-const { getSelected } = useSelectedTags();
-const { getSortingList } = useSortingList();
+const { setPerPage, setCurrPage, getPerPage, getCurrPage } = usePagination();
+const { setSearchText, getSearchText } = useSearchText();
+const { setSelected, getSelected } = useSelectedTags();
+const { setSortingList, getSortingList } = useSortingList();
+const { getPageUsersState, setPageUsersState } = usePagesStore();
 
 export default defineComponent({
   name: 'UsersList',
@@ -110,8 +113,23 @@ export default defineComponent({
     },
   },
 
+  created() {
+    this.loadStore();
+  },
+
   async mounted() {
     await this.getUsers();
+  },
+
+  beforeUnmount() {
+    const savedProps = {
+      currPage: getCurrPage(),
+      perPage: getPerPage(),
+      searchText: getSearchText(),
+      selected: getSelected(),
+      sorting: getSortingList(),
+    };
+    setPageUsersState(JSON.stringify(savedProps));
   },
 
   methods: {
@@ -212,6 +230,34 @@ export default defineComponent({
 
     closeUserInfo() {
       this.isUserInfoVisible = false;
+    },
+
+    loadStore() {
+      const settings: PageSettings = {
+        currPage: 1,
+        perPage: PAGINATION_OPTIONS[0],
+        searchText: '',
+        selected: [] as string[],
+        sorting: '',
+      };
+
+      const str = getPageUsersState();
+      if (str) {
+        const data = JSON.parse(str);
+        if (data) {
+          settings.currPage = data.currPage;
+          settings.perPage = data.perPage;
+          settings.searchText = data.searchText;
+          settings.selected = data.selected;
+          settings.sorting = data.sorting;
+        }
+      }
+
+      setCurrPage(settings.currPage);
+      setPerPage(settings.perPage);
+      setSearchText(settings.searchText);
+      setSelected(settings.selected);
+      setSortingList(settings.sorting);
     },
   },
 });
