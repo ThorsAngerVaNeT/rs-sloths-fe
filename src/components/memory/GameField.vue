@@ -40,7 +40,7 @@
         <img :src="cardWinner" alt="winner" />
         <p>{{ $t('memory.win') }}</p>
         <p>{{ steps }} {{ getStepsText }}</p>
-        <p>{{ getTime }} {{ $t('memory.time') }}</p>
+        <p>{{ getTime / 1000 }} {{ $t('memory.time') }}</p>
       </template>
     </modal-window>
   </div>
@@ -110,7 +110,7 @@ export default defineComponent({
     },
 
     getTime(): number {
-      return (this.endTime - this.startTime) / 1000;
+      return this.endTime - this.startTime;
     },
 
     getShowModal(): boolean {
@@ -133,9 +133,7 @@ export default defineComponent({
   },
 
   methods: {
-    async getImages() {
-      // todo fetch
-
+    getImages() {
       this.images = [
         './test01.png',
         './test02.png',
@@ -291,14 +289,11 @@ export default defineComponent({
     },
 
     async saveResult() {
-      const result = JSON.stringify({
-        steps: this.steps,
-        time: this.getTime,
-      });
       const service = new GameResultService(this.level.gameId);
       const gameResult: GameResult = {
         gameId: this.level.gameId,
-        result,
+        count: this.steps,
+        time: this.getTime,
       };
       await service.create(gameResult);
     },
