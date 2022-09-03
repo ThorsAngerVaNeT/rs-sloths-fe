@@ -65,7 +65,8 @@
     "tags": "Tags",
     "btn": {
       "new": "New Sloth"
-    }
+    },
+    "count": "Total count"
   },
 
   "guess": {
@@ -98,8 +99,16 @@
     "status": "Status",
     "user": "User",
     "btn": {
-      "new": "Your Suggestion"
-    }
+      "new": "Your Suggestion",
+      "switch": {
+        "to-new": "New Suggestion",
+        "to-watch": "All Suggestions"
+      },
+      "submit": "Submit"
+    },
+    "new": "Create new Suggestion",
+    "placeholder": "Enter description of meme",
+    "count": "Total count"
   },
 
   "create": {
@@ -206,5 +215,11 @@
     "prev": "❮",
     "top": "❮❮",
     "bottom": "❯❯"
+  },
+
+  "results": {
+    "user": "Personal results",
+    "all": "All results",
+    "again": "Try again:"
   }
 }

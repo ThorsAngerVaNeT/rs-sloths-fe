@@ -51,6 +51,7 @@ export type Sloth = {
   description: string;
   image_url: string;
   rating: number;
+  ratings: UserRate[];
   createdAt: number;
   tags: Tags;
   checked?: boolean;
@@ -77,6 +78,7 @@ export type Suggestion = {
   image_url: string;
   userId: string;
   rating: number;
+  ratings: UserRate[];
   createdAt: Date;
   status: SuggestionStatus;
 };
@@ -86,9 +88,23 @@ export type SuggestionsRating = {
   rate: number;
 };
 
+export type UserRate = {
+  rate: number;
+};
+
+export type GameResults = GameResult[];
+export type GameResult = {
+  id?: string;
+  gameId?: string;
+  userId?: string;
+  result: string;
+  createdAt?: Date;
+};
+
 export type MemoryLevel = {
   level: string;
   n: number;
+  gameId: string;
 };
 
 export type ErrorDescription = {

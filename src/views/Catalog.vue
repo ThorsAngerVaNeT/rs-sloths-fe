@@ -1,7 +1,7 @@
 <template>
   <div class="catalog">
     <div class="catalog__aside list-aside">
-      <h3>{{ $t('catalog.title') }}: {{ count }}</h3>
+      <h3>{{ $t('catalog.count') }}: {{ count }}</h3>
       <custom-btn
         v-show="getPageName === 'admin'"
         :text="$t('catalog.btn.new')"

@@ -1,7 +1,6 @@
 <template>
   <div class="admin">
     <div class="admin__aside">
-      <h3>{{ $t('admin.title') }}</h3>
       <div class="admin__nav">
         <div
           v-for="(page, index) in pages"

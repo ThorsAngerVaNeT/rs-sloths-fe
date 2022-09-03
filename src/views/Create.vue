@@ -1,7 +1,6 @@
 <template>
   <div class="meme">
     <div class="meme__list list-aside">
-      <h2>{{ $t('create.title') }}</h2>
       <h3>{{ $t('create.description') }}</h3>
       <div class="meme__memes">
         <img
@@ -163,18 +162,19 @@ export default defineComponent({
       // todo fetch
 
       this.images = [
-        './test01.svg',
-        './test02.svg',
-        './test03.svg',
-        './test04.svg',
-        './test05.svg',
-        './test06.svg',
-        './test07.svg',
-        './test08.svg',
-        './test09.svg',
-        './test10.svg',
-        './test11.svg',
-        './test12.svg',
+        './img/memes/deadline.svg',
+        './img/memes/expert.svg',
+        './img/memes/git.svg',
+        './img/memes/its_ok.svg',
+        './img/memes/love.svg',
+        './img/memes/mentor.svg',
+        './img/memes/read_chat.svg',
+        './img/memes/shocked.svg',
+        './img/memes/so_close.svg',
+        './img/memes/student_1.svg',
+        './img/memes/without_mentor.svg',
+        './img/memes/work_done.svg',
+        './img/memes/wtf.svg',
       ];
     },
 
@@ -356,6 +356,11 @@ export default defineComponent({
 
   color: var(--color-text);
 }
+
+.meme {
+  padding: 0 3rem;
+}
+
 .meme__generator {
   flex-direction: column;
   align-items: center;

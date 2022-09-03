@@ -1,56 +1,68 @@
 <template>
   <div class="game-info">
-    <div class="title">{{ id }}</div>
+    <div class="title">{{ isAdmin ? 'all results' : userId }}</div>
+    <div v-for="(res, index) in results" :key="index">
+      {{ res.result }} {{ res.createdAt }} {{ isAdmin ? res.userId : '' }}
+    </div>
 
-    <router-link to="/guess">
-      <custom-btn :text="$t('guess.title')" className="btn" img-path="./guess-game.png"></custom-btn>
-    </router-link>
+    <home-category category="guess" @click="$router.push({ name: 'guess' })"></home-category>
   </div>
 </template>
 
 <script lang="ts">
+import type { GameResult } from '@/common/types';
 import { defineComponent } from 'vue';
-import CustomBtn from '../buttons/CustomBtn.vue';
-// import { errorHandler } from '../../services/error-handling/error-handler';
-
-// const service = new UsersService();
+// import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import HomeCategory from '@/components/home/HomeCategory.vue';
+import { errorHandler } from '@/services/error-handling/error-handler';
+import { GameResultService } from '@/services/game-result-service';
+import { GUESS_GAME_ID } from '@/common/const';
 
 export default defineComponent({
   name: 'GuessInfo',
 
   components: {
-    CustomBtn,
+    // CustomBtn,
+    HomeCategory,
   },
 
   data() {
     return {
-      gameInfo: {
-        id: '',
-        title: '',
-      },
+      count: 0,
+      results: [] as GameResult[],
     };
   },
 
   props: {
-    id: {
+    userId: {
       type: String,
-      required: true,
+      default: '',
     },
   },
 
-  mounted() {
-    this.getGameInfo();
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
+    },
+  },
+
+  async mounted() {
+    await this.getGameInfo();
   },
 
   methods: {
     async getGameInfo() {
-      //   try {
-      //     const res = await service.getById(this.id);
-      //     if (!res) throw Error(); // todo
-      //     this.userInfo = res.data;
-      //   } catch (error) {
-      //     errorHandler(error);
-      //   }
+      try {
+        const service = new GameResultService(GUESS_GAME_ID, this.userId);
+
+        const res = await service.getAll();
+        if (!res.ok) throw Error(); // todo
+
+        this.count = res.data.count;
+        this.results = res.data.items;
+      } catch (error) {
+        errorHandler(error);
+      }
     },
   },
 });

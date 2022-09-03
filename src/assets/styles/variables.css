@@ -30,6 +30,8 @@
   --color-background-inverse: var(--dark-addict);
   --color-background-inverse-soft: var(--dark-main);
 
+  --color-background-opacity: rgba(220, 219, 225, 0.5);
+
   --color-heading: var(--dark-addict);
   --color-text: var(--dark-main);
   --color-text-inverse: var(--light-main);
@@ -44,6 +46,8 @@
 
   --color-background-inverse: var(--light-addict);
   --color-background-inverse-soft: var(--light-main);
+
+  --color-background-opacity: rgba(31, 31, 31, 0.5);
 
   --color-heading: var(--light-addict);
   --color-text: var(--light-main);

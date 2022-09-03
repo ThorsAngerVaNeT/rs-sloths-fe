@@ -1,7 +1,7 @@
 <template>
   <div class="user-info">
     <div class="user-info__avatar">
-      <img class="user-info__img" :src="(adminPanel ? userInfo : currUser)['avatar_url']" :alt="$t('profile.avatar')" />
+      <img class="user-info__img" :src="getAvatar" :alt="$t('profile.avatar')" />
     </div>
     <input
       type="text"
@@ -70,7 +70,9 @@ export default defineComponent({
 
   computed: {
     getAvatar(): string {
-      return this.userInfo.avatar_url ?? DEFAULT_USER_AVATAR;
+      return this.adminPanel
+        ? this.userInfo.avatar_url ?? DEFAULT_USER_AVATAR
+        : this.currUser.avatar_url ?? DEFAULT_USER_AVATAR;
     },
 
     isAdmin() {
@@ -96,8 +98,9 @@ export default defineComponent({
   width: 100%;
   color: var(--color-text);
   background-color: var(--color-background-soft);
-  border: 0.1rem solid gray;
+  border: 0.2rem solid gray;
   border-radius: 0.5rem;
+  transition: 0.5s ease;
 }
 
 .user-info__avatar {
@@ -106,10 +109,15 @@ export default defineComponent({
   height: 25rem;
   overflow: hidden;
   border-radius: 50%;
+  border: 0.2rem solid var(--color-border-inverse);
 }
+
 .user-info__img {
-  height: 25rem;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
+
 .user-info__property,
 .user-info__select {
   margin: 0.5rem 0;
@@ -117,13 +125,18 @@ export default defineComponent({
   width: 90%;
   text-align: center;
   color: inherit;
-  background-color: var(--color-background);
-  border: none;
-  border-bottom: 0.2rem solid gray;
+  background: none;
+  border: 0.2rem solid var(--color-border-theme);
+  border-radius: 1rem;
+  transition: 0.5s ease;
 }
 
 .user-info__property,
 .user-info__property:focus {
   outline: none;
+}
+
+.user-info__property:focus {
+  border-color: var(--color-border-inverse);
 }
 </style>
