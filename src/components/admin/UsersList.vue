@@ -2,7 +2,7 @@
   <div class="users">
     <div class="users__aside list-aside">
       <custom-btn :text="$t('admin.users.btn.new')" className="btn btn-primary" @click="showUserInfoNew"></custom-btn>
-      <h3 class="users__count">{{ $t('admin.users.title') }}: {{ count }}</h3>
+      <h3 class="users__count">{{ $t('pagination.count') }}: {{ count }}</h3>
       <list-controls
         @search="getUsers"
         @tags="getUsers"
