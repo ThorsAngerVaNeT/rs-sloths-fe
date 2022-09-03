@@ -45,5 +45,6 @@ export default defineComponent({
 <style scoped>
 .alert-modal {
   z-index: 100;
+  position: absolute;
 }
 </style>
