@@ -98,6 +98,7 @@ export default defineComponent({
 <style scoped>
 .admin {
   display: flex;
+  gap: 2rem;
   padding: 0 3rem;
   color: var(--color-text);
 }
@@ -113,7 +114,6 @@ export default defineComponent({
 }
 
 .admin__main {
-  padding: 1rem;
   width: 100%;
 }
 </style>

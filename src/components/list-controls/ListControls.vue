@@ -1,5 +1,5 @@
 <template>
-  <div class="controls">
+  <div class="controls" :class="isAdmin ? 'controls_admin' : ''">
     <search-text ref="search" @search="$emit('search')" :placeholder="placeholder"></search-text>
     <tag-cloud ref="tags" @tags="$emit('tags')" :tags="tags"></tag-cloud>
     <sorting-list ref="sorting" @sorting="$emit('sorting')" :title="title" :options="options"></sorting-list>
@@ -47,6 +47,12 @@ export default defineComponent({
     },
   },
 
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
+    },
+  },
+
   methods: {
     clearAll() {
       const search = this.$refs.search as SearchTextElement;
@@ -65,5 +71,12 @@ export default defineComponent({
 <style scoped>
 .controls {
   width: 100%;
+}
+
+.controls_admin {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: auto;
 }
 </style>
