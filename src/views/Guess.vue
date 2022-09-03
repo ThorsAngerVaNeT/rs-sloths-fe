@@ -1,6 +1,11 @@
 <template>
   <div class="guess">
-    <custom-btn :text="$t('guess.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
+    <custom-btn
+      v-show="step < 0"
+      :text="$t('guess.start')"
+      className="btn btn-primary"
+      :onClick="startGame"
+    ></custom-btn>
 
     <div v-for="(item, index) in gameCards" :key="index" v-show="index === step">
       <img :src="item.question.img" :alt="$t('guess.guess')" class="guess__img" />
@@ -15,8 +20,14 @@
         </span>
       </div>
     </div>
-    <custom-btn :text="$t('guess.next')" className="btn btn-primary" :onClick="nextStep"></custom-btn>
-    <div class="guess__results">
+    <custom-btn
+      v-show="step >= 0"
+      :text="$t('guess.next')"
+      className="btn btn-primary"
+      :disabled="stepSelection < 0"
+      :onClick="nextStep"
+    ></custom-btn>
+    <div v-show="step >= 0" class="guess__results">
       <div v-for="(res, index) in result" :key="index" :class="`guess__result ${getClassStepResult(index)}`"></div>
     </div>
 
@@ -68,7 +79,7 @@ export default defineComponent({
       result: [] as boolean[],
       startTime: 0,
       endTime: 0,
-      step: 0,
+      step: -1,
       stepSelection: -1,
       stepAnswer: false,
       cardWinner: GUESS_GAME_WINNER,
@@ -185,6 +196,9 @@ export default defineComponent({
         playAudio(audioWin);
         this.isModalVisible = true;
         this.saveResult();
+
+        this.step = -1;
+        this.stepSelection = -1;
       }
     },
 
