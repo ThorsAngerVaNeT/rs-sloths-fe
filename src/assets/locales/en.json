@@ -74,7 +74,8 @@
     "start": "Let's Go!",
     "congrats": "Congratulations!",
     "win": "You won! Your result:",
-    "guess": "Guess image"
+    "guess": "Guess image",
+    "next": "Give an answer"
   },
   "memory": {
     "title": "Memory Game",

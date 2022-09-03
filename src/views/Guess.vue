@@ -3,7 +3,7 @@
     <custom-btn :text="$t('guess.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
 
     <div v-for="(item, index) in gameCards" :key="index" v-show="index === step">
-      <img :src="item.guess.img" :alt="$t('guess.guess')" />
+      <img :src="item.guess.img" :alt="$t('guess.guess')" class="guess__img" />
       <div class="guess__answers">
         <span
           v-for="(answer, i) in item.answers"
@@ -15,7 +15,7 @@
         </span>
       </div>
     </div>
-    <custom-btn :text="$t('pagination.next')" className="btn btn-pagination" :onClick="nextStep"></custom-btn>
+    <custom-btn :text="$t('guess.next')" className="btn btn-primary" :onClick="nextStep"></custom-btn>
     <div class="guess__results">
       <div v-for="(res, index) in result" :key="index" :class="`guess__result ${getClassStepResult(index)}`"></div>
     </div>
@@ -38,6 +38,7 @@ import { defineComponent } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { GUESS_GAME_WINNER } from '@/common/const';
+import { playAudio, audioWin, audioSadTrombone } from '@/utils/audio';
 
 type Card = {
   caption: string;
@@ -63,6 +64,8 @@ export default defineComponent({
       answers: [] as Card[],
       gameCards: [] as GameCard[],
       result: [] as boolean[],
+      startTime: 0,
+      endTime: 0,
       step: 0,
       stepSelection: -1,
       stepAnswer: false,
@@ -109,6 +112,12 @@ export default defineComponent({
 
     startGame() {
       this.getGameCards();
+
+      this.endTime = 0;
+      this.startTime = Date.now();
+      this.step = 0;
+      this.stepSelection = -1;
+      this.stepAnswer = false;
     },
 
     getGameCards() {
@@ -133,9 +142,6 @@ export default defineComponent({
       });
 
       this.gameCards = gameCards.sort(() => Math.random() - 0.5);
-      this.step = 0;
-      this.stepSelection = -1;
-      this.stepAnswer = false;
     },
 
     setAnswer(guess: number, answer: number) {
@@ -145,9 +151,20 @@ export default defineComponent({
 
     nextStep() {
       this.result[this.step] = this.stepAnswer;
+
+      if (this.stepAnswer) {
+        playAudio(audioWin);
+      } else {
+        playAudio(audioSadTrombone);
+      }
+
       this.step += 1;
       this.stepAnswer = false;
       this.stepSelection = -1;
+
+      if (this.step === this.gameCards.length) {
+        this.endTime = Date.now();
+      }
     },
 
     getClassStepResult(i: number) {
@@ -167,6 +184,20 @@ export default defineComponent({
 </script>
 
 <style>
+.guess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.guess__img {
+  position: relative;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .guess__answers {
   padding: 0.5rem 0;
 
