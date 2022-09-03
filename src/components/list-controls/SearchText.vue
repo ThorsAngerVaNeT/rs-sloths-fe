@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="search" :class="isAdmin ? 'search_admin' : ''">
     <input
       type="text"
       class="search__text"
@@ -8,7 +8,7 @@
       v-model="searchText"
       @change="search"
     />
-    <custom-btn @click="clearSearch" text="X" className="btn btn-search"></custom-btn>
+    <custom-btn @click="clearSearch" text="X" className="btn btn-search btn-search_admin"></custom-btn>
   </div>
 </template>
 
@@ -39,6 +39,12 @@ const searchText = defineComponent({
     },
   },
 
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
+    },
+  },
+
   methods: {
     search() {
       setSearchText(this.searchText);
@@ -65,15 +71,25 @@ export type SearchTextElement = InstanceType<typeof searchText>;
   position: relative;
   color: var(--color-text);
 }
+
 .search__text {
-  margin: 0.5rem 0;
+  /* margin: 0.5rem 0; */
   padding: 0.5rem;
-
+  padding-right: 2rem;
   width: 100%;
-
-  border: none;
-  border-bottom: 0.2rem solid gray;
+  border: 0.2rem solid var(--color-border-theme);
   background-color: var(--color-background);
   color: inherit;
+  border-radius: 1rem;
+  transition: 0.5s ease;
+}
+
+.search__text,
+.search__text:focus {
+  outline: none;
+}
+
+.search__text:focus {
+  border-color: var(--color-border-inverse);
 }
 </style>
