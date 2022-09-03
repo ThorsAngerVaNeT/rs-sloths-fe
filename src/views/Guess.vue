@@ -3,7 +3,7 @@
     <custom-btn :text="$t('guess.start')" className="btn btn-primary" :onClick="startGame"></custom-btn>
 
     <div v-for="(item, index) in gameCards" :key="index" v-show="index === step">
-      <img :src="item.guess.img" :alt="$t('guess.guess')" class="guess__img" />
+      <img :src="item.question.img" :alt="$t('guess.guess')" class="guess__img" />
       <div class="guess__answers">
         <span
           v-for="(answer, i) in item.answers"
@@ -48,7 +48,7 @@ type Card = {
 };
 
 type GameCard = {
-  guess: Card;
+  question: Card;
   answers: Card[];
 };
 
@@ -62,7 +62,7 @@ export default defineComponent({
 
   data() {
     return {
-      guesses: [] as Card[],
+      questions: [] as Card[],
       answers: [] as Card[],
       gameCards: [] as GameCard[],
       result: [] as boolean[],
@@ -98,7 +98,7 @@ export default defineComponent({
 
   methods: {
     initCards() {
-      this.guesses = [
+      this.questions = [
         { caption: 'Student 1', img: './test01.svg' },
         { caption: 'Git problem', img: './test02.svg' },
         { caption: 'Samurai', img: './test03.svg' },
@@ -141,13 +141,13 @@ export default defineComponent({
       const gameCards = [] as GameCard[];
       this.result = [];
 
-      this.guesses.forEach((guess) => {
+      this.questions.forEach((question) => {
         const newGameCard = {} as GameCard;
-        newGameCard.guess = guess;
+        newGameCard.question = question;
 
-        const trueCard = this.answers.filter((el) => el.caption === guess.caption);
+        const trueCard = this.answers.filter((el) => el.caption === question.caption);
         const answers = this.answers
-          .filter((el) => el.caption !== guess.caption)
+          .filter((el) => el.caption !== question.caption)
           .sort(() => Math.random() - 0.5)
           .filter((el, i) => i < 3);
         answers.push(trueCard[0]);
@@ -161,9 +161,9 @@ export default defineComponent({
       this.gameCards = gameCards.sort(() => Math.random() - 0.5);
     },
 
-    setAnswer(guess: number, answer: number) {
+    setAnswer(question: number, answer: number) {
       this.stepSelection = answer;
-      this.stepAnswer = this.gameCards[guess].guess.caption === this.gameCards[guess].answers[answer].caption;
+      this.stepAnswer = this.gameCards[question].question.caption === this.gameCards[question].answers[answer].caption;
     },
 
     nextStep() {
