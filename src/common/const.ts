@@ -142,5 +142,6 @@ export const MEMORY_GAME_WINNER = './winner1.svg';
 
 // Guess Game
 export const GUESS_GAME_ID = '431b4880-0ac6-4082-ae9f-b34f5f9a84a6';
+export const GUESS_GAME_WINNER = './winner2.svg';
 
 export const CATALOG_SLOTH_PREVIEW = './preview.svg';

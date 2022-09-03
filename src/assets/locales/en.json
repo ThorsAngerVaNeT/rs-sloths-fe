@@ -70,9 +70,11 @@
   },
 
   "guess": {
-    "title": "Guess-a-Sloth Game"
+    "title": "Guess-a-Sloth Game",
+    "start": "Let's Go!",
+    "congrats": "Congratulations!",
+    "win": "You won! Your result:"
   },
-
   "memory": {
     "title": "Memory Game",
     "start": "Let's Go!",

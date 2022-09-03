@@ -133,9 +133,7 @@ export default defineComponent({
   },
 
   methods: {
-    async getImages() {
-      // todo fetch
-
+    getImages() {
       this.images = [
         './test01.png',
         './test02.png',
