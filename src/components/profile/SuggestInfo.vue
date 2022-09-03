@@ -1,16 +1,14 @@
 <template>
   <div class="game-info">
-    <div class="title">{{ id }}</div>
-
-    <router-link to="/suggest">
-      <custom-btn :text="$t('suggest.title')" className="btn" img-path="./suggest-game.png"></custom-btn>
-    </router-link>
+    <div class="game-info__again">
+      <home-category category="suggest" @click="$router.push({ name: 'suggest' })"></home-category>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CustomBtn from '../buttons/CustomBtn.vue';
+import HomeCategory from '@/components/home/HomeCategory.vue';
 // import { errorHandler } from '../../services/error-handling/error-handler';
 
 // const service = new UsersService();
@@ -19,7 +17,7 @@ export default defineComponent({
   name: 'SuggestInfo',
 
   components: {
-    CustomBtn,
+    HomeCategory,
   },
 
   data() {
@@ -32,9 +30,9 @@ export default defineComponent({
   },
 
   props: {
-    id: {
+    userId: {
       type: String,
-      required: true,
+      default: '',
     },
   },
 
