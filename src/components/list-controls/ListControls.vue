@@ -74,10 +74,6 @@ export default defineComponent({
 }
 
 .controls_admin {
-  /* display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: auto; */
   display: grid;
   grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(2, 3.5rem);
