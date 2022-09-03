@@ -97,7 +97,8 @@ export type GameResult = {
   id?: string;
   gameId?: string;
   userId?: string;
-  result: string;
+  count: number;
+  time: number;
   createdAt?: Date;
 };
 

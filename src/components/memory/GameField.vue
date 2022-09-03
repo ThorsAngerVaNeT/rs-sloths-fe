@@ -289,14 +289,11 @@ export default defineComponent({
     },
 
     async saveResult() {
-      const result = JSON.stringify({
-        steps: this.steps,
-        time: this.getTime,
-      });
       const service = new GameResultService(this.level.gameId);
       const gameResult: GameResult = {
         gameId: this.level.gameId,
-        result,
+        count: this.steps,
+        time: this.getTime,
       };
       await service.create(gameResult);
     },

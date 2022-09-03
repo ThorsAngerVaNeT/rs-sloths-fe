@@ -138,10 +138,11 @@ export const MEMORY_LEVELS: MemoryLevel[] = [
 ];
 export const MEMORY_GAME_TIMEOUT = 1000;
 export const MEMORY_GAME_COVER = './img/memory/card-cover.svg';
-export const MEMORY_GAME_WINNER = './winner1.svg';
+export const MEMORY_GAME_WINNER = './img/memory/winner1.svg';
 
 // Guess Game
 export const GUESS_GAME_ID = '431b4880-0ac6-4082-ae9f-b34f5f9a84a6';
-export const GUESS_GAME_WINNER = './winner2.svg';
+export const GUESS_GAME_WINNER = './img/guess/winner3.svg';
+export const GUESS_GAME_WINNER_ALL = './img/guess/winner2.svg';
 
 export const CATALOG_SLOTH_PREVIEW = './preview.svg';

@@ -24,10 +24,10 @@
       <template v-slot:header> {{ $t('guess.congrats') }} </template>
 
       <template v-slot:body>
-        <img :src="cardWinner" alt="winner" />
-        <p>{{ $t('guess.win') }}</p>
-        <!-- <p>{{ steps }} {{ getStepsText }}</p>
-      <p>{{ getTime }} {{ $t('memory.time') }}</p> -->
+        <img :src="allGuesses ? cardWinnerAll : cardWinner" alt="winner" />
+        <p>{{ allGuesses ? `${$t('guess.win')} ` : '' }}{{ $t('guess.result') }}</p>
+        <p>{{ getGuesses }} / {{ gameCards.length }} {{ $t('guess.guesses') }}</p>
+        <p>{{ getTime / 1000 }} {{ $t('memory.time') }}</p>
       </template>
     </modal-window>
   </div>
@@ -37,8 +37,10 @@
 import { defineComponent } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
-import { GUESS_GAME_WINNER } from '@/common/const';
+import { GUESS_GAME_WINNER, GUESS_GAME_WINNER_ALL, GUESS_GAME_ID } from '@/common/const';
 import { playAudio, audioWin, audioSadTrombone } from '@/utils/audio';
+import type { GameResult } from '@/common/types';
+import { GameResultService } from '@/services/game-result-service';
 
 type Card = {
   caption: string;
@@ -70,8 +72,23 @@ export default defineComponent({
       stepSelection: -1,
       stepAnswer: false,
       cardWinner: GUESS_GAME_WINNER,
+      cardWinnerAll: GUESS_GAME_WINNER_ALL,
       isModalVisible: false,
     };
+  },
+
+  computed: {
+    getGuesses(): number {
+      return this.result.filter((el) => el).length;
+    },
+
+    allGuesses(): boolean {
+      return this.getGuesses === this.gameCards.length;
+    },
+
+    getTime(): number {
+      return this.endTime - this.startTime;
+    },
   },
 
   mounted() {
@@ -82,31 +99,31 @@ export default defineComponent({
   methods: {
     initCards() {
       this.guesses = [
-        { caption: 'Student 1', img: './test01.png' },
-        { caption: 'Git problem', img: './test02.png' },
-        { caption: 'Samurai', img: './test03.png' },
-        { caption: 'Thanks', img: './test04.png' },
-        { caption: 'Popcorn', img: './test05.png' },
-        { caption: 'WTF?', img: './test06.png' },
-        { caption: 'Shocked', img: './test07.png' },
-        { caption: 'Junior', img: './test08.png' },
-        { caption: 'Middle', img: './test09.png' },
-        { caption: 'Senior', img: './test10.png' },
+        { caption: 'Student 1', img: './test01.svg' },
+        { caption: 'Git problem', img: './test02.svg' },
+        { caption: 'Samurai', img: './test03.svg' },
+        { caption: 'Thanks', img: './test04.svg' },
+        { caption: 'Popcorn', img: './test05.svg' },
+        { caption: 'WTF?', img: './test06.svg' },
+        { caption: 'Shocked', img: './test07.svg' },
+        { caption: 'Junior', img: './test08.svg' },
+        { caption: 'Middle', img: './test09.svg' },
+        { caption: 'Senior', img: './test10.svg' },
       ];
 
       this.answers = [
-        { caption: 'Student 1', img: './test01.png' },
-        { caption: 'Git problem', img: './test02.png' },
-        { caption: 'Samurai', img: './test03.png' },
-        { caption: 'Thanks', img: './test04.png' },
-        { caption: 'Popcorn', img: './test05.png' },
-        { caption: 'WTF?', img: './test06.png' },
-        { caption: 'Shocked', img: './test07.png' },
-        { caption: 'Junior', img: './test08.png' },
-        { caption: 'Middle', img: './test09.png' },
-        { caption: 'Senior', img: './test10.png' },
-        { caption: 'Fine', img: './test11.png' },
-        { caption: 'Love', img: './test12.png' },
+        { caption: 'Student 1', img: './test01.svg' },
+        { caption: 'Git problem', img: './test02.svg' },
+        { caption: 'Samurai', img: './test03.svg' },
+        { caption: 'Thanks', img: './test04.svg' },
+        { caption: 'Popcorn', img: './test05.svg' },
+        { caption: 'WTF?', img: './test06.svg' },
+        { caption: 'Shocked', img: './test07.svg' },
+        { caption: 'Junior', img: './test08.svg' },
+        { caption: 'Middle', img: './test09.svg' },
+        { caption: 'Senior', img: './test10.svg' },
+        { caption: 'Fine', img: './test11.svg' },
+        { caption: 'Love', img: './test12.svg' },
       ];
     },
 
@@ -163,7 +180,11 @@ export default defineComponent({
       this.stepSelection = -1;
 
       if (this.step === this.gameCards.length) {
+        // end
         this.endTime = Date.now();
+        playAudio(audioWin);
+        this.isModalVisible = true;
+        this.saveResult();
       }
     },
 
@@ -179,6 +200,16 @@ export default defineComponent({
     closeModal() {
       this.isModalVisible = false;
     },
+
+    async saveResult() {
+      const service = new GameResultService(GUESS_GAME_ID);
+      const gameResult: GameResult = {
+        gameId: GUESS_GAME_ID,
+        count: this.getGuesses,
+        time: this.getTime,
+      };
+      await service.create(gameResult);
+    },
   },
 });
 </script>
@@ -193,6 +224,7 @@ export default defineComponent({
 
 .guess__img {
   position: relative;
+  height: 40rem;
   top: 0;
   left: 50%;
   transform: translateX(-50%);

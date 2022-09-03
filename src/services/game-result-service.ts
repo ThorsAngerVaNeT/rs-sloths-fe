@@ -55,7 +55,8 @@ export class GameResultService implements API<GameResult> {
       const userId = getUserId;
       if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
 
-      const body = { userId, result: gameResult.result };
+      const { count, time } = gameResult;
+      const body = { userId, count, time };
       return this.service.create(body);
     } catch (error) {
       errorHandler(error);
@@ -66,8 +67,8 @@ export class GameResultService implements API<GameResult> {
   }
 
   public updateById(gameId: string, gameResult: GameResult) {
-    const { id, result } = gameResult;
-    const body = { id, result };
+    const { id, count, time } = gameResult;
+    const body = { id, count, time };
     return this.service.updateById(gameId, body);
   }
 
@@ -82,7 +83,8 @@ export class GameResultService implements API<GameResult> {
       const userId = getUserId;
       if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
 
-      const body = { userId, result: gameResult.result };
+      const { count, time } = gameResult;
+      const body = { userId, count, time };
       return this.service.update(body);
     } catch (error) {
       errorHandler(error);
