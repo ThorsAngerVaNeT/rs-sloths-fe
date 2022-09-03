@@ -29,7 +29,7 @@ import HomeCategory from '@/components/home/HomeCategory.vue';
 import { ruNounEnding } from '@/utils/ru-noun-ending';
 import { MEMORY_LEVELS } from '@/common/const';
 import { GameResultService } from '@/services/game-result-service';
-import type { GameResult, MemoryLevel } from '@/common/types';
+import type { GameResult, MemoryLevel, APIRequestResult, GetList } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import useLoader from '@/stores/loader';
 
@@ -70,35 +70,24 @@ export default defineComponent({
     async getGameInfo() {
       this.isLoad = true;
       try {
-        MEMORY_LEVELS.map(async (level) => {
+        const promises: Promise<APIRequestResult<GetList<GameResult>>>[] = [];
+        MEMORY_LEVELS.forEach((level) => {
           const service = new GameResultService(level.gameId, this.userId);
-
-          const res = await service.getAll();
-          if (!res.ok) throw Error(); // todo
-
-          this.gameResults.push({
-            level: level.level,
-            n: level.n,
-            gameId: level.gameId,
-            count: res.data.count,
-            results: res.data.items,
-          });
+          const res = service.getAll();
+          promises.push(res);
         });
 
-        // for (let level of MEMORY_LEVELS) {
-        //   const service = new GameResultService(level.gameId, this.userId);
-
-        //   const res = await service.getAll();
-        //   if (!res.ok) throw Error(); // todo
-
-        //   this.gameResults.push({
-        //     level: level.level,
-        //     n: level.n,
-        //     gameId: level.gameId,
-        //     count: res.data.count,
-        //     results: res.data.items,
-        //   });
-        // }
+        const results = await Promise.all(promises);
+        results.forEach((result, i) => {
+          if (!result.ok) throw Error(); // todo
+          this.gameResults.push({
+            level: MEMORY_LEVELS[i].level,
+            n: MEMORY_LEVELS[i].n,
+            gameId: MEMORY_LEVELS[i].gameId,
+            count: result.data.count,
+            results: result.data.items,
+          });
+        });
       } catch (error) {
         errorHandler(error);
       } finally {
