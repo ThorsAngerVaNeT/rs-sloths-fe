@@ -183,15 +183,26 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 
 @media (max-width: 1100px) {
   .pagination {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(2, auto);
+    grid-template-areas:
+      'A B'
+      'C C';
     justify-content: center;
     gap: 1rem;
   }
 
   .pagination__per-page {
-    position: static;
+    grid-area: A;
+  }
+
+  .pagination__count {
+    grid-area: B;
+  }
+
+  .pagination__btns {
+    grid-area: C;
   }
 }
 </style>
