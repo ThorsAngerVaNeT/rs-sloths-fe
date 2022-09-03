@@ -178,18 +178,18 @@
   },
 
   "sorting": {
-    "name+": "Sort by Name (ascending)",
-    "name-": "Sort by Name (descending)",
-    "github+": "Sort by GitHub (ascending)",
-    "github-": "Sort by GitHub (descending)",
-    "createdAt+": "Sort by creation date (ascending)",
-    "createdAt-": "Sort by creation date (descending)",
-    "caption+": "Sort by Caption (ascending)",
-    "caption-": "Sort by Caption (descending)",
-    "rating+": "Sort by Rating (ascending)",
-    "rating-": "Sort by Rating (descending)",
-    "status+": "Sort by Status (ascending)",
-    "status-": "Sort by Status (descending)"
+    "name+": "...Name (ascending)",
+    "name-": "...Name (descending)",
+    "github+": "...GitHub (ascending)",
+    "github-": "...GitHub (descending)",
+    "createdAt+": "...Creation date (ascending)",
+    "createdAt-": "...Creation date (descending)",
+    "caption+": "...Caption (ascending)",
+    "caption-": "...Caption (descending)",
+    "rating+": "...Rating (ascending)",
+    "rating-": "...Rating (descending)",
+    "status+": "...Status (ascending)",
+    "status-": "...Status (descending)"
   },
 
   "btn": {

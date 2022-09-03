@@ -190,7 +190,7 @@ export default defineComponent({
         const selected = getSelected();
         const sorting = getSortingList();
 
-        const res = await service.getPage(currPage, perPage, searchText, sorting, selected);
+        const res = await service.getAll(currPage, perPage, sorting, searchText, selected.join(','));
 
         if (!res.ok) throw Error(); // todo
 

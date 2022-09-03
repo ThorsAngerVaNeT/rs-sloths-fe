@@ -32,80 +32,80 @@ export const USERS_ERROR_UPD: ErrorDescription = {
 // Sorting
 export const USER_SORTING: SelectOptions[] = [
   {
-    value: JSON.stringify({ name: 'desc' }),
+    value: 'name-desc',
     text: 'sorting.name-',
   },
   {
-    value: JSON.stringify({ name: 'asc' }),
+    value: 'name-asc',
     text: 'sorting.name+',
   },
   {
-    value: JSON.stringify({ github: 'desc' }),
+    value: 'github-desc',
     text: 'sorting.github-',
   },
   {
-    value: JSON.stringify({ github: 'asc' }),
+    value: 'github-asc',
     text: 'sorting.github+',
   },
   {
-    value: JSON.stringify({ createdAt: 'desc' }),
+    value: 'createdAt-desc',
     text: 'sorting.createdAt-',
   },
   {
-    value: JSON.stringify({ createdAt: 'asc' }),
+    value: 'createdAt-asc',
     text: 'sorting.createdAt+',
   },
 ];
 
 export const SLOTH_SORTING: SelectOptions[] = [
   {
-    value: JSON.stringify({ caption: 'desc' }),
+    value: 'caption-desc',
     text: 'sorting.caption-',
   },
   {
-    value: JSON.stringify({ caption: 'asc' }),
+    value: 'caption-asc',
     text: 'sorting.caption+',
   },
   {
-    value: JSON.stringify({ rating: 'desc' }),
+    value: 'rating-desc',
     text: 'sorting.rating-',
   },
   {
-    value: JSON.stringify({ rating: 'asc' }),
+    value: 'rating-asc',
     text: 'sorting.rating+',
   },
   {
-    value: JSON.stringify({ createdAt: 'desc' }),
+    value: 'createdAt-desc',
     text: 'sorting.createdAt-',
   },
   {
-    value: JSON.stringify({ createdAt: 'asc' }),
+    value: 'createdAt-asc',
     text: 'sorting.createdAt+',
   },
 ];
 export const SUGGESTION_SORTING: SelectOptions[] = [
   {
-    value: JSON.stringify({ status: 'desc' }),
+    value: 'status-desc',
     text: 'sorting.status-',
   },
   {
-    value: JSON.stringify({ status: 'asc' }),
+    value: 'status-asc',
     text: 'sorting.status+',
   },
   {
-    value: JSON.stringify({ rating: 'desc' }),
+    value: 'rating-desc',
     text: 'sorting.rating-',
   },
   {
-    value: JSON.stringify({ rating: 'asc' }),
+    value: 'rating-asc',
     text: 'sorting.rating+',
   },
   {
-    value: JSON.stringify({ createdAt: 'desc' }),
+    value: 'createdAt-desc',
     text: 'sorting.createdAt-',
   },
   {
-    value: JSON.stringify({ createdAt: 'asc' }),
+    value: 'createdAt-asc',
     text: 'sorting.createdAt+',
   },
 ];
