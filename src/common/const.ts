@@ -115,7 +115,7 @@ export const PAGINATION_OPTIONS: number[] = [10, 15, 20, 1, 2];
 
 // Users
 export const DEFAULT_USER_AVATAR = './img/profile/default.svg';
-export const AUTHORIZATION_IMG = './github.png';
+export const AUTHORIZATION_IMG = './github.svg';
 export const AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize?client_id=12e65e35ba7755d60466';
 
 // Memory Game

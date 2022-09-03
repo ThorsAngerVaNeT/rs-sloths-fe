@@ -6,10 +6,8 @@
         <h4 class="result__level__title">{{ $t(`memory.${res.level}`) }}</h4>
         <div class="game-info__result" v-for="(r, i) in res.results" :key="i">
           <span class="result__index">{{ `${i + 1}.` }}</span>
-          <span class="result__steps">{{
-            `${handleResultString(r.result).steps} ${getStepsText(handleResultString(r.result).steps)}`
-          }}</span>
-          <span class="result__time">{{ `${handleResultString(r.result).time} s` }}</span>
+          <span class="result__steps">{{ `${r.count} ${getStepsText(r.count)}` }}</span>
+          <span class="result__time">{{ `${r.time / 1000} s` }}</span>
         </div>
       </div>
     </div>
@@ -92,9 +90,9 @@ export default defineComponent({
       }
     },
 
-    handleResultString(val: string) {
-      return JSON.parse(val);
-    },
+    // handleResultString(val: string) {
+    //   return JSON.parse(val);
+    // },
 
     getStepsText(val: number): string {
       return ruNounEnding(val, this.$t('memory.steps1'), this.$t('memory.steps2'), this.$t('memory.stepsN'));
