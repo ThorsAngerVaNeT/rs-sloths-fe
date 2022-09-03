@@ -116,6 +116,7 @@ export default defineComponent({
 .game-info__title {
   color: var(--color-text);
   font-size: 2.4rem;
+  transition: 0.5s ease;
 }
 
 .game-info__wrap {
@@ -130,12 +131,14 @@ export default defineComponent({
   border: 0.2rem solid var(--color-border-inverse);
   background-color: var(--color-background-opacity);
   color: var(--color-text);
+  transition: 0.5s ease;
 }
 
 .result__level__title {
   text-align: center;
   padding: 1rem;
   font-size: 2.4rem;
+  transition: 0.5s ease;
 }
 
 .game-info__result {
@@ -144,6 +147,7 @@ export default defineComponent({
   justify-content: space-between;
   gap: 1rem;
   color: var(--color-text);
+  transition: 0.5s ease;
 }
 
 .result__index {
@@ -162,5 +166,6 @@ export default defineComponent({
   display: flex;
   align-items: center;
   gap: 2rem;
+  transition: 0.5s ease;
 }
 </style>

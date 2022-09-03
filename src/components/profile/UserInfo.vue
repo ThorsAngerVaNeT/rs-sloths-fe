@@ -100,6 +100,7 @@ export default defineComponent({
   background-color: var(--color-background-soft);
   border: 0.1rem solid gray;
   border-radius: 0.5rem;
+  transition: 0.5s ease;
 }
 
 .user-info__avatar {
@@ -119,13 +120,20 @@ export default defineComponent({
   width: 90%;
   text-align: center;
   color: inherit;
-  background-color: var(--color-background);
-  border: none;
-  border-bottom: 0.2rem solid gray;
+  background: none;
+  /* border: none; */
+  border: 0.2rem solid var(--color-border-theme);
+  border-radius: 1rem;
+  transition: 0.5s ease;
+  /* border-bottom: 0.2rem solid gray; */
 }
 
 .user-info__property,
 .user-info__property:focus {
   outline: none;
+}
+
+.user-info__property:focus {
+  border-color: var(--color-border-inverse);
 }
 </style>

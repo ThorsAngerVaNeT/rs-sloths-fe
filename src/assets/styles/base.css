@@ -30,10 +30,11 @@ html {
   height: 100vh;
   display: grid;
   grid-template-rows: 80px auto 60px;
-  background: repeat var(--color-background-soft);
+  background-color: var(--color-background-soft);
   overflow: hidden;
   position: relative;
   font-size: 1.6rem;
+  transition: 0.5s ease;
 }
 
 .main {
