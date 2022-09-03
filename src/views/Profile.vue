@@ -1,6 +1,5 @@
 <template>
   <div class="profile">
-    <!-- <h2 class="profile__title">{{ $t('profile.title') }}</h2> -->
     <aside class="profile__aside">
       <user-info :adminPanel="false" @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
@@ -146,7 +145,25 @@ export default defineComponent({
 
 .profile__tab {
   border: 1px solid var(--color-border-inverse);
+  border-radius: 0 0 0.5rem 0.5rem;
   padding: 1rem;
   margin-left: 0.1rem;
+}
+
+@media (max-width: 1200px) {
+  .profile__main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .profile__tabs {
+    flex-direction: column;
+  }
+
+  .profile__tab {
+    border-radius: 0.5rem;
+    margin-left: 0;
+  }
 }
 </style>

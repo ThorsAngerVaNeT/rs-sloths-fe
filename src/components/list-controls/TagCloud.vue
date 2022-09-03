@@ -1,5 +1,5 @@
 <template>
-  <div class="tags tags-center">
+  <div class="tags tags-center" :class="isAdmin ? 'tags_admin' : ''">
     <span class="tag" :class="{ active: isHas(item) }" v-for="item in tags" :key="item" @click="select(item)">
       {{ item }}
     </span>
@@ -7,18 +7,17 @@
 </template>
 
 <script lang="ts">
-import type { TagCloud } from '@/common/types';
 import useSelectedTags from '@/stores/tag-cloud';
 import { defineComponent, type PropType } from 'vue';
 
-const { setSelected } = useSelectedTags();
+const { getSelected, setSelected } = useSelectedTags();
 
 const tagCloud = defineComponent({
   name: 'TagCloud',
 
   data() {
     return {
-      selected: new Set([]) as TagCloud,
+      selected: [] as string[],
     };
   },
 
@@ -29,17 +28,27 @@ const tagCloud = defineComponent({
     },
   },
 
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
+    },
+  },
+
+  mounted() {
+    this.selected = getSelected();
+  },
+
   methods: {
     isHas(tag: string) {
-      return this.selected.has(tag);
+      return this.selected.includes(tag);
     },
 
     select(tag: string) {
-      const has = this.selected.has(tag);
-      if (has) {
-        this.selected.delete(tag);
+      const i = this.selected.indexOf(tag);
+      if (i !== -1) {
+        this.selected.splice(i, 1);
       } else {
-        this.selected.add(tag);
+        this.selected.push(tag);
       }
 
       setSelected(this.selected);
@@ -47,7 +56,7 @@ const tagCloud = defineComponent({
     },
 
     clearSelected() {
-      this.selected = new Set([]) as TagCloud;
+      this.selected = [] as string[];
 
       setSelected(this.selected);
     },
@@ -59,31 +68,33 @@ export type TagCloudElement = InstanceType<typeof tagCloud>;
 
 <style>
 .tags {
-  padding: 0.5rem 0;
-
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: calc(var(--gap) / 2);
-
   color: var(--color-text);
 }
+
 .tags-center {
   justify-content: center;
 }
+
+.tags_admin {
+  grid-area: A;
+  overflow-y: auto;
+}
+
 .tag {
   padding: 0.5rem 0.7rem;
   cursor: pointer;
-
   color: inherit;
   background-color: var(--color-background);
-
   transition: background-color 0.3s ease, color 0.5s ease;
-
   border-radius: 1rem;
 }
+
 .tag:hover,
 .active {
   color: var(--color-text-inverse);

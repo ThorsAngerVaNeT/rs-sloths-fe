@@ -134,3 +134,12 @@ export type SelectOptions = {
 };
 
 export type TagCloud = Set<string>;
+
+export type PageSettings = {
+  currPage: number;
+  perPage: number;
+  searchText: string;
+  selected: string[];
+  sorting: string;
+  checked?: string[];
+};

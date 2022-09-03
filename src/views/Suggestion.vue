@@ -1,5 +1,5 @@
 <template>
-  <div class="suggest">
+  <div class="suggest" :class="isAdmin ? 'suggest_admin' : ''">
     <div class="suggest__tools">
       <custom-btn
         :text="mode === 'watch' ? `${$t('suggest.btn.switch.to-new')}` : `${$t('suggest.btn.switch.to-watch')}`"
@@ -10,7 +10,6 @@
     </div>
     <div v-if="mode === 'watch'" class="suggest__watch">
       <div class="suggest__aside list-aside">
-        <h3>{{ $t('suggest.count') }}: {{ count }}</h3>
         <list-controls
           @search="getSuggestions"
           @tags="getSuggestions"
@@ -55,9 +54,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
-import type { Suggestion, Suggestions } from '@/common/types';
+import type { PageSettings, Suggestion, Suggestions } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { SUGGESTION_SORTING } from '@/common/const';
+import { PAGINATION_OPTIONS, SUGGESTION_SORTING } from '@/common/const';
 import { SuggestionsService } from '@/services/suggestions-service';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useLoader from '@/stores/loader';
@@ -73,15 +72,17 @@ import SuggestionCard from '@/components/suggest/SuggestionCard.vue';
 import SuggestionInfo from '@/components/suggest/SuggestionInfo.vue';
 import SuggestionNew from '@/components/suggest/SuggestionNew.vue';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
+import usePagesStore from '@/stores/pages-store';
 
 const service = new SuggestionsService();
 
 const { setEmptySuggestionInfo, setSuggestionInfo } = useSuggestionInfo();
 
-const { getPerPage, getCurrPage } = usePagination();
-const { getSearchText } = useSearchText();
-const { getSelected } = useSelectedTags();
-const { getSortingList } = useSortingList();
+const { getPerPage, getCurrPage, setPerPage, setCurrPage } = usePagination();
+const { getSearchText, setSearchText } = useSearchText();
+const { getSelected, setSelected } = useSelectedTags();
+const { getSortingList, setSortingList } = useSortingList();
+const { getPageSuggestionState, setPageSuggestionState } = usePagesStore();
 
 export default defineComponent({
   name: 'SuggestionView',
@@ -120,10 +121,29 @@ export default defineComponent({
       if (this.modalEvents === ModalEvents.edit) return this.$t('btn.edit');
       return this.$t('suggest.info');
     },
+
+    isAdmin() {
+      return this.$route.name === 'admin';
+    },
   },
 
-  mounted() {
-    this.getSuggestions();
+  created() {
+    this.loadStore();
+  },
+
+  async mounted() {
+    await this.getSuggestions();
+  },
+
+  beforeUnmount() {
+    const savedProps = {
+      currPage: getCurrPage(),
+      perPage: getPerPage(),
+      searchText: getSearchText(),
+      selected: getSelected(),
+      sorting: getSortingList(),
+    };
+    setPageSuggestionState(JSON.stringify(savedProps));
   },
 
   methods: {
@@ -238,6 +258,34 @@ export default defineComponent({
     handleSwitchMode() {
       this.mode = this.mode === 'watch' ? 'new' : 'watch';
     },
+
+    loadStore() {
+      const settings: PageSettings = {
+        currPage: 1,
+        perPage: PAGINATION_OPTIONS[0],
+        searchText: '',
+        selected: [] as string[],
+        sorting: '',
+      };
+
+      const str = getPageSuggestionState();
+      if (str) {
+        const data = JSON.parse(str);
+        if (data) {
+          settings.currPage = data.currPage;
+          settings.perPage = data.perPage;
+          settings.searchText = data.searchText;
+          settings.selected = data.selected;
+          settings.sorting = data.sorting;
+        }
+      }
+
+      setCurrPage(settings.currPage);
+      setPerPage(settings.perPage);
+      setSearchText(settings.searchText);
+      setSelected(settings.selected);
+      setSortingList(settings.sorting);
+    },
   },
 });
 </script>
@@ -249,6 +297,10 @@ export default defineComponent({
   padding: 0 3rem;
 }
 
+.suggest_admin {
+  padding: 0;
+}
+
 .suggest__watch {
   display: flex;
   flex-direction: row;
@@ -256,8 +308,27 @@ export default defineComponent({
   color: var(--color-text);
 }
 
+.suggest_admin > .suggest__watch {
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
 .suggest__aside {
   margin: 0.5em;
+}
+
+.suggest_admin > .suggest__watch > .suggest__aside {
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.suggest_admin > .suggest__watch > .suggest__aside,
+.suggest_admin > .suggest__watch > .suggest__main {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .suggest__list {

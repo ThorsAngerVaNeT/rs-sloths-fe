@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="search" :class="isAdmin ? 'search_admin' : ''">
     <input
       type="text"
       class="search__text"
@@ -8,7 +8,7 @@
       v-model="searchText"
       @change="search"
     />
-    <custom-btn @click="clearSearch" text="X" className="btn btn-search"></custom-btn>
+    <custom-btn @click="clearSearch" text="X" className="btn btn-search btn-search_admin"></custom-btn>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ import useSearchText from '@/stores/search-text';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { defineComponent } from 'vue';
 
-const { setSearchText } = useSearchText();
+const { getSearchText, setSearchText } = useSearchText();
 
 const searchText = defineComponent({
   name: 'SearchText',
@@ -28,7 +28,7 @@ const searchText = defineComponent({
 
   data() {
     return {
-      searchText: '',
+      searchText: getSearchText(),
     };
   },
 
@@ -36,6 +36,12 @@ const searchText = defineComponent({
     placeholder: {
       type: String,
       required: true,
+    },
+  },
+
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
     },
   },
 
@@ -65,15 +71,28 @@ export type SearchTextElement = InstanceType<typeof searchText>;
   position: relative;
   color: var(--color-text);
 }
+
+.search_admin {
+  grid-area: B;
+}
+
 .search__text {
-  margin: 0.5rem 0;
   padding: 0.5rem;
-
+  padding-right: 2rem;
   width: 100%;
-
-  border: none;
-  border-bottom: 0.2rem solid gray;
+  border: 0.2rem solid var(--color-border-inverse-soft);
   background-color: var(--color-background);
   color: inherit;
+  border-radius: 1rem;
+  transition: 0.5s ease;
+}
+
+.search__text,
+.search__text:focus {
+  outline: none;
+}
+
+.search__text:focus {
+  border-color: var(--color-border-inverse);
 }
 </style>

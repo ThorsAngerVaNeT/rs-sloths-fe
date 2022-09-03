@@ -214,6 +214,13 @@
     "next": "❯",
     "prev": "❮",
     "top": "❮❮",
-    "bottom": "❯❯"
+    "bottom": "❯❯",
+    "count": "Total count"
+  },
+
+  "results": {
+    "user": "Personal results",
+    "all": "All results",
+    "again": "Try again:"
   }
 }

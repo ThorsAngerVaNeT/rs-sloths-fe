@@ -1,5 +1,5 @@
 <template>
-  <div class="sorting">
+  <div class="sorting" :class="isAdmin ? 'sorting_admin' : ''">
     <select name="select" class="sorting__select select-element" v-model="sorting" @change="sortingList">
       <option disabled value="">{{ title }}</option>
       <option v-for="(item, index) in options" :key="index" :value="item.value">{{ $t(item.text) }}</option>
@@ -12,14 +12,14 @@ import type { SelectOptions } from '@/common/types';
 import useSortingList from '@/stores/sorting-list';
 import { defineComponent, type PropType } from 'vue';
 
-const { setSortingList } = useSortingList();
+const { getSortingList, setSortingList } = useSortingList();
 
 const sortingList = defineComponent({
   name: 'SortingList',
 
   data() {
     return {
-      sorting: '',
+      sorting: getSortingList(),
     };
   },
 
@@ -32,6 +32,12 @@ const sortingList = defineComponent({
     options: {
       type: Object as PropType<SelectOptions[]>,
       required: true,
+    },
+  },
+
+  computed: {
+    isAdmin() {
+      return this.$route.name === 'admin';
     },
   },
 
@@ -53,16 +59,30 @@ export type SortingListElement = InstanceType<typeof sortingList>;
 
 <style>
 .sorting {
-  padding: 0.5rem 0;
-
   cursor: pointer;
   color: var(--color-text);
 }
 
+.sorting_admin {
+  padding: 0;
+  grid-area: D;
+}
+
 .sorting__select {
   width: 100%;
-
   color: inherit;
   background-color: var(--color-background);
+  border: 0.2rem solid var(--color-border-inverse-soft);
+  border-radius: 1rem;
+  transition: 0.5s ease;
+}
+
+.sorting__select,
+.sorting__select:focus {
+  outline: none;
+}
+
+.sorting__select:focus {
+  border-color: var(--color-border-inverse);
 }
 </style>

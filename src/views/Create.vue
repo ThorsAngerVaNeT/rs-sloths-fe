@@ -89,6 +89,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import usePagesStore from '@/stores/pages-store';
+
+const { getPageCreateState, setPageCreateState } = usePagesStore();
 
 export default defineComponent({
   name: 'CreateView',
@@ -125,6 +128,8 @@ export default defineComponent({
   mounted() {
     this.getImages();
 
+    this.loadStore();
+
     const { canvas } = this.$refs;
     if (!(canvas instanceof HTMLCanvasElement)) return;
 
@@ -133,7 +138,23 @@ export default defineComponent({
 
     this.canvas = canvas;
     this.ctx = ctx;
-    this.img = document.createElement('img');
+
+    const image = new Image();
+    image.onload = () => {
+      // Grab position info
+      this.imageRight = this.imageX + this.img.width;
+      this.imageBottom = this.imageY + this.img.height;
+
+      // Update CTX
+      this.draw();
+    };
+    image.src = this.images[this.index];
+
+    this.img = image;
+  },
+
+  beforeRouteLeave() {
+    setPageCreateState(JSON.stringify(this.$data));
   },
 
   methods: {
@@ -228,10 +249,8 @@ export default defineComponent({
       this.img = image;
 
       // Grab position info
-      this.imageWidth = this.img.width;
-      this.imageHeight = this.img.height;
-      this.imageRight = this.imageX + this.imageWidth;
-      this.imageBottom = this.imageY + this.imageHeight;
+      this.imageRight = this.imageX + this.img.width;
+      this.imageBottom = this.imageY + this.img.height;
 
       // Update CTX
       this.draw();
@@ -313,6 +332,16 @@ export default defineComponent({
         const item = new ClipboardItem({ [type]: blob });
         navigator.clipboard.write([item]);
       });
+    },
+
+    loadStore() {
+      const str = getPageCreateState();
+      if (!str) return;
+
+      const data = JSON.parse(str);
+      if (!data) return;
+
+      Object.assign(this.$data, data);
     },
   },
 });

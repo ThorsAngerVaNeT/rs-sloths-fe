@@ -68,11 +68,6 @@ export default defineComponent({
   border: none;
 }
 
-.btn-link {
-  color: var(--color-text);
-  text-decoration: underline;
-}
-
 .btn-primary {
   border-radius: 0.3rem;
   color: var(--color-text-inverse);
@@ -93,9 +88,7 @@ export default defineComponent({
 .btn-pagination {
   width: 4rem;
   height: 4rem;
-
   border-radius: 50%;
-
   color: var(--color-text-inverse);
   background-color: var(--color-background-inverse);
 }
@@ -137,9 +130,12 @@ export default defineComponent({
   position: absolute;
   top: 0.5rem;
   right: -0.5rem;
-
   background: none;
   color: inherit;
+}
+
+.btn-search_admin {
+  top: 0;
 }
 
 .btn__text {
@@ -150,7 +146,6 @@ export default defineComponent({
   width: 3rem;
   height: 3rem;
   border-radius: 0.5rem;
-
   background-color: var(--color-background-inverse);
   background-size: 65%;
   background-repeat: no-repeat;
@@ -164,6 +159,7 @@ export default defineComponent({
 .icon-light-del {
   background-image: url('@/assets/icons/btn/trash.svg');
 }
+
 .icon-dark-del {
   background-image: url('@/assets/icons/btn/trash-black.svg');
 }
@@ -171,6 +167,7 @@ export default defineComponent({
 .icon-light-edit {
   background-image: url('@/assets/icons/btn/pencil.svg');
 }
+
 .icon-dark-edit {
   background-image: url('@/assets/icons/btn/pencil-black.svg');
 }
@@ -178,6 +175,7 @@ export default defineComponent({
 .icon-light-download {
   background-image: url('@/assets/icons/btn/download.svg');
 }
+
 .icon-dark-download {
   background-image: url('@/assets/icons/btn/download-black.svg');
 }
@@ -185,6 +183,7 @@ export default defineComponent({
 .icon-light-copy {
   background-image: url('@/assets/icons/btn/clipboard.svg');
 }
+
 .icon-dark-copy {
   background-image: url('@/assets/icons/btn/clipboard-black.svg');
 }
@@ -192,6 +191,7 @@ export default defineComponent({
 .icon-light-plus {
   background-image: url('@/assets/icons/btn/plus-square.svg');
 }
+
 .icon-dark-plus {
   background-image: url('@/assets/icons/btn/plus-square-black.svg');
 }
@@ -199,6 +199,7 @@ export default defineComponent({
 .icon-light-true {
   background-image: url('@/assets/icons/btn/check-square.svg');
 }
+
 .icon-dark-true {
   background-image: url('@/assets/icons/btn/check-square-black.svg');
 }
@@ -206,6 +207,7 @@ export default defineComponent({
 .icon-light-minus {
   background-image: url('@/assets/icons/btn/dash-square.svg');
 }
+
 .icon-dark-minus {
   background-image: url('@/assets/icons/btn/dash-square-black.svg');
 }
@@ -233,5 +235,25 @@ export default defineComponent({
 
 .btn-memory:hover:not([disabled]) {
   transform: scale(1.1) rotate(10deg);
+}
+
+.btn-link {
+  color: var(--color-text);
+  border: 0.2rem solid var(--color-border-inverse);
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-link:hover:not([disabled]) {
+  border-color: var(--color-border-theme);
+  background-color: var(--color-background-soft);
+}
+
+@media (max-width: 1200px) {
+  .btn-tab {
+    border-radius: 0.5rem;
+    margin: 0;
+    text-align: center;
+  }
 }
 </style>

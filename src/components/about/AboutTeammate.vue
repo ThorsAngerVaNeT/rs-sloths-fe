@@ -35,7 +35,7 @@ export default defineComponent({
 .teammate__photo {
   border-radius: 50%;
   border: 0.5rem solid var(--color-border-inverse);
-  width: 25rem;
+  height: 25rem;
   transition: 0.5s ease;
 }
 
