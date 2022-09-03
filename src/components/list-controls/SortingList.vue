@@ -65,6 +65,7 @@ export type SortingListElement = InstanceType<typeof sortingList>;
 
 .sorting_admin {
   padding: 0;
+  grid-area: D;
 }
 
 .sorting__select {

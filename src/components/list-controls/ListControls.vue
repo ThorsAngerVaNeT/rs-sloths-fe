@@ -74,10 +74,17 @@ export default defineComponent({
 }
 
 .controls_admin {
-  display: flex;
+  /* display: flex;
   align-items: center;
   gap: 1rem;
-  width: auto;
+  width: auto; */
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(2, 3.5rem);
+  grid-template-areas:
+    'A B C'
+    'A D E';
+  gap: 1rem;
 }
 
 @media (max-width: 1200px) {

@@ -72,6 +72,10 @@ export type SearchTextElement = InstanceType<typeof searchText>;
   color: var(--color-text);
 }
 
+.search_admin {
+  grid-area: B;
+}
+
 .search__text {
   padding: 0.5rem;
   padding-right: 2rem;
