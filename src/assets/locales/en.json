@@ -73,7 +73,8 @@
     "title": "Guess-a-Sloth Game",
     "start": "Let's Go!",
     "congrats": "Congratulations!",
-    "win": "You won! Your result:"
+    "win": "You won! Your result:",
+    "guess": "Guess image"
   },
   "memory": {
     "title": "Memory Game",
