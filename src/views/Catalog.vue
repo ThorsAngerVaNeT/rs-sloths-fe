@@ -1,7 +1,6 @@
 <template>
   <div class="catalog" :class="isAdmin ? 'catalog_admin' : ''">
     <div class="catalog__aside list-aside">
-      <h3>{{ $t('catalog.count') }}: {{ count }}</h3>
       <custom-btn
         v-show="getPageName === 'admin'"
         :text="$t('catalog.btn.new')"
