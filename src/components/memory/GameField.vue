@@ -40,7 +40,7 @@
         <img :src="cardWinner" alt="winner" />
         <p>{{ $t('memory.win') }}</p>
         <p>{{ steps }} {{ getStepsText }}</p>
-        <p>{{ getTime }} {{ $t('memory.time') }}</p>
+        <p>{{ getTime / 1000 }} {{ $t('memory.time') }}</p>
       </template>
     </modal-window>
   </div>
@@ -110,7 +110,7 @@ export default defineComponent({
     },
 
     getTime(): number {
-      return (this.endTime - this.startTime) / 1000;
+      return this.endTime - this.startTime;
     },
 
     getShowModal(): boolean {
