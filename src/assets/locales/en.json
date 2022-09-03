@@ -196,7 +196,11 @@
     "rating+": "...Rating (ascending)",
     "rating-": "...Rating (descending)",
     "status+": "...Status (ascending)",
-    "status-": "...Status (descending)"
+    "status-": "...Status (descending)",
+    "count+": "...Count (ascending)",
+    "count-": "...Count (descending)",
+    "time+": "...Time (ascending)",
+    "time-": "...Time (descending)"
   },
 
   "btn": {
