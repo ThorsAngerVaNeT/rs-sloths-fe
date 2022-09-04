@@ -22,6 +22,8 @@
           :key="i"
           :class="`guess__answer ${getClassStepSelect(i)}`"
           @click="setAnswer(index, i)"
+          v-shortkey.push.once="[`${i + 1}`]"
+          @shortkey="setAnswer(index, i)"
         >
           {{ i + 1 }} - {{ answer.caption }}
         </span>
@@ -34,6 +36,8 @@
       className="btn btn-primary"
       :disabled="stepSelection < 0"
       :onClick="nextStep"
+      v-shortkey="['enter']"
+      @shortkey="nextStep"
     ></custom-btn>
     <div v-show="step >= 0" class="guess__results">
       <div v-for="(res, index) in result" :key="index" :class="`guess__result ${getClassStepResult(index)}`"></div>
