@@ -265,7 +265,7 @@ export default defineComponent({
         perPage: PAGINATION_OPTIONS[0],
         searchText: '',
         selected: [] as string[],
-        sorting: '',
+        sorting: SUGGESTION_SORTING[0].value,
       };
 
       const str = getPageSuggestionState();

@@ -169,15 +169,7 @@ export default defineComponent({
   },
 
   beforeUnmount() {
-    const savedProps = {
-      currPage: getCurrPage(),
-      perPage: getPerPage(),
-      searchText: getSearchText(),
-      selected: getSelected(),
-      sorting: getSortingList(),
-      checked: this.checked.filter((el) => el.checked).map((el) => el.id),
-    };
-    setPageCatalogState(JSON.stringify(savedProps));
+    this.saveStore();
   },
 
   methods: {
@@ -205,6 +197,8 @@ export default defineComponent({
         this.setChecked();
 
         await this.getTags();
+
+        this.saveStore();
       } catch (error) {
         errorHandler(error);
       } finally {
@@ -312,6 +306,8 @@ export default defineComponent({
       } else {
         this.checked.push(sloth);
       }
+
+      this.saveStore();
     },
 
     setChecked() {
@@ -370,13 +366,25 @@ export default defineComponent({
       this.isDownloadShow = false;
     },
 
+    saveStore() {
+      const savedProps = {
+        currPage: getCurrPage(),
+        perPage: getPerPage(),
+        searchText: getSearchText(),
+        selected: getSelected(),
+        sorting: getSortingList(),
+        checked: this.checked.filter((el) => el.checked).map((el) => el.id),
+      };
+      setPageCatalogState(JSON.stringify(savedProps));
+    },
+
     loadStore() {
       const settings: PageSettings = {
         currPage: 1,
         perPage: PAGINATION_OPTIONS[0],
         searchText: '',
         selected: [] as string[],
-        sorting: '',
+        sorting: SLOTH_SORTING[0].value,
         checked: [] as string[],
       };
 
