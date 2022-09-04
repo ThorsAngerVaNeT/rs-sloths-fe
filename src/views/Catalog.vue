@@ -14,6 +14,12 @@
         className="btn btn-primary"
         @click="downloadFiles"
       ></custom-btn>
+      <custom-btn
+        v-show="getPageName === 'catalog'"
+        :text="$t('merch.title')"
+        className="btn btn-primary"
+        @click="$router.push({ name: 'merch' })"
+      ></custom-btn>
       <list-controls
         @search="getSloths"
         @tags="getSloths"
