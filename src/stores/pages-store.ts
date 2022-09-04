@@ -7,6 +7,7 @@ const usePagesStore = defineStore({
     pageSuggestion: '',
     pageUsers: '',
     pageCreate: '',
+    pageMerch: '',
     pageMemory: '',
   }),
 
@@ -41,6 +42,14 @@ const usePagesStore = defineStore({
 
     setPageCreateState(newState: string) {
       this.pageCreate = newState;
+    },
+
+    getPageMerchState(): string {
+      return this.pageMerch;
+    },
+
+    setPageMerchState(newState: string) {
+      this.pageMerch = newState;
     },
 
     getPageMemoryState(): string {

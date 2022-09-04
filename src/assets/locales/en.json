@@ -130,6 +130,18 @@
     "backgroundColor": "Background Color"
   },
 
+  "merch": {
+    "title": "Merch",
+    "description": "Choose an image, enter text and copy the result",
+    "bottom": "Text",
+    "kText": "Text width (relative to image width)",
+    "kFont": "Font size (relative to image width)",
+    "marginTop": "Image Margin Top",
+    "marginLeft": "Image Margin Left",
+    "color": "Text Color",
+    "backgroundColor": "Item Color"
+  },
+
   "sloth": {
     "title": "What kind of sloth are you today"
   },
@@ -217,6 +229,7 @@
     "copy": "Copy",
     "download": "Download",
     "trueSize": "True Size",
+    "center": "on Center",
     "scaleUp": "Scale Up",
     "scaleDown": "Scale Down"
   },
