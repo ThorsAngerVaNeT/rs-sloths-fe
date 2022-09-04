@@ -103,10 +103,14 @@ export type GameResults = GameResult[];
 export type GameResult = {
   id?: string;
   gameId?: string;
-  userId?: string;
   count: number;
   time: number;
   createdAt?: Date;
+  user?: {
+    github: string;
+    id: string;
+    name: string;
+  };
 };
 
 export type MemoryLevel = {
