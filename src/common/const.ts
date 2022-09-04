@@ -3,7 +3,7 @@
 import type { ErrorDescription, MemoryLevel, SelectOptions } from './types';
 
 // Services
-export const BASE = 'http://localhost:3000'; // todo
+export const BASE = 'https://rs-sloths-be.herokuapp.com';
 
 // custom Errors
 export const JSON_ERROR: ErrorDescription = { code: 'NOT_JSON', message: 'Response is not a JSON!' };
@@ -137,12 +137,12 @@ export const GAME_RESULT_SORTING: SelectOptions[] = [
 ];
 
 // Pagination
-export const PAGINATION_OPTIONS: number[] = [10, 15, 20, 1, 2];
+export const PAGINATION_OPTIONS: number[] = [10, 15, 20, 25, 50, 100];
 
 // Users
 export const DEFAULT_USER_AVATAR = './img/profile/default.svg';
 export const AUTHORIZATION_IMG = './github.svg';
-export const AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize?client_id=12e65e35ba7755d60466';
+export const AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize?client_id=1383fcfa95f26efccc55';
 
 // Memory Game
 export const MEMORY_LEVELS: MemoryLevel[] = [

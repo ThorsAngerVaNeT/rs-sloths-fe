@@ -34,7 +34,7 @@
       </list-controls>
     </div>
     <div class="catalog__main list-main">
-      <list-pagination :size="count" @getPage="getSloths"></list-pagination>
+      <list-pagination ref="pagination" :size="count" @getPage="getSloths"></list-pagination>
       <div class="catalog__list">
         <sloth-card
           v-for="sloth in sloths"
@@ -103,7 +103,7 @@ import useSortingList from '@/stores/sorting-list';
 import useSlothInfo from '@/stores/sloth-info';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ListControls from '@/components/list-controls/ListControls.vue';
-import ListPagination from '@/components/list-controls/ListPagination.vue';
+import ListPagination, { type PaginationListElement } from '@/components/list-controls/ListPagination.vue';
 import SlothCard from '@/components/catalog/SlothCard.vue';
 import SlothInfo from '@/components/catalog/SlothInfo.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
@@ -158,7 +158,7 @@ export default defineComponent({
     },
 
     isChecked(): boolean {
-      return !!this.sloths.filter((el) => el.checked).length;
+      return !!this.checked.filter((el) => el.checked).length;
     },
 
     isAdmin() {
@@ -175,15 +175,7 @@ export default defineComponent({
   },
 
   beforeUnmount() {
-    const savedProps = {
-      currPage: getCurrPage(),
-      perPage: getPerPage(),
-      searchText: getSearchText(),
-      selected: getSelected(),
-      sorting: getSortingList(),
-      checked: this.sloths.filter((el) => el.checked).map((el) => el.id),
-    };
-    setPageCatalogState(JSON.stringify(savedProps));
+    this.saveStore();
   },
 
   methods: {
@@ -203,7 +195,16 @@ export default defineComponent({
         this.sloths = res.data.items;
         this.count = res.data.count;
 
+        if (!this.sloths.length && currPage !== 1) {
+          const pagination = this.$refs.pagination as PaginationListElement;
+          if (pagination) pagination.top();
+        }
+
+        this.setChecked();
+
         await this.getTags();
+
+        this.saveStore();
       } catch (error) {
         errorHandler(error);
       } finally {
@@ -302,8 +303,24 @@ export default defineComponent({
     },
 
     checkSlothInfoView(sloth: Sloth) {
-      const i = this.sloths.findIndex((el) => el.id === sloth.id);
-      this.sloths[i].checked = !this.sloths[i].checked;
+      let slothIndex = this.sloths.indexOf(sloth);
+      if (slothIndex !== -1) this.sloths[slothIndex].checked = !this.sloths[slothIndex].checked;
+
+      slothIndex = this.checked.findIndex((el) => el.id === sloth.id);
+      if (slothIndex !== -1) {
+        this.checked.splice(slothIndex, 1);
+      } else {
+        this.checked.push(sloth);
+      }
+
+      this.saveStore();
+    },
+
+    setChecked() {
+      this.sloths.forEach((sloth) => {
+        const slothIndex = this.checked.findIndex((el) => el.id === sloth.id);
+        this.sloths[this.sloths.indexOf(sloth)].checked = slothIndex !== -1;
+      });
     },
 
     showSlothInfoView(sloth: Sloth) {
@@ -333,12 +350,11 @@ export default defineComponent({
     },
 
     downloadFiles() {
-      this.checked = this.sloths.filter((el) => el.checked);
       if (this.checked.length) this.isDownloadShow = true;
     },
 
     approveDownload() {
-      const forDownload = this.sloths.filter((el) => el.checked).map((el) => el.id);
+      const forDownload = this.checked.filter((el) => el.checked).map((el) => el.id);
 
       if (!forDownload.length) return;
 
@@ -348,12 +364,24 @@ export default defineComponent({
       link.href = downloadUrl;
       link.click();
 
-      this.checked = [] as Sloths;
       this.closeModal();
     },
 
     closeModal() {
+      this.setChecked();
       this.isDownloadShow = false;
+    },
+
+    saveStore() {
+      const savedProps = {
+        currPage: getCurrPage(),
+        perPage: getPerPage(),
+        searchText: getSearchText(),
+        selected: getSelected(),
+        sorting: getSortingList(),
+        checked: this.checked.filter((el) => el.checked).map((el) => el.id),
+      };
+      setPageCatalogState(JSON.stringify(savedProps));
     },
 
     loadStore() {
@@ -362,7 +390,7 @@ export default defineComponent({
         perPage: PAGINATION_OPTIONS[0],
         searchText: '',
         selected: [] as string[],
-        sorting: '',
+        sorting: SLOTH_SORTING[0].value,
         checked: [] as string[],
       };
 
