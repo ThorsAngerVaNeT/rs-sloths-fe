@@ -29,30 +29,30 @@
         />
       </div>
       <div class="merch__settings">
-        <div class="merch__property">
+        <!-- <div class="merch__property">
           <label class="merch__label" for="top">{{ $t('create.top') }}</label>
           <input type="text" class="merch__text" id="top" v-model="topText" @input="draw()" />
-        </div>
+        </div> -->
         <div class="merch__property">
-          <label class="merch__label" for="bottom">{{ $t('create.bottom') }}</label>
+          <label class="merch__label" for="bottom">{{ $t('merch.bottom') }}</label>
           <input type="text" class="merch__text" id="bottom" v-model="bottomText" @input="draw()" />
         </div>
       </div>
       <div class="merch__settings">
         <div class="merch__property">
-          <label class="merch__label" for="color">{{ $t('create.color') }}</label>
+          <label class="merch__label" for="color">{{ $t('merch.color') }}</label>
           <input type="color" id="color" class="merch__color" v-model="color" @input="draw()" />
         </div>
-        <div class="merch__property">
+        <!-- <div class="merch__property">
           <label class="merch__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
           <input type="color" id="strokeStyle" class="merch__color" v-model="strokeStyle" @input="draw()" />
-        </div>
+        </div> -->
         <div class="merch__property">
-          <label class="merch__label" for="backgroundColor">{{ $t('create.backgroundColor') }}</label>
+          <label class="merch__label" for="backgroundColor">{{ $t('merch.backgroundColor') }}</label>
           <input type="color" id="backgroundColor" class="merch__color" v-model="backgroundColor" @input="draw()" />
         </div>
         <div class="merch__property">
-          <label class="merch__label" for="margin">{{ $t('create.margin') }}</label>
+          <label class="merch__label" for="margin">{{ $t('merch.marginTop') }}</label>
           <input
             type="number"
             id="margin"
@@ -64,7 +64,7 @@
           />
         </div>
         <div class="merch__property">
-          <label class="merch__label" for="margin">{{ $t('create.margin') }}</label>
+          <label class="merch__label" for="margin">{{ $t('merch.marginLeft') }}</label>
           <input
             type="number"
             id="margin"
@@ -153,8 +153,8 @@ export default defineComponent({
       imageHeight: 0,
       imageRight: 0,
       imageBottom: 0,
-      color: '#ffffff',
-      backgroundColor: '#777777',
+      color: '#000000',
+      backgroundColor: '#999999',
       strokeStyle: '#000000',
       marginTop: 0,
       marginLeft: 0,
@@ -329,10 +329,6 @@ export default defineComponent({
 
       this.imgMerch = image;
 
-      // Grab position info
-      // this.imageRight = this.imageX + this.imgMeme.width;
-      // this.imageBottom = this.imageY + this.imgMeme.height;
-
       // Update CTX
       this.draw();
     },
@@ -358,8 +354,8 @@ export default defineComponent({
 
     drawText() {
       const fontSize = Math.floor(this.scaledImageWidth / 5);
-      const yOffsetTop = this.marginTop - fontSize * 1.5;
-      const yOffsetBottom = this.marginTop + this.scaledImageHeight + fontSize * 1.5;
+      const yOffsetTop = this.marginTop - fontSize * 1.2;
+      const yOffsetBottom = this.marginTop + this.scaledImageHeight + fontSize * 1.2;
       const xOffset = this.marginLeft + this.scaledImageWidth / 2;
 
       this.ctx.strokeStyle = this.strokeStyle; // 'black';
@@ -385,7 +381,7 @@ export default defineComponent({
         const metrics = this.ctx.measureText(testLine);
         const testWidth = metrics.width;
         if (testWidth > maxWidth && index > 0) {
-          this.ctx.strokeText(line, x, y);
+          // this.ctx.strokeText(line, x, y);
           this.ctx.fillText(line, x, y);
           line = `${word} `;
           y += lineHeight;
@@ -393,7 +389,7 @@ export default defineComponent({
           line = testLine;
         }
       });
-      this.ctx.strokeText(line, x, y);
+      // this.ctx.strokeText(line, x, y);
       this.ctx.fillText(line, x, y);
     },
 
@@ -406,7 +402,7 @@ export default defineComponent({
         const metrics = this.ctx.measureText(testLine);
         const testWidth = metrics.width;
         if (testWidth > maxWidth && index > 0) {
-          this.ctx.strokeText(line, x, y);
+          // this.ctx.strokeText(line, x, y);
           this.ctx.fillText(line, x, y);
           line = ` ${word}`;
           y -= lineHeight;
@@ -414,7 +410,7 @@ export default defineComponent({
           line = testLine;
         }
       });
-      this.ctx.strokeText(line, x, y);
+      // this.ctx.strokeText(line, x, y);
       this.ctx.fillText(line, x, y);
     },
 

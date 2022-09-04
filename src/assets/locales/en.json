@@ -131,7 +131,12 @@
 
   "merch": {
     "title": "Merch",
-    "description": "Choose an image, enter text and copy the result"
+    "description": "Choose an image, enter text and copy the result",
+    "bottom": "Text",
+    "marginTop": "Image Margin Top",
+    "marginLeft": "Image Margin Left",
+    "color": "Text Color",
+    "backgroundColor": "Item Color"
   },
 
   "sloth": {
