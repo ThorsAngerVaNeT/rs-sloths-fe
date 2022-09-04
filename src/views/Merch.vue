@@ -14,6 +14,8 @@
           @click="updImage(index)"
         />
       </div>
+    </div>
+    <div class="merch__generator list-main">
       <div class="merch__merch">
         <img
           ref="merch"
@@ -26,8 +28,6 @@
           @click="updMerch(index)"
         />
       </div>
-    </div>
-    <div class="merch__generator list-main">
       <div class="merch__settings">
         <div class="merch__property">
           <label class="merch__label" for="top">{{ $t('create.top') }}</label>
@@ -93,10 +93,10 @@
               @click="scaleUp"
             ></custom-btn>
             <custom-btn
-              :text="$t('btn.trueSize')"
+              :text="$t('btn.center')"
               imgPath="icon"
               className="btn btn-icon icon-true"
-              @click="scaleTrue"
+              @click="imgCenter"
             ></custom-btn>
             <custom-btn
               :text="$t('btn.scaleDown')"
@@ -161,7 +161,7 @@ export default defineComponent({
     };
   },
 
-  mounted() {
+  async mounted() {
     this.getImages();
     this.loadStore();
 
@@ -174,25 +174,18 @@ export default defineComponent({
     this.canvas = canvas;
     this.ctx = ctx;
 
-    const imageMerch = new Image();
-    imageMerch.onload = () => {
-      // Update CTX
-      this.draw();
-    };
-    imageMerch.src = this.merch[this.indexMerch];
-    this.imgMerch = imageMerch;
+    const imageMerch = this.loadImage(this.merch[this.indexMerch]);
+    const imageMeme = this.loadImage(this.images[this.indexMeme]);
 
-    const image = new Image();
-    image.onload = () => {
-      // Grab position info
-      this.marginLeft = (this.canvas.width - this.imgMeme.naturalWidth * this.scaleSteps) / 2;
-      this.marginTop = (this.canvas.height - this.imgMeme.naturalHeight * this.scaleSteps) / 2;
+    [this.imgMerch, this.imgMeme] = await Promise.all([imageMerch, imageMeme]);
 
-      // Update CTX
-      this.draw();
-    };
-    image.src = this.images[this.indexMeme];
-    this.imgMeme = image;
+    this.canvas.width = this.imgMerch.naturalWidth;
+    this.canvas.height = this.imgMerch.naturalHeight;
+    this.marginLeft = (this.canvas.width - this.imgMeme.naturalWidth * this.scaleSteps) / 2;
+    this.marginTop = (this.canvas.height - this.imgMeme.naturalHeight * this.scaleSteps) / 2;
+
+    // Update CTX
+    this.draw();
   },
 
   beforeRouteLeave() {
@@ -206,17 +199,22 @@ export default defineComponent({
         './img/memes/expert.svg',
         './img/memes/git.svg',
         './img/memes/its_ok.svg',
-        // './img/memes/love.svg',
-        // './img/memes/mentor.svg',
-        // './img/memes/read_chat.svg',
-        // './img/memes/shocked.svg',
-        // './img/memes/so_close.svg',
-        // './img/memes/student_1.svg',
-        // './img/memes/without_mentor.svg',
-        // './img/memes/work_done.svg',
-        // './img/memes/wtf.svg',
+        './img/memes/love.svg',
+        './img/memes/mentor.svg',
+        './img/memes/read_chat.svg',
+        './img/memes/shocked.svg',
+        './img/memes/so_close.svg',
+        './img/memes/student_1.svg',
+        './img/memes/without_mentor.svg',
+        './img/memes/work_done.svg',
+        './img/memes/wtf.svg',
       ];
-      this.merch = ['./img/merch/tshirt.png', './img/merch/hoodie.png', './img/merch/mug.png'];
+      this.merch = [
+        './img/merch/tshirt.png',
+        './img/merch/hoodie.png',
+        './img/merch/mug.png',
+        './img/merch/thermo.png',
+      ];
     },
 
     getImg(i: number): string {
@@ -227,13 +225,24 @@ export default defineComponent({
       return this.merch[i];
     },
 
+    loadImage(url: string): Promise<HTMLImageElement> {
+      return new Promise((resolve) => {
+        const image = new Image();
+        image.addEventListener('load', () => {
+          resolve(image);
+        });
+        image.src = url;
+      });
+    },
+
     scaleUp() {
       this.scaleSteps = Math.min(2, this.scaleSteps + 0.01);
       this.draw();
     },
 
-    scaleTrue() {
-      this.scaleSteps = 1;
+    imgCenter() {
+      this.marginLeft = (this.canvas.width - this.imgMeme.naturalWidth * this.scaleSteps) / 2;
+      this.marginTop = (this.canvas.height - this.imgMeme.naturalHeight * this.scaleSteps) / 2;
       this.draw();
     },
 
@@ -271,8 +280,8 @@ export default defineComponent({
       // set canvas size abd fill background
       this.canvas.width = this.imgMerch.naturalWidth;
       this.canvas.height = this.imgMerch.naturalHeight;
-      this.ctx.fillStyle = 'gray';
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      // this.ctx.fillStyle = 'gray';
+      // this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       // use compositing to change the overlay of the original image
       this.ctx.drawImage(tempCanvas, 0, 0);
@@ -348,7 +357,6 @@ export default defineComponent({
     },
 
     drawText() {
-      const { width } = this.canvas;
       const fontSize = Math.floor(this.scaledImageWidth / 5);
       const yOffsetTop = this.marginTop - fontSize * 1.5;
       const yOffsetBottom = this.marginTop + this.scaledImageHeight + fontSize * 1.5;
