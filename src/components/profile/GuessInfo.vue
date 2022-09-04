@@ -97,21 +97,27 @@ export default defineComponent({
 }
 
 .results {
+  padding: 1rem;
+  width: 37rem;
+  min-height: 25rem;
+  max-height: 34rem;
+  overflow-y: auto;
+  border-radius: 1rem;
+  border: 0.2rem solid var(--color-border-inverse);
+  background-color: var(--color-background-opacity);
+  color: var(--color-text);
+  transition: 0.5s ease;
   display: flex;
-  gap: 2rem 5rem;
-
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .results__item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 2rem;
   color: var(--color-text);
-  border: 0.2rem solid var(--color-border-inverse);
-  border-radius: 1rem;
-  padding: 0.5rem 1rem;
-  height: 3.5rem;
 }
 
 .result__index {
