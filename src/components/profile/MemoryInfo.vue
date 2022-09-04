@@ -17,8 +17,8 @@
         </div>
       </div>
     </div>
-    <div class="game-info__again">
-      <div class="game-info__title">{{ isAdmin ? '' : $t('results.again') }}</div>
+    <div class="game-info__again" v-show="!isAdmin">
+      <div class="game-info__title">{{ $t('results.again') }}</div>
       <home-category category="memory" @click="$router.push({ name: 'memory' })"></home-category>
     </div>
   </div>

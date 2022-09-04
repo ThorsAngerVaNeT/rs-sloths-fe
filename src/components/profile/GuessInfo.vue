@@ -5,13 +5,13 @@
       <div class="results__item" v-for="(res, index) in results" :key="index">
         <span class="result__index">{{ `${index + 1}.` }}</span>
         <span class="result__user">{{ `${res.user.name}` }}</span>
-        <span class="result__steps">{{ `${res.count} p` }}</span>
+        <span class="result__steps">{{ `${res.count} ${getPointText(res.count)}` }}</span>
         <span class="result__time">{{ `${res.time / 1000} s` }}</span>
       </div>
     </div>
 
-    <div class="game-info__again">
-      <div class="game-info__title">{{ isAdmin ? '' : $t('results.again') }}</div>
+    <div class="game-info__again" v-show="!isAdmin">
+      <div class="game-info__title">{{ $t('results.again') }}</div>
       <home-category category="guess" @click="$router.push({ name: 'guess' })"></home-category>
     </div>
   </div>
@@ -27,6 +27,7 @@ import { GameResultService } from '@/services/game-result-service';
 import { GUESS_GAME_ID } from '@/common/const';
 import useLoader from '@/stores/loader';
 import { mapWritableState } from 'pinia';
+import { ruNounEnding } from '@/utils/ru-noun-ending';
 
 export default defineComponent({
   name: 'GuessInfo',
@@ -78,6 +79,10 @@ export default defineComponent({
         this.isLoad = false;
       }
     },
+
+    getPointText(val: number): string {
+      return ruNounEnding(val, this.$t('guess.points1'), this.$t('guess.points2'), this.$t('guess.pointsN'));
+    },
   },
 });
 </script>
@@ -98,7 +103,7 @@ export default defineComponent({
 
 .results {
   padding: 1rem;
-  width: 37rem;
+  width: 40rem;
   min-height: 25rem;
   max-height: 34rem;
   overflow-y: auto;
@@ -133,7 +138,7 @@ export default defineComponent({
 }
 
 .result__steps {
-  width: 5rem;
+  width: 8rem;
 }
 
 .result__time {
