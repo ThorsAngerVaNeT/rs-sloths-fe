@@ -129,6 +129,10 @@
     "backgroundColor": "Background Color"
   },
 
+  "merch": {
+    "title": "Merch"
+  },
+
   "sloth": {
     "title": "What kind of sloth are you today"
   },

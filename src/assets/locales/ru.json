@@ -136,6 +136,10 @@
     "backgroundColor": "Цвет фона"
   },
 
+  "merch": {
+    "title": "Merch"
+  },
+
   "sloth": {
     "title": "Какой ленивец сегодня ты?"
   },

@@ -1,8 +1,8 @@
 <template>
-  <div class="meme">
-    <div class="meme__list list-aside">
+  <div class="merch">
+    <div class="merch__list list-aside">
       <h3>{{ $t('create.description') }}</h3>
-      <div class="meme__memes">
+      <div class="merch__merchs">
         <img
           ref="imgs"
           v-for="(item, index) in images"
@@ -10,50 +10,50 @@
           :src="getImg(index)"
           alt="images"
           object-fit="contain"
-          class="meme__image"
+          class="merch__image"
           @click="updImage(index)"
         />
       </div>
     </div>
-    <div class="meme__generator list-main">
-      <div class="meme__settings">
-        <div class="meme__property">
-          <label class="meme__label" for="top">{{ $t('create.top') }}</label>
-          <input type="text" class="meme__text" id="top" v-model="topText" @input="draw()" />
+    <div class="merch__generator list-main">
+      <div class="merch__settings">
+        <div class="merch__property">
+          <label class="merch__label" for="top">{{ $t('create.top') }}</label>
+          <input type="text" class="merch__text" id="top" v-model="topText" @input="draw()" />
         </div>
-        <div class="meme__property">
-          <label class="meme__label" for="bottom">{{ $t('create.bottom') }}</label>
-          <input type="text" class="meme__text" id="bottom" v-model="bottomText" @input="draw()" />
+        <div class="merch__property">
+          <label class="merch__label" for="bottom">{{ $t('create.bottom') }}</label>
+          <input type="text" class="merch__text" id="bottom" v-model="bottomText" @input="draw()" />
         </div>
       </div>
-      <div class="meme__settings">
-        <div class="meme__property">
-          <label class="meme__label" for="color">{{ $t('create.color') }}</label>
-          <input type="color" id="color" class="meme__color" v-model="color" @input="draw()" />
+      <div class="merch__settings">
+        <div class="merch__property">
+          <label class="merch__label" for="color">{{ $t('create.color') }}</label>
+          <input type="color" id="color" class="merch__color" v-model="color" @input="draw()" />
         </div>
-        <div class="meme__property">
-          <label class="meme__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
-          <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @input="draw()" />
+        <div class="merch__property">
+          <label class="merch__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
+          <input type="color" id="strokeStyle" class="merch__color" v-model="strokeStyle" @input="draw()" />
         </div>
-        <div class="meme__property">
-          <label class="meme__label" for="backgroundColor">{{ $t('create.backgroundColor') }}</label>
-          <input type="color" id="backgroundColor" class="meme__color" v-model="backgroundColor" @input="draw()" />
+        <div class="merch__property">
+          <label class="merch__label" for="backgroundColor">{{ $t('create.backgroundColor') }}</label>
+          <input type="color" id="backgroundColor" class="merch__color" v-model="backgroundColor" @input="draw()" />
         </div>
-        <div class="meme__property">
-          <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
-          <input type="number" id="margin" min="0" max="100" class="meme__number" v-model="margin" @input="draw()" />
+        <div class="merch__property">
+          <label class="merch__label" for="margin">{{ $t('create.margin') }}</label>
+          <input type="number" id="margin" min="0" max="100" class="merch__number" v-model="margin" @input="draw()" />
         </div>
       </div>
 
-      <div class="meme__canvas-wrapper">
-        <div class="meme__control-buttons">
+      <div class="merch__canvas-wrapper">
+        <div class="merch__control-buttons">
           <custom-btn
             :text="$t('btn.download')"
             imgPath="icon"
             className="btn btn-icon icon-download"
             @click="saveImage"
           ></custom-btn>
-          <div class="meme__control-buttons-scale">
+          <div class="merch__control-buttons-scale">
             <custom-btn
               :text="$t('btn.scaleUp')"
               imgPath="icon"
@@ -80,7 +80,7 @@
             @click="copyImage"
           ></custom-btn>
         </div>
-        <canvas class="meme__canvas" ref="canvas"> </canvas>
+        <canvas class="merch__canvas" ref="canvas"> </canvas>
       </div>
     </div>
   </div>
@@ -91,10 +91,10 @@ import { defineComponent } from 'vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import usePagesStore from '@/stores/pages-store';
 
-const { getPageCreateState, setPageCreateState } = usePagesStore();
+const { getPageMerchState, setPageMerchState } = usePagesStore();
 
 export default defineComponent({
-  name: 'CreateView',
+  name: 'MerchView',
 
   components: {
     CustomBtn,
@@ -202,7 +202,7 @@ export default defineComponent({
   },
 
   beforeRouteLeave() {
-    setPageCreateState(JSON.stringify(this.$data));
+    setPageMerchState(JSON.stringify(this.$data));
   },
 
   methods: {
@@ -210,19 +210,19 @@ export default defineComponent({
       // todo fetch
 
       this.images = [
-        './img/memes/deadline.svg',
-        './img/memes/expert.svg',
-        './img/memes/git.svg',
-        './img/memes/its_ok.svg',
-        './img/memes/love.svg',
-        './img/memes/mentor.svg',
-        './img/memes/read_chat.svg',
-        './img/memes/shocked.svg',
-        './img/memes/so_close.svg',
-        './img/memes/student_1.svg',
-        './img/memes/without_mentor.svg',
-        './img/memes/work_done.svg',
-        './img/memes/wtf.svg',
+        './img/meme/deadline.svg',
+        './img/meme/expert.svg',
+        './img/meme/git.svg',
+        './img/meme/its_ok.svg',
+        './img/meme/love.svg',
+        './img/meme/mentor.svg',
+        './img/meme/read_chat.svg',
+        './img/meme/shocked.svg',
+        './img/meme/so_close.svg',
+        './img/meme/student_1.svg',
+        './img/meme/without_mentor.svg',
+        './img/meme/work_done.svg',
+        './img/meme/wtf.svg',
       ];
     },
 
@@ -398,7 +398,7 @@ export default defineComponent({
     },
 
     loadStore() {
-      const str = getPageCreateState();
+      const str = getPageMerchState();
       if (!str) return;
 
       const data = JSON.parse(str);
@@ -410,8 +410,8 @@ export default defineComponent({
 });
 </script>
 <style>
-.meme,
-.meme__generator {
+.merch,
+.merch__generator {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -420,16 +420,16 @@ export default defineComponent({
   color: var(--color-text);
 }
 
-.meme {
+.merch {
   padding: 0 3rem;
 }
 
-.meme__generator {
+.merch__generator {
   flex-direction: column;
   align-items: center;
 }
 
-.meme__memes {
+.merch__merchs {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -437,18 +437,18 @@ export default defineComponent({
   gap: var(--gap);
 }
 
-.meme__image {
+.merch__image {
   width: 14rem;
   height: 14rem;
 }
 
-.meme__settings {
+.merch__settings {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
-.meme__property {
+.merch__property {
   height: 100%;
   width: 100%;
   display: flex;
@@ -458,8 +458,8 @@ export default defineComponent({
   gap: var(--gap);
 }
 
-.meme__text,
-.meme__number {
+.merch__text,
+.merch__number {
   margin: 0.5rem 0;
   padding: 0.5rem 0;
 
@@ -468,7 +468,7 @@ export default defineComponent({
   background-color: var(--color-background);
   color: inherit;
 }
-.meme__color {
+.merch__color {
   margin: 0.5rem 0;
   padding: 0 0;
 
@@ -478,7 +478,7 @@ export default defineComponent({
   color: inherit;
 }
 
-.meme__canvas-wrapper {
+.merch__canvas-wrapper {
   position: relative;
   padding-top: 2rem;
   width: 100%;
@@ -489,7 +489,7 @@ export default defineComponent({
   justify-content: center;
 }
 
-.meme__control-buttons {
+.merch__control-buttons {
   z-index: 10;
 
   display: flex;
@@ -497,12 +497,12 @@ export default defineComponent({
   gap: 1rem;
 }
 
-.meme__control-buttons-scale button {
+.merch__control-buttons-scale button {
   margin: 0 0.25rem;
   padding: 0;
 }
 
-.meme__canvas {
+.merch__canvas {
   border: 0.2px solid gray;
 }
 </style>
