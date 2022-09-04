@@ -143,14 +143,6 @@ export default defineComponent({
 
   methods: {
     saveSloth() {
-      if (this.tags) {
-        this.slothInfo.tags = this.tags.split(' ').map((el) => {
-          return { value: el };
-        });
-
-        this.tags = '';
-      }
-
       if (this.modalEvents === ModalEvents.new) {
         if (!this.newFile.name) {
           showAlertModal('modal.header.error', `${this.$t('modal.body.empty-file')}`);
@@ -163,6 +155,17 @@ export default defineComponent({
         if (!this.slothInfo.description) {
           showAlertModal('modal.header.error', `${this.$t('modal.body.empty-description')}`);
           return;
+        }
+
+        if (this.tags) {
+          this.slothInfo.tags = this.tags
+            .trim()
+            .split(' ')
+            .map((el) => {
+              return { value: el };
+            });
+
+          this.tags = '';
         }
 
         this.$emit('createSloth', this.slothInfo, this.newFile);
@@ -241,6 +244,7 @@ input[type='file'] {
 
 .sloth-info__text {
   text-align: center;
+  white-space: pre-wrap;
 }
 
 .sloth-info__input {

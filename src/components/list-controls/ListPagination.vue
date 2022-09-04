@@ -144,7 +144,7 @@ export type PaginationListElement = InstanceType<typeof paginationList>;
 }
 
 .pagination__select {
-  width: 4rem;
+  width: 5rem;
   text-align: center;
   color: inherit;
   background-color: var(--color-background);

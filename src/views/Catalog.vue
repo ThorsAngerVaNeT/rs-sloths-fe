@@ -28,7 +28,7 @@
       </list-controls>
     </div>
     <div class="catalog__main list-main">
-      <list-pagination :size="count" @getPage="getSloths"></list-pagination>
+      <list-pagination ref="pagination" :size="count" @getPage="getSloths"></list-pagination>
       <div class="catalog__list">
         <sloth-card
           v-for="sloth in sloths"
@@ -97,7 +97,7 @@ import useSortingList from '@/stores/sorting-list';
 import useSlothInfo from '@/stores/sloth-info';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ListControls from '@/components/list-controls/ListControls.vue';
-import ListPagination from '@/components/list-controls/ListPagination.vue';
+import ListPagination, { type PaginationListElement } from '@/components/list-controls/ListPagination.vue';
 import SlothCard from '@/components/catalog/SlothCard.vue';
 import SlothInfo from '@/components/catalog/SlothInfo.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
@@ -152,7 +152,7 @@ export default defineComponent({
     },
 
     isChecked(): boolean {
-      return !!this.sloths.filter((el) => el.checked).length;
+      return !!this.checked.filter((el) => el.checked).length;
     },
 
     isAdmin() {
@@ -175,7 +175,7 @@ export default defineComponent({
       searchText: getSearchText(),
       selected: getSelected(),
       sorting: getSortingList(),
-      checked: this.sloths.filter((el) => el.checked).map((el) => el.id),
+      checked: this.checked.filter((el) => el.checked).map((el) => el.id),
     };
     setPageCatalogState(JSON.stringify(savedProps));
   },
@@ -196,6 +196,13 @@ export default defineComponent({
 
         this.sloths = res.data.items;
         this.count = res.data.count;
+
+        if (!this.sloths.length && currPage !== 1) {
+          const pagination = this.$refs.pagination as PaginationListElement;
+          if (pagination) pagination.top();
+        }
+
+        this.setChecked();
 
         await this.getTags();
       } catch (error) {
@@ -296,8 +303,22 @@ export default defineComponent({
     },
 
     checkSlothInfoView(sloth: Sloth) {
-      const i = this.sloths.findIndex((el) => el.id === sloth.id);
-      this.sloths[i].checked = !this.sloths[i].checked;
+      let i = this.sloths.indexOf(sloth);
+      if (i !== -1) this.sloths[i].checked = !this.sloths[i].checked;
+
+      i = this.checked.findIndex((el) => el.id === sloth.id);
+      if (i !== -1) {
+        this.checked.splice(i, 1);
+      } else {
+        this.checked.push(sloth);
+      }
+    },
+
+    setChecked() {
+      this.sloths.forEach((sloth) => {
+        const i = this.checked.findIndex((el) => el.id === sloth.id);
+        this.sloths[this.sloths.indexOf(sloth)].checked = i !== -1;
+      });
     },
 
     showSlothInfoView(sloth: Sloth) {
@@ -327,12 +348,11 @@ export default defineComponent({
     },
 
     downloadFiles() {
-      this.checked = this.sloths.filter((el) => el.checked);
       if (this.checked.length) this.isDownloadShow = true;
     },
 
     approveDownload() {
-      const forDownload = this.sloths.filter((el) => el.checked).map((el) => el.id);
+      const forDownload = this.checked.filter((el) => el.checked).map((el) => el.id);
 
       if (!forDownload.length) return;
 
@@ -342,11 +362,11 @@ export default defineComponent({
       link.href = downloadUrl;
       link.click();
 
-      this.checked = [] as Sloths;
       this.closeModal();
     },
 
     closeModal() {
+      this.setChecked();
       this.isDownloadShow = false;
     },
 
