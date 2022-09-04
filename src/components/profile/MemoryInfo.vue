@@ -90,10 +90,6 @@ export default defineComponent({
       }
     },
 
-    // handleResultString(val: string) {
-    //   return JSON.parse(val);
-    // },
-
     getStepsText(val: number): string {
       return ruNounEnding(val, this.$t('memory.steps1'), this.$t('memory.steps2'), this.$t('memory.stepsN'));
     },
