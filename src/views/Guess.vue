@@ -8,7 +8,7 @@
       :onClick="startGame"
     ></custom-btn>
 
-    <div class="guess__imgs">
+    <div class="guess__imgs" :class="step >= 0 ? 'guess__imgs_active' : ''">
       <div v-for="(item, index) in gameCards" :key="index" class="guess__img-wrapper">
         <transition name="slider" mode="out-in">
           <img v-show="index === step" :src="item.question.img" :alt="$t('guess.guess')" class="guess__img" />
@@ -43,7 +43,10 @@
       <template v-slot:header> {{ $t('guess.congrats') }} </template>
 
       <template v-slot:body>
-        <img :src="allGuesses ? cardWinnerAll : cardWinner" alt="winner" />
+        <div class="guess-modal__wrap">
+          <img class="guess-modal__img" :src="cardWinnerAll" alt="winner" />
+          <p class="guess-modal__points">{{ Math.round((getGuesses * 100) / gameCards.length) }} %</p>
+        </div>
         <p>{{ allGuesses ? `${$t('guess.win')} ` : '' }}{{ $t('guess.result') }}</p>
         <p>{{ getGuesses }} / {{ gameCards.length }} {{ $t('guess.guesses') }}</p>
         <p>{{ getTime / 1000 }} {{ $t('memory.time') }}</p>
@@ -229,6 +232,9 @@ export default defineComponent({
   position: relative;
   width: 40rem;
   height: 40rem;
+}
+
+.guess__imgs_active {
   background: no-repeat center center / contain url('./img/guess/bg.svg');
 }
 
@@ -298,6 +304,29 @@ export default defineComponent({
 
 .is-not-guess {
   background-color: var(--red-active);
+}
+
+.guess-modal__wrap {
+  position: relative;
+  width: 35rem;
+  height: 35rem;
+}
+
+.guess-modal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.guess-modal__points {
+  position: absolute;
+  top: 110px;
+  left: 7px;
+  text-align: center;
+  width: 10rem;
+  color: black;
+  font-weight: 700;
+  font-size: 28px;
 }
 
 .slider-enter-active {
