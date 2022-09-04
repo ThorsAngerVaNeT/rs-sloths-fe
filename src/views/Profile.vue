@@ -1,8 +1,6 @@
 <template>
   <div class="profile">
     <aside class="profile__aside">
-      {{ getUserId }}
-      {{ hasAuth }}
       <user-info :adminPanel="false" @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
       <router-link v-show="isAdmin" to="/admin">
@@ -30,7 +28,7 @@ import { defineComponent } from 'vue';
 import { mapState, mapWritableState } from 'pinia';
 import type { User } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { ProfileService } from '@/services/profile-service';
+import { UsersService } from '@/services/users-service';
 import useLoader from '@/stores/loader';
 import UserInfo from '@/components/profile/UserInfo.vue';
 import MemoryInfo from '@/components/profile/MemoryInfo.vue';
@@ -39,8 +37,6 @@ import SuggestInfo from '@/components/profile/SuggestInfo.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useCurrUser from '@/stores/curr-user';
 import { BASE } from '@/common/const';
-
-const service = new ProfileService();
 
 const { setClearUser } = useCurrUser();
 
@@ -72,7 +68,7 @@ export default defineComponent({
     async updUser(user: User) {
       this.isLoad = true;
       try {
-        const res = await service.updateById('', this.currUser);
+        const res = await UsersService.updateProfile(this.currUser);
 
         if (!res.ok) throw Error();
       } catch (error) {

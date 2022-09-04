@@ -31,6 +31,14 @@ export class UsersService implements API<User> {
     return this.service.updateById(userId, body);
   }
 
+  public static updateProfile(user: User) {
+    const profileService = new APIService<User>(Endpoints.profile);
+
+    const { id, name, role, github } = user;
+    const body = { id, name, role, github };
+    return profileService.updateById('', body);
+  }
+
   public deleteById(id: string) {
     return this.service.deleteById(id);
   }
