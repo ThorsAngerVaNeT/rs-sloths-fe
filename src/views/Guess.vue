@@ -22,8 +22,8 @@
           :key="i"
           :class="`guess__answer ${getClassStepSelect(i)}`"
           @click="setAnswer(index, i)"
-          v-shortkey.push.once="[`${i + 1}`]"
-          @shortkey="setAnswer(index, i)"
+          v-shortkey.once="[`${i + 1}`]"
+          @shortkey="setAnswer(step, i)"
         >
           {{ i + 1 }} - {{ answer.caption }}
         </span>
