@@ -130,7 +130,8 @@
   },
 
   "merch": {
-    "title": "Merch"
+    "title": "Merch",
+    "description": "Choose an image, enter text and copy the result"
   },
 
   "sloth": {

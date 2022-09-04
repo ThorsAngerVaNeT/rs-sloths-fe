@@ -1,17 +1,29 @@
 <template>
   <div class="merch">
     <div class="merch__list list-aside">
-      <h3>{{ $t('create.description') }}</h3>
-      <div class="merch__merchs">
+      <h3>{{ $t('merch.description') }}</h3>
+      <div class="merch__images">
         <img
           ref="imgs"
           v-for="(item, index) in images"
           :key="index"
           :src="getImg(index)"
-          alt="images"
+          alt="image"
           object-fit="contain"
           class="merch__image"
           @click="updImage(index)"
+        />
+      </div>
+      <div class="merch__merch">
+        <img
+          ref="merch"
+          v-for="(item, index) in merch"
+          :key="index"
+          :src="getMerch(index)"
+          alt="merch"
+          object-fit="contain"
+          class="merch__image"
+          @click="updMerch(index)"
         />
       </div>
     </div>
@@ -41,7 +53,27 @@
         </div>
         <div class="merch__property">
           <label class="merch__label" for="margin">{{ $t('create.margin') }}</label>
-          <input type="number" id="margin" min="0" max="100" class="merch__number" v-model="margin" @input="draw()" />
+          <input
+            type="number"
+            id="margin"
+            min="0"
+            max="250"
+            class="merch__number"
+            v-model="marginTop"
+            @input="draw()"
+          />
+        </div>
+        <div class="merch__property">
+          <label class="merch__label" for="margin">{{ $t('create.margin') }}</label>
+          <input
+            type="number"
+            id="margin"
+            min="0"
+            max="250"
+            class="merch__number"
+            v-model="marginLeft"
+            @input="draw()"
+          />
         </div>
       </div>
 
@@ -103,14 +135,16 @@ export default defineComponent({
   data() {
     return {
       images: [] as string[],
-      index: 0,
+      indexMeme: 0,
+      merch: [] as string[],
+      indexMerch: 0,
       topText: '',
       bottomText: '',
-      scaleSteps: 1,
+      scaleSteps: 0.5,
       canvas: {} as HTMLCanvasElement,
       ctx: {} as CanvasRenderingContext2D,
-      img: {} as HTMLImageElement,
-      shirt: {} as HTMLImageElement,
+      imgMeme: {} as HTMLImageElement,
+      imgMerch: {} as HTMLImageElement,
       imageX: 0,
       imageY: 0,
       scaledImageWidth: 0,
@@ -122,83 +156,43 @@ export default defineComponent({
       color: '#ffffff',
       backgroundColor: '#777777',
       strokeStyle: '#000000',
-      margin: 50,
+      marginTop: 0,
+      marginLeft: 0,
     };
   },
 
-  // mounted() {
-  //   this.getImages();
-
-  //   this.loadStore();
-
-  //   const { canvas } = this.$refs;
-  //   if (!(canvas instanceof HTMLCanvasElement)) return;
-
-  //   const ctx = canvas.getContext('2d');
-  //   if (!ctx) return;
-
-  //   this.canvas = canvas;
-  //   this.ctx = ctx;
-
-  //   const image = new Image();
-  //   image.onload = () => {
-  //     // Grab position info
-  //     this.imageRight = this.imageX + this.img.width;
-  //     this.imageBottom = this.imageY + this.img.height;
-
-  //     // Update CTX
-  //     this.draw();
-  //   };
-  //   image.src = this.images[this.index];
-
-  //   this.img = image;
-
-  //   const shirt = new Image();
-  //   // shirt.src = './T-Shirt.svg';
-  //   shirt.src = './tshirt.png';
-
-  //   this.shirt = shirt;
-  // },
-
   mounted() {
+    this.getImages();
+    this.loadStore();
+
     const { canvas } = this.$refs;
     if (!(canvas instanceof HTMLCanvasElement)) return;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
     this.canvas = canvas;
     this.ctx = ctx;
 
-    const img = new Image();
-
-    const start = () => {
-      // create an overlay with solid #00d9c6 color
-      const tempCanvas = document.createElement('canvas');
-      const tempctx = tempCanvas.getContext('2d');
-      if (!tempctx) return;
-      this.canvas.width = img.width;
-      this.canvas.height = img.height;
-      tempCanvas.width = img.width;
-      tempCanvas.height = img.height;
-      tempctx.drawImage(img, 0, 0);
-      tempctx.globalCompositeOperation = 'source-atop';
-      tempctx.fillStyle = '#f51919';
-      tempctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-
-      //
-      canvas.width = img.width;
-      canvas.height = img.height;
-
-      // use compositing to change the hue of the original image
-      ctx.drawImage(img, 0, 0);
-      ctx.globalCompositeOperation = 'overlay';
-      ctx.drawImage(tempCanvas, 0, 0);
-
-      // always clean up: reset compositing to its default
-      ctx.globalCompositeOperation = 'source-over';
+    const imageMerch = new Image();
+    imageMerch.onload = () => {
+      // Update CTX
+      this.draw();
     };
+    imageMerch.src = this.merch[this.indexMerch];
+    this.imgMerch = imageMerch;
 
-    img.onload = start;
-    img.src = './tshirt.png';
+    const image = new Image();
+    image.onload = () => {
+      // Grab position info
+      this.marginLeft = (this.canvas.width - this.imgMeme.naturalWidth * this.scaleSteps) / 2;
+      this.marginTop = (this.canvas.height - this.imgMeme.naturalHeight * this.scaleSteps) / 2;
+
+      // Update CTX
+      this.draw();
+    };
+    image.src = this.images[this.indexMeme];
+    this.imgMeme = image;
   },
 
   beforeRouteLeave() {
@@ -206,32 +200,35 @@ export default defineComponent({
   },
 
   methods: {
-    async getImages() {
-      // todo fetch
-
+    getImages() {
       this.images = [
-        './img/meme/deadline.svg',
-        './img/meme/expert.svg',
-        './img/meme/git.svg',
-        './img/meme/its_ok.svg',
-        './img/meme/love.svg',
-        './img/meme/mentor.svg',
-        './img/meme/read_chat.svg',
-        './img/meme/shocked.svg',
-        './img/meme/so_close.svg',
-        './img/meme/student_1.svg',
-        './img/meme/without_mentor.svg',
-        './img/meme/work_done.svg',
-        './img/meme/wtf.svg',
+        './img/memes/deadline.svg',
+        './img/memes/expert.svg',
+        './img/memes/git.svg',
+        './img/memes/its_ok.svg',
+        // './img/memes/love.svg',
+        // './img/memes/mentor.svg',
+        // './img/memes/read_chat.svg',
+        // './img/memes/shocked.svg',
+        // './img/memes/so_close.svg',
+        // './img/memes/student_1.svg',
+        // './img/memes/without_mentor.svg',
+        // './img/memes/work_done.svg',
+        // './img/memes/wtf.svg',
       ];
+      this.merch = ['./img/merch/tshirt.png', './img/merch/hoodie.png', './img/merch/mug.png'];
     },
 
     getImg(i: number): string {
       return this.images[i];
     },
 
+    getMerch(i: number): string {
+      return this.merch[i];
+    },
+
     scaleUp() {
-      this.scaleSteps = Math.min(2, this.scaleSteps + 0.1);
+      this.scaleSteps = Math.min(2, this.scaleSteps + 0.01);
       this.draw();
     },
 
@@ -241,56 +238,68 @@ export default defineComponent({
     },
 
     scaleDown() {
-      this.scaleSteps = Math.max(0.1, this.scaleSteps - 0.1);
+      this.scaleSteps = Math.max(0.1, this.scaleSteps - 0.01);
       this.draw();
     },
 
     setImgProps() {
-      this.scaledImageWidth = this.img.naturalWidth * this.scaleSteps;
-      this.scaledImageHeight = this.scaledImageWidth * (this.img.naturalHeight / this.img.naturalWidth);
+      this.scaledImageWidth = this.imgMeme.naturalWidth * this.scaleSteps;
+      this.scaledImageHeight = this.scaledImageWidth * (this.imgMeme.naturalHeight / this.imgMeme.naturalWidth);
 
-      this.imageX = this.margin * this.scaleSteps;
-      this.imageY = this.margin * this.scaleSteps;
+      this.imageX = this.marginLeft;
+      this.imageY = this.marginTop;
 
       this.imageRight = this.imageX + this.scaledImageWidth;
       this.imageBottom = this.imageY + this.scaledImageHeight;
     },
 
-    setCanvasProps() {
-      this.canvas.width = this.scaledImageWidth
-        ? this.scaledImageWidth + this.margin * 2 * this.scaleSteps
-        : this.canvas.width;
-      this.canvas.height = this.scaledImageHeight
-        ? this.scaledImageHeight + this.margin * 2 * this.scaleSteps
-        : this.canvas.height;
+    setMerchImage() {
+      // create an overlay with solid color
+      const tempCanvas = document.createElement('canvas');
+      const tempctx = tempCanvas.getContext('2d');
+      if (!tempctx) return;
+
+      tempCanvas.width = this.imgMerch.naturalWidth;
+      tempCanvas.height = this.imgMerch.naturalHeight;
+
+      tempctx.drawImage(this.imgMerch, 0, 0);
+
+      tempctx.globalCompositeOperation = 'source-atop';
+      tempctx.fillStyle = this.backgroundColor;
+      tempctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+      // set canvas size abd fill background
+      this.canvas.width = this.imgMerch.naturalWidth;
+      this.canvas.height = this.imgMerch.naturalHeight;
+      this.ctx.fillStyle = 'gray';
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+      // use compositing to change the overlay of the original image
+      this.ctx.drawImage(tempCanvas, 0, 0);
+      this.ctx.globalCompositeOperation = 'overlay';
+      this.ctx.drawImage(this.imgMerch, 0, 0);
+
+      // always clean up: reset compositing to its default
+      this.ctx.globalCompositeOperation = 'source-over';
     },
 
     draw() {
+      // clear background
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
       // some maths
       this.setImgProps();
 
-      // canvas size
-      this.setCanvasProps();
-
-      // image background
-      this.ctx.fillStyle = this.backgroundColor;
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-      this.ctx.globalCompositeOperation = 'hue';
-
       // draw the t-shirt
-      this.ctx.drawImage(this.shirt, 0, 0);
-
-      this.ctx.globalCompositeOperation = 'source-over';
+      this.setMerchImage();
 
       // draw the image
       this.ctx.drawImage(
-        this.img,
+        this.imgMeme,
         0,
         0,
-        this.img.naturalWidth,
-        this.img.naturalHeight,
+        this.imgMeme.naturalWidth,
+        this.imgMeme.naturalHeight,
         this.imageX,
         this.imageY,
         this.scaledImageWidth,
@@ -300,29 +309,50 @@ export default defineComponent({
       this.drawText();
     },
 
+    updMerch(i: number) {
+      this.indexMerch = i;
+
+      const { merch } = this.$refs;
+      if (!(merch instanceof Array)) return;
+
+      const image = merch[this.indexMerch];
+      if (!(image instanceof HTMLImageElement)) return;
+
+      this.imgMerch = image;
+
+      // Grab position info
+      // this.imageRight = this.imageX + this.imgMeme.width;
+      // this.imageBottom = this.imageY + this.imgMeme.height;
+
+      // Update CTX
+      this.draw();
+    },
+
     updImage(i: number) {
-      this.index = i;
+      this.indexMeme = i;
 
       const { imgs } = this.$refs;
       if (!(imgs instanceof Array)) return;
 
-      const image = imgs[this.index];
+      const image = imgs[this.indexMeme];
       if (!(image instanceof HTMLImageElement)) return;
 
-      this.img = image;
+      this.imgMeme = image;
 
       // Grab position info
-      this.imageRight = this.imageX + this.img.width;
-      this.imageBottom = this.imageY + this.img.height;
+      this.imageRight = this.imageX + this.imgMeme.width;
+      this.imageBottom = this.imageY + this.imgMeme.height;
 
       // Update CTX
       this.draw();
     },
 
     drawText() {
-      const { width, height } = this.canvas;
-      const fontSize = Math.floor(width / 10);
-      const yOffset = height / 25;
+      const { width } = this.canvas;
+      const fontSize = Math.floor(this.scaledImageWidth / 5);
+      const yOffsetTop = this.marginTop - fontSize * 1.5;
+      const yOffsetBottom = this.marginTop + this.scaledImageHeight + fontSize * 1.5;
+      const xOffset = this.marginLeft + this.scaledImageWidth / 2;
 
       this.ctx.strokeStyle = this.strokeStyle; // 'black';
       this.ctx.lineWidth = Math.floor(fontSize / 4);
@@ -332,10 +362,10 @@ export default defineComponent({
       this.ctx.font = `${fontSize}px sans-serif`;
 
       this.ctx.textBaseline = 'top';
-      this.drawTextMultiLineTop(this.topText, width / 2, yOffset, this.canvas.width, fontSize);
+      this.drawTextMultiLineTop(this.topText, xOffset, yOffsetTop, this.canvas.width, fontSize);
 
       this.ctx.textBaseline = 'bottom';
-      this.drawTextMultiLineBottom(this.bottomText, width / 2, height - yOffset, this.canvas.width, fontSize);
+      this.drawTextMultiLineBottom(this.bottomText, xOffset, yOffsetBottom, this.canvas.width, fontSize);
     },
 
     drawTextMultiLineTop(text: string, x: number, top: number, maxWidth: number, lineHeight: number) {
@@ -409,7 +439,7 @@ export default defineComponent({
   },
 });
 </script>
-<style>
+<style scoped>
 .merch,
 .merch__generator {
   display: flex;
@@ -429,7 +459,8 @@ export default defineComponent({
   align-items: center;
 }
 
-.merch__merchs {
+.merch__images,
+.merch__merch {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
