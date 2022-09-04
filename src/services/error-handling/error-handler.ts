@@ -11,7 +11,13 @@ export const errorHandler = (error: unknown) => {
     if (error.statusCode === 401) {
       showAuthorizationModal();
     } else {
-      showAlertModal('modal.header.error', `ErrorCode (${error.statusCode}): ${error.message}`);
+      const messageDetail = error.requestError.message;
+
+      const messageForUser = Array.isArray(messageDetail) ? messageDetail.join('\r\n- ') : messageDetail;
+      showAlertModal(
+        'modal.header.error',
+        `API Error (Code ${error.statusCode}): ${error.message}\r\n \r\n- ${messageForUser}`
+      );
     }
   } else if (error instanceof CustomError) {
     if (error.statusCode === 401) {

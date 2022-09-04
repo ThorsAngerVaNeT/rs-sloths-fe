@@ -43,15 +43,7 @@
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { CustomError } from '@/services/error-handling/custom-error';
-import {
-  PAGINATION_OPTIONS,
-  USERS_ERROR_CREATE,
-  USERS_ERROR_DEL,
-  USERS_ERROR_GET_LIST,
-  USERS_ERROR_UPD,
-  USER_SORTING,
-} from '@/common/const';
+import { PAGINATION_OPTIONS, USER_SORTING } from '@/common/const';
 import { UsersService } from '@/services/users-service';
 import type { PageSettings, User, Users } from '@/common/types';
 import { ModalEvents } from '@/common/enums/modal-events';
@@ -143,7 +135,7 @@ export default defineComponent({
 
         const res = await service.getAll(currPage, perPage, sorting, searchText, selected.join(','));
 
-        if (!res.ok) throw new CustomError(res.status, USERS_ERROR_GET_LIST.code, USERS_ERROR_GET_LIST.message);
+        if (!res.ok) throw Error();
 
         this.users = res.data.items;
         this.count = res.data.count;
@@ -159,7 +151,7 @@ export default defineComponent({
       try {
         const res = await service.deleteById(id);
 
-        if (!res.ok) throw new CustomError(res.status, USERS_ERROR_DEL.code, `${USERS_ERROR_DEL.message} (id=${id})`);
+        if (!res.ok) throw Error();
 
         await this.getUsers();
       } catch (error) {
@@ -174,12 +166,7 @@ export default defineComponent({
       try {
         const res = await service.create(user);
 
-        if (!res.ok)
-          throw new CustomError(
-            res.status,
-            USERS_ERROR_CREATE.code,
-            `${USERS_ERROR_CREATE.message} (name=${user.name})`
-          );
+        if (!res.ok) throw Error();
 
         await this.getUsers();
       } catch (error) {
@@ -194,8 +181,7 @@ export default defineComponent({
       try {
         const res = await service.updateById(user.id, user);
 
-        if (!res.ok)
-          throw new CustomError(res.status, USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
+        if (!res.ok) throw Error();
 
         await this.getUsers();
       } catch (error) {

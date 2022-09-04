@@ -1,10 +1,9 @@
-export class APIError extends Error {
-  statusCode: number;
+import type { RequestError } from '@/common/types';
 
-  constructor(message: string, statusCode: number) {
+export class APIError extends Error {
+  constructor(message: string, public statusCode: number, public requestError: RequestError) {
     super();
     this.message = message;
-    this.statusCode = statusCode;
   }
 }
 

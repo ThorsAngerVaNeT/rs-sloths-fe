@@ -1,10 +1,17 @@
 import type { SuggestionStatus } from './enums/suggestion-status';
 import type { Role } from './enums/user-role';
 
+export type RequestError = {
+  statusCode: number;
+  message: string | string[];
+  error: string;
+};
+
 export type APIRequestResult<T> = {
   ok: boolean;
   status: number;
   data: T;
+  error: RequestError;
   headers: Headers;
 };
 
