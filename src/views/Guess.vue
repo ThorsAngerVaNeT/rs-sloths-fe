@@ -293,9 +293,16 @@ export default defineComponent({
   border-color: var(--color-border-inverse);
 }
 
+.guess__results {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .guess__result {
   display: inline-block;
-  margin: 1rem;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
