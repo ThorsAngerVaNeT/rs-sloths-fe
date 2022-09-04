@@ -1,6 +1,8 @@
 <template>
   <div class="profile">
     <aside class="profile__aside">
+      {{ getUserId }}
+      {{ hasAuth }}
       <user-info :adminPanel="false" @updUser="updUser"></user-info>
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
       <router-link v-show="isAdmin" to="/admin">
@@ -28,21 +30,18 @@ import { defineComponent } from 'vue';
 import { mapState, mapWritableState } from 'pinia';
 import type { User } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
-import { UsersService } from '@/services/users-service';
+import { ProfileService } from '@/services/profile-service';
 import useLoader from '@/stores/loader';
 import UserInfo from '@/components/profile/UserInfo.vue';
 import MemoryInfo from '@/components/profile/MemoryInfo.vue';
 import GuessInfo from '@/components/profile/GuessInfo.vue';
 import SuggestInfo from '@/components/profile/SuggestInfo.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
-import useUserInfo from '@/stores/user-info';
 import useCurrUser from '@/stores/curr-user';
-import { USERS_ERROR_GET, USERS_ERROR_UPD, BASE } from '@/common/const';
-import { CustomError } from '@/services/error-handling/custom-error';
+import { BASE } from '@/common/const';
 
-const service = new UsersService();
+const service = new ProfileService();
 
-const { setUserInfo } = useUserInfo();
 const { setClearUser } = useCurrUser();
 
 export default defineComponent({
@@ -58,7 +57,6 @@ export default defineComponent({
 
   data() {
     return {
-      user: {} as User,
       currentGame: 0,
       tabs: ['memory', 'guess', 'suggest'],
       components: ['MemoryInfo', 'GuessInfo', 'SuggestInfo'],
@@ -66,34 +64,17 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState(useCurrUser, ['isAdmin', 'getUserId']),
+    ...mapState(useCurrUser, ['isAdmin', 'getUserId', 'hasAuth', 'currUser']),
     ...mapWritableState(useLoader, ['isLoad']),
   },
 
   methods: {
-    async getUser() {
-      this.isLoad = true;
-      try {
-        const res = await service.getById(this.getUserId);
-        if (!res.ok)
-          throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.getUserId})`);
-        this.user = res.data;
-
-        setUserInfo(this.user);
-      } catch (error) {
-        errorHandler(error);
-      } finally {
-        this.isLoad = false;
-      }
-    },
-
     async updUser(user: User) {
       this.isLoad = true;
       try {
-        const res = await service.updateById(user.id, user);
-        if (!res.ok)
-          throw new CustomError(res.status, USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
-        await this.getUser();
+        const res = await service.updateById('', this.currUser);
+
+        if (!res.ok) throw Error();
       } catch (error) {
         errorHandler(error);
       } finally {

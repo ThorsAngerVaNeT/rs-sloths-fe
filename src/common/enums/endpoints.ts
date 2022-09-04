@@ -4,5 +4,6 @@ export enum Endpoints {
   suggestions = 'suggestions',
   games = 'games',
   results = 'results',
+  profile = 'users/profile',
 }
 export default Endpoints;
