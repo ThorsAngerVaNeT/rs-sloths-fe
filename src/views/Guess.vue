@@ -222,19 +222,22 @@ export default defineComponent({
 
 .guess__description {
   text-align: center;
+  color: var(--color-text);
 }
 
 .guess__imgs {
   position: relative;
   width: 40rem;
   height: 40rem;
+  background: no-repeat center center / contain url('./img/guess/bg.svg');
 }
 
 .guess__img-wrapper {
   position: absolute;
-  width: 40rem;
-  height: 40rem;
-  top: 0;
+  width: 30rem;
+  height: 30rem;
+  top: 5rem;
+  left: 5rem;
   overflow: hidden;
 }
 
@@ -245,6 +248,7 @@ export default defineComponent({
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 1;
 }
 
 .guess__answers {
