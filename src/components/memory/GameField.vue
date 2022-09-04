@@ -135,18 +135,18 @@ export default defineComponent({
   methods: {
     getImages() {
       this.images = [
-        './test01.png',
-        './test02.png',
-        './test03.png',
-        './test04.png',
-        './test05.png',
-        './test06.png',
-        './test07.png',
-        './test08.png',
-        './test09.png',
-        './test10.png',
-        './test11.png',
-        './test12.png',
+        './img/memory/memory01.svg',
+        './img/memory/memory02.svg',
+        './img/memory/memory03.svg',
+        './img/memory/memory04.svg',
+        './img/memory/memory05.svg',
+        './img/memory/memory06.svg',
+        './img/memory/memory07.svg',
+        './img/memory/memory08.svg',
+        './img/memory/memory09.svg',
+        './img/memory/memory10.svg',
+        './img/memory/memory11.svg',
+        './img/memory/memory12.svg',
       ];
 
       this.getCards();

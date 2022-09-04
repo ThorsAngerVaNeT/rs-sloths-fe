@@ -109,13 +109,39 @@ export const SUGGESTION_SORTING: SelectOptions[] = [
     text: 'sorting.createdAt+',
   },
 ];
+export const GAME_RESULT_SORTING: SelectOptions[] = [
+  {
+    value: 'count-desc',
+    text: 'sorting.count-',
+  },
+  {
+    value: 'count-asc',
+    text: 'sorting.count+',
+  },
+  {
+    value: 'time-desc',
+    text: 'sorting.time-',
+  },
+  {
+    value: 'time-asc',
+    text: 'sorting.time+',
+  },
+  {
+    value: 'createdAt-desc',
+    text: 'sorting.createdAt-',
+  },
+  {
+    value: 'createdAt-asc',
+    text: 'sorting.createdAt+',
+  },
+];
 
 // Pagination
 export const PAGINATION_OPTIONS: number[] = [10, 15, 20, 1, 2];
 
 // Users
 export const DEFAULT_USER_AVATAR = './img/profile/default.svg';
-export const AUTHORIZATION_IMG = './github.png';
+export const AUTHORIZATION_IMG = './github.svg';
 export const AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize?client_id=12e65e35ba7755d60466';
 
 // Memory Game

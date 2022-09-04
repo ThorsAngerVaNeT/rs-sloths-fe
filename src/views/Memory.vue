@@ -69,7 +69,7 @@ export default defineComponent({
     },
 
     getImg(i: number): string {
-      return `./memory-level-${this.levels[i].level}.png`;
+      return `./img/memory/memory-level-${this.levels[i].level}.svg`;
     },
 
     setLevel(i: number) {
@@ -115,6 +115,7 @@ export default defineComponent({
 .memory__btn img {
   width: 15rem;
   height: 15rem;
+  object-fit: contain;
   border-radius: 50%;
   background-color: lightgray;
 }
