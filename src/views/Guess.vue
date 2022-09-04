@@ -1,6 +1,7 @@
 <template>
   <div class="guess">
-    <p class="guess__description">{{ $t('guess.description') }}</p>
+    <h2 class="guess__description">{{ $t('guess.description') }}</h2>
+    <h3 class="guess__description">{{ $t('guess.rules') }}</h3>
     <custom-btn
       v-show="step < 0"
       :text="$t('guess.start')"
