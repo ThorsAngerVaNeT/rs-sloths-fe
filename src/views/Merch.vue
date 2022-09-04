@@ -29,10 +29,6 @@
         />
       </div>
       <div class="merch__settings">
-        <!-- <div class="merch__property">
-          <label class="merch__label" for="top">{{ $t('create.top') }}</label>
-          <input type="text" class="merch__text" id="top" v-model="topText" @input="draw()" />
-        </div> -->
         <div class="merch__property">
           <label class="merch__label" for="bottom">{{ $t('merch.bottom') }}</label>
           <input type="text" class="merch__text" id="bottom" v-model="bottomText" @input="draw()" />
@@ -43,10 +39,6 @@
           <label class="merch__label" for="color">{{ $t('merch.color') }}</label>
           <input type="color" id="color" class="merch__color" v-model="color" @input="draw()" />
         </div>
-        <!-- <div class="merch__property">
-          <label class="merch__label" for="strokeStyle">{{ $t('create.stroke') }}</label>
-          <input type="color" id="strokeStyle" class="merch__color" v-model="strokeStyle" @input="draw()" />
-        </div> -->
         <div class="merch__property">
           <label class="merch__label" for="backgroundColor">{{ $t('merch.backgroundColor') }}</label>
           <input type="color" id="backgroundColor" class="merch__color" v-model="backgroundColor" @input="draw()" />
@@ -138,8 +130,8 @@ export default defineComponent({
       indexMeme: 0,
       merch: [] as string[],
       indexMerch: 0,
-      topText: '',
       bottomText: '',
+      lines: 0,
       scaleSteps: 0.5,
       canvas: {} as HTMLCanvasElement,
       ctx: {} as CanvasRenderingContext2D,
@@ -149,15 +141,12 @@ export default defineComponent({
       imageY: 0,
       scaledImageWidth: 0,
       scaledImageHeight: 0,
-      imageWidth: 0,
-      imageHeight: 0,
-      imageRight: 0,
-      imageBottom: 0,
       color: '#000000',
       backgroundColor: '#999999',
       strokeStyle: '#000000',
       marginTop: 0,
       marginLeft: 0,
+      kText: 1.5,
     };
   },
 
@@ -257,9 +246,6 @@ export default defineComponent({
 
       this.imageX = this.marginLeft;
       this.imageY = this.marginTop;
-
-      this.imageRight = this.imageX + this.scaledImageWidth;
-      this.imageBottom = this.imageY + this.scaledImageHeight;
     },
 
     setMerchImage() {
@@ -280,8 +266,6 @@ export default defineComponent({
       // set canvas size abd fill background
       this.canvas.width = this.imgMerch.naturalWidth;
       this.canvas.height = this.imgMerch.naturalHeight;
-      // this.ctx.fillStyle = 'gray';
-      // this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       // use compositing to change the overlay of the original image
       this.ctx.drawImage(tempCanvas, 0, 0);
@@ -315,7 +299,7 @@ export default defineComponent({
         this.scaledImageHeight
       );
 
-      this.drawText();
+      this.drawText(this.ctx);
     },
 
     updMerch(i: number) {
@@ -344,86 +328,128 @@ export default defineComponent({
 
       this.imgMeme = image;
 
-      // Grab position info
-      this.imageRight = this.imageX + this.imgMeme.width;
-      this.imageBottom = this.imageY + this.imgMeme.height;
-
       // Update CTX
       this.draw();
     },
 
-    drawText() {
+    drawText(ctx: CanvasRenderingContext2D) {
       const fontSize = Math.floor(this.scaledImageWidth / 5);
-      const yOffsetTop = this.marginTop - fontSize * 1.2;
       const yOffsetBottom = this.marginTop + this.scaledImageHeight + fontSize * 1.2;
       const xOffset = this.marginLeft + this.scaledImageWidth / 2;
 
-      this.ctx.strokeStyle = this.strokeStyle; // 'black';
-      this.ctx.lineWidth = Math.floor(fontSize / 4);
-      this.ctx.fillStyle = this.color; // 'white';
-      this.ctx.textAlign = 'center';
-      this.ctx.lineJoin = 'round';
-      this.ctx.font = `${fontSize}px sans-serif`;
+      ctx.strokeStyle = this.strokeStyle; // 'black';
+      ctx.lineWidth = Math.floor(fontSize / 4);
+      ctx.fillStyle = this.color; // 'white';
+      ctx.textAlign = 'center';
+      ctx.lineJoin = 'round';
+      ctx.font = `${fontSize}px sans-serif`;
 
-      this.ctx.textBaseline = 'top';
-      this.drawTextMultiLineTop(this.topText, xOffset, yOffsetTop, this.canvas.width, fontSize);
-
-      this.ctx.textBaseline = 'bottom';
-      this.drawTextMultiLineBottom(this.bottomText, xOffset, yOffsetBottom, this.canvas.width, fontSize);
+      ctx.textBaseline = 'bottom';
+      this.drawTextMultiLine(
+        ctx,
+        this.bottomText,
+        xOffset,
+        yOffsetBottom,
+        this.scaledImageWidth * this.kText,
+        fontSize
+      );
     },
 
-    drawTextMultiLineTop(text: string, x: number, top: number, maxWidth: number, lineHeight: number) {
+    drawTextMultiLine(
+      ctx: CanvasRenderingContext2D,
+      text: string,
+      x: number,
+      top: number,
+      maxWidth: number,
+      lineHeight: number
+    ) {
       const words = text.split(' ');
+      this.lines = 0;
       let line = '';
       let y = top;
       words.forEach((word, index) => {
         const testLine = `${line + word} `;
-        const metrics = this.ctx.measureText(testLine);
+        const metrics = ctx.measureText(testLine);
         const testWidth = metrics.width;
         if (testWidth > maxWidth && index > 0) {
-          // this.ctx.strokeText(line, x, y);
-          this.ctx.fillText(line, x, y);
+          ctx.fillText(line, x, y);
           line = `${word} `;
           y += lineHeight;
+          this.lines += 1;
         } else {
           line = testLine;
         }
       });
-      // this.ctx.strokeText(line, x, y);
-      this.ctx.fillText(line, x, y);
+      ctx.fillText(line, x, y);
+      this.lines += 1;
     },
 
-    drawTextMultiLineBottom(text: string, x: number, top: number, maxWidth: number, lineHeight: number) {
-      const words = text.split(' ').reverse();
-      let line = '';
-      let y = top;
-      words.forEach((word, index) => {
-        const testLine = ` ${word + line}`;
-        const metrics = this.ctx.measureText(testLine);
-        const testWidth = metrics.width;
-        if (testWidth > maxWidth && index > 0) {
-          // this.ctx.strokeText(line, x, y);
-          this.ctx.fillText(line, x, y);
-          line = ` ${word}`;
-          y -= lineHeight;
-        } else {
-          line = testLine;
-        }
-      });
-      // this.ctx.strokeText(line, x, y);
-      this.ctx.fillText(line, x, y);
+    prepareForSave(tempCanvas: HTMLCanvasElement, tempctx: CanvasRenderingContext2D) {
+      tempctx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+      const kWidth = this.bottomText ? this.kText : 1;
+      const kHeight = this.bottomText ? 1 + 0.2 * this.lines + 0.2 * 1.2 : 1;
+      const scaleSteps = Math.min(
+        tempCanvas.width / (this.imgMeme.naturalWidth * kWidth),
+        tempCanvas.height / (this.imgMeme.naturalHeight * kHeight)
+      );
+      const scaledImageWidth = this.imgMeme.naturalWidth * scaleSteps;
+      const scaledImageHeight = scaledImageWidth * (this.imgMeme.naturalHeight / this.imgMeme.naturalWidth);
+      const imageX = (tempCanvas.width - scaledImageWidth) / 2;
+      const imageY = (tempCanvas.height - scaledImageHeight * kHeight) / 2;
+      tempctx.drawImage(
+        this.imgMeme,
+        0,
+        0,
+        this.imgMeme.naturalWidth,
+        this.imgMeme.naturalHeight,
+        imageX,
+        imageY,
+        scaledImageWidth,
+        scaledImageHeight
+      );
+
+      const fontSize = Math.floor(scaledImageWidth / 5);
+      const yOffsetBottom = imageY + scaledImageHeight + fontSize * 1.2;
+      const xOffset = imageX + scaledImageWidth / 2;
+
+      const temp = tempctx;
+      temp.lineWidth = Math.floor(fontSize / 4);
+      temp.fillStyle = this.color;
+      temp.textAlign = 'center';
+      temp.lineJoin = 'round';
+      temp.font = `${fontSize}px sans-serif`;
+
+      temp.textBaseline = 'bottom';
+      this.drawTextMultiLine(tempctx, this.bottomText, xOffset, yOffsetBottom, scaledImageWidth * this.kText, fontSize);
     },
 
     saveImage() {
-      this.canvas.toDataURL();
+      const tempCanvas = document.createElement('canvas');
+      const tempctx = tempCanvas.getContext('2d');
+      if (!tempctx) return;
+
+      tempCanvas.width = 1240;
+      tempCanvas.height = 1754;
+      this.prepareForSave(tempCanvas, tempctx);
+
+      tempCanvas.toDataURL();
       const link = document.createElement('a');
       link.download = 'download.png';
-      link.href = this.canvas.toDataURL();
+      link.href = tempCanvas.toDataURL();
       link.click();
     },
 
     copyImage() {
-      this.canvas.toBlob((blob) => {
+      const tempCanvas = document.createElement('canvas');
+      const tempctx = tempCanvas.getContext('2d');
+      if (!tempctx) return;
+
+      tempCanvas.width = 1240;
+      tempCanvas.height = 1754;
+      this.prepareForSave(tempCanvas, tempctx);
+
+      tempCanvas.toBlob((blob) => {
         const type = blob?.type;
         if (!type) return;
         const item = new ClipboardItem({ [type]: blob });
