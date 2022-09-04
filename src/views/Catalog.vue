@@ -297,12 +297,12 @@ export default defineComponent({
     },
 
     checkSlothInfoView(sloth: Sloth) {
-      let i = this.sloths.indexOf(sloth);
-      if (i !== -1) this.sloths[i].checked = !this.sloths[i].checked;
+      let slothIndex = this.sloths.indexOf(sloth);
+      if (slothIndex !== -1) this.sloths[slothIndex].checked = !this.sloths[slothIndex].checked;
 
-      i = this.checked.findIndex((el) => el.id === sloth.id);
-      if (i !== -1) {
-        this.checked.splice(i, 1);
+      slothIndex = this.checked.findIndex((el) => el.id === sloth.id);
+      if (slothIndex !== -1) {
+        this.checked.splice(slothIndex, 1);
       } else {
         this.checked.push(sloth);
       }
@@ -312,8 +312,8 @@ export default defineComponent({
 
     setChecked() {
       this.sloths.forEach((sloth) => {
-        const i = this.checked.findIndex((el) => el.id === sloth.id);
-        this.sloths[this.sloths.indexOf(sloth)].checked = i !== -1;
+        const slothIndex = this.checked.findIndex((el) => el.id === sloth.id);
+        this.sloths[this.sloths.indexOf(sloth)].checked = slothIndex !== -1;
       });
     },
 
