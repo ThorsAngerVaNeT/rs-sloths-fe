@@ -384,7 +384,9 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
 }
+
 .meme__property {
   height: 100%;
   width: 100%;
@@ -397,22 +399,30 @@ export default defineComponent({
 
 .meme__text,
 .meme__number {
-  margin: 0.5rem 0;
-  padding: 0.5rem 0;
-
-  border: none;
-  border-bottom: 0.2rem solid gray;
+  padding: 0.5rem;
+  border: 0.2rem solid var(--color-border-inverse-soft);
   background-color: var(--color-background);
   color: inherit;
+  border-radius: 1rem;
+  transition: 0.5s ease;
 }
-.meme__color {
-  margin: 0.5rem 0;
-  padding: 0 0;
 
+.meme__color {
+  padding: 0 0;
   border: none;
-  border-bottom: 0.2rem solid gray;
-  background-color: var(--color-background);
-  color: inherit;
+  background: none;
+  width: 6.2rem;
+  height: 3.2rem;
+  transition: 0.5s ease;
+}
+
+.meme__color::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.meme__color::-webkit-color-swatch {
+  border: 0.2rem solid var(--color-border-inverse-soft);
+  border-radius: 1rem;
 }
 
 .meme__canvas-wrapper {
