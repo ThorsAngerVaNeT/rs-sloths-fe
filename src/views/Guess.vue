@@ -56,7 +56,7 @@
 import { defineComponent } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
-import { GUESS_GAME_WINNER, GUESS_GAME_WINNER_ALL, GUESS_GAME_ID } from '@/common/const';
+import { GUESS_GAME_WINNER, GUESS_GAME_WINNER_ALL, GUESS_GAME_ID, GUESS_SLOTHS } from '@/common/const';
 import { playAudio, audioWin, audioSadTrombone, audioOvation } from '@/utils/audio';
 import type { GameResult } from '@/common/types';
 import { GameResultService } from '@/services/game-result-service';
@@ -118,33 +118,8 @@ export default defineComponent({
 
   methods: {
     initCards() {
-      this.questions = [
-        { caption: 'Student 1', img: './test01.svg' },
-        { caption: 'Git problem', img: './test02.svg' },
-        { caption: 'Samurai', img: './test03.svg' },
-        { caption: 'Thanks', img: './test04.svg' },
-        { caption: 'Popcorn', img: './test05.svg' },
-        { caption: 'WTF?', img: './test06.svg' },
-        { caption: 'Shocked', img: './test07.svg' },
-        { caption: 'Junior', img: './test08.svg' },
-        { caption: 'Middle', img: './test09.svg' },
-        { caption: 'Senior', img: './test10.svg' },
-      ];
-
-      this.answers = [
-        { caption: 'Student 1', img: './test01.svg' },
-        { caption: 'Git problem', img: './test02.svg' },
-        { caption: 'Samurai', img: './test03.svg' },
-        { caption: 'Thanks', img: './test04.svg' },
-        { caption: 'Popcorn', img: './test05.svg' },
-        { caption: 'WTF?', img: './test06.svg' },
-        { caption: 'Shocked', img: './test07.svg' },
-        { caption: 'Junior', img: './test08.svg' },
-        { caption: 'Middle', img: './test09.svg' },
-        { caption: 'Senior', img: './test10.svg' },
-        { caption: 'Fine', img: './test11.svg' },
-        { caption: 'Love', img: './test12.svg' },
-      ];
+      this.questions = GUESS_SLOTHS;
+      this.answers = GUESS_SLOTHS;
     },
 
     startGame() {
