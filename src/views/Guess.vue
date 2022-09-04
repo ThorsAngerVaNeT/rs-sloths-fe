@@ -8,7 +8,7 @@
       :onClick="startGame"
     ></custom-btn>
 
-    <div class="guess__imgs">
+    <div class="guess__imgs" :class="step >= 0 ? 'guess__imgs_active' : ''">
       <div v-for="(item, index) in gameCards" :key="index" class="guess__img-wrapper">
         <transition name="slider" mode="out-in">
           <img v-show="index === step" :src="item.question.img" :alt="$t('guess.guess')" class="guess__img" />
@@ -22,6 +22,8 @@
           :key="i"
           :class="`guess__answer ${getClassStepSelect(i)}`"
           @click="setAnswer(index, i)"
+          v-shortkey.once="[`${i + 1}`]"
+          @shortkey="setAnswer(step, i)"
         >
           {{ i + 1 }} - {{ answer.caption }}
         </span>
@@ -34,6 +36,8 @@
       className="btn btn-primary"
       :disabled="stepSelection < 0"
       :onClick="nextStep"
+      v-shortkey="['enter']"
+      @shortkey="nextStep"
     ></custom-btn>
     <div v-show="step >= 0" class="guess__results">
       <div v-for="(res, index) in result" :key="index" :class="`guess__result ${getClassStepResult(index)}`"></div>
@@ -43,7 +47,10 @@
       <template v-slot:header> {{ $t('guess.congrats') }} </template>
 
       <template v-slot:body>
-        <img :src="allGuesses ? cardWinnerAll : cardWinner" alt="winner" />
+        <div class="guess-modal__wrap">
+          <img class="guess-modal__img" :src="cardWinnerAll" alt="winner" />
+          <p class="guess-modal__points">{{ Math.round((getGuesses * 100) / gameCards.length) }} %</p>
+        </div>
         <p>{{ allGuesses ? `${$t('guess.win')} ` : '' }}{{ $t('guess.result') }}</p>
         <p>{{ getGuesses }} / {{ gameCards.length }} {{ $t('guess.guesses') }}</p>
         <p>{{ getTime / 1000 }} {{ $t('memory.time') }}</p>
@@ -56,7 +63,7 @@
 import { defineComponent } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
-import { GUESS_GAME_WINNER, GUESS_GAME_WINNER_ALL, GUESS_GAME_ID } from '@/common/const';
+import { GUESS_GAME_WINNER, GUESS_GAME_WINNER_ALL, GUESS_GAME_ID, GUESS_SLOTHS } from '@/common/const';
 import { playAudio, audioWin, audioSadTrombone, audioOvation } from '@/utils/audio';
 import type { GameResult } from '@/common/types';
 import { GameResultService } from '@/services/game-result-service';
@@ -118,33 +125,8 @@ export default defineComponent({
 
   methods: {
     initCards() {
-      this.questions = [
-        { caption: 'Student 1', img: './test01.svg' },
-        { caption: 'Git problem', img: './test02.svg' },
-        { caption: 'Samurai', img: './test03.svg' },
-        { caption: 'Thanks', img: './test04.svg' },
-        { caption: 'Popcorn', img: './test05.svg' },
-        { caption: 'WTF?', img: './test06.svg' },
-        { caption: 'Shocked', img: './test07.svg' },
-        { caption: 'Junior', img: './test08.svg' },
-        { caption: 'Middle', img: './test09.svg' },
-        { caption: 'Senior', img: './test10.svg' },
-      ];
-
-      this.answers = [
-        { caption: 'Student 1', img: './test01.svg' },
-        { caption: 'Git problem', img: './test02.svg' },
-        { caption: 'Samurai', img: './test03.svg' },
-        { caption: 'Thanks', img: './test04.svg' },
-        { caption: 'Popcorn', img: './test05.svg' },
-        { caption: 'WTF?', img: './test06.svg' },
-        { caption: 'Shocked', img: './test07.svg' },
-        { caption: 'Junior', img: './test08.svg' },
-        { caption: 'Middle', img: './test09.svg' },
-        { caption: 'Senior', img: './test10.svg' },
-        { caption: 'Fine', img: './test11.svg' },
-        { caption: 'Love', img: './test12.svg' },
-      ];
+      this.questions = GUESS_SLOTHS;
+      this.answers = GUESS_SLOTHS;
     },
 
     startGame() {
@@ -247,6 +229,7 @@ export default defineComponent({
 
 .guess__description {
   text-align: center;
+  color: var(--color-text);
 }
 
 .guess__imgs {
@@ -255,11 +238,16 @@ export default defineComponent({
   height: 40rem;
 }
 
+.guess__imgs_active {
+  background: no-repeat center center / contain url('./img/guess/bg.svg');
+}
+
 .guess__img-wrapper {
   position: absolute;
-  width: 40rem;
-  height: 40rem;
-  top: 0;
+  width: 30rem;
+  height: 30rem;
+  top: 5rem;
+  left: 5rem;
   overflow: hidden;
 }
 
@@ -270,6 +258,7 @@ export default defineComponent({
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 1;
 }
 
 .guess__answers {
@@ -304,9 +293,16 @@ export default defineComponent({
   border-color: var(--color-border-inverse);
 }
 
+.guess__results {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .guess__result {
   display: inline-block;
-  margin: 1rem;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -319,6 +315,29 @@ export default defineComponent({
 
 .is-not-guess {
   background-color: var(--red-active);
+}
+
+.guess-modal__wrap {
+  position: relative;
+  width: 35rem;
+  height: 35rem;
+}
+
+.guess-modal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.guess-modal__points {
+  position: absolute;
+  top: 110px;
+  left: 7px;
+  text-align: center;
+  width: 10rem;
+  color: black;
+  font-weight: 700;
+  font-size: 28px;
 }
 
 .slider-enter-active {

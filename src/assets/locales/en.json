@@ -78,8 +78,9 @@
     "result": "Your result:",
     "guess": "Guess image",
     "guesses": "guesses",
-    "next": "Give an answer"
+    "next": "Send an answer"
   },
+
   "memory": {
     "title": "Memory Game",
     "start": "Let's Go!",
