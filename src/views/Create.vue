@@ -353,7 +353,6 @@ export default defineComponent({
   flex-direction: row;
   align-items: flex-start;
   gap: var(--gap);
-
   color: var(--color-text);
 }
 
@@ -429,7 +428,6 @@ export default defineComponent({
   position: relative;
   padding-top: 2rem;
   width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -438,7 +436,6 @@ export default defineComponent({
 
 .meme__control-buttons {
   z-index: 10;
-
   display: flex;
   justify-content: center;
   gap: 1rem;
