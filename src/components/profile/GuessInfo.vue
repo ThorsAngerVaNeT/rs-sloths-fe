@@ -73,7 +73,6 @@ export default defineComponent({
 
         this.count = res.data.count;
         this.results = res.data.items;
-        console.log(this.results);
       } catch (error) {
         errorHandler(error);
       } finally {
