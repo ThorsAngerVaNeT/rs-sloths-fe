@@ -6,6 +6,7 @@
       <router-link v-show="isAdmin" to="/admin">
         <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
       </router-link>
+      <custom-btn text="Сегодня я..." className="btn btn-link" :onClick="todaySloth"></custom-btn>
     </aside>
     <main class="profile__main">
       <div class="profile__tabs">
@@ -71,6 +72,21 @@ export default defineComponent({
         const res = await UsersService.updateProfile(this.currUser);
 
         if (!res.ok) throw Error();
+      } catch (error) {
+        errorHandler(error);
+      } finally {
+        this.isLoad = false;
+      }
+    },
+
+    async todaySloth() {
+      this.isLoad = true;
+      try {
+        const res = await UsersService.getTodaySloth();
+
+        if (!res.ok) throw Error();
+
+        console.log(res);
       } catch (error) {
         errorHandler(error);
       } finally {
