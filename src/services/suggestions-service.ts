@@ -1,4 +1,11 @@
-import type { API, Suggestion, SuggestionsRating, APIRequestResult, QueryStringOptions } from '@/common/types';
+import type {
+  API,
+  Suggestion,
+  SuggestionsRating,
+  APIRequestResult,
+  QueryStringOptions,
+  RequestError,
+} from '@/common/types';
 import useCurrUser from '@/stores/curr-user';
 import { Endpoints } from '@/common/enums/endpoints';
 import { APIService } from './api-service';
@@ -50,13 +57,14 @@ export class SuggestionsService implements API<Suggestion> {
       ok: false,
       status: 401,
       data: {} as SuggestionsRating,
+      error: {} as RequestError,
       headers: {} as Headers,
     };
     try {
       const ratingService = new APIService<SuggestionsRating>(`${Endpoints.suggestions}/${suggestionId}/rating`);
       const userId = getUserId;
 
-      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
+      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401, res.error);
 
       const body: SuggestionsRating = { suggestionId, userId, rate };
       return ratingService.update(body);
