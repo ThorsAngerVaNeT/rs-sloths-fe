@@ -33,39 +33,69 @@
           <label class="merch__label" for="bottom">{{ $t('merch.bottom') }}</label>
           <input type="text" class="merch__text" id="bottom" v-model="bottomText" @input="draw()" />
         </div>
+        <div class="merch__property">
+          <label class="merch__label" for="kText">{{ $t('merch.kText') }}</label>
+          <input
+            type="number"
+            id="kText"
+            min="0"
+            max="3"
+            step="0.1"
+            class="merch__number"
+            v-model="kText"
+            @input="draw()"
+          />
+        </div>
+        <div class="merch__property">
+          <label class="merch__label" for="kFont">{{ $t('merch.kFont') }}</label>
+          <input
+            type="number"
+            id="kFont"
+            min="0"
+            max="1"
+            step="0.01"
+            class="merch__number"
+            v-model="kFont"
+            @input="draw()"
+          />
+        </div>
       </div>
-      <div class="merch__settings">
-        <div class="merch__property">
-          <label class="merch__label" for="color">{{ $t('merch.color') }}</label>
-          <input type="color" id="color" class="merch__color" v-model="color" @input="draw()" />
+      <div class="merch__settings-row">
+        <div class="merch__settings">
+          <div class="merch__property">
+            <label class="merch__label" for="color">{{ $t('merch.color') }}</label>
+            <input type="color" id="color" class="merch__color" v-model="color" @input="draw()" />
+          </div>
+          <div class="merch__property">
+            <label class="merch__label" for="backgroundColor">{{ $t('merch.backgroundColor') }}</label>
+            <input type="color" id="backgroundColor" class="merch__color" v-model="backgroundColor" @input="draw()" />
+          </div>
         </div>
-        <div class="merch__property">
-          <label class="merch__label" for="backgroundColor">{{ $t('merch.backgroundColor') }}</label>
-          <input type="color" id="backgroundColor" class="merch__color" v-model="backgroundColor" @input="draw()" />
-        </div>
-        <div class="merch__property">
-          <label class="merch__label" for="margin">{{ $t('merch.marginTop') }}</label>
-          <input
-            type="number"
-            id="margin"
-            min="0"
-            max="250"
-            class="merch__number"
-            v-model="marginTop"
-            @input="draw()"
-          />
-        </div>
-        <div class="merch__property">
-          <label class="merch__label" for="margin">{{ $t('merch.marginLeft') }}</label>
-          <input
-            type="number"
-            id="margin"
-            min="0"
-            max="250"
-            class="merch__number"
-            v-model="marginLeft"
-            @input="draw()"
-          />
+        <div class="merch__settings">
+          <div class="merch__property">
+            <label class="merch__label" for="marginTop">{{ $t('merch.marginTop') }}</label>
+            <input
+              type="number"
+              id="marginTop"
+              min="0"
+              max="250"
+              class="merch__number"
+              v-model="marginTop"
+              @input="draw()"
+            />
+          </div>
+          <div class="merch__property">
+            <label class="merch__label" for="marginLeft">{{ $t('merch.marginLeft') }}</label>
+            <input
+              type="number"
+              id="marginLeft"
+              min="0"
+              max="250"
+              class="merch__number"
+              v-model="marginLeft"
+              @input="draw()"
+            />
+          </div>
         </div>
       </div>
 
@@ -147,6 +177,7 @@ export default defineComponent({
       marginTop: 0,
       marginLeft: 0,
       kText: 1.5,
+      kFont: 0.2,
     };
   },
 
@@ -333,7 +364,7 @@ export default defineComponent({
     },
 
     drawText(ctx: CanvasRenderingContext2D) {
-      const fontSize = Math.floor(this.scaledImageWidth / 5);
+      const fontSize = Math.floor(this.scaledImageWidth * this.kFont);
       const yOffsetBottom = this.marginTop + this.scaledImageHeight + fontSize * 1.2;
       const xOffset = this.marginLeft + this.scaledImageWidth / 2;
 
@@ -388,7 +419,7 @@ export default defineComponent({
       tempctx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
 
       const kWidth = this.bottomText ? this.kText : 1;
-      const kHeight = this.bottomText ? 1 + 0.2 * this.lines + 0.2 * 1.2 : 1;
+      const kHeight = this.bottomText ? 1 + this.kFont * this.lines + this.kFont * 1.2 : 1;
       const scaleSteps = Math.min(
         tempCanvas.width / (this.imgMeme.naturalWidth * kWidth),
         tempCanvas.height / (this.imgMeme.naturalHeight * kHeight)
@@ -409,7 +440,7 @@ export default defineComponent({
         scaledImageHeight
       );
 
-      const fontSize = Math.floor(scaledImageWidth / 5);
+      const fontSize = Math.floor(scaledImageWidth * this.kFont);
       const yOffsetBottom = imageY + scaledImageHeight + fontSize * 1.2;
       const xOffset = imageX + scaledImageWidth / 2;
 
@@ -441,15 +472,7 @@ export default defineComponent({
     },
 
     copyImage() {
-      const tempCanvas = document.createElement('canvas');
-      const tempctx = tempCanvas.getContext('2d');
-      if (!tempctx) return;
-
-      tempCanvas.width = 1240;
-      tempCanvas.height = 1754;
-      this.prepareForSave(tempCanvas, tempctx);
-
-      tempCanvas.toBlob((blob) => {
+      this.canvas.toBlob((blob) => {
         const type = blob?.type;
         if (!type) return;
         const item = new ClipboardItem({ [type]: blob });
@@ -503,12 +526,21 @@ export default defineComponent({
   height: 14rem;
 }
 
-.merch__settings {
+.merch__settings,
+.merch__settings-row {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
+
+.merch__settings {
+  flex-direction: column;
+}
+
+.merch__settings-row {
+  gap: var(--gap);
+}
+
 .merch__property {
   height: 100%;
   width: 100%;
@@ -528,6 +560,10 @@ export default defineComponent({
   border-bottom: 0.2rem solid gray;
   background-color: var(--color-background);
   color: inherit;
+}
+
+.merch__text {
+  width: 30rem;
 }
 .merch__color {
   margin: 0.5rem 0;

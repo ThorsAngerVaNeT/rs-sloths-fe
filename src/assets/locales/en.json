@@ -133,6 +133,8 @@
     "title": "Merch",
     "description": "Choose an image, enter text and copy the result",
     "bottom": "Text",
+    "kText": "Text width (relative to image width)",
+    "kFont": "Font size (relative to image width)",
     "marginTop": "Image Margin Top",
     "marginLeft": "Image Margin Left",
     "color": "Text Color",
