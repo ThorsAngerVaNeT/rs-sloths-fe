@@ -1,4 +1,13 @@
-import type { API, APIRequestResult, QueryStringOptions, Sloth, SlothRating, SlothTags, Tag } from '@/common/types';
+import type {
+  API,
+  APIRequestResult,
+  QueryStringOptions,
+  RequestError,
+  Sloth,
+  SlothRating,
+  SlothTags,
+  Tag,
+} from '@/common/types';
 import { Endpoints } from '@/common/enums/endpoints';
 import useCurrUser from '@/stores/curr-user';
 import { APIService } from './api-service';
@@ -78,13 +87,14 @@ export class SlothsService implements API<Sloth> {
       ok: false,
       status: 401,
       data: {} as SlothRating,
+      error: {} as RequestError,
       headers: {} as Headers,
     };
     try {
       const ratingService = new APIService<SlothRating>(`${Endpoints.sloths}/${slothId}/rating`);
       const userId = getUserId;
 
-      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
+      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401, res.error);
 
       const body: SlothRating = { slothId, userId, rate };
       return ratingService.update(body);

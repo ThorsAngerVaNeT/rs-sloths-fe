@@ -4,7 +4,9 @@
       <template v-slot:header> {{ $t(header) }} </template>
 
       <template v-slot:body>
-        {{ message }}
+        <p>
+          {{ message }}
+        </p>
       </template>
     </modal-window>
   </div>
@@ -46,5 +48,9 @@ export default defineComponent({
 .alert-modal {
   z-index: 100;
   position: absolute;
+}
+
+p {
+  white-space: pre-wrap;
 }
 </style>

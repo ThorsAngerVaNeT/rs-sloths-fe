@@ -1,4 +1,4 @@
-import type { APIRequestResult } from '@/common/types';
+import type { APIRequestResult, RequestError } from '@/common/types';
 import { JSON_ERROR } from '@/common/const';
 import { APIError } from './error-handling/api-error';
 import { CustomError } from './error-handling/custom-error';
@@ -9,6 +9,7 @@ export const apiRequest = async <T>(url: string, config: RequestInit): Promise<A
     ok: false,
     status: 0,
     data: {} as T,
+    error: {} as RequestError,
     headers: {} as Headers,
   };
 
@@ -18,17 +19,21 @@ export const apiRequest = async <T>(url: string, config: RequestInit): Promise<A
     res.ok = response.ok;
     res.status = response.status;
 
-    if (!res.ok) throw new APIError(response.statusText, response.status);
+    if (response.status === 204) return res;
 
-    if (response.status !== 204) {
-      res.headers = response.headers;
-      const contentType = res.headers.get('content-type');
+    res.headers = response.headers;
+    const contentType = res.headers.get('content-type');
 
-      if (!contentType || !contentType.includes('application/json')) {
-        throw new CustomError(response.status, JSON_ERROR.code, JSON_ERROR.message);
-      }
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new CustomError(response.status, JSON_ERROR.code, JSON_ERROR.message);
+    }
 
+    if (res.ok) {
       res.data = await response.json();
+    } else {
+      res.error = await response.json();
+
+      throw new APIError(response.statusText, response.status, res.error);
     }
   } catch (error: unknown) {
     errorHandler(error);
