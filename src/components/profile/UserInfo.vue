@@ -1,5 +1,5 @@
 <template>
-  <div class="user-info">
+  <form class="user-info" ref="profileForm" :onSubmit="(e) => e.preventDefault()">
     <div class="user-info__avatar">
       <img class="user-info__img" :src="getAvatar" :alt="$t('profile.avatar')" />
     </div>
@@ -7,6 +7,7 @@
       type="text"
       class="input-text user-info__property"
       autocomplete="off"
+      required
       :placeholder="$t('profile.name')"
       :title="$t('profile.name')"
       v-model="(adminPanel ? userInfo : currUser).name"
@@ -15,6 +16,7 @@
       type="text"
       class="input-text user-info__property"
       autocomplete="off"
+      required
       :placeholder="$t('profile.github')"
       :title="$t('profile.github')"
       v-model="(adminPanel ? userInfo : currUser).github"
@@ -30,7 +32,7 @@
       <option :value="user">{{ user }}</option>
     </select>
     <custom-btn :text="$t('btn.save')" className="btn btn-primary" :onClick="saveUser"></custom-btn>
-  </div>
+  </form>
 </template>
 
 <script lang="ts">
@@ -82,7 +84,9 @@ export default defineComponent({
 
   methods: {
     saveUser() {
-      this.$emit('updUser', this.userInfo);
+      if (this.$refs.profileForm instanceof HTMLFormElement && this.$refs.profileForm.checkValidity()) {
+        this.$emit('updUser', this.userInfo);
+      }
     },
   },
 });
