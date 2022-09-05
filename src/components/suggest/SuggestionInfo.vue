@@ -53,7 +53,7 @@
           <div v-else class="suggest-info__props">
             <div v-show="isNew" class="suggest-info__suggest">
               <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
-              <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
+              <input class="input__file" type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
               <img v-show="isNew" class="suggest-info__img" :src="preview" alt="preview" />
             </div>
             <div v-show="!isNew" :class="'suggest-info__sloth'">
@@ -270,7 +270,7 @@ export default defineComponent({
   align-items: center;
 }
 
-input[type='file'] {
+.input__file {
   display: none;
 }
 
