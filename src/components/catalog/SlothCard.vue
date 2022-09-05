@@ -64,7 +64,6 @@
         <div class="catalog-sloth-info__props">
           <p class="sloth-info__property sloth-info__property_text">{{ slothInfo.caption }}</p>
           <div class="sloth-info__property sloth-info__property_rating">
-            <p class="sloth-info__rating">{{ $t('rate.user') }}</p>
             <p v-if="slothInfo.rating === 0" class="sloth-info__user-rate">
               <span class="user-rate__main">{{ $t('rate.none') }}</span>
             </p>

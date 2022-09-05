@@ -56,7 +56,6 @@
           <p class="suggest-info__property cut-text">{{ suggestInfo.description }}</p>
           <p class="suggest-info__property">{{ suggestInfo.status }}</p>
           <div class="suggest-info__property suggest-info__property_rating">
-            <p class="suggest-info__rating">{{ $t('rate.user') }}</p>
             <p v-if="suggestInfo.rating === 0" class="suggest-info__user-rate">
               <span class="user-rate__main">{{ $t('rate.none') }}</span>
             </p>
