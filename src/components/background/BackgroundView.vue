@@ -111,4 +111,12 @@ export default defineComponent({
 .background-profile-dark {
   background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-profile-dark.svg');
 }
+
+.background-merch-light {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-merch-light.svg');
+}
+
+.background-merch-dark {
+  background: no-repeat left bottom / cover url('../../assets/backgrounds/bg-merch-dark.svg');
+}
 </style>
