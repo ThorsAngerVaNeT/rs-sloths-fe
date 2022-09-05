@@ -15,6 +15,9 @@
       class="theme-switcher__label"
       :for="`${checkTheme}-theme`"
       :class="`theme-switcher__label_${checkTheme}`"
+      v-shortkey="['ctrl', '3']"
+      @shortkey="setTheme(`${checkTheme}`)"
+      v-on:keydown="handleKeyPress"
     ></label>
   </div>
 </template>
@@ -61,6 +64,10 @@ export default defineComponent({
       localStorage.setItem('rs-sloths-theme', theme);
       this.currTheme = theme;
       document.documentElement.className = theme;
+    },
+
+    handleKeyPress(e: Event) {
+      console.log('e,', e);
     },
   },
 });
