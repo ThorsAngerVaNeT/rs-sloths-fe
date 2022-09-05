@@ -41,24 +41,21 @@
           <p class="sloth-info__property sloth-info__property_text">{{ slothInfo.caption }}</p>
           <div class="sloth-info__property sloth-info__property_rating">
             <p class="sloth-info__rating">User Rating:</p>
-            <!-- <p class="sloth-info__rating">{{ handleUserRate(slothInfo.rating) }}⭐</p> -->
-            <p class="sloth-info__user-rate">
+            <p v-if="slothInfo.rating === 0" class="sloth-info__user-rate">
               <span class="user-rate__main">{{ slothInfo.rating }}</span>
-              <img src="/img/catalog/sloths.svg" alt="sloths" class="user-rate__sloth" />
-              <span class="user-rate__other">out of 5</span>
+            </p>
+            <p v-else class="sloth-info__user-rate">
+              <img
+                v-for="item in slothInfo.rating"
+                :key="item"
+                src="/img/catalog/sloths.svg"
+                alt="sloths"
+                class="user-rate__sloth"
+              />
             </p>
           </div>
           <div class="sloth-info__property sloth-info__property_rate">
             <label for="range" class="sloth-info__label">Your Rate:</label>
-            <!-- <input
-              type="range"
-              id="range"
-              min="0"
-              max="5"
-              step="1"
-              v-model="newRating"
-              @change="$emit('editRating', slothInfo, +newRating)"
-            /> -->
             <select
               class="sloth-info__select"
               name="range"
@@ -339,7 +336,6 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
 }
 
 .sloth-info__rating {
@@ -353,11 +349,6 @@ export default defineComponent({
 
 .user-rate__sloth {
   height: 4rem;
-}
-
-.user-rate__other {
-  font-size: 1.8rem;
-  align-self: end;
 }
 
 .sloth-info__property_rate {
