@@ -1,16 +1,26 @@
 <template>
   <div class="game-info">
-    <div class="game-info__title">{{ isAdmin ? $t('results.all') : $t('results.user') }}</div>
-    <div class="results">
+    <div class="game-info__title">{{ isAdmin || isGuess ? $t('results.all') : $t('results.user') }}</div>
+    <div class="game-info__btns">
+      <custom-btn
+        v-for="(indexAll, index) in sortingOptions"
+        :key="index"
+        :text="$t(sortingOptionsALL[indexAll].text)"
+        className="btn btn-primary"
+        @click="setSorting(index)"
+      ></custom-btn>
+    </div>
+
+    <div class="results" :class="isAdmin || isGuess ? 'results_admin' : ''">
       <div class="results__item" v-for="(res, index) in results" :key="index">
         <span class="result__index">{{ `${index + 1}.` }}</span>
-        <span class="result__user">{{ `${res.user.name}` }}</span>
+        <span class="result__user" v-show="isAdmin || isGuess">{{ `${res.user?.name}` }}</span>
         <span class="result__steps">{{ `${res.count} ${getPointText(res.count)}` }}</span>
         <span class="result__time">{{ `${res.time / 1000} s` }}</span>
       </div>
     </div>
 
-    <div class="game-info__again" v-show="!isAdmin">
+    <div class="game-info__again" v-show="!(isAdmin || isGuess)">
       <div class="game-info__title">{{ $t('results.again') }}</div>
       <home-category category="guess" @click="$router.push({ name: 'guess' })"></home-category>
     </div>
@@ -20,11 +30,11 @@
 <script lang="ts">
 import type { GameResult } from '@/common/types';
 import { defineComponent } from 'vue';
-// import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import HomeCategory from '@/components/home/HomeCategory.vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { GameResultService } from '@/services/game-result-service';
-import { GUESS_GAME_ID } from '@/common/const';
+import { GAME_RESULT_SORTING, GUESS_GAME_ID } from '@/common/const';
 import useLoader from '@/stores/loader';
 import { mapWritableState } from 'pinia';
 import { ruNounEnding } from '@/utils/ru-noun-ending';
@@ -33,14 +43,17 @@ export default defineComponent({
   name: 'GuessInfo',
 
   components: {
-    // CustomBtn,
     HomeCategory,
+    CustomBtn,
   },
 
   data() {
     return {
       count: 0,
       results: [] as GameResult[],
+      sortingOptionsALL: GAME_RESULT_SORTING,
+      sortingOptions: [] as number[],
+      sorting: 0,
     };
   },
 
@@ -53,13 +66,20 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
+
     isAdmin() {
       return this.$route.name === 'admin';
+    },
+
+    isGuess() {
+      return this.$route.name === 'guess';
     },
   },
 
   async mounted() {
     await this.getGameInfo();
+
+    this.sortingOptions = this.sortingOptionsALL.map((el, i) => i).filter((el) => el % 2 === 0);
   },
 
   methods: {
@@ -68,7 +88,7 @@ export default defineComponent({
       try {
         const service = new GameResultService(GUESS_GAME_ID, this.userId);
 
-        const res = await service.getAll();
+        const res = await service.getAll(undefined, undefined, this.sortingOptionsALL[this.sorting].value);
         if (!res.ok) throw Error(); // todo
 
         this.count = res.data.count;
@@ -82,6 +102,18 @@ export default defineComponent({
 
     getPointText(val: number): string {
       return ruNounEnding(val, this.$t('guess.points1'), this.$t('guess.points2'), this.$t('guess.pointsN'));
+    },
+
+    setSorting(i: number) {
+      if (this.sortingOptions[i] % 2 === 0) {
+        this.sortingOptions[i] += 1;
+      } else {
+        this.sortingOptions[i] -= 1;
+      }
+
+      this.sorting = this.sortingOptions[i];
+
+      this.getGameInfo();
     },
   },
 });
@@ -101,9 +133,16 @@ export default defineComponent({
   transition: 0.5s ease;
 }
 
+.game-info__btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap);
+}
+
 .results {
   padding: 1rem;
-  width: 40rem;
+  width: 28rem;
   min-height: 25rem;
   max-height: 34rem;
   overflow-y: auto;
@@ -116,6 +155,9 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+.results_admin {
+  width: 40rem;
 }
 
 .results__item {

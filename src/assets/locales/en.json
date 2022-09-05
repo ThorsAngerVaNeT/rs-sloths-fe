@@ -82,7 +82,8 @@
     "next": "Send an answer",
     "points1": "point",
     "points2": "points",
-    "pointsN": "points"
+    "pointsN": "points",
+    "results": "Guess-a-Sloth Results"
   },
 
   "memory": {
@@ -97,7 +98,8 @@
     "level": "Choose your level",
     "junior": "Junior",
     "middle": "Middle",
-    "senior": "Senior"
+    "senior": "Senior",
+    "results": "Memory Results"
   },
 
   "suggest": {
@@ -213,11 +215,7 @@
     "rating+": "...Rating (ascending)",
     "rating-": "...Rating (descending)",
     "status+": "...Status (ascending)",
-    "status-": "...Status (descending)",
-    "count+": "...Count (ascending)",
-    "count-": "...Count (descending)",
-    "time+": "...Time (ascending)",
-    "time-": "...Time (descending)"
+    "status-": "...Status (descending)"
   },
 
   "btn": {
@@ -235,7 +233,13 @@
     "trueSize": "True Size",
     "center": "on Center",
     "scaleUp": "Scale Up",
-    "scaleDown": "Scale Down"
+    "scaleDown": "Scale Down",
+    "count-": "Count ▼",
+    "count+": "Count ▲",
+    "time-": "Time ▼",
+    "time+": "Time ▲",
+    "createdAt-": "Creation date ▼",
+    "createdAt+": "Creation date ▲"
   },
 
   "pagination": {
