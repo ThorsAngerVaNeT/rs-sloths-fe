@@ -19,7 +19,31 @@
             </div>
             <div class="sloth-info__property property-center">
               <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }}</label>
-              <p id="rating" class="sloth-info__text">{{ slothInfo.rating }}⭐</p>
+              <p id="rating" class="sloth-info__text sloth-info__text_rate">
+                <span v-show="slothInfo.rating === 0" class="sloth-info__text__main">0</span>
+                <img
+                  v-for="item in Math.floor(slothInfo.rating) || 0"
+                  :key="item"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="sloth-info__text__sloth"
+                  :title="slothInfo.rating || 0"
+                />
+                <img
+                  v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="sloth-info__text__sloth"
+                  :title="slothInfo.rating || 0"
+                  :style="{
+                    height: '20px',
+                    width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
+                    overflowX: 'hidden',
+                    objectFit: 'cover',
+                    objectPosition: 'left center',
+                  }"
+                />
+              </p>
             </div>
             <div class="sloth-info__property property-center">
               <label for="createdAt" class="sloth-info__label">{{ $t('catalog.createdAt') }} </label>
@@ -27,16 +51,30 @@
             </div>
           </div>
 
-          <div v-else class="sloth-info__props">
+          <form v-else class="sloth-info__props" ref="slothForm">
             <div class="sloth-info__sloth">
               <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
-              <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
+              <input
+                type="file"
+                id="file"
+                class="sloth-info__file"
+                accept="image/*"
+                required
+                ref="uploadBtn"
+                @change="uploadImage"
+              />
               <img v-show="isNew" class="sloth-info__img" :src="preview" alt="preview" />
               <img v-show="!isNew" class="sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
             </div>
             <div class="sloth-info__property">
               <label for="caption" class="sloth-info__label">{{ $t('catalog.caption') }} </label>
-              <input type="text" id="caption" class="sloth-info__input input-text" v-model="slothInfo.caption" />
+              <input
+                type="text"
+                id="caption"
+                class="sloth-info__input input-text"
+                required
+                v-model="slothInfo.caption"
+              />
             </div>
             <div class="sloth-info__property">
               <label for="description" class="sloth-info__label">{{ $t('catalog.description') }} </label>
@@ -44,6 +82,7 @@
                 rows="3"
                 id="description"
                 class="sloth-info__input input-text"
+                required
                 v-model="slothInfo.description"
               ></textarea>
             </div>
@@ -53,13 +92,37 @@
             </div>
             <div v-show="!isNew" class="sloth-info__property">
               <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }} </label>
-              <p id="rating" class="sloth-info__text">{{ slothInfo.rating }}⭐</p>
+              <p id="rating" class="sloth-info__text sloth-info__text_rate">
+                <span v-show="slothInfo.rating === 0" class="sloth-info__text__main">0</span>
+                <img
+                  v-for="item in Math.floor(slothInfo.rating) || 0"
+                  :key="item"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="sloth-info__text__sloth"
+                  :title="slothInfo.rating || 0"
+                />
+                <img
+                  v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="sloth-info__text__sloth"
+                  :title="slothInfo.rating || 0"
+                  :style="{
+                    height: '20px',
+                    width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
+                    overflowX: 'hidden',
+                    objectFit: 'cover',
+                    objectPosition: 'left center',
+                  }"
+                />
+              </p>
             </div>
             <div v-show="!isNew" class="sloth-info__property">
               <label for="createdAt" class="sloth-info__label">{{ $t('catalog.createdAt') }} </label>
               <p id="createdAt" class="sloth-info__text">{{ new Date(slothInfo.createdAt).toLocaleDateString() }}</p>
             </div>
-          </div>
+          </form>
         </div>
       </template>
 
@@ -143,41 +206,38 @@ export default defineComponent({
 
   methods: {
     saveSloth() {
-      if (this.modalEvents === ModalEvents.new) {
-        if (!this.newFile.name) {
-          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-file')}`);
-          return;
-        }
-        if (!this.slothInfo.caption) {
-          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-caption')}`);
-          return;
-        }
-        if (!this.slothInfo.description) {
-          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-description')}`);
-          return;
-        }
+      if (this.$refs.slothForm instanceof HTMLFormElement) {
+        if (this.$refs.slothForm.checkValidity()) {
+          if (this.modalEvents === ModalEvents.new) {
+            if (!this.newFile.name) {
+              showAlertModal('modal.header.error', `${this.$t('modal.body.empty-file')}`);
+              return;
+            }
+            if (this.tags) {
+              this.slothInfo.tags = this.tags
+                .trim()
+                .split(' ')
+                .map((el) => {
+                  return { value: el };
+                });
 
-        if (this.tags) {
-          this.slothInfo.tags = this.tags
-            .trim()
-            .split(' ')
-            .map((el) => {
-              return { value: el };
-            });
+              this.tags = '';
+            }
 
-          this.tags = '';
-        }
+            this.$emit('createSloth', this.slothInfo, this.newFile);
+            this.closeModal();
+          } else if (this.modalEvents === ModalEvents.edit) {
+            if (this.newFile.name) {
+              this.$emit('updSlothImage', this.slothInfo, this.newFile);
+            } else {
+              this.$emit('updSloth', this.slothInfo);
+            }
 
-        this.$emit('createSloth', this.slothInfo, this.newFile);
-        this.closeModal();
-      } else if (this.modalEvents === ModalEvents.edit) {
-        if (this.newFile.name) {
-          this.$emit('updSlothImage', this.slothInfo, this.newFile);
+            this.closeModal();
+          }
         } else {
-          this.$emit('updSloth', this.slothInfo);
+          this.$refs.slothForm.reportValidity();
         }
-
-        this.closeModal();
       }
     },
 
@@ -234,8 +294,9 @@ export default defineComponent({
   align-items: center;
 }
 
-input[type='file'] {
-  display: none;
+.sloth-info__file {
+  opacity: 0;
+  height: 1px;
 }
 
 .sloth-info__img {
@@ -247,7 +308,20 @@ input[type='file'] {
   white-space: pre-wrap;
 }
 
+.sloth-info__text_rate {
+  display: flex;
+  align-items: center;
+}
+
 .sloth-info__input {
   width: 30rem !important;
+}
+
+.sloth-info__text__main {
+  font-size: 2rem;
+}
+
+.sloth-info__text__sloth {
+  height: 2rem;
 }
 </style>

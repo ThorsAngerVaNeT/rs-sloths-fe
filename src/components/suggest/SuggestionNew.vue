@@ -1,10 +1,10 @@
 <template>
   <div class="suggest-new">
     <h3 class="suggest-new__title">{{ $t('suggest.new') }}</h3>
-    <form @submit.prevent="handleSubmit" class="suggest-new__form form">
+    <form @submit.prevent="handleSubmit" class="suggest-new__form form" ref="suggestionForm">
       <div class="form__block form__block_1">
-        <input class="form__file" type="file" name="upload-file" id="drop" @change="handleUploadChange" />
-        <label for="drop" class="form__drop" @drop="handleDrop" @dragover="handleDrag">
+        <input class="form__file" type="file" accept="image/*" name="file" id="file" @change="handleUploadChange" />
+        <label for="file" class="form__drop" @drop="handleDrop" @dragover="handleDrag">
           <img
             class="form__img"
             ref="img"
@@ -14,13 +14,14 @@
         </label>
       </div>
       <div class="form__block form__block_2">
-        <label for="descr" class="form__label">{{ $t('suggest.description') }}</label>
+        <label for="description" class="form__label">{{ $t('suggest.description') }}</label>
         <textarea
           class="form__input form__textarea"
           v-model="suggest.description"
           :placeholder="$t('suggest.placeholder')"
-          id="descr"
+          id="description"
           autocomplete="off"
+          required
         />
       </div>
       <div class="form__block form__block_3">
@@ -67,13 +68,19 @@ export default defineComponent({
 
   methods: {
     handleSubmit() {
-      this.$emit('createSuggest', this.suggest, this.image);
-      this.suggest = {} as Suggestion;
-      this.image = {} as File;
+      if (this.$refs.suggestionForm instanceof HTMLFormElement) {
+        if (this.$refs.suggestionForm.checkValidity()) {
+          this.$emit('createSuggest', this.suggest, this.image);
+          this.suggest = {} as Suggestion;
+          this.image = {} as File;
 
-      if (this.$refs.img instanceof HTMLImageElement) {
-        const imgEl = this.$refs.img;
-        imgEl.src = `/img/suggest/upload-${this.$i18n.locale}-${this.currTheme}.svg`;
+          if (this.$refs.img instanceof HTMLImageElement) {
+            const imgEl = this.$refs.img;
+            imgEl.src = `/img/suggest/upload-${this.$i18n.locale}-${this.currTheme}.svg`;
+          }
+        } else {
+          this.$refs.suggestionForm.reportValidity();
+        }
       }
     },
 
@@ -93,7 +100,7 @@ export default defineComponent({
     },
 
     handleUploadChange(ev: Event) {
-      if (ev.target instanceof HTMLFormElement) {
+      if (ev.target instanceof HTMLInputElement && ev?.target?.files) {
         const file: File = ev.target.files[0];
         this.renderFile(file);
       }
