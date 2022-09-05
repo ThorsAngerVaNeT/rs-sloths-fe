@@ -27,7 +27,7 @@
             </div>
           </div>
 
-          <div v-else class="sloth-info__props">
+          <form v-else class="sloth-info__props" ref="slothForm">
             <div class="sloth-info__sloth">
               <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
               <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
@@ -36,7 +36,13 @@
             </div>
             <div class="sloth-info__property">
               <label for="caption" class="sloth-info__label">{{ $t('catalog.caption') }} </label>
-              <input type="text" id="caption" class="sloth-info__input input-text" v-model="slothInfo.caption" />
+              <input
+                type="text"
+                id="caption"
+                class="sloth-info__input input-text"
+                required
+                v-model="slothInfo.caption"
+              />
             </div>
             <div class="sloth-info__property">
               <label for="description" class="sloth-info__label">{{ $t('catalog.description') }} </label>
@@ -44,6 +50,7 @@
                 rows="3"
                 id="description"
                 class="sloth-info__input input-text"
+                required
                 v-model="slothInfo.description"
               ></textarea>
             </div>
@@ -59,7 +66,7 @@
               <label for="createdAt" class="sloth-info__label">{{ $t('catalog.createdAt') }} </label>
               <p id="createdAt" class="sloth-info__text">{{ new Date(slothInfo.createdAt).toLocaleDateString() }}</p>
             </div>
-          </div>
+          </form>
         </div>
       </template>
 
@@ -143,41 +150,38 @@ export default defineComponent({
 
   methods: {
     saveSloth() {
-      if (this.modalEvents === ModalEvents.new) {
-        if (!this.newFile.name) {
-          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-file')}`);
-          return;
-        }
-        if (!this.slothInfo.caption) {
-          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-caption')}`);
-          return;
-        }
-        if (!this.slothInfo.description) {
-          showAlertModal('modal.header.error', `${this.$t('modal.body.empty-description')}`);
-          return;
-        }
+      if (this.$refs.slothForm instanceof HTMLFormElement) {
+        if (this.$refs.slothForm.checkValidity()) {
+          if (this.modalEvents === ModalEvents.new) {
+            if (!this.newFile.name) {
+              showAlertModal('modal.header.error', `${this.$t('modal.body.empty-file')}`);
+              return;
+            }
+            if (this.tags) {
+              this.slothInfo.tags = this.tags
+                .trim()
+                .split(' ')
+                .map((el) => {
+                  return { value: el };
+                });
 
-        if (this.tags) {
-          this.slothInfo.tags = this.tags
-            .trim()
-            .split(' ')
-            .map((el) => {
-              return { value: el };
-            });
+              this.tags = '';
+            }
 
-          this.tags = '';
-        }
+            this.$emit('createSloth', this.slothInfo, this.newFile);
+            this.closeModal();
+          } else if (this.modalEvents === ModalEvents.edit) {
+            if (this.newFile.name) {
+              this.$emit('updSlothImage', this.slothInfo, this.newFile);
+            } else {
+              this.$emit('updSloth', this.slothInfo);
+            }
 
-        this.$emit('createSloth', this.slothInfo, this.newFile);
-        this.closeModal();
-      } else if (this.modalEvents === ModalEvents.edit) {
-        if (this.newFile.name) {
-          this.$emit('updSlothImage', this.slothInfo, this.newFile);
+            this.closeModal();
+          }
         } else {
-          this.$emit('updSloth', this.slothInfo);
+          this.$refs.slothForm.reportValidity();
         }
-
-        this.closeModal();
       }
     },
 
