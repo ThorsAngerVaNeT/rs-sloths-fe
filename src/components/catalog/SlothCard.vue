@@ -18,7 +18,29 @@
       </div>
       <div class="admin-sloth-info__props">
         <p class="sloth-info__property">{{ slothInfo.caption }}</p>
-        <p class="sloth-info__property">{{ slothInfo.rating }}⭐</p>
+        <p v-show="slothInfo.rating === 0" class="sloth-info__text__main">0</p>
+        <p class="sloth-info__property">
+          <img
+            v-for="item in Math.floor(slothInfo.rating) || 0"
+            :key="item"
+            src="/img/catalog/sloths.svg"
+            alt="sloths"
+            class="sloth-info__text__sloth"
+          />
+          <img
+            v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
+            src="/img/catalog/sloths.svg"
+            alt="sloths"
+            class="sloth-info__text__sloth"
+            :style="{
+              height: '20px',
+              width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
+              overflowX: 'hidden',
+              objectFit: 'cover',
+              objectPosition: 'left center',
+            }"
+          />
+        </p>
         <p class="sloth-info__property">
           {{ new Date(slothInfo.createdAt).toLocaleDateString() }}
         </p>
@@ -381,6 +403,10 @@ export default defineComponent({
 
 .sloth-info__user-other {
   align-self: end;
+}
+
+.sloth-info__text__sloth {
+  height: 2rem;
 }
 
 @media (max-width: 1000px) {

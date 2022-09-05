@@ -21,8 +21,9 @@
               <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }}</label>
               <p id="rating" class="sloth-info__text sloth-info__text_rate">
                 <span v-show="slothInfo.rating === 0" class="sloth-info__text__main">0</span>
+                <!-- {{ handleUserRate(slothInfo.rating, 'first') }} -->
                 <img
-                  v-for="item in Math.floor(slothInfo.rating)"
+                  v-for="item in Math.floor(slothInfo.rating) || 0"
                   :key="item"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
@@ -77,8 +78,9 @@
               <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }} </label>
               <p id="rating" class="sloth-info__text sloth-info__text_rate">
                 <span v-show="slothInfo.rating === 0" class="sloth-info__text__main">0</span>
+                {{ handleUserRate(slothInfo.rating, 'second') }}
                 <img
-                  v-for="item in Math.floor(slothInfo.rating)"
+                  v-for="item in Math.floor(slothInfo.rating) || 0"
                   :key="item"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
@@ -90,8 +92,8 @@
                   alt="sloths"
                   class="sloth-info__text__sloth"
                   :style="{
-                    height: '40px',
-                    width: 44 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
+                    height: '20px',
+                    width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
                     overflowX: 'hidden',
                     objectFit: 'cover',
                     objectPosition: 'left center',
@@ -245,6 +247,10 @@ export default defineComponent({
 
       const src = URL.createObjectURL(this.newFile);
       this.preview = src;
+    },
+
+    handleUserRate(rate, str) {
+      console.log('rate: ', rate, typeof rate, str);
     },
   },
 });
