@@ -25,14 +25,14 @@
             src="/img/catalog/sloths.svg"
             alt="sloths"
             class="suggest-info__text__sloth"
-            :title="suggestInfo.rating || 0"
+            :title="`${suggestInfo.rating || 0}`"
           />
           <img
             v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
             src="/img/catalog/sloths.svg"
             alt="sloths"
             class="suggest-info__text__sloth"
-            :title="suggestInfo.rating || 0"
+            :title="`${suggestInfo.rating || 0}`"
             :style="{
               height: '20px',
               width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
@@ -47,7 +47,7 @@
         </p>
       </div>
     </div>
-    <div v-if="isSuggest" class="suggest-suggest-info__inner">
+    <div v-if="isSuggest || isProfile" class="suggest-suggest-info__inner">
       <div class="suggest-suggest-info__suggest">
         <img class="suggest-suggest-info__img" :src="getImage" alt="suggestion" />
       </div>
@@ -66,14 +66,14 @@
                 src="/img/catalog/sloths.svg"
                 alt="sloths"
                 class="user-rate__sloth"
-                :title="suggestInfo.rating"
+                :title="`${suggestInfo.rating}`"
               />
               <img
                 v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
                 src="/img/catalog/sloths.svg"
                 alt="sloths"
                 class="user-rate__sloth"
-                :title="suggestInfo.rating"
+                :title="`${suggestInfo.rating}`"
                 :style="{
                   height: '40px',
                   width: 44 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
@@ -84,7 +84,7 @@
               />
             </p>
           </div>
-          <div class="suggest-info__property suggest-info__property_rate">
+          <div class="suggest-info__property suggest-info__property_rate" v-show="isSuggest">
             <label for="range" class="suggest-info__label">{{ $t('rate.your') }}</label>
             <select
               class="suggest-info__select"
@@ -124,7 +124,7 @@ import { defineComponent, type PropType } from 'vue';
 import type { Suggestion } from '@/common/types';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
-import { DEFAULT_USER_AVATAR, RATING_OPTIONS } from '@/common/const';
+import { BASE, DEFAULT_USER_AVATAR, RATING_OPTIONS } from '@/common/const';
 
 export default defineComponent({
   name: 'SuggestionCard',
@@ -162,8 +162,12 @@ export default defineComponent({
       return this.$route.name === 'suggest';
     },
 
+    isProfile() {
+      return this.$route.name === 'profile';
+    },
+
     getImage() {
-      return this.suggestInfo.image_url || DEFAULT_USER_AVATAR;
+      return this.suggestInfo.image_url ? `${BASE}/${this.suggestInfo.image_url}` : DEFAULT_USER_AVATAR;
     },
   },
 
