@@ -34,6 +34,7 @@
           <div class="suggest-info__property">
             <label for="range" class="suggest-info__label">{{ suggestInfo.rating }}⭐</label>
             <input
+              v-show="isSuggest"
               type="range"
               id="range"
               min="0"
