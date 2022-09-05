@@ -17,7 +17,6 @@
       <div class="admin-suggest-info__props">
         <p class="suggest-info__property cut-text">{{ suggestInfo.description }}</p>
         <p class="suggest-info__property">{{ suggestInfo.status }}</p>
-        <!-- <p class="suggest-info__property">{{ handleUserRate(suggestInfo.rating) }}⭐</p> -->
         <p v-show="suggestInfo.rating === 0" class="suggest-info__property">0</p>
         <p class="suggest-info__property">
           <img
@@ -26,12 +25,14 @@
             src="/img/catalog/sloths.svg"
             alt="sloths"
             class="suggest-info__text__sloth"
+            :title="suggestInfo.rating || 0"
           />
           <img
             v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
             src="/img/catalog/sloths.svg"
             alt="sloths"
             class="suggest-info__text__sloth"
+            :title="suggestInfo.rating || 0"
             :style="{
               height: '20px',
               width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
@@ -66,12 +67,14 @@
                 src="/img/catalog/sloths.svg"
                 alt="sloths"
                 class="user-rate__sloth"
+                :title="suggestInfo.rating"
               />
               <img
                 v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
                 src="/img/catalog/sloths.svg"
                 alt="sloths"
                 class="user-rate__sloth"
+                :title="suggestInfo.rating"
                 :style="{
                   height: '40px',
                   width: 44 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',

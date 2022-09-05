@@ -26,12 +26,14 @@
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="suggest-info__text__sloth"
+                  :title="suggestInfo.rating || 0"
                 />
                 <img
                   v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="suggest-info__text__sloth"
+                  :title="suggestInfo.rating || 0"
                   :style="{
                     height: '20px',
                     width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
@@ -90,12 +92,14 @@
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="suggest-info__text__sloth"
+                  :title="suggestInfo.rating || 0"
                 />
                 <img
                   v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="suggest-info__text__sloth"
+                  :title="suggestInfo.rating || 0"
                   :style="{
                     height: '20px',
                     width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
