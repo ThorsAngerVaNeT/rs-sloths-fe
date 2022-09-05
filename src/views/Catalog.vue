@@ -440,6 +440,13 @@ export default defineComponent({
   flex-direction: column;
 }
 
+.catalog__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--gap-2);
+}
+
 .catalog__aside {
   padding: 1rem;
 }
@@ -457,12 +464,11 @@ export default defineComponent({
 }
 
 .catalog__list {
-  margin: 0.5em 0;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: var(--gap);
+  gap: 1rem;
 }
 
 .catalog__download {
