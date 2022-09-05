@@ -2,17 +2,23 @@
   <div class="game-info">
     <div class="game-info__title">{{ isAdmin ? $t('results.all') : $t('results.user') }}</div>
     <div class="game-info__wrap">
-      <div class="game-info__level" v-for="(res, index) in gameResults" :key="index">
+      <div
+        class="game-info__level"
+        :class="isAdmin ? 'game-info__level_admin' : ''"
+        v-for="(res, index) in gameResults"
+        :key="index"
+      >
         <h4 class="result__level__title">{{ $t(`memory.${res.level}`) }}</h4>
         <div class="game-info__result" v-for="(r, i) in res.results" :key="i">
           <span class="result__index">{{ `${i + 1}.` }}</span>
+          <span class="result__user" v-show="isAdmin">{{ `${r.user.name}` }}</span>
           <span class="result__steps">{{ `${r.count} ${getStepsText(r.count)}` }}</span>
           <span class="result__time">{{ `${r.time / 1000} s` }}</span>
         </div>
       </div>
     </div>
-    <div class="game-info__again">
-      <div class="game-info__title">{{ isAdmin ? '' : $t('results.again') }}</div>
+    <div class="game-info__again" v-show="!isAdmin">
+      <div class="game-info__title">{{ $t('results.again') }}</div>
       <home-category category="memory" @click="$router.push({ name: 'memory' })"></home-category>
     </div>
   </div>
@@ -128,6 +134,10 @@ export default defineComponent({
   transition: 0.5s ease;
 }
 
+.game-info__level_admin {
+  width: 37rem;
+}
+
 .result__level__title {
   text-align: center;
   padding: 1rem;
@@ -146,6 +156,13 @@ export default defineComponent({
 
 .result__index {
   width: 3rem;
+}
+
+.result__user {
+  width: 11rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .result__steps {

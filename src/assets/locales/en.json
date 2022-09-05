@@ -79,7 +79,10 @@
     "result": "Your result:",
     "guess": "Guess image",
     "guesses": "guesses",
-    "next": "Send an answer"
+    "next": "Send an answer",
+    "points1": "point",
+    "points2": "points",
+    "pointsN": "points"
   },
 
   "memory": {
