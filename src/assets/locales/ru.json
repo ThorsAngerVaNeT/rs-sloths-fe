@@ -250,10 +250,10 @@
 
   "pagination": {
     "perPage": "Элементов на странице",
-    "next": "❯",
-    "prev": "❮",
-    "top": "❮❮",
-    "bottom": "❯❯",
+    "next": "❯ (Page Down)",
+    "prev": "❮ (Page Up)",
+    "top": "❮❮ (Home)",
+    "bottom": "❯❯ (End)",
     "count": "Всего найдено"
   },
 

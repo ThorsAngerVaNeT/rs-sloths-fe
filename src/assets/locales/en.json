@@ -240,10 +240,10 @@
 
   "pagination": {
     "perPage": "Items per page",
-    "next": "❯",
-    "prev": "❮",
-    "top": "❮❮",
-    "bottom": "❯❯",
+    "next": "❯ (Page Down)",
+    "prev": "❮ (Page Up)",
+    "top": "❮❮ (Home)",
+    "bottom": "❯❯ (End)",
     "count": "Total count"
   },
 

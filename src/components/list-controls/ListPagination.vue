@@ -17,12 +17,16 @@
         :text="$t('pagination.top')"
         className="btn btn-pagination"
         @click="top"
+        v-shortkey="['home']"
+        @shortkey="top"
         :disabled="checkTop"
       ></custom-btn>
       <custom-btn
         :text="$t('pagination.prev')"
         className="btn btn-pagination"
         @click="prev"
+        v-shortkey="['pageup']"
+        @shortkey="prev"
         :disabled="checkTop"
       ></custom-btn>
 
@@ -34,12 +38,16 @@
         :text="$t('pagination.next')"
         className="btn btn-pagination"
         @click="next"
+        v-shortkey="['pagedown']"
+        @shortkey="next"
         :disabled="checkBottom"
       ></custom-btn>
       <custom-btn
         :text="$t('pagination.bottom')"
         className="btn btn-pagination"
         @click="bottom"
+        v-shortkey="['end']"
+        @shortkey="bottom"
         :disabled="checkBottom"
       ></custom-btn>
     </div>
@@ -106,23 +114,31 @@ const paginationList = defineComponent({
     },
 
     top() {
-      this.currPage = 1;
-      this.getPage();
+      if (!this.checkTop) {
+        this.currPage = 1;
+        this.getPage();
+      }
     },
 
     next() {
-      if (this.currPage < this.pages) this.currPage += 1;
-      this.getPage();
+      if (!this.checkBottom) {
+        if (this.currPage < this.pages) this.currPage += 1;
+        this.getPage();
+      }
     },
 
     prev() {
-      if (this.currPage > 1) this.currPage -= 1;
-      this.getPage();
+      if (!this.checkTop) {
+        if (this.currPage > 1) this.currPage -= 1;
+        this.getPage();
+      }
     },
 
     bottom() {
-      this.currPage = this.pages;
-      this.getPage();
+      if (!this.checkBottom) {
+        this.currPage = this.pages;
+        this.getPage();
+      }
     },
   },
 });
