@@ -27,14 +27,14 @@
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
-                  :title="`${slothInfo.rating || 0}`"
+                  :title="`${(slothInfo.rating || 0).toFixed(1)}`"
                 />
                 <img
                   v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
-                  :title="`${slothInfo.rating || 0}`"
+                  :title="`${(slothInfo.rating || 0).toFixed(1)}`"
                   :style="{
                     height: '20px',
                     width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
@@ -100,14 +100,14 @@
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
-                  :title="`${slothInfo.rating || 0}`"
+                  :title="`${(slothInfo.rating || 0).toFixed(1)}`"
                 />
                 <img
                   v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
-                  :title="`${slothInfo.rating || 0}`"
+                  :title="`${(slothInfo.rating || 0).toFixed(1)}`"
                   :style="{
                     height: '20px',
                     width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',

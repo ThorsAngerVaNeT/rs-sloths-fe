@@ -25,14 +25,14 @@
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="suggest-info__text__sloth"
-                  :title="suggestInfo.rating || 0"
+                  :title="`${(suggestInfo.rating || 0).toFixed(1)}`"
                 />
                 <img
                   v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="suggest-info__text__sloth"
-                  :title="suggestInfo.rating || 0"
+                  :title="`${(suggestInfo.rating || 0).toFixed(1)}`"
                   :style="{
                     height: '20px',
                     width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
@@ -89,14 +89,14 @@
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="suggest-info__text__sloth"
-                  :title="suggestInfo.rating || 0"
+                  :title="`${(suggestInfo.rating || 0).toFixed(1)}`"
                 />
                 <img
                   v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="suggest-info__text__sloth"
-                  :title="suggestInfo.rating || 0"
+                  :title="`${(suggestInfo.rating || 0).toFixed(1)}`"
                   :style="{
                     height: '20px',
                     width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
@@ -141,7 +141,7 @@ import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import useSuggestInfo from '@/stores/suggestion-info';
 import { ModalEvents } from '@/common/enums/modal-events';
 import useAlertModal from '@/stores/alert-modal';
-import { CATALOG_SLOTH_PREVIEW, DEFAULT_USER_AVATAR } from '@/common/const';
+import { BASE, CATALOG_SLOTH_PREVIEW, DEFAULT_USER_AVATAR } from '@/common/const';
 import { SuggestionStatus } from '@/common/enums/suggestion-status';
 
 const { suggestionInfo } = storeToRefs(useSuggestInfo());
@@ -197,8 +197,7 @@ export default defineComponent({
     },
 
     getImage(): string {
-      // if (this.newFile.name) return this.preview;
-      return this.suggestInfo.image_url || DEFAULT_USER_AVATAR;
+      return this.suggestInfo.image_url ? `${BASE}/${this.suggestInfo.image_url}` : DEFAULT_USER_AVATAR;
     },
   },
 
