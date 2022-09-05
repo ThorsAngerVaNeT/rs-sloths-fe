@@ -15,6 +15,7 @@
     <div class="pagination__btns">
       <custom-btn
         :text="$t('pagination.top')"
+        :title="$t('pagination.topTitle')"
         className="btn btn-pagination"
         @click="top"
         v-shortkey="['home']"
@@ -23,6 +24,7 @@
       ></custom-btn>
       <custom-btn
         :text="$t('pagination.prev')"
+        :title="$t('pagination.prevTitle')"
         className="btn btn-pagination"
         @click="prev"
         v-shortkey="['pageup']"
@@ -36,6 +38,7 @@
 
       <custom-btn
         :text="$t('pagination.next')"
+        :title="$t('pagination.nextTitle')"
         className="btn btn-pagination"
         @click="next"
         v-shortkey="['pagedown']"
@@ -44,6 +47,7 @@
       ></custom-btn>
       <custom-btn
         :text="$t('pagination.bottom')"
+        :title="$t('pagination.bottomTitle')"
         className="btn btn-pagination"
         @click="bottom"
         v-shortkey="['end']"
