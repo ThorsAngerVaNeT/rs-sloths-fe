@@ -139,6 +139,9 @@ export const GAME_RESULT_SORTING: SelectOptions[] = [
 // Pagination
 export const PAGINATION_OPTIONS: number[] = [10, 15, 20, 25, 50, 100];
 
+// Rating
+export const RATING_OPTIONS: number[] = [0, 1, 2, 3, 4, 5];
+
 // Users
 export const DEFAULT_USER_AVATAR = './img/profile/default.svg';
 export const AUTHORIZATION_IMG = './github.svg';

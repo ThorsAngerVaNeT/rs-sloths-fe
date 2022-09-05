@@ -460,6 +460,7 @@ export default defineComponent({
   margin: 0.5em 0;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   flex-wrap: wrap;
   gap: var(--gap);
 }

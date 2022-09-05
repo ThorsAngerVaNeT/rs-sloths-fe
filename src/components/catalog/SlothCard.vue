@@ -38,10 +38,19 @@
       ></custom-btn>
       <div>
         <div class="catalog-sloth-info__props">
-          <p class="sloth-info__property">{{ slothInfo.caption }}</p>
-          <div class="sloth-info__property">
-            <label for="range" class="sloth-info__label">{{ slothInfo.rating }}⭐</label>
-            <input
+          <p class="sloth-info__property sloth-info__property_text">{{ slothInfo.caption }}</p>
+          <div class="sloth-info__property sloth-info__property_rating">
+            <p class="sloth-info__rating">User Rating:</p>
+            <!-- <p class="sloth-info__rating">{{ handleUserRate(slothInfo.rating) }}⭐</p> -->
+            <p class="sloth-info__user-rate">
+              <span class="user-rate__main">{{ slothInfo.rating }}</span>
+              <img src="/img/catalog/sloths.svg" alt="sloths" class="user-rate__sloth" />
+              <span class="user-rate__other">out of 5</span>
+            </p>
+          </div>
+          <div class="sloth-info__property sloth-info__property_rate">
+            <label for="range" class="sloth-info__label">Your Rate:</label>
+            <!-- <input
               type="range"
               id="range"
               min="0"
@@ -49,7 +58,16 @@
               step="1"
               v-model="newRating"
               @change="$emit('editRating', slothInfo, +newRating)"
-            />
+            /> -->
+            <select
+              class="sloth-info__select"
+              name="range"
+              id="range"
+              v-model="newRating"
+              @change="$emit('editRating', slothInfo, +newRating)"
+            >
+              <option v-for="value in rateValues" :key="value" :value="value">{{ value }}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -91,7 +109,7 @@ import { defineComponent, type PropType } from 'vue';
 import type { Sloth } from '@/common/types';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
-import { BASE } from '@/common/const';
+import { BASE, RATING_OPTIONS } from '@/common/const';
 
 export default defineComponent({
   name: 'SlothCard',
@@ -105,6 +123,7 @@ export default defineComponent({
     return {
       newRating: this.slothInfo.ratings[0]?.rate ?? 0,
       isApproveShow: false,
+      rateValues: RATING_OPTIONS,
     };
   },
 
@@ -149,6 +168,9 @@ export default defineComponent({
     closeModal() {
       this.isApproveShow = false;
     },
+    handleUserRate(rate) {
+      console.log('rate: ', rate, typeof rate);
+    },
   },
 });
 </script>
@@ -157,22 +179,20 @@ export default defineComponent({
 .catalog-sloth-info,
 .admin-sloth-info {
   overflow: hidden;
-
   background-color: var(--color-background-soft);
   border: 1px solid gray;
 }
+
 .admin-sloth-info {
   padding: 0.5rem;
   width: calc(50% - var(--gap));
-
   border-radius: 0.5rem;
 }
 
 .catalog-sloth-info {
   position: relative;
   padding: 1rem;
-  width: 20rem;
-
+  width: 30rem;
   border-radius: 1rem;
 }
 
@@ -191,11 +211,11 @@ export default defineComponent({
 
 .catalog-sloth-info__inner {
   flex-direction: column;
+  justify-content: center;
 }
 
 .catalog-sloth-info__sloth {
   position: relative;
-
   overflow: hidden;
 }
 
@@ -206,8 +226,8 @@ export default defineComponent({
 }
 
 .catalog-sloth-info__img {
-  width: calc(20rem - 2rem);
-  height: calc(20rem - 2rem);
+  width: 100%;
+  height: 25rem;
   object-fit: contain;
 }
 
@@ -222,11 +242,20 @@ export default defineComponent({
 }
 
 .catalog-sloth-info__props {
+  text-align: center;
   align-items: center;
+  gap: var(--gap);
 }
 
 .sloth-info__property {
-  padding: 0.25rem;
+  font-size: 2rem;
+}
+
+.sloth-info__property_text {
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sloth-info__btn {
@@ -246,10 +275,8 @@ export default defineComponent({
   top: 0;
   left: 0;
   width: 100%;
-
   transform: translateY(-500px);
   transition: transform 0.3s;
-
   justify-content: center;
   z-index: 10;
 }
@@ -261,10 +288,8 @@ export default defineComponent({
 .sloth-info__tag {
   padding: 0.5rem 0.7rem;
   cursor: default;
-
   color: inherit;
   background-color: var(--color-background);
-
   border-radius: 1rem;
   border: 1px solid gray;
 }
@@ -302,6 +327,53 @@ export default defineComponent({
 
 .download-sloth-info__img {
   height: 6rem;
+}
+
+.sloth-info__property_rating {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sloth-info__user-rate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sloth-info__rating {
+  text-transform: uppercase;
+}
+
+.user-rate__main {
+  font-size: 3.6rem;
+  font-weight: 700;
+}
+
+.user-rate__sloth {
+  height: 4rem;
+}
+
+.user-rate__other {
+  font-size: 1.8rem;
+  align-self: end;
+}
+
+.sloth-info__property_rate {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.sloth-info__select {
+  padding: 0.5rem;
+  border: 0.2rem solid var(--color-border-inverse-soft);
+  background-color: var(--color-background);
+  color: inherit;
+  width: 5rem;
+  border-radius: 1rem;
+  transition: 0.5s ease;
 }
 
 @media (max-width: 1000px) {
