@@ -27,14 +27,14 @@
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
-                  :title="slothInfo.rating || 0"
+                  :title="`${slothInfo.rating || 0}`"
                 />
                 <img
                   v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
-                  :title="slothInfo.rating || 0"
+                  :title="`${slothInfo.rating || 0}`"
                   :style="{
                     height: '20px',
                     width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
@@ -59,7 +59,7 @@
                 id="file"
                 class="sloth-info__file"
                 accept="image/*"
-                required
+                :required="isNew"
                 ref="uploadBtn"
                 @change="uploadImage"
               />
@@ -100,14 +100,14 @@
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
-                  :title="slothInfo.rating || 0"
+                  :title="`${slothInfo.rating || 0}`"
                 />
                 <img
                   v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
-                  :title="slothInfo.rating || 0"
+                  :title="`${slothInfo.rating || 0}`"
                   :style="{
                     height: '20px',
                     width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
