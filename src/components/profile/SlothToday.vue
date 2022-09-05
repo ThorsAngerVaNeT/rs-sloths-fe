@@ -1,6 +1,6 @@
 <template>
   <div class="game-info">
-    <div class="game-info__title">Your Sloth Today</div>
+    <div class="game-info__title">{{ $t('profile.btn.sloth') }}</div>
     <div class="result">
       <div class="result__sloth">
         <img class="result__img" :src="slothUrl" :alt="caption" />
