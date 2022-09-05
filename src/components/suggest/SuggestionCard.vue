@@ -97,18 +97,6 @@
               <option v-for="value in rateValues" :key="value" :value="value">{{ value }}</option>
             </select>
           </div>
-          <!-- <div class="suggest-info__property">
-            <label for="range" class="suggest-info__label">{{ handleUserRate(suggestInfo.rating) }}⭐</label>
-            <input
-              type="range"
-              id="range"
-              min="0"
-              max="5"
-              step="1"
-              v-model="newRating"
-              @change="$emit('editRating', suggestInfo, +newRating)"
-            />
-          </div> -->
         </div>
       </div>
       <custom-btn
@@ -190,9 +178,6 @@ export default defineComponent({
     },
     closeModal() {
       this.isApproveShow = false;
-    },
-    handleUserRate(rate) {
-      console.log('rate: ', rate, typeof rate);
     },
   },
 });

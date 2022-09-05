@@ -204,9 +204,6 @@ export default defineComponent({
     closeModal() {
       this.isApproveShow = false;
     },
-    handleUserRate(rate) {
-      console.log('rate: ', rate, typeof rate);
-    },
   },
 });
 </script>

@@ -17,7 +17,6 @@
             </div>
             <div class="suggest-info__property property-center">
               <label for="rating" class="suggest-info__label">{{ $t('suggest.rating') }}</label>
-              <!-- <p id="rating" class="suggest-info__text">{{ suggestInfo.rating }}⭐</p> -->
               <p id="rating" class="suggest-info__text suggest-info__text_rate">
                 <span v-show="suggestInfo.rating === 0" class="suggest-info__text__main">0</span>
                 <img
@@ -82,10 +81,8 @@
             </div>
             <div v-show="!isNew" class="suggest-info__property">
               <label for="rating" class="suggest-info__label">{{ $t('suggest.rating') }} </label>
-              <!-- <p id="rating" class="suggest-info__text">{{ suggestInfo.rating }}⭐</p> -->
               <p id="rating" class="suggest-info__text suggest-info__text_rate">
                 <span v-show="suggestInfo.rating === 0" class="suggest-info__text__main">0</span>
-                {{ handleUserRate(suggestInfo.rating, 'second') }}
                 <img
                   v-for="item in Math.floor(suggestInfo.rating) || 0"
                   :key="item"
