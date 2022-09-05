@@ -21,7 +21,6 @@
               <label for="rating" class="sloth-info__label">{{ $t('catalog.rating') }}</label>
               <p id="rating" class="sloth-info__text sloth-info__text_rate">
                 <span v-show="slothInfo.rating === 0" class="sloth-info__text__main">0</span>
-                <!-- {{ handleUserRate(slothInfo.rating, 'first') }} -->
                 <img
                   v-for="item in Math.floor(slothInfo.rating) || 0"
                   :key="item"
