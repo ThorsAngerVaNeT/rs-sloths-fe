@@ -327,10 +327,26 @@ export default defineComponent({
       });
     },
 
-    showSlothInfoView(sloth: Sloth) {
-      this.modalEvents = ModalEvents.view;
-      setSlothInfo(sloth);
-      this.showSlothInfo();
+    async showSlothInfoView(sloth: Sloth) {
+      this.isLoad = true;
+      try {
+        const res = await service.getById(sloth.id);
+
+        if (!res.ok) throw Error(); // todo
+
+        const dataSloth = res.data;
+        const slothIndex = this.sloths.findIndex((el) => el.id === sloth.id);
+
+        if (slothIndex !== -1) this.sloths[slothIndex] = dataSloth;
+
+        this.modalEvents = ModalEvents.view;
+        setSlothInfo(dataSloth);
+        this.showSlothInfo();
+      } catch (error) {
+        errorHandler(error);
+      } finally {
+        this.isLoad = false;
+      }
     },
 
     showSlothInfoNew() {

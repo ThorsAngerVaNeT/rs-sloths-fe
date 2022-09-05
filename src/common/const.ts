@@ -144,7 +144,7 @@ export const RATING_OPTIONS: number[] = [0, 1, 2, 3, 4, 5];
 
 // Users
 export const DEFAULT_USER_AVATAR = './img/profile/default.svg';
-export const AUTHORIZATION_IMG = './github.svg';
+export const AUTHORIZATION_IMG = './img/github.svg';
 export const AUTHORIZATION_URL = `${BASE}/auth/github`;
 
 // Memory Game
@@ -174,7 +174,7 @@ export const GUESS_GAME_ID = '431b4880-0ac6-4082-ae9f-b34f5f9a84a6';
 export const GUESS_GAME_WINNER = './img/guess/winner3.svg';
 export const GUESS_GAME_WINNER_ALL = './img/guess/winner2.svg';
 
-export const CATALOG_SLOTH_PREVIEW = './preview.svg';
+export const CATALOG_SLOTH_PREVIEW = './img/preview.svg';
 
 export const GUESS_SLOTHS = [
   { caption: 'Error', img: './img/guess/painted/01.svg' },
