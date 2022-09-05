@@ -11,7 +11,14 @@
       :id="`locale-${locale}`"
     />
 
-    <label class="switcher__label" :for="`locale-${checkLocale}`" :class="`switcher__label_${checkLocale}`"></label>
+    <label
+      class="switcher__label"
+      :for="`locale-${checkLocale}`"
+      :class="`switcher__label_${checkLocale}`"
+      :title="$t('modal.header.switchers.locale')"
+      v-shortkey="['ctrl', '2']"
+      @shortkey="setLocaleValue(`${checkLocale}`)"
+    ></label>
   </div>
 </template>
 

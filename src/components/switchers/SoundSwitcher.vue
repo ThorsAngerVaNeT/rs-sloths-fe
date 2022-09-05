@@ -15,6 +15,9 @@
       class="sound-switcher__label"
       :for="`sound-${checkSound}`"
       :class="`sound-switcher__label_${currTheme}-${checkSound}`"
+      :title="$t('modal.header.switchers.sound')"
+      v-shortkey="['ctrl', '1']"
+      @shortkey="setSoundValue(`${checkSound}`)"
     ></label>
   </div>
 </template>
@@ -61,6 +64,7 @@ export default defineComponent({
 
     setSoundValue(sound: string): void {
       localStorage.setItem('rs-sloths-sound', sound);
+      this.currSound = sound;
       this.isAudioOn = sound === 'on';
     },
   },

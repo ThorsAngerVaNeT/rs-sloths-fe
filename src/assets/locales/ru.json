@@ -187,7 +187,12 @@
     "header": {
       "alert": "Предупреждение!",
       "error": "ОШИБКА!",
-      "authorization": "Пожалуйста, войдите через GitHub"
+      "authorization": "Пожалуйста, войдите через GitHub",
+      "switchers": {
+        "sound": "Вкл/выкл звук (Ctrl+1)",
+        "locale": "Сменить язык (Ctrl+2)",
+        "theme": "Сменить тему (Ctrl+3)"
+      }
     },
     "body": {
       "authorization": "Чтобы получить доступ к RS Sloths, вам необходимо войти в свою учетную запись GitHub.",
@@ -259,6 +264,10 @@
     "prev": "❮",
     "top": "❮❮",
     "bottom": "❯❯",
+    "nextTitle": "❯ (Page Down)",
+    "prevTitle": "❮ (Page Up)",
+    "topTitle": "❮❮ (Home)",
+    "bottomTitle": "❯❯ (End)",
     "count": "Всего найдено"
   },
 

@@ -177,7 +177,12 @@
     "header": {
       "alert": "Alert!",
       "error": "ERROR!",
-      "authorization": "Please login via GitHub"
+      "authorization": "Please login via GitHub",
+      "switchers": {
+        "sound": "Turn on/off sound (Ctrl+1)",
+        "locale": "Switch language (Ctrl+2)",
+        "theme": "Switch theme (Ctrl+3)"
+      }
     },
     "body": {
       "authorization": "In order to access the RS Sloths, you need to login with your GitHub account",
@@ -249,6 +254,10 @@
     "prev": "❮",
     "top": "❮❮",
     "bottom": "❯❯",
+    "nextTitle": "❯ (Page Down)",
+    "prevTitle": "❮ (Page Up)",
+    "topTitle": "❮❮ (Home)",
+    "bottomTitle": "❯❯ (End)",
     "count": "Total count"
   },
 
