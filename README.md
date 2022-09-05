@@ -4,6 +4,9 @@
 
 Vue3, Pinia, Vue Router, TypeScript, Vite
 
+## Backend
+https://github.com/ThorsAngerVaNeT/rs-sloths-be
+
 ## Project Setup
 
 ```sh
