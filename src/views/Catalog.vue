@@ -9,16 +9,11 @@
       ></custom-btn>
       <custom-btn
         v-show="getPageName === 'catalog'"
+        :imgPath="`./img/catalog/download-${$i18n.locale}-${currTheme}.svg`"
         :disabled="!isChecked"
         :text="$t('btn.download')"
-        className="btn btn-primary"
+        className="btn btn-download"
         @click="downloadFiles"
-      ></custom-btn>
-      <custom-btn
-        v-show="getPageName === 'catalog'"
-        :text="$t('merch.title')"
-        className="btn btn-primary"
-        @click="$router.push({ name: 'merch' })"
       ></custom-btn>
       <list-controls
         @search="getSloths"
@@ -32,6 +27,13 @@
         :text="$t('btn.reset')"
       >
       </list-controls>
+      <custom-btn
+        v-show="getPageName === 'catalog'"
+        :text="$t('merch.title')"
+        :imgPath="'./img/catalog/merch.svg'"
+        className="btn btn-catalog"
+        @click="$router.push({ name: 'merch' })"
+      ></custom-btn>
     </div>
     <div class="catalog__main list-main">
       <list-pagination ref="pagination" :size="count" @getPage="getSloths"></list-pagination>
@@ -90,6 +92,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
+import themeProp from '@/stores/theme';
 import type { PageSettings, Sloth, Sloths } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { BASE, PAGINATION_OPTIONS, SLOTH_SORTING } from '@/common/const';
@@ -146,6 +149,7 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
+    ...mapWritableState(themeProp, ['currTheme']),
 
     getPageName(): string {
       return this.$route.name === 'admin' ? 'admin' : 'catalog';
@@ -437,7 +441,7 @@ export default defineComponent({
 }
 
 .catalog__aside {
-  margin: 0.5em;
+  padding: 1rem;
 }
 
 .catalog_admin > .catalog__aside {

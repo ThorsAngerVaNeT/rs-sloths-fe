@@ -9,8 +9,8 @@
     :disabled="disabled"
     :title="text"
   ></button>
-  <button v-else class="btn-img" :class="className" @click="onClick" :disabled="disabled">
-    <img :src="imgPath" :alt="text" />
+  <button v-else class="btn-img" :class="className" @click="onClick" :disabled="disabled" :title="text">
+    <img class="image" :src="imgPath" :alt="text" />
   </button>
 </template>
 
@@ -97,9 +97,25 @@ export default defineComponent({
   background-color: var(--color-background-inverse-soft);
 }
 
-.btn-img img {
+.btn-img .image {
   overflow: hidden;
   border: 0.2rem solid var(--color-border-inverse);
+}
+
+.btn-catalog {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 50%;
+  border: 0.2rem solid var(--color-border-inverse);
+  align-self: center;
+}
+
+.btn-catalog .image {
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+  object-fit: contain;
+  border: none;
 }
 
 .btn-img:hover:not([disabled]) {
@@ -247,6 +263,26 @@ export default defineComponent({
 .btn-link:hover:not([disabled]) {
   border-color: var(--color-border-theme);
   background-color: var(--color-background-soft);
+}
+
+.btn-download {
+  margin: 0 auto;
+  padding: 0;
+  width: 24rem;
+}
+
+.btn-download > .image {
+  border: none;
+}
+
+.btn-download:hover:not([disabled]) {
+  transform: scale(1.1);
+}
+
+.btn-download:disabled {
+  filter: grayscale(1);
+  transform: scale(0.9);
+  cursor: default;
 }
 
 @media (max-width: 1200px) {
