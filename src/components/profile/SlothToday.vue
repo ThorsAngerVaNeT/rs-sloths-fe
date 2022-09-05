@@ -51,7 +51,6 @@ export default defineComponent({
 
         if (!res.ok) throw Error();
 
-        console.log(res);
         this.slothUrl = `${BASE}/${res.data.image_url}`;
         this.caption = res.data.caption;
         this.descr = res.data.description;
@@ -106,6 +105,6 @@ export default defineComponent({
 
 .result__descr {
   font-size: 1.8rem;
-  word-wrap: normal;
+  white-space: pre-wrap;
 }
 </style>

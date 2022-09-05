@@ -2,12 +2,10 @@
   <div class="profile">
     <aside class="profile__aside">
       <user-info :adminPanel="false" @updUser="updUser"></user-info>
-      <!-- <home-category category="sloth" @click="todaySloth"></home-category> -->
       <custom-btn :text="$t('profile.btn.logout')" className="btn btn-link" :onClick="logOut"></custom-btn>
       <router-link v-show="isAdmin" to="/admin">
         <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
       </router-link>
-      <!-- <custom-btn text="Сегодня я..." className="btn btn-link" :onClick="todaySloth"></custom-btn> -->
     </aside>
     <main class="profile__main">
       <div class="profile__tabs">
@@ -83,21 +81,6 @@ export default defineComponent({
         this.isLoad = false;
       }
     },
-
-    // async todaySloth() {
-    //   this.isLoad = true;
-    //   try {
-    //     const res = await UsersService.getTodaySloth();
-
-    //     if (!res.ok) throw Error();
-
-    //     console.log(res);
-    //   } catch (error) {
-    //     errorHandler(error);
-    //   } finally {
-    //     this.isLoad = false;
-    //   }
-    // },
 
     async logOut() {
       try {
