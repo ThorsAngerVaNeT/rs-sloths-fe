@@ -6,6 +6,7 @@
       <router-link v-show="isAdmin" to="/admin">
         <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
       </router-link>
+      <custom-btn text="Сегодня я..." className="btn btn-link" :onClick="todaySloth"></custom-btn>
     </aside>
     <main class="profile__main">
       <div class="profile__tabs">
@@ -35,14 +36,9 @@ import MemoryInfo from '@/components/profile/MemoryInfo.vue';
 import GuessInfo from '@/components/profile/GuessInfo.vue';
 import SuggestInfo from '@/components/profile/SuggestInfo.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
-import useUserInfo from '@/stores/user-info';
 import useCurrUser from '@/stores/curr-user';
-import { USERS_ERROR_GET, USERS_ERROR_UPD, BASE } from '@/common/const';
-import { CustomError } from '@/services/error-handling/custom-error';
+import { BASE } from '@/common/const';
 
-const service = new UsersService();
-
-const { setUserInfo } = useUserInfo();
 const { setClearUser } = useCurrUser();
 
 export default defineComponent({
@@ -58,7 +54,6 @@ export default defineComponent({
 
   data() {
     return {
-      user: {} as User,
       currentGame: 0,
       tabs: ['memory', 'guess', 'suggest'],
       components: ['MemoryInfo', 'GuessInfo', 'SuggestInfo'],
@@ -66,20 +61,17 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState(useCurrUser, ['isAdmin', 'getUserId']),
+    ...mapState(useCurrUser, ['isAdmin', 'getUserId', 'hasAuth', 'currUser']),
     ...mapWritableState(useLoader, ['isLoad']),
   },
 
   methods: {
-    async getUser() {
+    async updUser(user: User) {
       this.isLoad = true;
       try {
-        const res = await service.getById(this.getUserId);
-        if (!res.ok)
-          throw new CustomError(res.status, USERS_ERROR_GET.code, `${USERS_ERROR_GET.message} (id=${this.getUserId})`);
-        this.user = res.data;
+        const res = await UsersService.updateProfile(this.currUser);
 
-        setUserInfo(this.user);
+        if (!res.ok) throw Error();
       } catch (error) {
         errorHandler(error);
       } finally {
@@ -87,13 +79,14 @@ export default defineComponent({
       }
     },
 
-    async updUser(user: User) {
+    async todaySloth() {
       this.isLoad = true;
       try {
-        const res = await service.updateById(user.id, user);
-        if (!res.ok)
-          throw new CustomError(res.status, USERS_ERROR_UPD.code, `${USERS_ERROR_UPD.message} (id=${user.id})`);
-        await this.getUser();
+        const res = await UsersService.getTodaySloth();
+
+        if (!res.ok) throw Error();
+
+        console.log(res);
       } catch (error) {
         errorHandler(error);
       } finally {

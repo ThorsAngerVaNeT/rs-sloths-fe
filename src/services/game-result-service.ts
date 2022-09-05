@@ -1,4 +1,4 @@
-import type { API, GameResult, APIRequestResult, QueryStringOptions } from '@/common/types';
+import type { API, GameResult, APIRequestResult, QueryStringOptions, RequestError } from '@/common/types';
 import useCurrUser from '@/stores/curr-user';
 import { Endpoints } from '@/common/enums/endpoints';
 import { APIService } from './api-service';
@@ -35,11 +35,12 @@ export class GameResultService implements API<GameResult> {
       ok: false,
       status: 401,
       data: {} as GameResult,
+      error: {} as RequestError,
       headers: {} as Headers,
     };
     try {
       const userId = getUserId;
-      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
+      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401, res.error);
 
       const { count, time } = gameResult;
       const body = { userId, count, time };
@@ -63,11 +64,12 @@ export class GameResultService implements API<GameResult> {
       ok: false,
       status: 401,
       data: {} as GameResult,
+      error: {} as RequestError,
       headers: {} as Headers,
     };
     try {
       const userId = getUserId;
-      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401);
+      if (!(hasAuth && userId)) throw new APIError('Unauthorized', 401, res.error);
 
       const { count, time } = gameResult;
       const body = { userId, count, time };

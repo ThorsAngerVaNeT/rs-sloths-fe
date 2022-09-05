@@ -1,4 +1,4 @@
-import type { API, User, QueryStringOptions } from '@/common/types';
+import type { API, User, QueryStringOptions, Sloth } from '@/common/types';
 import { Endpoints } from '../common/enums/endpoints';
 import { APIService } from './api-service';
 
@@ -31,8 +31,22 @@ export class UsersService implements API<User> {
     return this.service.updateById(userId, body);
   }
 
+  public static updateProfile(user: User) {
+    const profileService = new APIService<User>(Endpoints.profile);
+
+    const { id, name, role, github } = user;
+    const body = { id, name, role, github };
+    return profileService.updateById('', body);
+  }
+
   public deleteById(id: string) {
     return this.service.deleteById(id);
+  }
+
+  public static getTodaySloth() {
+    const todaySlothService = new APIService<Sloth>(Endpoints.todaySloth);
+
+    return todaySlothService.getById('');
   }
 }
 

@@ -3,7 +3,7 @@
 import type { ErrorDescription, MemoryLevel, SelectOptions } from './types';
 
 // Services
-export const BASE = 'https://rs-sloths-be.herokuapp.com';
+export const BASE = import.meta.env.VITE_BFF_URL;
 
 // custom Errors
 export const JSON_ERROR: ErrorDescription = { code: 'NOT_JSON', message: 'Response is not a JSON!' };
@@ -145,7 +145,7 @@ export const RATING_OPTIONS: number[] = [0, 1, 2, 3, 4, 5];
 // Users
 export const DEFAULT_USER_AVATAR = './img/profile/default.svg';
 export const AUTHORIZATION_IMG = './github.svg';
-export const AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize?client_id=1383fcfa95f26efccc55';
+export const AUTHORIZATION_URL = `${BASE}/auth/github`;
 
 // Memory Game
 export const MEMORY_LEVELS: MemoryLevel[] = [

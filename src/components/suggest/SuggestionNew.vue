@@ -1,7 +1,7 @@
 <template>
   <div class="suggest-new">
     <h3 class="suggest-new__title">{{ $t('suggest.new') }}</h3>
-    <form @submit.prevent="handleSubmit" class="suggest-new__form form">
+    <form @submit.prevent="handleSubmit" class="suggest-new__form form" ref="suggestionForm">
       <div class="form__block form__block_1">
         <input class="form__file" type="file" name="upload-file" id="drop" @change="handleUploadChange" />
         <label for="drop" class="form__drop" @drop="handleDrop" @dragover="handleDrag">
@@ -21,6 +21,7 @@
           :placeholder="$t('suggest.placeholder')"
           id="descr"
           autocomplete="off"
+          required
         />
       </div>
       <div class="form__block form__block_3">
@@ -67,13 +68,19 @@ export default defineComponent({
 
   methods: {
     handleSubmit() {
-      this.$emit('createSuggest', this.suggest, this.image);
-      this.suggest = {} as Suggestion;
-      this.image = {} as File;
+      if (this.$refs.suggestionForm instanceof HTMLFormElement) {
+        if (this.$refs.suggestionForm.checkValidity()) {
+          this.$emit('createSuggest', this.suggest, this.image);
+          this.suggest = {} as Suggestion;
+          this.image = {} as File;
 
-      if (this.$refs.img instanceof HTMLImageElement) {
-        const imgEl = this.$refs.img;
-        imgEl.src = `/img/suggest/upload-${this.$i18n.locale}-${this.currTheme}.svg`;
+          if (this.$refs.img instanceof HTMLImageElement) {
+            const imgEl = this.$refs.img;
+            imgEl.src = `/img/suggest/upload-${this.$i18n.locale}-${this.currTheme}.svg`;
+          }
+        } else {
+          this.$refs.suggestionForm.reportValidity();
+        }
       }
     },
 
