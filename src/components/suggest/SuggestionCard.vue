@@ -23,7 +23,7 @@
         </p>
       </div>
     </div>
-    <div v-if="isSuggest" class="suggest-suggest-info__inner">
+    <div v-if="isSuggest || isProfile" class="suggest-suggest-info__inner">
       <div class="suggest-suggest-info__suggest">
         <img class="suggest-suggest-info__img" :src="getImage" alt="suggestion" />
       </div>
@@ -71,7 +71,7 @@ import { defineComponent, type PropType } from 'vue';
 import type { Suggestion } from '@/common/types';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
-import { DEFAULT_USER_AVATAR } from '@/common/const';
+import { BASE, DEFAULT_USER_AVATAR } from '@/common/const';
 
 export default defineComponent({
   name: 'SuggestionCard',
@@ -108,8 +108,12 @@ export default defineComponent({
       return this.$route.name === 'suggest';
     },
 
+    isProfile() {
+      return this.$route.name === 'profile';
+    },
+
     getImage() {
-      return this.suggestInfo.image_url || DEFAULT_USER_AVATAR;
+      return this.suggestInfo.image_url ? `${BASE}/${this.suggestInfo.image_url}` : DEFAULT_USER_AVATAR;
     },
   },
 

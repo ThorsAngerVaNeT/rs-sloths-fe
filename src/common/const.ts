@@ -3,7 +3,7 @@
 import type { ErrorDescription, MemoryLevel, SelectOptions } from './types';
 
 // Services
-export const BASE = 'https://rs-sloths-be.herokuapp.com';
+export const BASE = 'https://rs-sloths.herokuapp.com';
 
 // custom Errors
 export const JSON_ERROR: ErrorDescription = { code: 'NOT_JSON', message: 'Response is not a JSON!' };
