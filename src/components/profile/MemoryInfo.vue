@@ -157,7 +157,7 @@ export default defineComponent({
 .game-info__btns {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--gap);
 }
 
