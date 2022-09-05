@@ -17,7 +17,31 @@
             </div>
             <div class="suggest-info__property property-center">
               <label for="rating" class="suggest-info__label">{{ $t('suggest.rating') }}</label>
-              <p id="rating" class="suggest-info__text">{{ suggestInfo.rating }}⭐</p>
+              <p id="rating" class="suggest-info__text suggest-info__text_rate">
+                <span v-show="suggestInfo.rating === 0" class="suggest-info__text__main">0</span>
+                <img
+                  v-for="item in Math.floor(suggestInfo.rating) || 0"
+                  :key="item"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="suggest-info__text__sloth"
+                  :title="suggestInfo.rating || 0"
+                />
+                <img
+                  v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="suggest-info__text__sloth"
+                  :title="suggestInfo.rating || 0"
+                  :style="{
+                    height: '20px',
+                    width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
+                    overflowX: 'hidden',
+                    objectFit: 'cover',
+                    objectPosition: 'left center',
+                  }"
+                />
+              </p>
             </div>
             <div class="suggest-info__property property-center">
               <label for="createdAt" class="suggest-info__label">{{ $t('suggest.createdAt') }} </label>
@@ -30,7 +54,7 @@
           <div v-else class="suggest-info__props">
             <div v-show="isNew" class="suggest-info__suggest">
               <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
-              <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
+              <input class="input__file" type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
               <img v-show="isNew" class="suggest-info__img" :src="preview" alt="preview" />
             </div>
             <div v-show="!isNew" :class="'suggest-info__sloth'">
@@ -57,7 +81,31 @@
             </div>
             <div v-show="!isNew" class="suggest-info__property">
               <label for="rating" class="suggest-info__label">{{ $t('suggest.rating') }} </label>
-              <p id="rating" class="suggest-info__text">{{ suggestInfo.rating }}⭐</p>
+              <p id="rating" class="suggest-info__text suggest-info__text_rate">
+                <span v-show="suggestInfo.rating === 0" class="suggest-info__text__main">0</span>
+                <img
+                  v-for="item in Math.floor(suggestInfo.rating) || 0"
+                  :key="item"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="suggest-info__text__sloth"
+                  :title="suggestInfo.rating || 0"
+                />
+                <img
+                  v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="suggest-info__text__sloth"
+                  :title="suggestInfo.rating || 0"
+                  :style="{
+                    height: '20px',
+                    width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
+                    overflowX: 'hidden',
+                    objectFit: 'cover',
+                    objectPosition: 'left center',
+                  }"
+                />
+              </p>
             </div>
             <div v-show="!isNew" class="suggest-info__property">
               <label for="createdAt" class="suggest-info__label">{{ $t('suggest.createdAt') }} </label>
@@ -212,6 +260,7 @@ export default defineComponent({
   justify-content: space-between;
   gap: var(--gap);
 }
+
 .property-center {
   justify-content: center;
 }
@@ -221,12 +270,15 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
-input[type='file'] {
+
+.input__file {
   display: none;
 }
+
 .suggest-info__img {
   height: 20rem;
 }
+
 .suggest-info__text {
   text-align: center;
 }
@@ -234,12 +286,18 @@ input[type='file'] {
 .suggest-info__input {
   margin: 0.5rem 0;
   padding: 0.5rem 0;
-
   width: 30rem !important;
-
   border: none;
   border-bottom: 0.2rem solid gray;
   background-color: var(--color-background);
   color: inherit;
+}
+
+.suggest-info__text__main {
+  font-size: 2rem;
+}
+
+.suggest-info__text__sloth {
+  height: 2rem;
 }
 </style>

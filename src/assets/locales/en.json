@@ -251,5 +251,11 @@
     "user": "Personal results",
     "all": "All results",
     "again": "Try again:"
+  },
+
+  "rate": {
+    "none": "No rating",
+    "user": "User rating:",
+    "your": "Your rate:"
   }
 }

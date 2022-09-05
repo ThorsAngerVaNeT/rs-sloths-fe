@@ -47,12 +47,12 @@ html {
 
 .list-aside {
   width: var(--width-panel);
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap);
+  gap: var(--gap-2);
 }
+
 .list-main {
   width: calc(100% - var(--width-panel) - var(--gap));
 }

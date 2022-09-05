@@ -17,7 +17,31 @@
       <div class="admin-suggest-info__props">
         <p class="suggest-info__property cut-text">{{ suggestInfo.description }}</p>
         <p class="suggest-info__property">{{ suggestInfo.status }}</p>
-        <p class="suggest-info__property">{{ suggestInfo.rating }}⭐</p>
+        <p v-show="suggestInfo.rating === 0" class="suggest-info__property">0</p>
+        <p class="suggest-info__property">
+          <img
+            v-for="item in Math.floor(suggestInfo.rating) || 0"
+            :key="item"
+            src="/img/catalog/sloths.svg"
+            alt="sloths"
+            class="suggest-info__text__sloth"
+            :title="suggestInfo.rating || 0"
+          />
+          <img
+            v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
+            src="/img/catalog/sloths.svg"
+            alt="sloths"
+            class="suggest-info__text__sloth"
+            :title="suggestInfo.rating || 0"
+            :style="{
+              height: '20px',
+              width: 22 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
+              overflowX: 'hidden',
+              objectFit: 'cover',
+              objectPosition: 'left center',
+            }"
+          />
+        </p>
         <p class="suggest-info__property">
           {{ new Date(suggestInfo.createdAt).toLocaleDateString() }}
         </p>
@@ -31,17 +55,46 @@
         <div class="suggest-suggest-info__props">
           <p class="suggest-info__property cut-text">{{ suggestInfo.description }}</p>
           <p class="suggest-info__property">{{ suggestInfo.status }}</p>
-          <div class="suggest-info__property">
-            <label for="range" class="suggest-info__label">{{ suggestInfo.rating }}⭐</label>
-            <input
-              type="range"
+          <div class="suggest-info__property suggest-info__property_rating">
+            <p v-if="suggestInfo.rating === 0" class="suggest-info__user-rate">
+              <span class="user-rate__main">{{ $t('rate.none') }}</span>
+            </p>
+            <p v-else class="suggest-info__user-rate">
+              <img
+                v-for="item in Math.floor(suggestInfo.rating)"
+                :key="item"
+                src="/img/catalog/sloths.svg"
+                alt="sloths"
+                class="user-rate__sloth"
+                :title="suggestInfo.rating"
+              />
+              <img
+                v-show="suggestInfo.rating - Math.floor(suggestInfo.rating) !== 0"
+                src="/img/catalog/sloths.svg"
+                alt="sloths"
+                class="user-rate__sloth"
+                :title="suggestInfo.rating"
+                :style="{
+                  height: '40px',
+                  width: 44 * (suggestInfo.rating - Math.floor(suggestInfo.rating)) + 'px',
+                  overflowX: 'hidden',
+                  objectFit: 'cover',
+                  objectPosition: 'left center',
+                }"
+              />
+            </p>
+          </div>
+          <div class="suggest-info__property suggest-info__property_rate">
+            <label for="range" class="suggest-info__label">{{ $t('rate.your') }}</label>
+            <select
+              class="suggest-info__select"
+              name="range"
               id="range"
-              min="0"
-              max="5"
-              step="1"
               v-model="newRating"
               @change="$emit('editRating', suggestInfo, +newRating)"
-            />
+            >
+              <option v-for="value in rateValues" :key="value" :value="value">{{ value }}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -71,7 +124,7 @@ import { defineComponent, type PropType } from 'vue';
 import type { Suggestion } from '@/common/types';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
-import { DEFAULT_USER_AVATAR } from '@/common/const';
+import { DEFAULT_USER_AVATAR, RATING_OPTIONS } from '@/common/const';
 
 export default defineComponent({
   name: 'SuggestionCard',
@@ -85,6 +138,7 @@ export default defineComponent({
     return {
       newRating: this.suggestInfo.ratings[0]?.rate ?? 0,
       isApproveShow: false,
+      rateValues: RATING_OPTIONS,
     };
   },
 
@@ -132,23 +186,23 @@ export default defineComponent({
 .suggest-suggest-info,
 .admin-suggest-info {
   overflow: hidden;
-
   background-color: var(--color-background-soft);
   border: 1px solid gray;
 }
+
 .admin-suggest-info {
   padding: 0.5rem;
   width: calc(50% - var(--gap));
-
   border-radius: 0.5rem;
 }
+
 .suggest-suggest-info {
   position: relative;
   padding: 1rem;
   width: 30rem;
-
   border-radius: 1rem;
 }
+
 .admin-suggest-info:hover,
 .suggest-suggest-info:hover {
   box-shadow: 0px 0px 0.5rem gray;
@@ -160,13 +214,13 @@ export default defineComponent({
   align-items: center;
   gap: var(--gap);
 }
+
 .suggest-suggest-info__inner {
   flex-direction: column;
 }
 
 .suggest-suggest-info__suggest {
   position: relative;
-
   overflow: hidden;
 }
 
@@ -175,6 +229,7 @@ export default defineComponent({
   height: calc(10rem - 1rem);
   object-fit: contain;
 }
+
 .suggest-suggest-info__img {
   width: calc(20rem - 2rem);
   height: calc(20rem - 2rem);
@@ -186,9 +241,11 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 }
+
 .admin-suggest-info__props {
   align-items: flex-start;
 }
+
 .suggest-suggest-info__props {
   align-items: center;
 }
@@ -211,9 +268,55 @@ export default defineComponent({
   justify-content: center;
   gap: var(--gap);
 }
+
 .btn-horizontal {
   flex-direction: row;
 }
+
+.suggest-info__text__sloth {
+  height: 2rem;
+}
+
+.suggest-info__property_rating {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.suggest-info__user-rate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.suggest-info__rating {
+  text-transform: uppercase;
+}
+
+.user-rate__main {
+  font-size: 2rem;
+}
+
+.user-rate__sloth {
+  height: 4rem;
+}
+
+.suggest-info__property_rate {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.suggest-info__select {
+  padding: 0.5rem;
+  border: 0.2rem solid var(--color-border-inverse-soft);
+  background-color: var(--color-background);
+  color: inherit;
+  width: 5rem;
+  border-radius: 1rem;
+  transition: 0.5s ease;
+}
+
 @media (max-width: 1000px) {
   .admin-suggest-info {
     width: 100%;
