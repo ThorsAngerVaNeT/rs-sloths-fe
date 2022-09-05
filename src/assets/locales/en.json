@@ -48,7 +48,8 @@
       "guess": "Guess-a-Sloth Game results",
       "memory": "Memory Game results",
       "suggest": "Your Sloths suggestions",
-      "admin": "To Admin panel"
+      "admin": "To Admin panel",
+      "sloth": "Your Sloth today"
     }
   },
 

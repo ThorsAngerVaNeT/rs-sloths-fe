@@ -6,7 +6,6 @@
       <router-link v-show="isAdmin" to="/admin">
         <custom-btn :text="$t('profile.btn.admin')" className="btn btn-link"></custom-btn>
       </router-link>
-      <custom-btn text="Сегодня я..." className="btn btn-link" :onClick="todaySloth"></custom-btn>
     </aside>
     <main class="profile__main">
       <div class="profile__tabs">
@@ -35,7 +34,9 @@ import UserInfo from '@/components/profile/UserInfo.vue';
 import MemoryInfo from '@/components/profile/MemoryInfo.vue';
 import GuessInfo from '@/components/profile/GuessInfo.vue';
 import SuggestInfo from '@/components/profile/SuggestInfo.vue';
+import SlothToday from '@/components/profile/SlothToday.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import HomeCategory from '@/components/home/HomeCategory.vue';
 import useCurrUser from '@/stores/curr-user';
 import { BASE } from '@/common/const';
 
@@ -50,13 +51,15 @@ export default defineComponent({
     GuessInfo,
     SuggestInfo,
     CustomBtn,
+    HomeCategory,
+    SlothToday,
   },
 
   data() {
     return {
       currentGame: 0,
-      tabs: ['memory', 'guess', 'suggest'],
-      components: ['MemoryInfo', 'GuessInfo', 'SuggestInfo'],
+      tabs: ['memory', 'guess', 'suggest', 'sloth'],
+      components: ['MemoryInfo', 'GuessInfo', 'SuggestInfo', 'SlothToday'],
     };
   },
 
@@ -72,21 +75,6 @@ export default defineComponent({
         const res = await UsersService.updateProfile(this.currUser);
 
         if (!res.ok) throw Error();
-      } catch (error) {
-        errorHandler(error);
-      } finally {
-        this.isLoad = false;
-      }
-    },
-
-    async todaySloth() {
-      this.isLoad = true;
-      try {
-        const res = await UsersService.getTodaySloth();
-
-        if (!res.ok) throw Error();
-
-        console.log(res);
       } catch (error) {
         errorHandler(error);
       } finally {

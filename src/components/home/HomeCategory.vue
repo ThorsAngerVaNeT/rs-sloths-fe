@@ -83,8 +83,8 @@ export default defineComponent({
   background: no-repeat center center / contain url('../../assets/icons/home/create.svg') var(--color-background-soft);
 }
 
-.home-category_sloth > .home-category__img {
-  background: no-repeat center center / contain url('../../assets/icons/home/sloth.svg') var(--color-background-soft);
+.home-category_merch > .home-category__img {
+  background: no-repeat center center / contain url('../../assets/icons/home/merch.svg') var(--color-background-soft);
 }
 
 .home-category__name {
