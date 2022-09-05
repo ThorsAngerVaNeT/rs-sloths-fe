@@ -1,5 +1,5 @@
 <template>
-  <form class="user-info" ref="profileForm">
+  <form class="user-info" ref="profileForm" :onSubmit="(e) => e.preventDefault()">
     <div class="user-info__avatar">
       <img class="user-info__img" :src="getAvatar" :alt="$t('profile.avatar')" />
     </div>
