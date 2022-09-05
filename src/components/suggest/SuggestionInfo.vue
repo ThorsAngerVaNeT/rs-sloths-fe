@@ -197,7 +197,6 @@ export default defineComponent({
     },
 
     getImage(): string {
-      // if (this.newFile.name) return this.preview;
       return this.suggestInfo.image_url ? `${BASE}/${this.suggestInfo.image_url}` : DEFAULT_USER_AVATAR;
     },
   },
