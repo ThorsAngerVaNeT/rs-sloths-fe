@@ -133,6 +133,13 @@ export default defineComponent({
   transition: 0.5s ease;
 }
 
+.game-info__btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap);
+}
+
 .results {
   padding: 1rem;
   width: 28rem;
