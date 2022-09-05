@@ -1,6 +1,16 @@
 <template>
   <div class="game-info">
     <div class="game-info__title">{{ isAdmin || isGuess ? $t('results.all') : $t('results.user') }}</div>
+    <div class="game-info__btns">
+      <custom-btn
+        v-for="(indexAll, index) in sortingOptions"
+        :key="index"
+        :text="$t(sortingOptionsALL[indexAll].text)"
+        className="btn btn-primary"
+        @click="setSorting(index)"
+      ></custom-btn>
+    </div>
+
     <div class="results" :class="isAdmin || isGuess ? 'results_admin' : ''">
       <div class="results__item" v-for="(res, index) in results" :key="index">
         <span class="result__index">{{ `${index + 1}.` }}</span>
@@ -21,9 +31,10 @@
 import type { GameResult } from '@/common/types';
 import { defineComponent } from 'vue';
 import HomeCategory from '@/components/home/HomeCategory.vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { GameResultService } from '@/services/game-result-service';
-import { GUESS_GAME_ID } from '@/common/const';
+import { GAME_RESULT_SORTING, GUESS_GAME_ID } from '@/common/const';
 import useLoader from '@/stores/loader';
 import { mapWritableState } from 'pinia';
 import { ruNounEnding } from '@/utils/ru-noun-ending';
@@ -33,12 +44,16 @@ export default defineComponent({
 
   components: {
     HomeCategory,
+    CustomBtn,
   },
 
   data() {
     return {
       count: 0,
       results: [] as GameResult[],
+      sortingOptionsALL: GAME_RESULT_SORTING,
+      sortingOptions: [] as number[],
+      sorting: 0,
     };
   },
 
@@ -63,6 +78,8 @@ export default defineComponent({
 
   async mounted() {
     await this.getGameInfo();
+
+    this.sortingOptions = this.sortingOptionsALL.map((el, i) => i).filter((el) => el % 2 === 0);
   },
 
   methods: {
@@ -71,7 +88,7 @@ export default defineComponent({
       try {
         const service = new GameResultService(GUESS_GAME_ID, this.userId);
 
-        const res = await service.getAll();
+        const res = await service.getAll(undefined, undefined, this.sortingOptionsALL[this.sorting].value);
         if (!res.ok) throw Error(); // todo
 
         this.count = res.data.count;
@@ -85,6 +102,18 @@ export default defineComponent({
 
     getPointText(val: number): string {
       return ruNounEnding(val, this.$t('guess.points1'), this.$t('guess.points2'), this.$t('guess.pointsN'));
+    },
+
+    setSorting(i: number) {
+      if (this.sortingOptions[i] % 2 === 0) {
+        this.sortingOptions[i] += 1;
+      } else {
+        this.sortingOptions[i] -= 1;
+      }
+
+      this.sorting = this.sortingOptions[i];
+
+      this.getGameInfo();
     },
   },
 });

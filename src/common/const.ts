@@ -111,28 +111,28 @@ export const SUGGESTION_SORTING: SelectOptions[] = [
 ];
 export const GAME_RESULT_SORTING: SelectOptions[] = [
   {
-    value: 'count-desc',
-    text: 'sorting.count-',
-  },
-  {
     value: 'count-asc',
-    text: 'sorting.count+',
+    text: 'btn.count+',
   },
   {
-    value: 'time-desc',
-    text: 'sorting.time-',
+    value: 'count-desc',
+    text: 'btn.count-',
   },
   {
     value: 'time-asc',
-    text: 'sorting.time+',
+    text: 'btn.time+',
   },
   {
-    value: 'createdAt-desc',
-    text: 'sorting.createdAt-',
+    value: 'time-desc',
+    text: 'btn.time-',
   },
   {
     value: 'createdAt-asc',
-    text: 'sorting.createdAt+',
+    text: 'btn.createdAt+',
+  },
+  {
+    value: 'createdAt-desc',
+    text: 'btn.createdAt-',
   },
 ];
 

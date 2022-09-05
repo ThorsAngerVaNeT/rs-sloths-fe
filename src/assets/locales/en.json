@@ -215,11 +215,7 @@
     "rating+": "...Rating (ascending)",
     "rating-": "...Rating (descending)",
     "status+": "...Status (ascending)",
-    "status-": "...Status (descending)",
-    "count+": "...Count (ascending)",
-    "count-": "...Count (descending)",
-    "time+": "...Time (ascending)",
-    "time-": "...Time (descending)"
+    "status-": "...Status (descending)"
   },
 
   "btn": {
@@ -237,7 +233,13 @@
     "trueSize": "True Size",
     "center": "on Center",
     "scaleUp": "Scale Up",
-    "scaleDown": "Scale Down"
+    "scaleDown": "Scale Down",
+    "count-": "Count ▼",
+    "count+": "Count ▲",
+    "time-": "Time ▼",
+    "time+": "Time ▲",
+    "createdAt-": "Creation date ▼",
+    "createdAt+": "Creation date ▲"
   },
 
   "pagination": {

@@ -1,6 +1,16 @@
 <template>
   <div class="game-info">
     <div class="game-info__title">{{ isAdmin || isMemory ? $t('results.all') : $t('results.user') }}</div>
+    <div class="game-info__btns">
+      <custom-btn
+        v-for="(indexAll, index) in sortingOptions"
+        :key="index"
+        :text="$t(sortingOptionsALL[indexAll].text)"
+        className="btn btn-primary"
+        @click="setSorting(index)"
+      ></custom-btn>
+    </div>
+
     <div class="game-info__wrap">
       <div
         class="game-info__level"
@@ -28,8 +38,9 @@
 import { defineComponent } from 'vue';
 import { mapWritableState } from 'pinia';
 import HomeCategory from '@/components/home/HomeCategory.vue';
+import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import { ruNounEnding } from '@/utils/ru-noun-ending';
-import { MEMORY_LEVELS } from '@/common/const';
+import { GAME_RESULT_SORTING, MEMORY_LEVELS } from '@/common/const';
 import { GameResultService } from '@/services/game-result-service';
 import type { GameResult, MemoryLevel, APIRequestResult, GetList } from '@/common/types';
 import { errorHandler } from '@/services/error-handling/error-handler';
@@ -42,11 +53,15 @@ export default defineComponent({
 
   components: {
     HomeCategory,
+    CustomBtn,
   },
 
   data() {
     return {
       gameResults: [] as MemoryLevelResult[],
+      sortingOptionsALL: GAME_RESULT_SORTING,
+      sortingOptions: [] as number[],
+      sorting: 0,
     };
   },
 
@@ -68,22 +83,27 @@ export default defineComponent({
       return this.$route.name === 'memory';
     },
   },
+
   async mounted() {
     await this.getGameInfo();
+
+    this.sortingOptions = this.sortingOptionsALL.map((el, i) => i).filter((el) => el % 2 === 0);
   },
 
   methods: {
     async getGameInfo() {
       this.isLoad = true;
+
       try {
         const promises: Promise<APIRequestResult<GetList<GameResult>>>[] = [];
         MEMORY_LEVELS.forEach((level) => {
           const service = new GameResultService(level.gameId, this.userId);
-          const res = service.getAll();
+          const res = service.getAll(undefined, undefined, this.sortingOptionsALL[this.sorting].value);
           promises.push(res);
         });
 
         const results = await Promise.all(promises);
+        this.gameResults = [];
         results.forEach((result, i) => {
           if (!result.ok) throw Error(); // todo
           this.gameResults.push({
@@ -104,6 +124,18 @@ export default defineComponent({
     getStepsText(val: number): string {
       return ruNounEnding(val, this.$t('memory.steps1'), this.$t('memory.steps2'), this.$t('memory.stepsN'));
     },
+
+    setSorting(i: number) {
+      if (this.sortingOptions[i] % 2 === 0) {
+        this.sortingOptions[i] += 1;
+      } else {
+        this.sortingOptions[i] -= 1;
+      }
+
+      this.sorting = this.sortingOptions[i];
+
+      this.getGameInfo();
+    },
   },
 });
 </script>
@@ -120,6 +152,13 @@ export default defineComponent({
   color: var(--color-text);
   font-size: 2.4rem;
   transition: 0.5s ease;
+}
+
+.game-info__btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap);
 }
 
 .game-info__wrap {
