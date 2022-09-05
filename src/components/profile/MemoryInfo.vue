@@ -1,23 +1,23 @@
 <template>
   <div class="game-info">
-    <div class="game-info__title">{{ isAdmin ? $t('results.all') : $t('results.user') }}</div>
+    <div class="game-info__title">{{ isAdmin || isMemory ? $t('results.all') : $t('results.user') }}</div>
     <div class="game-info__wrap">
       <div
         class="game-info__level"
-        :class="isAdmin ? 'game-info__level_admin' : ''"
+        :class="isAdmin || isMemory ? 'game-info__level_admin' : ''"
         v-for="(res, index) in gameResults"
         :key="index"
       >
         <h4 class="result__level__title">{{ $t(`memory.${res.level}`) }}</h4>
         <div class="game-info__result" v-for="(r, i) in res.results" :key="i">
           <span class="result__index">{{ `${i + 1}.` }}</span>
-          <span class="result__user" v-show="isAdmin">{{ `${r.user.name}` }}</span>
+          <span class="result__user" v-show="isAdmin || isMemory">{{ `${r.user?.name}` }}</span>
           <span class="result__steps">{{ `${r.count} ${getStepsText(r.count)}` }}</span>
           <span class="result__time">{{ `${r.time / 1000} s` }}</span>
         </div>
       </div>
     </div>
-    <div class="game-info__again" v-show="!isAdmin">
+    <div class="game-info__again" v-show="!(isAdmin || isMemory)">
       <div class="game-info__title">{{ $t('results.again') }}</div>
       <home-category category="memory" @click="$router.push({ name: 'memory' })"></home-category>
     </div>
@@ -59,8 +59,13 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
+
     isAdmin() {
       return this.$route.name === 'admin';
+    },
+
+    isMemory() {
+      return this.$route.name === 'memory';
     },
   },
   async mounted() {
