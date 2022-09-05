@@ -40,22 +40,35 @@
         <div class="catalog-sloth-info__props">
           <p class="sloth-info__property sloth-info__property_text">{{ slothInfo.caption }}</p>
           <div class="sloth-info__property sloth-info__property_rating">
-            <p class="sloth-info__rating">User Rating:</p>
+            <p class="sloth-info__rating">{{ $t('rate.user') }}</p>
             <p v-if="slothInfo.rating === 0" class="sloth-info__user-rate">
-              <span class="user-rate__main">{{ slothInfo.rating }}</span>
+              <span class="user-rate__main">{{ $t('rate.none') }}</span>
             </p>
             <p v-else class="sloth-info__user-rate">
               <img
-                v-for="item in slothInfo.rating"
+                v-for="item in Math.floor(slothInfo.rating)"
                 :key="item"
                 src="/img/catalog/sloths.svg"
                 alt="sloths"
                 class="user-rate__sloth"
               />
+              <img
+                v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
+                src="/img/catalog/sloths.svg"
+                alt="sloths"
+                class="user-rate__sloth"
+                :style="{
+                  height: '40px',
+                  width: 44 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
+                  overflowX: 'hidden',
+                  objectFit: 'cover',
+                  objectPosition: 'left center',
+                }"
+              />
             </p>
           </div>
           <div class="sloth-info__property sloth-info__property_rate">
-            <label for="range" class="sloth-info__label">Your Rate:</label>
+            <label for="range" class="sloth-info__label">{{ $t('rate.your') }}</label>
             <select
               class="sloth-info__select"
               name="range"
@@ -343,8 +356,7 @@ export default defineComponent({
 }
 
 .user-rate__main {
-  font-size: 3.6rem;
-  font-weight: 700;
+  font-size: 2rem;
 }
 
 .user-rate__sloth {
@@ -365,6 +377,10 @@ export default defineComponent({
   width: 5rem;
   border-radius: 1rem;
   transition: 0.5s ease;
+}
+
+.sloth-info__user-other {
+  align-self: end;
 }
 
 @media (max-width: 1000px) {

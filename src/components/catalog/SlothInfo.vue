@@ -22,11 +22,24 @@
               <p id="rating" class="sloth-info__text sloth-info__text_rate">
                 <span v-show="slothInfo.rating === 0" class="sloth-info__text__main">0</span>
                 <img
-                  v-for="item in slothInfo.rating"
+                  v-for="item in Math.floor(slothInfo.rating)"
                   :key="item"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
+                />
+                <img
+                  v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="sloth-info__text__sloth"
+                  :style="{
+                    height: '20px',
+                    width: 22 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
+                    overflowX: 'hidden',
+                    objectFit: 'cover',
+                    objectPosition: 'left center',
+                  }"
                 />
               </p>
             </div>
@@ -65,11 +78,24 @@
               <p id="rating" class="sloth-info__text sloth-info__text_rate">
                 <span v-show="slothInfo.rating === 0" class="sloth-info__text__main">0</span>
                 <img
-                  v-for="item in slothInfo.rating"
+                  v-for="item in Math.floor(slothInfo.rating)"
                   :key="item"
                   src="/img/catalog/sloths.svg"
                   alt="sloths"
                   class="sloth-info__text__sloth"
+                />
+                <img
+                  v-show="slothInfo.rating - Math.floor(slothInfo.rating) !== 0"
+                  src="/img/catalog/sloths.svg"
+                  alt="sloths"
+                  class="sloth-info__text__sloth"
+                  :style="{
+                    height: '40px',
+                    width: 44 * (slothInfo.rating - Math.floor(slothInfo.rating)) + 'px',
+                    overflowX: 'hidden',
+                    objectFit: 'cover',
+                    objectPosition: 'left center',
+                  }"
                 />
               </p>
             </div>
