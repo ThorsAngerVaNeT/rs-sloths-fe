@@ -30,7 +30,15 @@
           <form v-else class="sloth-info__props" ref="slothForm">
             <div class="sloth-info__sloth">
               <label for="file" class="btn btn-primary">{{ $t('btn.upload') }}</label>
-              <input type="file" id="file" accept="image/*" ref="uploadBtn" @change="uploadImage" />
+              <input
+                type="file"
+                id="file"
+                class="sloth-info__file"
+                accept="image/*"
+                required
+                ref="uploadBtn"
+                @change="uploadImage"
+              />
               <img v-show="isNew" class="sloth-info__img" :src="preview" alt="preview" />
               <img v-show="!isNew" class="sloth-info__img" :src="getImageUrl" :alt="slothInfo.caption" />
             </div>
@@ -238,8 +246,9 @@ export default defineComponent({
   align-items: center;
 }
 
-input[type='file'] {
-  display: none;
+.sloth-info__file {
+  opacity: 0;
+  height: 1px;
 }
 
 .sloth-info__img {
