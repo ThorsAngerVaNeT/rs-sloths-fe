@@ -34,7 +34,7 @@ export default defineComponent({
 
   data(): { categories: string[] } {
     return {
-      categories: ['profile', 'memory', 'guess', 'create', 'suggest', 'sloth'],
+      categories: ['profile', 'memory', 'guess', 'create', 'suggest', 'merch'],
     };
   },
 
@@ -45,11 +45,7 @@ export default defineComponent({
 
   methods: {
     handleCategoryClick(category: string): void {
-      if (category === 'sloth') {
-        alert('Здесь что-нибудь будет по ленивцу');
-      } else {
-        this.$router.push({ name: `${category}` });
-      }
+      this.$router.push({ name: `${category}` });
     },
 
     handleAuth() {
