@@ -1,16 +1,16 @@
 <template>
   <div class="game-info">
-    <div class="game-info__title">{{ isAdmin ? $t('results.all') : $t('results.user') }}</div>
-    <div class="results">
+    <div class="game-info__title">{{ isAdmin || isGuess ? $t('results.all') : $t('results.user') }}</div>
+    <div class="results" :class="isAdmin || isGuess ? 'results_admin' : ''">
       <div class="results__item" v-for="(res, index) in results" :key="index">
         <span class="result__index">{{ `${index + 1}.` }}</span>
-        <span class="result__user">{{ `${res.user.name}` }}</span>
+        <span class="result__user" v-show="isAdmin || isGuess">{{ `${res.user?.name}` }}</span>
         <span class="result__steps">{{ `${res.count} ${getPointText(res.count)}` }}</span>
         <span class="result__time">{{ `${res.time / 1000} s` }}</span>
       </div>
     </div>
 
-    <div class="game-info__again" v-show="!isAdmin">
+    <div class="game-info__again" v-show="!(isAdmin || isGuess)">
       <div class="game-info__title">{{ $t('results.again') }}</div>
       <home-category category="guess" @click="$router.push({ name: 'guess' })"></home-category>
     </div>
@@ -20,7 +20,6 @@
 <script lang="ts">
 import type { GameResult } from '@/common/types';
 import { defineComponent } from 'vue';
-// import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import HomeCategory from '@/components/home/HomeCategory.vue';
 import { errorHandler } from '@/services/error-handling/error-handler';
 import { GameResultService } from '@/services/game-result-service';
@@ -33,7 +32,6 @@ export default defineComponent({
   name: 'GuessInfo',
 
   components: {
-    // CustomBtn,
     HomeCategory,
   },
 
@@ -53,8 +51,13 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
+
     isAdmin() {
       return this.$route.name === 'admin';
+    },
+
+    isGuess() {
+      return this.$route.name === 'guess';
     },
   },
 
@@ -103,7 +106,7 @@ export default defineComponent({
 
 .results {
   padding: 1rem;
-  width: 40rem;
+  width: 28rem;
   min-height: 25rem;
   max-height: 34rem;
   overflow-y: auto;
@@ -116,6 +119,9 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+.results_admin {
+  width: 40rem;
 }
 
 .results__item {

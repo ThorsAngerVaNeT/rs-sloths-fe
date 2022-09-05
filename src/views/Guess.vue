@@ -1,5 +1,10 @@
 <template>
   <div class="guess">
+    <custom-btn
+      :text="$t('guess.results')"
+      className="btn btn-primary"
+      @click="isTableResultsVisible = true"
+    ></custom-btn>
     <h2 class="guess__description">{{ $t('guess.description') }}</h2>
     <h3 class="guess__description">{{ $t('guess.rules') }}</h3>
     <custom-btn
@@ -57,6 +62,12 @@
         <p>{{ getTime / 1000 }} {{ $t('memory.time') }}</p>
       </template>
     </modal-window>
+    <modal-window v-show="isTableResultsVisible" @close="closeTableResults">
+      <template v-slot:header> {{ $t('guess.results') }} </template>
+      <template v-slot:body>
+        <guess-info></guess-info>
+      </template>
+    </modal-window>
   </div>
 </template>
 
@@ -64,6 +75,7 @@
 import { defineComponent } from 'vue';
 import ModalWindow from '@/components/modal/ModalWindow.vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
+import GuessInfo from '@/components/profile/GuessInfo.vue';
 import { GUESS_GAME_WINNER, GUESS_GAME_WINNER_ALL, GUESS_GAME_ID, GUESS_SLOTHS } from '@/common/const';
 import { playAudio, audioWin, audioSadTrombone, audioOvation } from '@/utils/audio';
 import type { GameResult } from '@/common/types';
@@ -85,6 +97,7 @@ export default defineComponent({
   components: {
     CustomBtn,
     ModalWindow,
+    GuessInfo,
   },
 
   data() {
@@ -102,6 +115,7 @@ export default defineComponent({
       cardWinnerAll: GUESS_GAME_WINNER_ALL,
       isAnimated: false,
       isModalVisible: false,
+      isTableResultsVisible: false,
     };
   },
 
@@ -215,6 +229,10 @@ export default defineComponent({
         time: this.getTime,
       };
       await service.create(gameResult);
+    },
+
+    closeTableResults() {
+      this.isTableResultsVisible = false;
     },
   },
 });

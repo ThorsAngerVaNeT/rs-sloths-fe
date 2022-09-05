@@ -14,12 +14,16 @@
           <img :src="getImg(index)" :alt="$t(getText(index))" />
         </div>
       </div>
-      <custom-btn :text="$t('memory.results')" className="btn btn-primary" @click="isModalVisible = true"></custom-btn>
+      <custom-btn
+        :text="$t('memory.results')"
+        className="btn btn-primary"
+        @click="isTableResultsVisible = true"
+      ></custom-btn>
     </div>
     <div class="memory__main list-main">
       <game-field :level="levels[activeLevel]"></game-field>
     </div>
-    <modal-window v-show="isModalVisible" @close="closeModal">
+    <modal-window v-show="isTableResultsVisible" @close="closeTableResults">
       <template v-slot:header> {{ $t('memory.results') }} </template>
       <template v-slot:body>
         <memory-info></memory-info>
@@ -53,7 +57,7 @@ export default defineComponent({
     return {
       levels: MEMORY_LEVELS,
       activeLevel: 1,
-      isModalVisible: false,
+      isTableResultsVisible: false,
     };
   },
 
@@ -90,8 +94,8 @@ export default defineComponent({
       this.activeLevel = i;
     },
 
-    closeModal() {
-      this.isModalVisible = false;
+    closeTableResults() {
+      this.isTableResultsVisible = false;
     },
   },
 });

@@ -82,7 +82,8 @@
     "next": "Send an answer",
     "points1": "point",
     "points2": "points",
-    "pointsN": "points"
+    "pointsN": "points",
+    "results": "Guess-a-Sloth Results"
   },
 
   "memory": {
