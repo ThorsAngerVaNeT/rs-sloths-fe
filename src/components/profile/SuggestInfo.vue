@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapWritableState } from 'pinia';
+import { mapState, mapWritableState } from 'pinia';
 import HomeCategory from '@/components/home/HomeCategory.vue';
 import { SuggestionsService } from '@/services/suggestions-service';
 import type { Suggestion, Suggestions } from '@/common/types';
@@ -37,6 +37,7 @@ import useLoader from '@/stores/loader';
 import usePagination from '@/stores/pagination';
 import useSuggestionInfo from '@/stores/suggestion-info';
 import { ModalEvents } from '@/common/enums/modal-events';
+import useCurrUser from '@/stores/curr-user';
 
 const service = new SuggestionsService();
 
@@ -72,6 +73,7 @@ export default defineComponent({
 
   computed: {
     ...mapWritableState(useLoader, ['isLoad']),
+    ...mapState(useCurrUser, ['getUserId']),
   },
 
   mounted() {
@@ -85,7 +87,7 @@ export default defineComponent({
         const currPage = getCurrPage();
         const perPage = getPerPage();
 
-        const res = await service.getAll(currPage, perPage, 'createdAt-desc');
+        const res = await service.getAll(currPage, perPage, 'createdAt-desc', '', '', this.getUserId);
 
         if (!res.ok) throw Error(); // todo
 
