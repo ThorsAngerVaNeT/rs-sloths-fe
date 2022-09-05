@@ -170,27 +170,29 @@ export default defineComponent({
     },
 
     nextStep() {
-      this.result[this.step] = this.stepAnswer;
+      if (this.stepSelection >= 0) {
+        this.result[this.step] = this.stepAnswer;
 
-      if (this.stepAnswer) {
-        playAudio(audioWin);
-      } else {
-        playAudio(audioSadTrombone);
-      }
+        if (this.stepAnswer) {
+          playAudio(audioWin);
+        } else {
+          playAudio(audioSadTrombone);
+        }
 
-      this.step += 1;
-      this.stepAnswer = false;
-      this.stepSelection = -1;
-
-      if (this.step === this.gameCards.length) {
-        // end
-        this.endTime = Date.now();
-        playAudio(audioOvation);
-        this.isModalVisible = true;
-        this.saveResult();
-
-        this.step = -1;
+        this.step += 1;
+        this.stepAnswer = false;
         this.stepSelection = -1;
+
+        if (this.step === this.gameCards.length) {
+          // end
+          this.endTime = Date.now();
+          playAudio(audioOvation);
+          this.isModalVisible = true;
+          this.saveResult();
+
+          this.step = -1;
+          this.stepSelection = -1;
+        }
       }
     },
 
