@@ -3,8 +3,8 @@
     <h3 class="suggest-new__title">{{ $t('suggest.new') }}</h3>
     <form @submit.prevent="handleSubmit" class="suggest-new__form form" ref="suggestionForm">
       <div class="form__block form__block_1">
-        <input class="form__file" type="file" name="upload-file" id="drop" @change="handleUploadChange" />
-        <label for="drop" class="form__drop" @drop="handleDrop" @dragover="handleDrag">
+        <input class="form__file" type="file" accept="image/*" name="file" id="file" @change="handleUploadChange" />
+        <label for="file" class="form__drop" @drop="handleDrop" @dragover="handleDrag">
           <img
             class="form__img"
             ref="img"
@@ -14,12 +14,12 @@
         </label>
       </div>
       <div class="form__block form__block_2">
-        <label for="descr" class="form__label">{{ $t('suggest.description') }}</label>
+        <label for="description" class="form__label">{{ $t('suggest.description') }}</label>
         <textarea
           class="form__input form__textarea"
           v-model="suggest.description"
           :placeholder="$t('suggest.placeholder')"
-          id="descr"
+          id="description"
           autocomplete="off"
           required
         />
@@ -100,7 +100,7 @@ export default defineComponent({
     },
 
     handleUploadChange(ev: Event) {
-      if (ev.target instanceof HTMLFormElement) {
+      if (ev.target instanceof HTMLInputElement && ev?.target?.files) {
         const file: File = ev.target.files[0];
         this.renderFile(file);
       }
