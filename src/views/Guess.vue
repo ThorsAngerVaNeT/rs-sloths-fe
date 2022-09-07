@@ -260,7 +260,7 @@ export default defineComponent({
 }
 
 .guess__imgs_active {
-  background: no-repeat center center / contain url('./img/guess/bg.svg');
+  background: no-repeat center center / contain url('../img/guess/bg.svg');
 }
 
 .guess__img-wrapper {
