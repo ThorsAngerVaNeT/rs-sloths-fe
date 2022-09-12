@@ -344,12 +344,21 @@ export default defineComponent({
 }
 
 .meme {
-  padding: 0 3rem;
+  padding-left: 3rem;
+  height: 100%;
+}
+
+.meme__list {
+  height: 100%;
+  overflow-y: auto;
 }
 
 .meme__generator {
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  padding-right: 3rem;
+  overflow-y: auto;
 }
 
 .meme__memes {
@@ -363,6 +372,7 @@ export default defineComponent({
 .meme__image {
   width: 14rem;
   height: 14rem;
+  object-fit: contain;
 }
 
 .meme__settings {
@@ -435,5 +445,15 @@ export default defineComponent({
 
 .meme__canvas {
   border: 0.2px solid gray;
+}
+
+@media (max-width: 1200px) {
+  .meme {
+    padding-left: 1.5rem;
+  }
+
+  .meme__generator {
+    padding-right: 1.5rem;
+  }
 }
 </style>
