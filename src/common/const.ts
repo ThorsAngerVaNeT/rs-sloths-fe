@@ -218,3 +218,19 @@ export const GUESS_SLOTHS = [
   { caption: 'Congrats', img: './img/guess/painted/39.svg' },
   { caption: 'No Mentor', img: './img/guess/painted/40.svg' },
 ];
+
+export const MEMES_SLOTHS = [
+  './img/memes/deadline.svg',
+  './img/memes/expert.svg',
+  './img/memes/git.svg',
+  './img/memes/its_ok.svg',
+  './img/memes/love.svg',
+  './img/memes/mentor.svg',
+  './img/memes/read_chat.svg',
+  './img/memes/shocked.svg',
+  './img/memes/so_close.svg',
+  './img/memes/student_1.svg',
+  './img/memes/without_mentor.svg',
+  './img/memes/work_done.svg',
+  './img/memes/wtf.svg',
+];

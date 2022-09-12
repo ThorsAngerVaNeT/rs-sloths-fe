@@ -90,6 +90,7 @@
 import { defineComponent } from 'vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import usePagesStore from '@/stores/pages-store';
+import { MEMES_SLOTHS } from '@/common/const';
 
 const { getPageCreateState, setPageCreateState } = usePagesStore();
 
@@ -161,21 +162,7 @@ export default defineComponent({
     async getImages() {
       // todo fetch
 
-      this.images = [
-        './img/memes/deadline.svg',
-        './img/memes/expert.svg',
-        './img/memes/git.svg',
-        './img/memes/its_ok.svg',
-        './img/memes/love.svg',
-        './img/memes/mentor.svg',
-        './img/memes/read_chat.svg',
-        './img/memes/shocked.svg',
-        './img/memes/so_close.svg',
-        './img/memes/student_1.svg',
-        './img/memes/without_mentor.svg',
-        './img/memes/work_done.svg',
-        './img/memes/wtf.svg',
-      ];
+      this.images = MEMES_SLOTHS;
     },
 
     getImg(i: number): string {
