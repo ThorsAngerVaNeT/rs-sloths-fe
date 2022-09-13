@@ -36,8 +36,25 @@
           <input type="color" id="strokeStyle" class="meme__color" v-model="strokeStyle" @input="draw()" />
         </div>
         <div class="meme__property">
+          <label class="meme__label" for="backgroundTransparent">{{ $t('create.backgroundTransparent') }}</label>
+          <input
+            type="checkbox"
+            id="backgroundTransparent"
+            class="meme__transparent"
+            v-model="transparent"
+            @change="draw()"
+          />
+        </div>
+        <div class="meme__property" :class="{ 'meme__property-disabled': transparent }">
           <label class="meme__label" for="backgroundColor">{{ $t('create.backgroundColor') }}</label>
-          <input type="color" id="backgroundColor" class="meme__color" v-model="backgroundColor" @input="draw()" />
+          <input
+            type="color"
+            id="backgroundColor"
+            class="meme__color"
+            v-model="backgroundColor"
+            @input="draw()"
+            :disabled="transparent"
+          />
         </div>
         <div class="meme__property">
           <label class="meme__label" for="margin">{{ $t('create.margin') }}</label>
@@ -120,6 +137,7 @@ export default defineComponent({
       imageBottom: 0,
       color: '#ffffff',
       backgroundColor: '#777777',
+      transparent: false,
       strokeStyle: '#000000',
       margin: 50,
     };
@@ -215,8 +233,10 @@ export default defineComponent({
         : this.canvas.height;
 
       // image background
-      this.ctx.fillStyle = this.backgroundColor;
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      if (!this.transparent) {
+        this.ctx.fillStyle = this.backgroundColor;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      }
 
       // draw the image
       this.ctx.drawImage(
@@ -230,7 +250,6 @@ export default defineComponent({
         this.scaledImageWidth,
         this.scaledImageHeight
       );
-
       this.imageRight = this.imageX + this.scaledImageWidth;
       this.imageBottom = this.imageY + this.scaledImageHeight;
 
@@ -396,6 +415,10 @@ export default defineComponent({
   gap: var(--gap);
 }
 
+.meme__property-disabled {
+  opacity: 0.45;
+}
+
 .meme__text,
 .meme__number {
   padding: 0.5rem;
@@ -422,6 +445,11 @@ export default defineComponent({
 .meme__color::-webkit-color-swatch {
   border: 0.2rem solid var(--color-border-inverse-soft);
   border-radius: 1rem;
+}
+
+.meme__transparent {
+  width: 1.5em;
+  height: 1.5em;
 }
 
 .meme__canvas-wrapper {

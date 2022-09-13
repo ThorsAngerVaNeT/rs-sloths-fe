@@ -140,7 +140,8 @@
     "margin": "Поля картинки",
     "color": "Цвет текста",
     "stroke": "Цвет обводки",
-    "backgroundColor": "Цвет фона"
+    "backgroundColor": "Цвет фона",
+    "backgroundTransparent": "Прозрачный фон"
   },
 
   "merch": {
