@@ -448,8 +448,9 @@ export default defineComponent({
 }
 
 .meme__transparent {
-  width: 1.5em;
-  height: 1.5em;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.6rem 0;
 }
 
 .meme__canvas-wrapper {
