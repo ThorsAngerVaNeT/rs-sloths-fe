@@ -451,6 +451,7 @@ export default defineComponent({
   width: 2rem;
   height: 2rem;
   margin: 0.6rem 0;
+  accent-color: var(--color-background-inverse);
 }
 
 .meme__canvas-wrapper {
