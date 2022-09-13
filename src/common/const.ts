@@ -220,6 +220,7 @@ export const GUESS_SLOTHS = [
 ];
 
 export const MEMES_SLOTHS = [
+  './img/memes/slothorian.png',
   './img/memes/deadline.png',
   './img/memes/expert.png',
   './img/memes/git.png',
