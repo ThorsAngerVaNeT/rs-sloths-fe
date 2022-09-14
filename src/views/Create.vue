@@ -160,8 +160,6 @@ export default defineComponent({
 
   methods: {
     async getImages() {
-      // todo fetch
-
       this.images = MEMES_SLOTHS;
     },
 
