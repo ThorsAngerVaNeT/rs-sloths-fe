@@ -134,7 +134,8 @@
     "margin": "Image Margin",
     "color": "Text Color",
     "stroke": "Text Stroke Color",
-    "backgroundColor": "Background Color"
+    "backgroundColor": "Background Color",
+    "backgroundTransparent": "Transparent Background"
   },
 
   "merch": {
