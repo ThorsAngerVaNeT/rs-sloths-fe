@@ -129,6 +129,7 @@ export default defineComponent({
   border-radius: 0 0 0.5rem 0.5rem;
   padding: 1rem;
   margin-left: 0.1rem;
+  color: var(--color-text);
 }
 
 @media (max-width: 1200px) {
