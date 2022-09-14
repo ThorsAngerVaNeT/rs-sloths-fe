@@ -107,6 +107,7 @@
 import { defineComponent } from 'vue';
 import CustomBtn from '@/components/buttons/CustomBtn.vue';
 import usePagesStore from '@/stores/pages-store';
+import { MEMES_SLOTHS } from '@/common/const';
 
 const { getPageCreateState, setPageCreateState } = usePagesStore();
 
@@ -177,23 +178,7 @@ export default defineComponent({
 
   methods: {
     async getImages() {
-      // todo fetch
-
-      this.images = [
-        './img/memes/deadline.svg',
-        './img/memes/expert.svg',
-        './img/memes/git.svg',
-        './img/memes/its_ok.svg',
-        './img/memes/love.svg',
-        './img/memes/mentor.svg',
-        './img/memes/read_chat.svg',
-        './img/memes/shocked.svg',
-        './img/memes/so_close.svg',
-        './img/memes/student_1.svg',
-        './img/memes/without_mentor.svg',
-        './img/memes/work_done.svg',
-        './img/memes/wtf.svg',
-      ];
+      this.images = MEMES_SLOTHS;
     },
 
     getImg(i: number): string {
@@ -376,12 +361,21 @@ export default defineComponent({
 }
 
 .meme {
-  padding: 0 3rem;
+  padding-left: 3rem;
+  height: 100%;
+}
+
+.meme__list {
+  height: 100%;
+  overflow-y: auto;
 }
 
 .meme__generator {
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  padding-right: 3rem;
+  overflow-y: auto;
 }
 
 .meme__memes {
@@ -395,6 +389,7 @@ export default defineComponent({
 .meme__image {
   width: 14rem;
   height: 14rem;
+  object-fit: contain;
 }
 
 .meme__settings {
@@ -478,5 +473,15 @@ export default defineComponent({
 
 .meme__canvas {
   border: 0.2px solid gray;
+}
+
+@media (max-width: 1200px) {
+  .meme {
+    padding-left: 1.5rem;
+  }
+
+  .meme__generator {
+    padding-right: 1.5rem;
+  }
 }
 </style>

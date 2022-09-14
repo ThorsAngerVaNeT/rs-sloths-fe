@@ -410,7 +410,7 @@ export default defineComponent({
         perPage: PAGINATION_OPTIONS[0],
         searchText: '',
         selected: [] as string[],
-        sorting: SLOTH_SORTING[0].value,
+        sorting: SLOTH_SORTING[1].value,
         checked: [] as string[],
       };
 
